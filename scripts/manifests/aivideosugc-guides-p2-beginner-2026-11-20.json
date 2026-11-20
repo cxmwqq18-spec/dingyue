@@ -1,0 +1,157 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T11:09:27.023Z",
+  "applying": true,
+  "editCount": 23,
+  "pages": [
+    "/guides",
+    "/guides/how-do-text-to-video",
+    "/guides/how-do-ai-video",
+    "/guides/how-do-image-to-video",
+    "/guides/how-do-ai-image",
+    "/guides/how-do-ai-avatar",
+    "/guides/how-do-subtitle-studio",
+    "/guides/how-do-url-to-video",
+    "/guides/how-do-product-links"
+  ],
+  "edits": [
+    {
+      "slug": "/guides",
+      "field": "hub.learningPath",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "4c0c3d56662017ab65220b9c4ff2b32172bca6248ad1ec3affd21d6d8b278902"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "c9237687a2aacc59d6b8f251bd8f4299a41891029f796e914ff3d490f62f32f1"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "field": "steps[3] jargon: estimate",
+      "beforeHash": "10b184378d9b705e4b6320ce3fdb02f0e54e9f8b9ab78cd5707dba4771b45e16",
+      "afterHash": "023cbdccc36cc10e0d57b934925b806103360855d73dda8abf32de8977826b9e"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "field": "steps[3] jargon: references",
+      "beforeHash": "023cbdccc36cc10e0d57b934925b806103360855d73dda8abf32de8977826b9e",
+      "afterHash": "4c53289196d344f0757069e3ac71354eb9801128e3c97f8052456b3a12c1a6d4"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "field": "steps[0] jargon: presenter",
+      "beforeHash": "86a5b10eea4f423d1a3adce59a46b1d19cc156be0017cbd065e8a10eb68c9bdf",
+      "afterHash": "3dff59b15d24ac042d788b76096b418072652b41ebe90abe4313654f2acd91d3"
+    },
+    {
+      "slug": "/guides/how-do-ai-image",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "ed4c0bbf3a69fdd05b6331ea6c4fe835ad766a8b5d24740365bf9e9845549c6e"
+    },
+    {
+      "slug": "/guides/how-do-ai-image",
+      "field": "steps[4] jargon: estimate",
+      "beforeHash": "8606ebf4c79f50ed6fe4570f32a55a722cdef52d7fd2cc8d30d1cf7eac224cda",
+      "afterHash": "2ffa401163ce09e4e7858103e38e06ca2ffee553dad91810a341911d2d4e4164"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "c9237687a2aacc59d6b8f251bd8f4299a41891029f796e914ff3d490f62f32f1"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "field": "steps[3] jargon: estimate",
+      "beforeHash": "39901060306c5cb372eae3b4bf4d0f300d2c359c310c780d372ea17b5ddd183f",
+      "afterHash": "caea9a97d61b5217ea76e58b8ca5373a2d28934a9b81f5a27b87ce175cd6f3bf"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "c9237687a2aacc59d6b8f251bd8f4299a41891029f796e914ff3d490f62f32f1"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "field": "steps[3] jargon: estimate",
+      "beforeHash": "25b73644076757f53061875794bf4534409a11afc4413219b0a6d7e5f46004f6",
+      "afterHash": "c2d37737cefcaee7684d478f4214bf91d2210605c3bd30e2dcbf67121c91dff4"
+    },
+    {
+      "slug": "/guides/how-do-product-links",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "25cbcfecebddfa23fd89e597b4588e5ff3f682266ca6a38948429fd2f75abac2"
+    },
+    {
+      "slug": "/guides/how-do-product-links",
+      "field": "nextStep",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "5249bac41cbd074788ed1857f9b6cfa93ae42e2b391c403b7d49d108785cf590"
+    },
+    {
+      "slug": "/guides/how-do-subtitle-studio",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "79ee604055faa454266a9e0f2faebecaa59818761191540130b9284076ecb51f"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "c9237687a2aacc59d6b8f251bd8f4299a41891029f796e914ff3d490f62f32f1"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "field": "steps[3] jargon: storyboard",
+      "beforeHash": "9b6a905d259e923695b53f74ebe6cec435751f783d6f6abc2639c3a2a5863402",
+      "afterHash": "e4af2189134d887bdff9f160e66e06627a4dc8f592234c6bceb401bb0aef1aae"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "field": "steps[2] jargon: optimize",
+      "beforeHash": "13f4be09652c5342dd858cda04443c59d33f00a6449072367890283e59a9178c",
+      "afterHash": "225964669eaa4152e8a23316c4ba69c7d6acc3c4e0d1f5bb72311d46ad60bd25"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "field": "steps[4] jargon: estimate",
+      "beforeHash": "1855dc3b28a7c465bd4ae471592f836d8e7f47700bd15611fecabce8237f2c76",
+      "afterHash": "b310dc8fbfb43411684b2a94d0d2fa4d6be8f61b8094fcf4b21d024292ce10b4"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "field": "steps[4] jargon: draft",
+      "beforeHash": "b310dc8fbfb43411684b2a94d0d2fa4d6be8f61b8094fcf4b21d024292ce10b4",
+      "afterHash": "f823c05b0f5b654404bda206fed95614b54b7904693a23674a1c0bb371e4bc72"
+    },
+    {
+      "slug": "/guides/how-do-url-to-video",
+      "field": "intro signup+cost note",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "25cbcfecebddfa23fd89e597b4588e5ff3f682266ca6a38948429fd2f75abac2"
+    },
+    {
+      "slug": "/guides/how-do-url-to-video",
+      "field": "steps[3] jargon: draft",
+      "beforeHash": "7d83a23cb9db22bbdfc75d9981811e6ee3fdd1e9a966a9051e2edec187fc102c",
+      "afterHash": "2f6f58884df398d4dcf78fb8a3379c6fe6886fb914d3cf1181eac1452473062a"
+    },
+    {
+      "slug": "/guides/how-do-url-to-video",
+      "field": "steps[4] jargon: references",
+      "beforeHash": "c9318f2d65538464aba9fb0545356510292c58beaeb64776616289df885225d6",
+      "afterHash": "ae5129f33151d00a20d069581e56c002b064f5ea4f1630400326b8d162a9c2d3"
+    },
+    {
+      "slug": "/guides/how-do-url-to-video",
+      "field": "nextStep",
+      "beforeHash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "afterHash": "c403528cb28b6436e54e646de59bfe846f8832c4bfed486e20707c09d5854528"
+    }
+  ]
+}
