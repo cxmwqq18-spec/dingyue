@@ -1,18 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Poster-first media slot for indexable landing sections.
  *
  * Google reports any <video> it finds on a page that is not the clip's watch
  * page as "video not on a watch page", so the server-rendered HTML of a
- * landing section must stay poster-only. Visitors still get the clip: pointing
- * at (or focusing) the slot mounts the <video> and plays it. Because the swap
- * happens after hydration, the crawlable markup never contains a video
- * element, and the dedicated /watch/<slug> page stays the single indexable
- * player. The wrapper is display:contents so the slot keeps the exact layout
- * contract of the element it replaces.
+ * landing section must stay poster-only. Visitors still get the clip playing
+ * by default: the <video> mounts and autoplays as soon as the slot scrolls
+ * into view (and immediately on hover or focus). Because the swap happens
+ * after hydration, the crawlable markup never contains a video element, and
+ * the dedicated /watch/<slug> page stays the single indexable player. The
+ * wrapper is display:contents so the slot keeps the exact layout contract of
+ * the element it replaces.
  */
 export function PosterSwapVideo({
   alt,
@@ -31,17 +32,31 @@ export function PosterSwapVideo({
   src: string;
   width?: number;
 }) {
+  const imageRef = useRef<HTMLImageElement | null>(null);
   const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const element = imageRef.current;
+    // Without IntersectionObserver the visitor still gets the clip: mount it
+    // rather than leaving a static poster behind.
+    if (!element || typeof IntersectionObserver === "undefined") {
+      setActive(true);
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setActive(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "240px 0px" });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <span
-      onBlur={() => setActive(false)}
       onFocus={() => setActive(true)}
-      onPointerEnter={(event) => {
-        if (event.pointerType === "mouse" || event.pointerType === "pen") setActive(true);
-      }}
-      onPointerLeave={(event) => {
-        if (event.pointerType === "mouse" || event.pointerType === "pen") setActive(false);
-      }}
+      onPointerEnter={() => setActive(true)}
       style={{ display: "contents" }}
     >
       {active ? (
@@ -65,6 +80,7 @@ export function PosterSwapVideo({
           decoding="async"
           height={height}
           loading={eager ? "eager" : "lazy"}
+          ref={imageRef}
           src={poster}
           width={width}
         />
