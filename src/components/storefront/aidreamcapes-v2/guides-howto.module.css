@@ -15,8 +15,8 @@
 .headerCenter {
   text-align: center;
 }
-:global(.adc2) .ahero .headerCenter h1,
-:global(.adc2) .ahero .headerCenter :global(.lead) {
+:global(.adc2) :global(.ahero) .headerCenter h1,
+:global(.adc2) :global(.ahero) .headerCenter :global(.lead) {
   margin-left: auto;
   margin-right: auto;
 }
