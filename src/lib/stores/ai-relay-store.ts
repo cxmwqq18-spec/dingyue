@@ -250,6 +250,8 @@ export type RelaySyncApplyResult = {
   removed: number;
   unchanged: number;
   providerIds: string[];
+  /** 本次同步删除的通道（上游下线或隐藏变体），用于审计与界面提示。 */
+  removedProviders?: Array<{ id: string; modelId: string; providerType: string }>;
 };
 
 /**
@@ -270,19 +272,18 @@ export async function syncPlatformAiRelayModelsRelational(params: {
     const existing = await tx.platformAiProvider.findMany({ where: { relayId: params.relayId } });
     const existingByModelId = new Map(existing.map((provider) => [provider.upstreamModelId ?? "", provider]));
     const created: string[] = [];
+    const removed: Array<{ id: string; modelId: string; providerType: string }> = [];
     let updatedCount = 0;
-    let removedCount = 0;
     let unchangedCount = 0;
 
     for (const entry of params.entries) {
       if (entry.action === "remove") {
         const matched = existingByModelId.get(entry.upstreamModelId);
         if (!matched) continue;
-        await tx.platformAiProvider.update({
-          where: { id: matched.id },
-          data: { enabled: false, syncState: "upstream_removed", updatedBy: params.actor }
-        });
-        removedCount += 1;
+        // 上游已下线或属于隐藏变体：通道不再出现在平台目录里，直接删除。
+        // 人工维护的优先级/档位等配置随行删除；审计日志保留这次删除记录。
+        await tx.platformAiProvider.delete({ where: { id: matched.id } });
+        removed.push({ id: matched.id, modelId: entry.upstreamModelId, providerType: matched.providerType });
         continue;
       }
 
@@ -348,7 +349,44 @@ export async function syncPlatformAiRelayModelsRelational(params: {
       }
     });
 
-    return { created: created.length, updated: updatedCount, removed: removedCount, unchanged: unchangedCount, providerIds: created };
+    // 删除的通道可能仍留在站点的域名 AI 使用范围数组里：同步清理，避免悬空引用。
+    if (removed.length) {
+      const removedIds = removed.map((item) => item.id);
+      const domains = await tx.siteDomain.findMany({
+        where: { allowedAiProviderIds: { hasSome: removedIds } },
+        select: { id: true, allowedAiProviderIds: true }
+      });
+      for (const domain of domains) {
+        await tx.siteDomain.update({
+          where: { id: domain.id },
+          data: { allowedAiProviderIds: domain.allowedAiProviderIds.filter((id) => !removedIds.includes(id)) }
+        });
+      }
+      // 被删掉的通道如果是该类型的优先通道，按原有规则补选一个可用通道。
+      const affectedTypes = Array.from(new Set(removed.map((item) => item.providerType)));
+      for (const providerType of affectedTypes) {
+        const preferred = await tx.platformAiProvider.findFirst({
+          where: { providerType, enabled: true, preferred: true },
+          select: { id: true }
+        });
+        if (preferred) continue;
+        const fallback = await tx.platformAiProvider.findFirst({
+          where: { providerType, enabled: true },
+          orderBy: [{ priority: "asc" }, { createdAt: "asc" }]
+        });
+        if (!fallback) continue;
+        await tx.platformAiProvider.updateMany({
+          where: { providerType, id: { not: fallback.id } },
+          data: { preferred: false }
+        });
+        await tx.platformAiProvider.update({
+          where: { id: fallback.id },
+          data: { preferred: true, enabled: true, priority: 0, updatedBy: params.actor }
+        });
+      }
+    }
+
+    return { created: created.length, updated: updatedCount, removed: removed.length, unchanged: unchangedCount, providerIds: created, removedProviders: removed };
   }, relayTransactionOptions);
 
   await addAuditLogRelational(prisma, {
@@ -363,7 +401,8 @@ export async function syncPlatformAiRelayModelsRelational(params: {
       created: result.created,
       updated: result.updated,
       removed: result.removed,
-      unchanged: result.unchanged
+      unchanged: result.unchanged,
+      removedModels: (result.removedProviders ?? []).map((item) => item.modelId).join(", ")
     }
   });
   clearPlatformReadCache();

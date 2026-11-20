@@ -113,6 +113,41 @@ export function classifyRelayModels(modelIds: string[]): RelayModelClassificatio
   return modelIds.map((modelId) => classifyRelayModel(modelId));
 }
 
+/**
+ * 隐藏模型：中转平台的 /v1/models 会把内部变体也列出来（评测用的短视频、
+ * 工作流别名、内部 1080p 通道等），这些模型不应该出现在平台的公开模型目录里。
+ * 规则只匹配明确的变体后缀/前缀，避免误伤正式模型；命中时同步会跳过并计入
+ * “跳过”计数，预览差异里逐条列出原因。
+ */
+const hiddenModelPatterns: Array<[RegExp, string]> = [
+  [/-15s$/, "15 秒隐藏变体"],
+  [/^dola-/, "Dola 内部别名"],
+  [/workflow/, "工作流别名"],
+  [/^wan-1080p$/, "内部 1080p 通道"],
+  [/-special$/, "专用隐藏变体"]
+];
+
+/** Returns the hidden reason when the model should not be synced. */
+export function hiddenRelayModelReason(modelId: string): string | undefined {
+  const normalized = modelId.trim().toLowerCase();
+  if (!normalized) return undefined;
+  return matches(hiddenModelPatterns, normalized);
+}
+
+export function splitRelayModelsByVisibility(models: RelayModelClassification[]): {
+  visible: RelayModelClassification[];
+  hidden: Array<RelayModelClassification & { hiddenReason: string }>;
+} {
+  const visible: RelayModelClassification[] = [];
+  const hidden: Array<RelayModelClassification & { hiddenReason: string }> = [];
+  for (const model of models) {
+    const reason = hiddenRelayModelReason(model.modelId);
+    if (reason) hidden.push({ ...model, hiddenReason: reason });
+    else visible.push(model);
+  }
+  return { visible, hidden };
+}
+
 /** 从 OpenAI 兼容的 /v1/models 响应中提取模型 ID。 */
 export function extractRelayModelIds(payload: unknown): string[] {
   const data = (payload as { data?: unknown })?.data;

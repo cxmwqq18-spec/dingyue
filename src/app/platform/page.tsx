@@ -18,7 +18,6 @@ import {
 import { AdminShell } from "@/components/admin/admin-shell";
 import { LogoutActionButton } from "@/components/auth/logout-action-button";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
-import { DomainPanel } from "@/components/platform/domain-panel";
 import { GatewayEditor } from "@/components/platform/gateway-editor";
 import { PlatformSiteAdminLink } from "@/components/platform/platform-site-admin-link";
 import { PlatformAuditPanel } from "@/components/platform/platform-audit-panel";
@@ -523,10 +522,6 @@ async function PlatformModuleContent({
               />
 
               <div className="grid gap-4">
-                <ErpSection description="域名在站点工厂新增；AI URL 使用范围由平台供应商队列统一生效，不需要逐域名保存。" eyebrow="域名管理" title="域名 AI URL 使用范围">
-                  <DomainPanel domains={platformDomains} providers={aiProviders} />
-                </ErpSection>
-
                 {selectedGateway ? (
                   <ErpSection description="当前只保留策略参数查看和兜底编辑；AI 中转已默认对所有站点域名可用。" eyebrow="网关策略" title={`AI 网关策略：${selectedSnapshot.site.name}`}>
                     <GatewayEditor group={selectedGateway} providers={aiProviders} siteId={selectedSnapshot.site.id} />

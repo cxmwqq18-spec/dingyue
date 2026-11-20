@@ -881,18 +881,30 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
     finally { setRevealingKey(false); }
   }
 
+  // 乐观更新：点击后立即改变本地状态，请求失败再回滚。状态切换只改一个字段，
+  // 等待一次完整往返再刷新界面会让远程访问显得“卡住”。
   async function makeCurrent(providerId: string) {
     const target = status.providers.find((provider) => provider.id === providerId); if (!target) return;
-    setCurrentActionId(providerId); setMessage(`正在切换${platformAiProviderTypeLabel(target.providerType)}优先供应商…`);
-    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ providerId }) }); setStatus(result); setMessage(`${platformAiProviderTypeLabel(target.providerType)}优先供应商已切换。`); }
-    catch (error) { setMessage(`切换失败：${error instanceof Error ? error.message : "unknown error"}`); }
+    const previous = status;
+    setStatus((current) => ({
+      ...current,
+      providers: current.providers.map((provider) => provider.providerType === target.providerType ? { ...provider, isCurrent: provider.id === providerId } : provider)
+    }));
+    setCurrentActionId(providerId); setMessage(`${platformAiProviderTypeLabel(target.providerType)}优先供应商已切换。`);
+    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ providerId }) }); setStatus(result); }
+    catch (error) { setStatus(previous); setMessage(`切换失败：${error instanceof Error ? error.message : "unknown error"}`); }
     finally { setCurrentActionId(null); }
   }
 
   async function setProviderEnabled(provider: AiProviderRow, enabled: boolean) {
-    setEnableActionId(provider.id); setMessage(`正在${enabled ? "启用" : "禁用"} AI 通道…`);
-    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ action: "enabled", providerId: provider.id, enabled }) }); setStatus(result); setMessage(`AI 通道「${provider.label}」已${enabled ? "启用" : "禁用"}。`); }
-    catch (error) { setMessage(`${enabled ? "启用" : "禁用"}失败：${error instanceof Error ? error.message : "unknown error"}`); }
+    const previous = status;
+    setStatus((current) => ({
+      ...current,
+      providers: current.providers.map((item) => item.id === provider.id ? { ...item, enabled } : item)
+    }));
+    setEnableActionId(provider.id); setMessage(`AI 通道「${provider.label}」已${enabled ? "启用" : "禁用"}。`);
+    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ action: "enabled", providerId: provider.id, enabled }) }); setStatus(result); }
+    catch (error) { setStatus(previous); setMessage(`${enabled ? "启用" : "禁用"}失败：${error instanceof Error ? error.message : "unknown error"}`); }
     finally { setEnableActionId(null); }
   }
 

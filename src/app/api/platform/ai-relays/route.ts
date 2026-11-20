@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { fetchRelayModelList } from "@/lib/relay-model-list";
+import { splitRelayModelsByVisibility } from "@/lib/relay-model-catalog";
 import {
   deletePlatformAiRelayRelational,
   getPlatformAiRelayRelational,
@@ -128,10 +129,19 @@ export async function POST(request: NextRequest) {
     await markPlatformAiRelaySyncFailedRelational({ relayId: relay.id, error: listing.message, actor: permission.current.platformAdmin.id });
     return NextResponse.json({ error: "ai_relay_model_list_failed", message: listing.message }, { status: 502 });
   }
+  // 只同步上游公开的模型：内部变体（-15s、workflow、dola-* 等）不进入平台目录，
+  // 并在预览里逐条列出，避免把隐藏的视频模型当成正式通道。
+  const { visible, hidden } = splitRelayModelsByVisibility(listing.models);
+  if (!visible.length) {
+    const message = "上游目录只返回隐藏模型，已跳过本次同步。";
+    await markPlatformAiRelaySyncFailedRelational({ relayId: relay.id, error: message, actor: permission.current.platformAdmin.id });
+    return NextResponse.json({ error: "ai_relay_only_hidden_models", message, hidden }, { status: 422 });
+  }
 
-  const plan = await planPlatformAiRelaySyncRelational({ relayId: relay.id, models: listing.models });
+  const plan = await planPlatformAiRelaySyncRelational({ relayId: relay.id, models: visible });
+  const hiddenNote = hidden.length ? `，跳过 ${hidden.length} 个隐藏模型` : "";
   if (body.action === "preview") {
-    return NextResponse.json({ ok: true, plan, message: listing.message });
+    return NextResponse.json({ ok: true, plan, hidden, message: `${listing.message}${hiddenNote}` });
   }
 
   const applied = await syncPlatformAiRelayModelsRelational({
@@ -141,8 +151,9 @@ export async function POST(request: NextRequest) {
   });
   return NextResponse.json({
     ok: true,
-    message: `同步完成：新增 ${applied.created}，更新 ${applied.updated}，停用 ${applied.removed}，未变 ${applied.unchanged}`,
+    message: `同步完成：新增 ${applied.created}，更新 ${applied.updated}，移除 ${applied.removed}，未变 ${applied.unchanged}${hiddenNote}`,
     plan,
+    hidden,
     applied
   });
 }
