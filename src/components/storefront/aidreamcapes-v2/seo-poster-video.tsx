@@ -3,12 +3,15 @@
 // Poster-first video for article, guide and landing-page embeds.
 //
 // Google indexes a <video> element on any page and reports it as "video not on
-// a watch page" when that page is not a dedicated watch page. These embeds are
-// supporting content, so the server renders only the poster. The real <video>
-// mounts after the visitor presses play. The dedicated /watch/<slug> page is
-// the only server-rendered video player and the only page with VideoObject.
+// a watch page" when that page is not a dedicated watch page, so the server
+// renders only the poster. Visitors still get default playback: the player
+// mounts and autoplays (muted, so browsers allow it) as soon as the embed
+// reaches the viewport, and native controls stay for seeking and unmuting.
+// Pressing the poster still starts playback immediately. The dedicated
+// /watch/<slug> page remains the only server-rendered player and the only page
+// with VideoObject.
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function SeoPosterVideo({
   src,
@@ -37,7 +40,32 @@ export function SeoPosterVideo({
   muted?: boolean;
   tracks?: Array<{ src: string; srcLang: string; label: string; default?: boolean }>;
 }) {
+  const posterRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState(false);
+  // Observer-started playback must stay muted or browsers refuse to autoplay;
+  // a click is a user gesture and may start with sound when the caller asked
+  // for it. Looping keeps the ambient embed alive like the rest of the site.
+  const [autoStarted, setAutoStarted] = useState(false);
+
+  useEffect(() => {
+    if (active) return;
+    const element = posterRef.current;
+    if (!element) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setAutoStarted(true);
+      setActive(true);
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        observer.disconnect();
+        setAutoStarted(true);
+        setActive(true);
+      }
+    }, { rootMargin: "240px 0px" });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [active]);
 
   if (active) {
     return (
@@ -47,8 +75,8 @@ export function SeoPosterVideo({
         className={className}
         controls={controls}
         height={height}
-        loop={loop}
-        muted={muted}
+        loop={loop || autoStarted}
+        muted={muted || autoStarted}
         playsInline
         poster={poster}
         preload="metadata"
@@ -67,6 +95,7 @@ export function SeoPosterVideo({
       aria-label={`Play ${alt}`}
       className={posterClassName ?? className}
       onClick={() => setActive(true)}
+      ref={posterRef}
       style={{ position: "relative", display: "block", width: "100%", padding: 0, border: 0, background: "transparent", cursor: "pointer", overflow: "hidden", borderRadius: "inherit" }}
       type="button"
     >
