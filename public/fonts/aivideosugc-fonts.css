@@ -1,3 +1,17 @@
+/* Metric-matched fallback for the Outfit stack. The web font still swaps in,
+   but both faces report the same ascent/descent and average width, so a late
+   font fetch no longer reflows the page (first-visit CLS on slow networks). */
+@font-face {
+  font-family: 'Outfit Fallback';
+  font-style: normal;
+  font-weight: 100 900;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 97.6%;
+  ascent-override: 100%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
 /* latin-ext */
 @font-face {
   font-family: 'Outfit';

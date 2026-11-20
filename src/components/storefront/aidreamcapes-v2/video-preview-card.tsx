@@ -41,12 +41,15 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
 
   useEffect(() => {
     const element = boxRef.current;
+    // Low-end phones: keep only the cards near the viewport mounted. Leaving
+    // the 240px margin releases the player back to its poster (same ratio, so
+    // no layout shift); desktops keep the paused player for instant resume.
+    const mobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
     // The first visible row must play without waiting for an observer
     // callback: cards above the fold mount immediately after hydration.
     if (posterEager) {
       setMounted(true);
       setVisible(true);
-      return;
     }
     if (!element || typeof IntersectionObserver === "undefined") {
       setMounted(true);
@@ -56,14 +59,19 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
     const observer = new IntersectionObserver(
       (entries) => {
         const intersecting = entries.some((entry) => entry.isIntersecting);
-        if (intersecting) setMounted(true);
-        setVisible(intersecting);
+        if (intersecting) {
+          setMounted(true);
+          setVisible(true);
+        } else {
+          setVisible(false);
+          if (mobile) setMounted(false);
+        }
       },
       { rootMargin: "240px 0px" }
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [posterEager]);
 
   useEffect(() => {
     const video = videoRef.current;

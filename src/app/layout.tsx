@@ -51,7 +51,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           render-blocking critical path. Outfit is the v2 theme's single text
           family, so its latin file is preloaded. */}
         <link rel="preload" href="/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="/fonts/aivideosugc-fonts.css?v=20261103" />
+        <link rel="stylesheet" href="/fonts/aivideosugc-fonts.css?v=20261120" />
       </head>
       <body translate="yes">
         {children}

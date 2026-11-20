@@ -46,10 +46,16 @@ export function PosterSwapVideo({
       setActive(true);
       return;
     }
+    // Low-end phones: release the player back to its poster once the slot
+    // leaves the 240px margin, so a long landing page never keeps dozens of
+    // decoders alive. Desktops keep the paused player for instant resume.
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
     const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
+      const intersecting = entries.some((entry) => entry.isIntersecting);
+      if (intersecting) {
         setActive(true);
-        observer.disconnect();
+      } else if (mobile) {
+        setActive(false);
       }
     }, { rootMargin: "240px 0px" });
     observer.observe(element);

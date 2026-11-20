@@ -547,7 +547,7 @@ main[data-aidreamcapes-public-page="true"] .ac-cta-band p { max-width: 640px; ma
 .aidreamcapes-zip-homepage,
 .aidreamcapes-zip-header,
 .aidreamcapes-zip-header * {
-  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
 }
 
 .aidreamcapes-zip-homepage .glass-card:hover {
