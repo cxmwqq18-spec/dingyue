@@ -1,15 +1,15 @@
 "use client";
 
-// Poster-first preview for list cards.
+// Ambient card preview.
 //
-// Google discovers a <video> element on every indexable page and reports it as
-// "video not on a watch page" when the page is not a dedicated watch page.
-// Cards, hubs, articles and landing pages are not watch pages, so their SSR
-// markup contains only the poster image. A real <video> mounts and autoplays
-// as soon as the card scrolls into view (hover and focus start it sooner),
-// which restores default playback for visitors without putting a video element
-// in the crawlable HTML. The dedicated /watch/<slug> page owns the indexable
-// player and VideoObject.
+// Visitors expect the catalog clips to play by themselves — the pre-watch-page
+// split site did exactly that — while Google must not find a <video> in the
+// crawlable markup of a listing page ("video not on a watch page" reports).
+// The poster ships in the SSR document; the player mounts once the card
+// approaches the viewport and plays muted and looping while it is visible.
+// Leaving the viewport pauses the player but keeps it mounted, so the media
+// keeps the exact media ratio (posters and players share one aspect-ratio)
+// and nothing jumps when the visitor scrolls back.
 
 import { useEffect, useRef, useState } from "react";
 
@@ -25,36 +25,61 @@ export type Adc2VideoPreviewMedia = {
 };
 
 export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean }) {
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const [active, setActive] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const label = ariaLabel ?? media.name;
   const ratio = media.width && media.height ? `${media.width} / ${media.height}` : undefined;
+  const mediaStyle = {
+    display: "block",
+    width: "100%",
+    height: "auto",
+    objectFit: "cover" as const,
+    ...(ratio ? { aspectRatio: ratio } : {})
+  };
 
   useEffect(() => {
-    const element = imageRef.current;
-    // Without IntersectionObserver the visitor still gets the clip: mount it
-    // rather than leaving a static poster behind.
+    const element = boxRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {
-      setActive(true);
+      setMounted(true);
+      setVisible(true);
       return;
     }
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        setActive(true);
-        observer.disconnect();
-      }
-    }, { rootMargin: "240px 0px" });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries.some((entry) => entry.isIntersecting);
+        if (intersecting) setMounted(true);
+        setVisible(intersecting);
+      },
+      { rootMargin: "240px 0px" }
+    );
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (visible) {
+      const attempt = video.play();
+      if (attempt && typeof attempt.catch === "function") attempt.catch(() => undefined);
+    } else {
+      video.pause();
+    }
+  }, [visible, mounted]);
+
   return (
     <div
       className="v-preview-box"
-      onFocus={() => setActive(true)}
-      onPointerEnter={() => setActive(true)}
+      onBlur={() => setVisible(false)}
+      onFocus={() => {
+        setMounted(true);
+        setVisible(true);
+      }}
+      ref={boxRef}
     >
-      {active ? (
+      {mounted ? (
         <video
           aria-label={label}
           autoPlay
@@ -65,7 +90,9 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
           playsInline
           poster={media.poster || undefined}
           preload="metadata"
+          ref={videoRef}
           src={media.previewSrc ?? media.src}
+          style={mediaStyle}
           width={media.width}
         />
       ) : media.poster ? (
@@ -74,9 +101,8 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
           decoding="async"
           height={media.height}
           loading={posterEager ? "eager" : "lazy"}
-          ref={imageRef}
           src={media.poster}
-          style={{ display: "block", width: "100%", height: "auto", objectFit: "cover", ...(ratio ? { aspectRatio: ratio } : {}) }}
+          style={mediaStyle}
           width={media.width}
         />
       ) : (

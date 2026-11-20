@@ -207,6 +207,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail-media{margin:0;border-radius:18px;overflow:hidden;background:#0d1220;box-shadow:0 18px 60px rgba(10,16,32,.18)}
 #media-detail .v-detail-media img,#media-detail .v-detail-media video{display:block;width:100%;height:auto}
 #media-detail .v-detail-play{position:relative}
+#media-detail .v-detail-play video{background:#000;object-fit:cover}
 #media-detail .v-detail-play-poster{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
 #media-detail .v-detail-play-poster img{transition:opacity .18s ease}
 #media-detail .v-detail-play-poster:hover img{opacity:.92}
