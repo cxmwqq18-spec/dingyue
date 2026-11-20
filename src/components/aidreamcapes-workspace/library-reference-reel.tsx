@@ -115,7 +115,7 @@ export function LibraryReferenceReel({ items, onOpen }: { items: LibraryReelItem
             onClick={() => onOpen(item.taskId)}
             aria-label={`${item.title}: ${item.label || "reference image"}, open this video`}
           >
-            <img className={styles.reelBackdrop} src={item.url} alt="" aria-hidden="true" decoding="async" />
+            <img className={styles.reelBackdrop} src={item.url} alt="" aria-hidden="true" decoding="async" loading="lazy" />
             <img className={styles.reelShot} src={item.url} alt="" loading="lazy" decoding="async" />
             {item.count > 1 && <span className={styles.reelBadge}>{item.count} refs</span>}
             <span className={styles.reelMeta}>

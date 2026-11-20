@@ -561,3 +561,45 @@ textarea.input { resize: vertical; min-height: 100px; }
 .optimizerFooter { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 3px; }
 @media (max-width: 640px) { .optimizerHead { padding: 18px 18px 15px; } .optimizerBody { padding: 15px 18px 17px; } .optimizerFooter { flex-wrap: wrap; } .optimizerFooter .button { flex: 1; } }
 @media (prefers-reduced-motion: reduce) { .optimizerProgressBar { animation: none; transform: none; } }
+
+/* ---- Library pager (one page of cards at a time) ---- */
+.libraryPagerWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 26px 0 34px;
+}
+.libraryPageCount {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.libraryPager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.libraryPageNum, .libraryPageNav {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 0 6px;
+}
+.libraryPageNum:hover, .libraryPageNav:hover:not(:disabled) { border-color: #bcb1f8; }
+.libraryPageNum:disabled, .libraryPageNav:disabled { opacity: .45; cursor: default; }
+.libraryPageCurrent {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+}
+.libraryPageGap { color: var(--muted); padding: 0 2px; }

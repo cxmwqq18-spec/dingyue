@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, Clapperboard, Copy, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, ChevronLeft, ChevronRight, Clapperboard, Copy, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 import { creditLabel } from "@/lib/format-credits";
@@ -56,6 +56,25 @@ export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 
 type View = WorkspaceView;
 type WorkspaceTask = BaseWorkspaceTask & { operation?: { action: string; state: "pending" | "run" | "done" | "fail" | "cancelled"; error?: string } };
+/** Library page size: one screen of cards plus a pager. */
+const LIBRARY_PAGE_SIZE = 12;
+/**
+ * The numbered pager keeps a stable width: first/last plus a two-page window
+ * around the current page, with gaps where the sequence jumps.
+ */
+function libraryPageWindow(current: number, pages: number): (number | "gap")[] {
+  if (pages <= 7) return Array.from({ length: pages }, (_, index) => index + 1);
+  const keep = new Set<number>([1, pages, current - 1, current, current + 1]);
+  if (current <= 3) [2, 3, 4].forEach((page) => keep.add(page));
+  if (current >= pages - 2) [pages - 3, pages - 2, pages - 1].forEach((page) => keep.add(page));
+  const sorted = [...keep].filter((page) => page >= 1 && page <= pages).sort((a, b) => a - b);
+  const entries: (number | "gap")[] = [];
+  sorted.forEach((page, index) => {
+    if (index > 0 && page - sorted[index - 1] > 1) entries.push("gap");
+    entries.push(page);
+  });
+  return entries;
+}
 type ComposerProduct = ImportedProductAsset & { confirmedBrief?: ConfirmedProductBrief };
 type ComposerPreset = { title?: string; aspect?: TaskInput["options"]["aspect"]; duration?: TaskInput["options"]["duration"]; resolution?: string; modelId?: string; referenceUrls?: string[]; referenceVideos?: string[]; referenceAudios?: string[] };
 type Step = "input" | "storyboard" | "render" | "delivery";
@@ -106,6 +125,8 @@ export interface AidreamcapesWorkspaceProps {
   initialHandoff?: WorkspaceHandoff;
   initialTemplateGallery?: WorkspaceTemplateGallery;
   initialInspirations?: import("@/lib/aidreamcapes-inspirations-types").InspirationPage;
+  /** Raw tool id from the workspace route (e.g. "image-to-video"); drives the video view H1. */
+  initialVideoTool?: string;
 }
 
 const derivedStatusLabels: Record<DerivedTaskStatus, string> = { cancelled: "Cancelled", completed: "Completed", rendering: "Rendering", generating: "Generating", planning: "Planning", failed: "Needs attention", ready: "Ready to render", draft: "Draft" };
@@ -209,7 +230,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialActorId, initialPreset, initialHandoff, initialTemplateGallery, initialInspirations }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialActorId, initialPreset, initialHandoff, initialTemplateGallery, initialInspirations, initialVideoTool }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -228,16 +249,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [subtitleJob, setSubtitleJob] = useState<SubtitleActiveJob | null>(null);
   const [subtitleNotice, setSubtitleNotice] = useState("");
   const [subtitleElapsed, setSubtitleElapsed] = useState(0);
-  // Library list paging: the first page loads eagerly, further pages append
-  // while the customer scrolls towards the end of the grid.
-  const [tasksHasMore, setTasksHasMore] = useState(false);
-  const [tasksLoadingMore, setTasksLoadingMore] = useState(false);
-  // Rows already consumed from the server. The library polls merge refreshed
-  // head-window tasks into `tasks`, so the array length drifts — paging must
-  // advance on a stable cursor instead of the live list length, or a merge
-  // that reorders rows makes the same offset repeat and scrolling stalls.
-  const tasksOffsetRef = useRef(0);
-  const librarySentinelRef = useRef<HTMLDivElement | null>(null);
+  // Library list paging: one page at a time keeps the DOM and the media budget
+  // bounded (a scroll-through used to mount every page at once). The page is
+  // mirrored in ?page= so back/forward and shared links land on the same page.
+  const [libraryPage, setLibraryPage] = useState(() => {
+    if (typeof window === "undefined") return 1;
+    const raw = Number(new URLSearchParams(window.location.search).get("page"));
+    return Number.isFinite(raw) && raw > 1 ? Math.trunc(raw) : 1;
+  });
+  const [libraryTotal, setLibraryTotal] = useState<number | null>(null);
+  const [libraryPageLoading, setLibraryPageLoading] = useState(false);
+  const libraryPageRef = useRef(libraryPage);
+  const libraryFetchSerial = useRef(0);
+  // Visited pages stay in memory so going back is instant. Only the task-list
+  // JSON is cached/prefetched — never media files, which stay lazy per card.
+  const libraryPageCache = useRef(new Map<number, { tasks: WorkspaceTask[]; total: number; at: number }>());
   const [step, setStep] = useState<Step>("input");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(!initialCatalog || Boolean(customer && initialTaskId));
@@ -649,7 +675,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       document.cookie = `${entryCookieName(entryView)}=; Path=${basePath}/app/create; Max-Age=0; SameSite=Lax`;
       const canonical = new URL(window.location.href);
       canonical.pathname = staticViewHref(basePath, entryView);
-      canonical.search = ""; canonical.hash = "";
+      // The Library mirrors its page number in ?page= so back/forward and
+      // shared links reopen the same page; every other entry still starts from
+      // a clean address.
+      const libraryPageParam = entryView === "library" ? Number(canonical.searchParams.get("page")) : 0;
+      canonical.search = "";
+      if (entryView === "library" && Number.isFinite(libraryPageParam) && libraryPageParam > 1) canonical.searchParams.set("page", String(Math.trunc(libraryPageParam)));
+      canonical.hash = "";
       window.history.replaceState(window.history.state, "", canonical);
     }
     if (runEntryEffects && customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
@@ -712,9 +744,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             : requestedStep);
         }
       }));
-    } else if (customerId && (entryView === "library" || entryView === "home" || entryView === "subtitles")) {
+    } else if (customerId && (entryView === "home" || entryView === "subtitles")) {
       setLoading(true);
-      loads.push(request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>("/tasks?limit=20&offset=0", { signal: controller.signal }).then((result) => { if (active()) { setTasks(result.tasks); setTasksHasMore(Boolean(result.hasMore)); tasksOffsetRef.current = result.tasks.length; } }));
+      // Home and Subtitle Studio only need the newest tasks; the Library owns
+      // its own paged loader below.
+      loads.push(request<{ tasks: WorkspaceTask[]; total?: number }>(`/tasks?limit=${LIBRARY_PAGE_SIZE}&offset=0`, { signal: controller.signal }).then((result) => { if (active()) { setTasks(result.tasks); setLibraryTotal(result.total ?? result.tasks.length); } }));
     }
     void Promise.allSettled(loads).then((results) => {
       if (!active()) return;
@@ -771,8 +805,85 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }, 5000, true);
   }, [customerId, request, view]);
 
+  // ------------------------------------------------------------ library pages ---
+  const libraryPageCount = Math.max(1, Math.ceil((libraryTotal ?? 0) / LIBRARY_PAGE_SIZE));
+
+  const cacheLibraryPage = useCallback((page: number, pageTasks: WorkspaceTask[], total: number) => {
+    const cache = libraryPageCache.current;
+    cache.set(page, { tasks: pageTasks, total, at: Date.now() });
+    // Revisits only touch a handful of neighbours; drop the coldest entries.
+    while (cache.size > 12) {
+      const coldest = [...cache.entries()].sort((a, b) => a[1].at - b[1].at)[0];
+      if (!coldest) break;
+      cache.delete(coldest[0]);
+    }
+  }, []);
+
+  const loadLibraryPage = useCallback(async (page: number, options: { force?: boolean } = {}) => {
+    if (!customerId) return;
+    const serial = ++libraryFetchSerial.current;
+    const cached = options.force ? undefined : libraryPageCache.current.get(page);
+    if (cached) {
+      setTasks(cached.tasks);
+      setLibraryTotal(cached.total);
+    }
+    setLibraryPageLoading(!cached);
+    try {
+      const result = await request<{ tasks: WorkspaceTask[]; total?: number }>(`/tasks?limit=${LIBRARY_PAGE_SIZE}&offset=${(page - 1) * LIBRARY_PAGE_SIZE}`);
+      const total = result.total ?? result.tasks.length;
+      cacheLibraryPage(page, result.tasks, total);
+      if (serial !== libraryFetchSerial.current) return;
+      setTasks(result.tasks);
+      setLibraryTotal(total);
+      // The list may have shrunk elsewhere (delete in another tab); clamp back.
+      const pages = Math.max(1, Math.ceil(total / LIBRARY_PAGE_SIZE));
+      if (page > pages) setLibraryPage(pages);
+    } catch (error) {
+      if (serial === libraryFetchSerial.current && !cached) setMessage((error as Error).message);
+    } finally {
+      if (serial === libraryFetchSerial.current) setLibraryPageLoading(false);
+    }
+  }, [cacheLibraryPage, customerId, request]);
+
+  useEffect(() => { libraryPageRef.current = libraryPage; }, [libraryPage]);
+
+  useEffect(() => {
+    if (!customerId || view !== "library") return;
+    void loadLibraryPage(libraryPage);
+  }, [customerId, libraryPage, loadLibraryPage, view]);
+
+  // Prefetch the neighbouring page's list JSON while the browser is idle.
+  // Media is never prefetched in bulk: posters stay lazy per visible card.
+  useEffect(() => {
+    if (!customerId || view !== "library" || libraryPageCount < 2) return;
+    const targets = [libraryPage + 1, libraryPage - 1].filter((page) => page >= 1 && page <= libraryPageCount && !libraryPageCache.current.has(page));
+    if (!targets.length) return;
+    const timer = window.setTimeout(() => {
+      for (const page of targets) {
+        void request<{ tasks: WorkspaceTask[]; total?: number }>(`/tasks?limit=${LIBRARY_PAGE_SIZE}&offset=${(page - 1) * LIBRARY_PAGE_SIZE}`)
+          .then((result) => cacheLibraryPage(page, result.tasks, result.total ?? result.tasks.length))
+          .catch(() => { /* Prefetch is best-effort. */ });
+      }
+    }, 1200);
+    return () => window.clearTimeout(timer);
+  }, [cacheLibraryPage, customerId, libraryPage, libraryPageCount, request, view]);
+
+  const goToLibraryPage = useCallback((page: number) => {
+    const next = Math.max(1, Math.min(page, libraryPageCount));
+    libraryPageRef.current = next;
+    setLibraryPage(next);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      if (next > 1) url.searchParams.set("page", String(next));
+      else url.searchParams.delete("page");
+      window.history.replaceState(window.history.state, "", url);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [libraryPageCount]);
+
   // Keep the library live while a clip is still with the provider, so a
-  // finished or rejected shot leaves "Working" without a manual reload.
+  // finished or rejected shot leaves "Working" without a manual reload. Only
+  // the visible page is refreshed, never the whole scroll history.
   const libraryInFlight = view === "library" && tasks.some((item) =>
     item.operation?.state === "pending" || item.operation?.state === "run" ||
     (item.storyboard?.shots ?? []).some((shot) =>
@@ -784,53 +895,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!customerId || !libraryInFlight) return;
     return startWorkspacePolling(async (signal) => {
       try {
-        // The poll refreshes the loaded head window; tasks from appended
-        // scroll pages are kept so paging and live updates compose.
-        const result = await request<{ tasks: WorkspaceTask[] }>("/tasks", { signal });
-        if (!signal.aborted) setTasks((current) => {
-          const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
-          return [...result.tasks.map((item) => {
-            const saved = current.find((entry) => entry.taskId === item.taskId);
-            return saved && saved.revision > item.revision ? saved : item;
-          }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
-        });
+        const page = libraryPageRef.current;
+        const result = await request<{ tasks: WorkspaceTask[]; total?: number }>(`/tasks?limit=${LIBRARY_PAGE_SIZE}&offset=${(page - 1) * LIBRARY_PAGE_SIZE}`, { signal });
+        if (signal.aborted || page !== libraryPageRef.current) return;
+        const total = result.total ?? result.tasks.length;
+        cacheLibraryPage(page, result.tasks, total);
+        setLibraryTotal(total);
+        setTasks((current) => result.tasks.map((item) => {
+          const saved = current.find((entry) => entry.taskId === item.taskId);
+          return saved && saved.revision > item.revision ? saved : item;
+        }));
       } catch { /* Library refresh should not interrupt browsing. */ }
     }, 4000);
-  }, [customerId, libraryInFlight, request]);
-
-  const loadMoreTasks = useCallback(async () => {
-    if (!customerId || !tasksHasMore || tasksLoadingMore || loading) return;
-    setTasksLoadingMore(true);
-    try {
-      const offset = tasksOffsetRef.current;
-      const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=20&offset=${offset}`);
-      tasksOffsetRef.current = offset + result.tasks.length;
-      setTasks((current) => {
-        const known = new Set(current.map((entry) => entry.taskId));
-        return [...current, ...result.tasks.filter((item) => !known.has(item.taskId))];
-      });
-      setTasksHasMore(Boolean(result.hasMore));
-    } catch (error) {
-      setMessage((error as Error).message);
-    } finally {
-      setTasksLoadingMore(false);
-    }
-  }, [customerId, loading, request, tasksHasMore, tasksLoadingMore]);
-
-  // Infinite scroll: load the next page when the customer approaches the end
-  // of the library grid. The observer reconnects whenever a page settles
-  // (loading flag flips back), and the cursor keeps paging moving even when
-  // the 4-second poll reshuffles the head of the list.
-  useEffect(() => {
-    if (view !== "library" || !tasksHasMore || tasksLoadingMore) return;
-    const sentinel = librarySentinelRef.current;
-    if (!sentinel) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) void loadMoreTasks();
-    }, { rootMargin: "800px 0px" });
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [loadMoreTasks, tasksHasMore, tasksLoadingMore, view]);
+  }, [cacheLibraryPage, customerId, libraryInFlight, request]);
 
   useEffect(() => {
     if (!customerId) return;
@@ -925,26 +1002,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       updateUrl(currentRef.current, step, "agent");
     });
     if (next === "library" && customerId) {
-      setLoading(true);
-      try {
-        // Reload everything the customer has already paged through, so the
-        // accumulated list stays complete when they return — and re-arm
-        // paging: without this, a client-side navigation used to leave
-        // tasksHasMore false and the sentinel never rendered again.
-        const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=${Math.max(tasksOffsetRef.current, 20)}&offset=0`);
-        if (navigation === navigationSerial.current) {
-          setTasks((current) => {
-            const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
-            return [...result.tasks.map((item) => {
-              const saved = current.find((entry) => entry.taskId === item.taskId);
-              return saved && saved.revision > item.revision ? saved : item;
-            }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
-          });
-          setTasksHasMore(Boolean(result.hasMore));
-          tasksOffsetRef.current = result.tasks.length;
-        }
-      } catch (error) { if (navigation === navigationSerial.current) setMessage((error as Error).message); }
-      finally { if (navigation === navigationSerial.current) setLoading(false); }
+      // The Library pager owns its own loader; revalidate the page the
+      // customer was reading so a task finished elsewhere shows up.
+      if (navigation === navigationSerial.current) void loadLibraryPage(libraryPageRef.current);
     }
     await save;
   }
@@ -1201,7 +1261,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   async function removeTask(item: WorkspaceTask) {
     if (!window.confirm(`Delete “${item.title}”? This permanently removes this task from your library.`)) return;
     setBusy(true);
-    try { await request(`/tasks/${item.taskId}`, { method: "DELETE", headers: { "If-Match": String(item.revision) } }); setTasks((items) => items.filter((entry) => entry.taskId !== item.taskId)); }
+    try {
+      await request(`/tasks/${item.taskId}`, { method: "DELETE", headers: { "If-Match": String(item.revision) } });
+      setTasks((items) => items.filter((entry) => entry.taskId !== item.taskId));
+      // Backfill the page so the grid never ends on a short last page, and
+      // step back when the deleted card was the only one left.
+      const page = libraryPageRef.current;
+      libraryPageCache.current.delete(page);
+      if (tasks.length <= 1 && page > 1) goToLibraryPage(page - 1);
+      else void loadLibraryPage(page, { force: true });
+    }
     catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
@@ -1981,7 +2050,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       label: entry.label,
       count: images.length
     }));
-  });
+  }).slice(0, 18);
 
   // Keep text beside icons/conditional children in host elements: browser
   // translation replaces bare Text nodes that React would otherwise remove.
@@ -2110,7 +2179,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {view === "videoLink" && <UrlToVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
         {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} disabled={working} imports={productImports} importsLoading={productImportsLoading} onBackfill={backfillProductImport} onDeleteImport={(importId) => void deleteProductImport(importId)} createSlot={productCreateScene ? sceneCreateForm(productCreateScene, "product") : null} />}
         {view === "batch" && <BatchDraftPage />}
-        {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
+        {view === "video" && <><div className={styles.pageTitle}><h1>{initialVideoTool === "image-to-video" ? "Image to Video" : "AI Video"}</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
           <HomeComposer
             tab="AI Video" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={handleComposerPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
@@ -2233,21 +2302,37 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           </div>
           {customer && libraryItems.length > 0 && <div className={styles.notice}><span>Generated videos are kept for 15 days, then automatically deleted. Download the ones you want to keep.</span></div>}
           {customer && !loading && libraryReelItems.length > 0 && <LibraryReferenceReel items={libraryReelItems} onOpen={setDetailTaskId} />}
-          <div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "active", "failed", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "active" ? "In progress" : filter === "failed" ? "Failed" : "Completed"}</button>)}</div>
+          <div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "active", "failed", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => { setLibraryFilter(filter); if (libraryPage !== 1) goToLibraryPage(1); }}>{filter === "all" ? "All videos" : filter === "active" ? "In progress" : filter === "failed" ? "Failed" : "Completed"}</button>)}</div>
           {!customer
             ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div>
-            : loading
+            : loading || libraryPageLoading
               ? <div className={styles.empty}><Loader2 className={styles.spin} size={25} /><span>Loading your videos…</span></div>
               : libraryItems.length
                 ? renderTaskCards(libraryItems)
                 : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open Text to Video, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}
-          {view === "library" && tasksHasMore && <div ref={librarySentinelRef} aria-hidden="true" className={styles.loadMoreSentinel} />}
-          {tasksLoadingMore && <div className={styles.empty} role="status"><Loader2 className={styles.spin} size={22} /><span>Loading more videos…</span></div>}
+          {view === "library" && customer && libraryPageCount > 1 && (
+            <div className={styles.libraryPagerWrap}>
+              <p className={styles.libraryPageCount} aria-live="polite">
+                {libraryFilter === "all"
+                  ? `Showing ${(libraryPage - 1) * LIBRARY_PAGE_SIZE + 1}–${Math.min(libraryPage * LIBRARY_PAGE_SIZE, libraryTotal ?? 0)} of ${libraryTotal ?? 0}`
+                  : `${libraryItems.length} on this page`}
+              </p>
+              <nav className={styles.libraryPager} aria-label="Library pages">
+                <button type="button" className={styles.libraryPageNav} aria-label="Previous page" disabled={libraryPage <= 1 || libraryPageLoading} onClick={() => goToLibraryPage(libraryPage - 1)}><ChevronLeft size={15} /></button>
+                {libraryPageWindow(libraryPage, libraryPageCount).map((entry, index) => entry === "gap"
+                  ? <span key={`gap-${index}`} className={styles.libraryPageGap} aria-hidden="true">…</span>
+                  : entry === libraryPage
+                    ? <span key={entry} aria-current="page" className={`${styles.libraryPageNum} ${styles.libraryPageCurrent}`}>{entry}</span>
+                    : <button key={entry} type="button" className={styles.libraryPageNum} disabled={libraryPageLoading} onClick={() => goToLibraryPage(entry)}>{entry}</button>)}
+                <button type="button" className={styles.libraryPageNav} aria-label="Next page" disabled={libraryPage >= libraryPageCount || libraryPageLoading} onClick={() => goToLibraryPage(libraryPage + 1)}><ChevronRight size={15} /></button>
+              </nav>
+            </div>
+          )}
         </>}
 
         {view === "actors" && presenterStudioEnabled && <>
           <div className={styles.creatorHeading}>
-            <div><span className={styles.creatorEyebrow}>PRESENTER STUDIO</span><h1>Create a video with an AI presenter</h1><p>Choose a presenter, add your product photo and share the message you want them to cover.</p></div>
+            <div><span className={styles.creatorEyebrow}>PRESENTER STUDIO</span><h1>AI Avatar</h1><p>Choose a presenter, add your product photo and share the message you want them to cover.</p></div>
             {customer && <span className={styles.creatorDraftHint}>Your work saves as a draft first</span>}
           </div>
           <div className={styles.creatorStudio}>

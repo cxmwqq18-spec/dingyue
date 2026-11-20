@@ -10,6 +10,11 @@ export interface LibraryCardMedia {
   label: string;
 }
 
+/** Small JPEG poster served by the asset route (ffmpeg frame, disk-cached). */
+function videoPosterUrl(src: string): string {
+  return `${src}${src.includes("?") ? "&" : "?"}poster=1`;
+}
+
 export interface LibraryTaskCardProps {
   title: string;
   statusLabel: string;
@@ -64,12 +69,21 @@ export function LibraryTaskCard({
   onDelete
 }: LibraryTaskCardProps) {
   const [active, setActive] = useState(0);
+  // The grid shows a light poster until the customer presses play: mounting a
+  // <video> for every card made the library fetch metadata from 100MB+ files
+  // on first paint.
+  const [playing, setPlaying] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Media can arrive later, and the active frame has to stay in range.
   useEffect(() => {
     setActive((current) => (current >= media.length ? 0 : current));
   }, [media.length]);
+
+  // Switching frames or receiving a fresh render returns to the poster.
+  useEffect(() => {
+    setPlaying(false);
+  }, [active, media.length]);
 
   const imageCount = useMemo(() => media.filter((item) => item.kind === "image").length, [media]);
   const activeItem = media[active];
@@ -119,17 +133,23 @@ export function LibraryTaskCard({
           </div>
         )}
 
-        {backdrop && <img className={styles.stageBackdrop} src={backdrop} alt="" aria-hidden="true" decoding="async" />}
+        {backdrop && <img className={styles.stageBackdrop} src={backdrop} alt="" aria-hidden="true" decoding="async" loading="lazy" />}
 
         {media.length > 0 && (
           <div className={styles.layers}>
             {media.map((item, index) => (
               <div key={`${item.kind}:${item.url}`} className={`${styles.layer} ${index === active ? styles.layerActive : ""}`} aria-hidden={index === active ? undefined : true}>
                 {item.kind === "video" ? (
-                  // Only the active video is mounted, so a page of cards never
-                  // loads several files at once.
+                  // The poster is a small cached JPEG (the asset route renders
+                  // it with ?poster=1). The real video is only mounted once the
+                  // customer asks to play it.
                   index === active
-                    ? <video className={styles.stageVideo} controls preload="metadata" playsInline src={item.url} />
+                    ? playing
+                      ? <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={item.url} />
+                      : <button type="button" className={styles.stagePoster} onClick={() => setPlaying(true)} aria-label={`Play ${title}`}>
+                        <img loading="lazy" decoding="async" src={videoPosterUrl(item.url)} alt="" />
+                        <span className={styles.stagePlay}><span><Play size={22} fill="currentColor" /></span></span>
+                      </button>
                     : null
                 ) : (
                   <img loading="lazy" decoding="async" src={item.url} alt={item.label ? `${title}: ${item.label}` : title} />

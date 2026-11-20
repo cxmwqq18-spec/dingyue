@@ -1,7 +1,7 @@
 import { after, type NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceResponse, workspaceFailure, jsonBody, parseInput, assertOwnedImages } from "@/lib/aidreamcapes-workspace/api";
-import { createTask, listTasks, publicTask, publicTaskSummary } from "@/lib/aidreamcapes-workspace/store";
+import { createTask, countTasks, listTasks, publicTask, publicTaskSummary } from "@/lib/aidreamcapes-workspace/store";
 import { refreshTask, taskHasPendingProviderWork, continueDirectTask, directTaskNeedsServerContinuation } from "@/lib/aidreamcapes-workspace/runner";
 import { sceneSchema, defaultTaskInput } from "@/lib/aidreamcapes-workspace/catalogs";
 import { validateTaskInput } from "@/lib/aidreamcapes-workspace/pipeline";
@@ -17,11 +17,9 @@ type Context = { params: Promise<{ siteId: string }> };
 export async function GET(request: NextRequest, { params }: Context) {
   try {
     const { siteId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response;
-    // The library must reflect provider progress: a shot that the provider has
-    // already finished or rejected has to leave "Generating" without the
-    // customer opening the editor. Only tasks with in-flight work pay for the
-    // extra lookups. The list pages 20 at a time; the browser appends the
-    // next page while the customer scrolls.
+    // The library pages one screen at a time (the browser fetches the next
+    // page on demand), and `total` lets the pager show the exact page count
+    // without walking the list.
     const url = new URL(request.url);
     const rawLimit = Number(url.searchParams.get("limit"));
     const rawOffset = Number(url.searchParams.get("offset"));
@@ -29,7 +27,10 @@ export async function GET(request: NextRequest, { params }: Context) {
     const offset = Number.isFinite(rawOffset) && rawOffset > 0 ? Math.trunc(rawOffset) : 0;
     const filter = url.searchParams.get("filter") === "subtitle_ready" ? "subtitle_ready" as const : undefined;
     const query = url.searchParams.get("q")?.trim() || undefined;
-    const page = await listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query });
+    const [page, total] = await Promise.all([
+      listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query }),
+      countTasks(siteId, auth.current.customer.id, { filter, query })
+    ]);
     const hasMore = page.length > limit;
     const tasks = page.slice(0, limit);
     // Provider progress used to be refreshed inline for every pending task,
@@ -56,7 +57,7 @@ export async function GET(request: NextRequest, { params }: Context) {
         }
       });
     }
-    return workspaceResponse({ tasks: tasks.map(publicTaskSummary), hasMore });
+    return workspaceResponse({ tasks: tasks.map(publicTaskSummary), hasMore, total });
   }
   catch (error) { return workspaceFailure(error); }
 }
