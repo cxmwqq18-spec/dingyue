@@ -4,6 +4,7 @@ import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
 import { ChunkLoadRecovery } from "@/components/storefront/chunk-load-recovery";
+import { ClientErrorReporter } from "@/components/storefront/client-error-reporter";
 import "./globals.css";
 
 /**
@@ -66,6 +67,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body translate="yes">
         <ChunkLoadRecovery />
+        <ClientErrorReporter />
         {children}
       </body>
     </html>
