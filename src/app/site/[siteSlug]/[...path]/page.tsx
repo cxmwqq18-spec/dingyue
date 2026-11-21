@@ -1,5 +1,5 @@
 import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
-import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
+import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter, withAidreamcapesListingPageMetadata } from "@/lib/aidreamcapes-template-filter.server";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -581,7 +581,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");
-    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
+    return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery) : {};
   }
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, collectionPath) : undefined;
   if (isCollectionRequest && path.length === 2 && path[0] === "ai-image-generation" && isAidreamcapesPathModeSite(pathModePublicSlug)) {
@@ -657,7 +657,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: canonicalUrlForSite(site, canonicalRequestedSlug) } } };
     return metadataForPublishedStorefrontPage({ site, page: canonicalPage, products: state.products, creativePacks: state.creativePacks, snapshot });
   }
-  return metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot });
+  return withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery);
 }
 
 export default async function SiteCatchAllPage({
