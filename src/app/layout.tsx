@@ -5,6 +5,7 @@ import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
 import { ChunkLoadRecovery } from "@/components/storefront/chunk-load-recovery";
 import { ClientErrorReporter } from "@/components/storefront/client-error-reporter";
+import { TranslateAfterHydration } from "@/components/translate-after-hydration";
 import "./globals.css";
 
 /**
@@ -78,6 +79,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // in one day, all on the storefront root). Manual translation from the
   // address bar still works because it mutates after hydration. The
   // chat-page incident on 2026-11-14 was the same family, fixed per-page.
+  // SSR ships translate="no"; TranslateAfterHydration flips it back to "yes"
+  // once hydrated, so the owner keeps browser translation (2026-11-22).
   return (
     <html lang={language} suppressHydrationWarning translate="no">
       <head>
@@ -100,6 +103,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body translate="no">
         <ChunkLoadRecovery />
         <ClientErrorReporter />
+        <TranslateAfterHydration />
         {children}
       </body>
     </html>
