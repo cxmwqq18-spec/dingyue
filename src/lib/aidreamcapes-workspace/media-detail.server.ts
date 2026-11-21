@@ -170,8 +170,12 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
         .find((card) => card.publicSlug === aliasOf && toDetailCard(card)?.kind === kind);
       const targetIdentity = presetGenerationIdentity(presetFromCard(targetPage, targetPage.slug, targetCard));
       // Chains/cycles fail closed to the original detail. Single-hop refs only.
+      // A placeholder alias (no video of its own) completes its merge into the
+      // target even when the target carries the real mp4 — the alias URL must
+      // not keep rendering a duplicate placeholder page. An alias that HAS a
+      // video never merges into a target without one.
       if (currentIdentity && currentIdentity === targetIdentity && !str(targetCard?.detailAliasOf)
-        && ownerCard.video?.src === (targetCard && toDetailCard(targetCard)?.video?.src)) {
+        && (!ownerCard.video?.src || ownerCard.video?.src === (targetCard && toDetailCard(targetCard)?.video?.src))) {
         return resolveMediaDetail(kind, aliasOf, false, targetPages);
       }
     }
