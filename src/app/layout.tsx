@@ -72,13 +72,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     host.split(",")[0]?.trim().toLowerCase().split(":")[0] ?? ""
   );
   const aidreamcapesThemeCssHref = isAidreamcapesHost ? aidreamcapesV2ThemeCssHref() : undefined;
+  // translate="no" keeps Chrome's auto-translate from rewriting text nodes
+  // before React hydrates: pre-hydration mutation throws React #418 and the
+  // client render then blanks the main content (2026-11-21, 17 occurrences
+  // in one day, all on the storefront root). Manual translation from the
+  // address bar still works because it mutates after hydration. The
+  // chat-page incident on 2026-11-14 was the same family, fixed per-page.
   return (
-    {/* translate="no" keeps Chrome's auto-translate from rewriting text nodes
-      * before React hydrates: pre-hydration mutation throws React #418 and the
-      * client render then blanks the main content (2026-11-21, 17 occurrences
-      * in one day, all on the storefront root). Manual translation from the
-      * address bar still works because it mutates after hydration. The
-      * chat-page incident on 2026-11-14 was the same family, fixed per-page. */}
     <html lang={language} suppressHydrationWarning translate="no">
       <head>
         <script dangerouslySetInnerHTML={{ __html: EARLY_ERROR_BEACON }} />
