@@ -111,9 +111,11 @@ function trimmed(value: string | undefined, max: number): string {
   return `${(boundary > max * 0.6 ? clipped.slice(0, boundary) : clipped).trimEnd()}…`;
 }
 
-/** Only curated public copy belongs in the detail description. */
+/** Only curated public copy belongs in the detail description. The lead is
+ * the page's per-example paragraph, so the cap leaves room for a short
+ * curated passage (2-4 sentences) instead of one clipped sentence. */
 export function mediaDetailIntro(card: Pick<MediaDetailCard, "line" | "prompt">): string {
-  return trimmed(card.line, 240);
+  return trimmed(card.line, 600);
 }
 
 /**

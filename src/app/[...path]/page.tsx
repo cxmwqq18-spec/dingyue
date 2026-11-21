@@ -1,5 +1,5 @@
 import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
-import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
+import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter, withAidreamcapesListingPageMetadata } from "@/lib/aidreamcapes-template-filter.server";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -464,7 +464,8 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const requestedPath = `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
-  const filterMetadata = await aidreamcapesTemplateFilterMetadata(hostSiteSlug, requestedPath, searchParams ? await searchParams : {});
+  const query = searchParams ? await searchParams : {};
+  const filterMetadata = await aidreamcapesTemplateFilterMetadata(hostSiteSlug, requestedPath, query);
   if (filterMetadata) return filterMetadata;
   if (hostSiteSlug === "aidreamcapes" && requestedPath === "/partners") {
     const title = "Partner Program | AIVideosUGC";
@@ -631,19 +632,19 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");
-    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
+    return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
   }
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
     if (!resolved || !resolved.page) return {};
-    return metadataForPublishedStorefrontDirectoryPage({
+    return withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontDirectoryPage({
       site: resolved.site,
       page: resolved.page,
       kind: "tool",
       directorySlug: path[1],
       products: resolved.state.products,
       creativePacks: resolved.state.creativePacks
-    });
+    }), hostSiteSlug, requestedPath, query);
   }
   if (isCollectionRequest && path.length === 2 && path[0] === "ai-image-generation" && isAidreamcapesSite(site)) {
     // Photo template pages share the collection prefix. Read the exact page
@@ -711,7 +712,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   if (resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") return {};
   const page = findPage(site, slug);
-  return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
+  return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
 }
 
 export default async function HostStorefrontCatchAllPage({

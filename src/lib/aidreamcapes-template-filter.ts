@@ -2,6 +2,43 @@
 export type TemplateFilterQuery = Record<string, string | string[] | undefined>;
 export const TEMPLATE_FACETS = ["industries", "platforms", "occasions"] as const;
 export type TemplateFacetKey = typeof TEMPLATE_FACETS[number];
+
+/** Listing routes whose ?page=N views are standalone indexable SSR pages.
+ * Facet-filtered views stay noindexed utility views; only the pagination
+ * dimension gains its own indexable identity. */
+const PAGINATED_LISTING_PATH_RE = /^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation|\/tools\/[^/]+)$/;
+
+/** The pagination page a listing request addresses. Page 1 (explicit or
+ * defaulted) and unparsable values resolve to the page-1 identity, so they
+ * keep today's canonical; only genuinely deeper pages differ. */
+export function aidreamcapesListingPageNumber(query: TemplateFilterQuery): number {
+  const raw = Array.isArray(query.page) ? query.page[0] : query.page;
+  const value = Math.floor(Number(raw));
+  return Number.isFinite(value) && value >= 2 && value <= 999 ? value : 0;
+}
+
+/** Distinct title for a deeper listing page: the page marker lands before the
+ * trailing "| Brand" segment so the brand suffix stays the last element. */
+export function aidreamcapesListingPageTitle(title: string | undefined, page: number): string | undefined {
+  if (!title || !page || title.includes(`Page ${page}`)) return title;
+  const marker = ` · Page ${page}`;
+  const brandAt = title.lastIndexOf(" | ");
+  return brandAt > 0 ? `${title.slice(0, brandAt)}${marker}${title.slice(brandAt)}` : `${title}${marker}`;
+}
+
+/** Self-referencing canonical for a deeper listing page: the base canonical
+ * keeps its other parameters (the kind catalogs) and gains ?page=N. */
+export function aidreamcapesListingPageCanonical(canonical: string | undefined, page: number): string | undefined {
+  if (!canonical || !page) return canonical;
+  try {
+    const url = new URL(canonical);
+    url.searchParams.delete("page");
+    url.searchParams.set("page", String(page));
+    return url.toString();
+  } catch {
+    return canonical;
+  }
+}
 export type TemplateFilters = Partial<Record<TemplateFacetKey | "kind", string>>;
 export type TemplateFilterState = {
   path: string;
@@ -80,9 +117,22 @@ export function templateMatchesFilters(template: { kind: string; industries: str
 /** Update only this page's structured identity, leaving linked entities intact. */
 export function aidreamcapesFilterJsonLd<T>(nodes: T, path: string, query: TemplateFilterQuery): T {
   const state = normalizeAidreamcapesTemplateFilter(path, query);
-  if (!/^\/(templates|industries|platforms|occasions)(?:\/|$)/.test(path) || !state.noindex) return nodes;
-  const before = `https://www.aivideosugc.com${path}`;
-  const after = `https://www.aivideosugc.com${state.canonicalPath}`;
+  if (/^\/(templates|industries|platforms|occasions)(?:\/|$)/.test(path) && state.noindex) {
+    return rewriteAidreamcapesJsonLdIdentity(nodes, `https://www.aivideosugc.com${path}`, `https://www.aivideosugc.com${state.canonicalPath}`);
+  }
+  // Paginated indexable listing views carry a page-inclusive canonical, so the
+  // page nodes in the graph must address the same identity instead of
+  // disagreeing with the link tag about which document this is.
+  const page = aidreamcapesListingPageNumber(query);
+  if (page && PAGINATED_LISTING_PATH_RE.test(path)) {
+    const before = `https://www.aivideosugc.com${path}`;
+    const after = aidreamcapesListingPageCanonical(before, page);
+    if (after && after !== before) return rewriteAidreamcapesJsonLdIdentity(nodes, before, after);
+  }
+  return nodes;
+}
+
+function rewriteAidreamcapesJsonLdIdentity<T>(nodes: T, before: string, after: string): T {
   const walk = (value: unknown): unknown => {
     if (typeof value === "string") return value === before ? after : value.startsWith(`${before}#`) ? after + value.slice(before.length) : value;
     if (Array.isArray(value)) return value.map(walk);

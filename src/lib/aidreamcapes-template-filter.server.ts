@@ -3,7 +3,41 @@ import { cache } from "react";
 import type { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { normalizeAidreamcapesTemplateFilter, templateMatchesFilters, TEMPLATE_FACETS, type TemplateFilterQuery } from "./aidreamcapes-template-filter";
+import {
+  aidreamcapesListingPageCanonical,
+  aidreamcapesListingPageNumber,
+  aidreamcapesListingPageTitle,
+  normalizeAidreamcapesTemplateFilter,
+  templateMatchesFilters,
+  TEMPLATE_FACETS,
+  type TemplateFilterQuery
+} from "./aidreamcapes-template-filter";
+
+/** Listing routes whose ?page=N views are standalone indexable SSR pages with
+ * a page-inclusive canonical and a page-distinct title. Facet-filtered views
+ * keep their noindex treatment; only deeper pagination pages gain an identity. */
+const PAGINATED_LISTING_PATH_RE = /^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation|\/tools\/[^/]+)$/;
+
+/** Patch already-built page metadata for a deeper listing page: self
+ * canonical with the page parameter and a page-distinct title. Everything the
+ * base metadata resolved (description, robots, OG image) stays as built. */
+export function withAidreamcapesListingPageMetadata(metadata: Metadata, hostSiteSlug: string | undefined, path: string, query: TemplateFilterQuery): Metadata {
+  if (hostSiteSlug !== "aidreamcapes" || !metadata) return metadata;
+  const page = aidreamcapesListingPageNumber(query);
+  if (!page || !PAGINATED_LISTING_PATH_RE.test(path)) return metadata;
+  const baseCanonical = typeof metadata.alternates?.canonical === "string" ? metadata.alternates.canonical : undefined;
+  const canonical = aidreamcapesListingPageCanonical(baseCanonical, page);
+  const baseTitle = typeof metadata.title === "string" ? metadata.title : (metadata.title as { absolute?: string } | undefined)?.absolute;
+  const title = aidreamcapesListingPageTitle(typeof baseTitle === "string" ? baseTitle : undefined, page);
+  if (!canonical || !title || title === metadata.title) return metadata;
+  return {
+    ...metadata,
+    alternates: { ...(metadata.alternates ?? {}), canonical },
+    title,
+    ...(metadata.openGraph ? { openGraph: { ...metadata.openGraph, title, url: canonical } } : {}),
+    ...(metadata.twitter ? { twitter: { ...metadata.twitter, title } } : {})
+  };
+}
 
 type Definition = { id: string; path: string; kind: string; industries: string[]; platforms: string[]; occasions: string[] };
 type Directory = { slug: string; paths: string[] };
@@ -94,16 +128,22 @@ export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | unde
     const kind = urlState.filters.kind;
     if (!urlState.noindex && (kind === "video" || kind === "photo")) {
       const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
-      const canonical = new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href;
+      // A deeper catalog page (?kind=video&page=N) is its own indexable SSR
+      // page: self canonical with the page parameter and a page-distinct
+      // title, while page 1 keeps today's kind-catalog identity verbatim.
+      const page = aidreamcapesListingPageNumber(query);
+      const canonical = aidreamcapesListingPageCanonical(new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href, page)
+        ?? new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href;
+      const title = aidreamcapesListingPageTitle(copy.title, page) ?? copy.title;
       const row = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } }, select: { contentJson: true } });
       const seo = (row?.contentJson as { seo?: { ogImage?: string; ogImageAlt?: string } } | undefined)?.seo;
       const images = seo?.ogImage ? [{ url: new URL(seo.ogImage, canonical).href, alt: seo.ogImageAlt }] : [];
       return {
-        title: { absolute: copy.title },
+        title: { absolute: title },
         description: copy.description,
         alternates: { canonical },
-        openGraph: { title: copy.title, description: copy.description, url: canonical, images },
-        twitter: { card: "summary_large_image", title: copy.title, description: copy.description, images }
+        openGraph: { title, description: copy.description, url: canonical, images },
+        twitter: { card: "summary_large_image", title, description: copy.description, images }
       };
     }
   }
