@@ -16,12 +16,16 @@ function videoPosterUrl(src: string): string {
 }
 
 /**
- * 480p card-stage playback copy (`size=preview`); the detail view keeps the
- * 720p copy and the download link keeps the original file. When the 480p
- * sidecar is not prewarmed yet, the route transcodes it once and caches it.
+ * 480p card-stage playback copy (`size=preview`); entering fullscreen swaps
+ * to the HD copy (`web=1` — the original when small enough, else its 1080p-
+ * capped web copy) so "watch big" always means full quality. The detail view
+ * and the download link keep their own sources.
  */
 function videoWebUrl(src: string): string {
   return `${src}${src.includes("?") ? "&" : "?"}web=1&size=preview`;
+}
+function videoHdUrl(src: string): string {
+  return `${src}${src.includes("?") ? "&" : "?"}web=1`;
 }
 
 export interface LibraryTaskCardProps {
@@ -86,7 +90,12 @@ export function LibraryTaskCard({
   // stage until the browser can actually play it. Completion-time prewarm
   // (AIVIDEOSUGC_PREWARM_MEDIA=1) usually has this ready before first play.
   const [playReady, setPlayReady] = useState(false);
+  // Fullscreen means "watch big": swap the card stream to the HD copy for the
+  // duration and fall back to the preview copy on exit.
+  const [fullHd, setFullHd] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  const stageVideoRef = useRef<HTMLVideoElement | null>(null);
+  const resumeAtRef = useRef<number | null>(null);
 
   // Media can arrive later, and the active frame has to stay in range.
   useEffect(() => {
@@ -97,7 +106,19 @@ export function LibraryTaskCard({
   useEffect(() => {
     setPlaying(false);
     setPlayReady(false);
+    setFullHd(false);
   }, [active, media.length]);
+
+  useEffect(() => {
+    if (!playing) return;
+    const onFullscreenChange = () => setFullHd(document.fullscreenElement === stageVideoRef.current);
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", onFullscreenChange);
+    };
+  }, [playing]);
 
   const imageCount = useMemo(() => media.filter((item) => item.kind === "image").length, [media]);
   const activeItem = media[active];
@@ -160,7 +181,29 @@ export function LibraryTaskCard({
                   index === active
                     ? playing
                       ? <>
-                        <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={videoWebUrl(item.url)} onCanPlay={() => setPlayReady(true)} onPlaying={() => setPlayReady(true)} onWaiting={() => setPlayReady(false)} />
+                        <video
+                          ref={stageVideoRef}
+                          className={styles.stageVideo}
+                          controls
+                          autoPlay
+                          playsInline
+                          poster={videoPosterUrl(item.url)}
+                          src={fullHd ? videoHdUrl(item.url) : videoWebUrl(item.url)}
+                          onCanPlay={() => setPlayReady(true)}
+                          onPlaying={() => setPlayReady(true)}
+                          onWaiting={() => setPlayReady(false)}
+                          onTimeUpdate={() => { resumeAtRef.current = stageVideoRef.current?.currentTime ?? resumeAtRef.current; }}
+                          onLoadedMetadata={() => {
+                            // The quality swap reloads the media; resume at the
+                            // last position without losing the playing state.
+                            const video = stageVideoRef.current;
+                            if (video && resumeAtRef.current != null) {
+                              try { video.currentTime = resumeAtRef.current; } catch {}
+                              resumeAtRef.current = null;
+                              void video.play().catch(() => {});
+                            }
+                          }}
+                        />
                         {!playReady && <span className={styles.stagePreparing} role="status">Preparing preview…</span>}
                       </>
                       : <button type="button" className={styles.stagePoster} onClick={() => setPlaying(true)} aria-label={`Play ${title}`}>
