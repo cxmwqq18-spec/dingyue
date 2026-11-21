@@ -24,13 +24,13 @@ export type Adc2VideoPreviewMedia = {
   name?: string;
 };
 
-export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true, forceAspectRatio }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean; forceAspectRatio?: string }) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const label = ariaLabel ?? media.name;
-  const ratio = media.width && media.height ? `${media.width} / ${media.height}` : undefined;
+  const ratio = forceAspectRatio ?? (media.width && media.height ? `${media.width} / ${media.height}` : undefined);
   const mediaStyle = {
     display: "block",
     width: "100%",
@@ -41,10 +41,9 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
 
   useEffect(() => {
     const element = boxRef.current;
-    // Low-end phones: keep only the cards near the viewport mounted. Leaving
-    // the 240px margin releases the player back to its poster (same ratio, so
-    // no layout shift); desktops keep the paused player for instant resume.
-    const mobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+    // Mount once and keep the player: unmounting it on scroll makes mobile
+    // browsers create/destroy media elements continuously, which crashes them
+    // (see PosterSwapVideo). Leaving the viewport only pauses playback.
     // The first visible row must play without waiting for an observer
     // callback: cards above the fold mount immediately after hydration.
     if (posterEager) {
@@ -64,7 +63,6 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
           setVisible(true);
         } else {
           setVisible(false);
-          if (mobile) setMounted(false);
         }
       },
       { rootMargin: "240px 0px" }
@@ -86,14 +84,31 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
 
   return (
     <div
-      className="v-preview-box"
+      className="v-preview-box notranslate"
       onBlur={() => setVisible(false)}
       onFocus={() => {
         setMounted(true);
         setVisible(true);
       }}
       ref={boxRef}
+      translate="no"
     >
+      {/* The poster stays mounted for the life of the card: mobile browsers
+          with built-in translation rewrite the DOM, and removing a rewritten
+          node makes React throw NotFoundError from removeChild. */}
+      {media.poster ? (
+        <img
+          alt={label ?? ""}
+          decoding="async"
+          height={media.height}
+          loading={posterEager ? "eager" : "lazy"}
+          src={media.poster}
+          style={{ ...mediaStyle, display: mounted ? "none" : "block" }}
+          width={media.width}
+        />
+      ) : !mounted ? (
+        <span aria-hidden="true" style={{ display: "block", width: "100%", aspectRatio: ratio ?? "16 / 9", background: "#111" }} />
+      ) : null}
       {mounted ? (
         <video
           aria-label={label}
@@ -110,19 +125,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
           style={mediaStyle}
           width={media.width}
         />
-      ) : media.poster ? (
-        <img
-          alt={label ?? ""}
-          decoding="async"
-          height={media.height}
-          loading={posterEager ? "eager" : "lazy"}
-          src={media.poster}
-          style={mediaStyle}
-          width={media.width}
-        />
-      ) : (
-        <span aria-hidden="true" style={{ display: "block", width: "100%", aspectRatio: ratio ?? "16 / 9", background: "#111" }} />
-      )}
+      ) : null}
       {showDuration && media.duration ? <div className="v-preview-dur">{formatPreviewDuration(media.duration)}</div> : null}
     </div>
   );
