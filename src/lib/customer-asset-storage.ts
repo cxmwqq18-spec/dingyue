@@ -1,5 +1,6 @@
 import "server-only";
 import { execFileSync } from "child_process";
+import crypto from "crypto";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -355,8 +356,23 @@ export function deleteCustomerAssetFile(storageKey: string): { deleted: boolean;
   } catch {
     // The directory may already be gone; retention still reports success.
   }
+  // The shared 720p copy and card poster live in the nginx-readable preview
+  // root, keyed by the source path hash.
+  const previewKey = crypto.createHash("sha256").update(filePath).digest("hex").slice(0, 16);
+  const previewRoot = previewRootForCleanup();
+  fs.rmSync(path.join(previewRoot, `${previewKey}.web.mp4`), { force: true });
+  fs.rmSync(path.join(previewRoot, `${previewKey}.poster.jpg`), { force: true });
   pruneEmptyAssetDirectories(path.dirname(filePath));
   return { deleted: existed, path: filePath };
+}
+
+function previewRootForCleanup(): string {
+  const configured = process.env.AIVIDEOSUGC_PREVIEW_ROOT?.trim();
+  if (configured) return path.resolve(configured);
+  if (process.env.NODE_ENV === "production" && process.cwd().includes(`${path.sep}releases${path.sep}`)) {
+    return path.resolve(process.cwd(), "..", "..", "data", "aidreamcapes-workspace-preview");
+  }
+  return path.join(process.cwd(), "data", "aidreamcapes-workspace-preview");
 }
 
 export async function deleteCustomerAssetFileShared(storageKey: string): Promise<{ storageKey: string; deleted: boolean; path?: string; remote: boolean }> {

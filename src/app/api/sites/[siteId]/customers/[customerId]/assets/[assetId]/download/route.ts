@@ -13,7 +13,7 @@ import {
 } from "@/lib/stores/asset-store";
 import { customerAssetFilePath, customerAssetRoot } from "@/lib/customer-asset-storage";
 import { generateVideoPosterBytes } from "@/lib/media-watermark";
-import { resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
+import { previewXAccelPathFor, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
 import { signWorkerAssetDownload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -38,7 +38,7 @@ async function serveAssetFile(request: Request, filePath: string, contentType: s
       headers: { "Accept-Ranges": "bytes", "Content-Range": `bytes */${size}`, "Cache-Control": previewImmutableCache }
     });
   }
-  const accel = customerAssetAccelPath(filePath);
+  const accel = customerAssetAccelPath(filePath) ?? previewXAccelPathFor(filePath);
   if (accel) {
     return new Response(null, {
       headers: {

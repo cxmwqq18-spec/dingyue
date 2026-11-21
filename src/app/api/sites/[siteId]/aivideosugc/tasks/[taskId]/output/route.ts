@@ -5,8 +5,8 @@ import type { NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceFailure } from "@/lib/aidreamcapes-workspace/api";
 import { getTask } from "@/lib/aidreamcapes-workspace/store";
-import { resolveWorkspaceOutput, workspaceRenderRoot, type WorkspaceOutputKind } from "@/lib/aidreamcapes-workspace/output";
-import { resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
+import { resolveWorkspaceOutput, type WorkspaceOutputKind } from "@/lib/aidreamcapes-workspace/output";
+import { previewXAccelPathFor, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
 import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
 
 export const runtime = "nodejs";
@@ -16,24 +16,19 @@ type Context = { params: Promise<{ siteId: string; taskId: string }> };
 const previewCacheControl = "private, max-age=86400, immutable";
 
 /**
- * Serve the cached sidecar directly from nginx when the internal prefix is
- * configured. Node then only authorizes the request; the file (and its range
- * requests) never passes through the app process.
+ * Serve the cached poster/720p copy directly from nginx. Only these preview
+ * artifacts live in the readable preview root; originals stay private.
  */
 function renderXAccelResponse(filePath: string, contentType: string): Response | undefined {
-  const configured = process.env.AIVIDEOSUGC_RENDER_X_ACCEL_PREFIX?.trim();
-  if (!configured) return undefined;
-  const root = workspaceRenderRoot();
-  const relative = path.relative(root, filePath);
-  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) return undefined;
-  const prefix = configured.endsWith("/") ? configured : `${configured}/`;
+  const redirect = previewXAccelPathFor(filePath);
+  if (!redirect) return undefined;
   return new Response(null, {
     headers: {
       "Content-Type": contentType,
       "Accept-Ranges": "bytes",
       "Cache-Control": previewCacheControl,
       "X-Robots-Tag": "noindex, nofollow",
-      "X-Accel-Redirect": `${prefix}${relative.split(path.sep).map(encodeURIComponent).join("/")}`
+      "X-Accel-Redirect": redirect
     }
   });
 }
