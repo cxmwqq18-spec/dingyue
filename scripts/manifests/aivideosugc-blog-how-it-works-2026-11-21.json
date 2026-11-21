@@ -1,0 +1,332 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "New blog article for /blog: 'How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO' — an engineering-notes long read adapted from the owner-provided page. Creates the article LivePage row (layout blog-engineering) and appends its card to the /blog hub list. Cover image: /ai-image-generation/actors/noah-640.webp (640x1138, owner-provided).",
+  "article": {
+    "id": "aidreamcapes_v2_blog_how_aivideosugc_works",
+    "slug": "/blog/how-aivideosugc-works",
+    "title": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO | AIVideosUGC",
+    "pageType": "article",
+    "contentJson": {
+      "version": 2,
+      "pageType": "article",
+      "sectionsOrder": [
+        "v2_main"
+      ],
+      "contentContract": {
+        "seoSource": "LivePage.contentJson",
+        "mediaSource": "LivePage.contentJson",
+        "sourceRevision": "aidreamcapes-site-v2"
+      },
+      "mediaManifest": [
+        {
+          "alt": "Young man with wavy light-brown hair and freckles, wearing a blue shirt over a blue tee, smiling in front of a framed world map.",
+          "src": "/ai-image-generation/actors/noah-640.webp",
+          "width": 640,
+          "height": 1138
+        }
+      ],
+      "seo": {
+        "index": true,
+        "title": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO | AIVideosUGC",
+        "description": "BLYDEY CTO Jim Doepker explains how AIVideosUGC turns product URLs, photos, and prompts into AI UGC video ads — covering ingestion, planning, generation, credit metering, and reliability.",
+        "keywords": "how AIVideosUGC works, AI UGC video ads, AI UGC video generator, URL to video, image to video, text to video, credit metering, AI video ad pipeline",
+        "primaryKeyword": "how AIVideosUGC works",
+        "canonical": "https://www.aivideosugc.com/blog/how-aivideosugc-works",
+        "canonicalPath": "/blog/how-aivideosugc-works",
+        "ogImage": "/ai-image-generation/actors/noah-640.webp",
+        "ogImageAlt": "Young man with wavy light-brown hair and freckles, wearing a blue shirt over a blue tee, smiling in front of a framed world map.",
+        "twitterDescription": "The engineering behind AI UGC video ads: ingestion, planning, generation, credit metering, and reliability.",
+        "robots": {
+          "index": true,
+          "follow": true,
+          "maxImagePreview": "large"
+        },
+        "jsonLd": {
+          "@graph": [
+            {
+              "@id": "https://www.aivideosugc.com/#organization",
+              "url": "https://www.aivideosugc.com/",
+              "name": "AIVideosUGC",
+              "@type": "Organization"
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "item": "https://www.aivideosugc.com/",
+                  "name": "Home",
+                  "@type": "ListItem",
+                  "position": 1
+                },
+                {
+                  "item": "https://www.aivideosugc.com/blog",
+                  "name": "Blog",
+                  "@type": "ListItem",
+                  "position": 2
+                },
+                {
+                  "item": "https://www.aivideosugc.com/blog/how-aivideosugc-works",
+                  "name": "Engineering Notes",
+                  "@type": "ListItem",
+                  "position": 3
+                }
+              ]
+            },
+            {
+              "@type": "TechArticle",
+              "headline": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO",
+              "description": "BLYDEY CTO Jim Doepker explains the system design behind AIVideosUGC: ingestion, planning, generation, credit metering, reliability, and the boundaries of automated UGC video.",
+              "image": "/ai-image-generation/actors/noah-640.webp",
+              "inLanguage": "en",
+              "author": {
+                "@type": "Person",
+                "name": "Jim Doepker",
+                "jobTitle": "Chief Technology Officer",
+                "worksFor": { "@type": "Organization", "name": "BLYDEY INC" }
+              },
+              "publisher": { "@id": "https://www.aivideosugc.com/#organization" },
+              "about": ["AI UGC video", "AIVideosUGC", "video ad generation", "product video automation"],
+              "datePublished": "2026-11-21",
+              "dateModified": "2026-11-21",
+              "mainEntityOfPage": "https://www.aivideosugc.com/blog/how-aivideosugc-works"
+            },
+            {
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "name": "What is AIVideosUGC?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "AIVideosUGC is BLYDEY's AI platform that turns a product URL, image, or text prompt into HD, watermark-free, creator-style video ads in minutes, without a camera crew, actors, or editing software.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "How does AIVideosUGC generate a video ad from a product link?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "The platform extracts product details from the URL, builds an ad plan, generates presenter video with script and voiceover, and assembles the final cut — all through an automated pipeline.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "Does AIVideosUGC require a subscription?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "No. It uses buy-once, credits-delivered-monthly packages: Starter at $24/month for 200 credits, Pro at $59/month for 500, and Studio at $129/month for 1,200. Failed jobs are refunded automatically.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "What are the AI presenter options in AIVideosUGC?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "AI Actor generates UGC-style talking-head video from an avatar and script. AI Twin creates a digital clone of the user for founder-led content. AI Presenter covers product explanations, feature demos, and social content.",
+                    "@type": "Answer"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sections": {
+        "v2_main": {
+          "type": "aidreamcapes_v2_page",
+          "blocks": [],
+          "settings": {
+            "layout": "blog-engineering",
+            "data": {
+              "kicker": "CTO Perspective · AI UGC Video",
+              "h1": "How AIVideosUGC Works: AI UGC Video Ads",
+              "h1Accent": "Explained by BLYDEY's CTO",
+              "cover": {
+                "alt": "Young man with wavy light-brown hair and freckles, wearing a blue shirt over a blue tee, smiling in front of a framed world map.",
+                "src": "/ai-image-generation/actors/noah-640.webp",
+                "width": 640,
+                "height": 1138
+              },
+              "byline": {
+                "initials": "JD",
+                "name": "Jim Doepker",
+                "role": "Chief Technology Officer · BLYDEY INC",
+                "note": "Engineering Notes"
+              },
+              "lead": "[AIVideosUGC](/) turns a product URL, an image, or a text prompt into an HD, watermark-free, creator-style video ad in minutes. That is the promise [Naruebet](/blog/from-product-link-to-finished-ad) tells, and it is the right story for the product. But a promise is only as good as the system that keeps it. This is the other version — the one about what has to be true **underneath** it.",
+              "pipeline": [
+                {
+                  "num": "01",
+                  "title": "Input layer",
+                  "text": "Three entry points, three distinct ingestion problems."
+                },
+                {
+                  "num": "02",
+                  "title": "Planning layer",
+                  "text": "Turning an asset into a defensible ad plan."
+                },
+                {
+                  "num": "03",
+                  "title": "Generation layer",
+                  "text": "Orchestrating models, renderers, voice, and cuts."
+                },
+                {
+                  "num": "04",
+                  "title": "Metering layer",
+                  "text": "Reserve, commit, release — no support ticket required."
+                },
+                {
+                  "num": "05",
+                  "title": "Boundary layer",
+                  "text": "Consent, identity, retention, and what we refuse to do."
+                }
+              ],
+              "sections": [
+                {
+                  "num": "1.",
+                  "h2": "The input layer is three problems wearing one UI",
+                  "paras": [
+                    "The three entry points look like one feature in the interface, but they are not the same problem — and treating them as the same problem is where naive pipelines break."
+                  ],
+                  "subsections": [
+                    {
+                      "h3": "URL to Video: extraction without hallucination",
+                      "paras": [
+                        "A product page is an uncontrolled input. Some pages expose clean structured data; others are dynamic, partially rendered, or inconsistent between regions. The ingestion layer has to extract the product title, images, feature claims, pricing context, and CTA, and it has to do so without inventing claims the page never made. When extraction is uncertain, we preserve source references and let the user correct the brief before generation. That correction step is not a UX nicety; it is a reliability mechanism."
+                      ]
+                    },
+                    {
+                      "h3": "Image to Video: fidelity is the hard constraint",
+                      "paras": [
+                        "Starting from a single product photo looks simpler than parsing a URL, but it is harder in one specific way: the output must still look like the product being sold. Users can add up to seven reference photos to improve consistency, and the system uses them to anchor product identity across generated motion. The failure mode here is subtle — a video that looks great but drifts from the actual product is worse than a video that fails outright, because it ships."
+                      ]
+                    },
+                    {
+                      "h3": "Text to Video: exposing the plan before spending credits",
+                      "paras": [
+                        "A creative brief is the most controllable input, and we treat it that way. The system converts the brief into an editable storyboard and generates the selected shots only after the user has seen the plan. This is deliberate: it turns an open-ended generation into a reviewable decision, and it keeps credit spend tied to an approved intent."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "num": "2.",
+                  "h2": "The planning layer is where most of the product lives",
+                  "paras": [
+                    "If the input layer is about fidelity, the planning layer is about judgment. The system has to answer a set of questions that a human creative director would answer: What is the hook? Who is on camera? What does the script claim? Which proof points appear, and in what order? What is the call to action? How many scenes does that require?",
+                    "This is also where the presenter model choice matters. [AI Actor](/ai-actors) pairs an avatar with a script and voiceover for talking-head UGC. **AI Twin** builds a digital clone for founder-led content. [AI Presenter](/ai-actors) handles product explanations and demos. Each option changes the planning constraints — a talking head needs different pacing and proof than a feature demo."
+                  ],
+                  "callout": "We made a deliberate decision not to require users to learn prompt engineering. That is not a marketing line; it is an architectural one. The planning layer absorbs complexity so the interface does not expose it."
+                },
+                {
+                  "num": "3.",
+                  "h2": "The generation layer has to be boring on purpose",
+                  "paras": [
+                    "Once a plan is approved, the generation layer orchestrates video model calls, presenter rendering, text-to-speech, captions, transitions, and final assembly. The output target is HD, watermark-free, creator-style video suitable for product pages or social channels.",
+                    "The interesting engineering here is not the model call — it is everything around it. The assembly layer is built on deterministic job IDs, idempotent steps, retries with backoff, and explicit state transitions. A user should never have to guess whether a job is queued, planning, generating, rendering, or failed."
+                  ],
+                  "code": "job lifecycle:\n  queued -> planning -> generating -> rendering -> ready\n                  \\         |             /\n                   \\________|____________/\n                            |\n                            v\n                    failed -> credits released",
+                  "afterCode": [
+                    "Boring is a feature. A pipeline that behaves the same way every time is what lets a team build a weekly testing cadence on top of it."
+                  ]
+                },
+                {
+                  "num": "4.",
+                  "h2": "The metering layer is a promise about money",
+                  "paras": [
+                    "Usage-based credits are usually described as a pricing model. From the engineering side, they are a consistency problem: the balance the user sees has to match the work the system actually performed, at every moment, including when things fail.",
+                    "We run credits on a reserve-commit-release model. Credits are reserved when a job starts, committed when the final render succeeds, and released automatically when a job fails. A 15-second video consumes 20 credits, a 30-second video consumes 40, a product photo consumes 1. The packaging is [buy-once with credits delivered monthly](/pricing): Starter at $24/month for 200 credits, Pro at $59/month for 500, Studio at $129/month for 1,200."
+                  ],
+                  "blockquote": "The test I hold the metering layer to is simple: a failed job should never require a support ticket to get credits back. If it does, the system failed before the user noticed."
+                },
+                {
+                  "num": "5.",
+                  "h2": "The boundary layer: consent, identity, and restraint",
+                  "paras": [
+                    "AI Twin is the feature that raises the hardest questions, and it should. A digital clone that looks, speaks, and moves like a person requires explicit consent, identity verification, and controlled access. We treat customer assets as customer assets: signed URLs, access control, retention policies, and no training on customer data without permission.",
+                    "There is also a quality boundary worth stating plainly. We are not trying to make every video look like a studio production. We are trying to preserve what makes creator video work — the fast hook, conversational delivery, product proof, and clear CTA. When a job fails those checks, the right outcome is a clear failure state and an automatic credit release, not a polished-looking video that misrepresents the product."
+                  ]
+                },
+                {
+                  "num": "6.",
+                  "h2": "What \"reliable\" means here",
+                  "paras": [
+                    "The system runs on a queue-based orchestration layer with model routing, capacity management, caching where it helps, and observability across every stage. We track success rate, latency, credit reconciliation, and failure reasons. Those metrics are not vanity numbers — they are the inputs to the decision about whether the promise holds.",
+                    "The next investments are scene-level control, brand kits, team workflows, localization, and API access for agencies and platforms generating creative at scale. Each of those is really the same problem in a new form: keep the output predictable while widening what the system can accept as input."
+                  ]
+                },
+                {
+                  "num": "7.",
+                  "h2": "The thesis, from the inside",
+                  "paras": [
+                    "Naruebet's version of the thesis is that AI UGC video should start with a link, not a six-month pilot. I agree, and from where I sit the thesis has a second half: starting with a link only matters if the system behind the link is dependable enough to build a testing cadence on.",
+                    "That is the difference between a campaign that waits on assets and one that ships on schedule. The first is a production problem. The second is an engineering one — and it is the one we are solving at BLYDEY."
+                  ]
+                }
+              ],
+              "faq": {
+                "title": "Frequently asked questions",
+                "items": [
+                  {
+                    "q": "What is AIVideosUGC?",
+                    "a": "AIVideosUGC is BLYDEY's AI platform that turns a product URL, image, or text prompt into HD, watermark-free, creator-style video ads in minutes, without a camera crew, actors, or editing software."
+                  },
+                  {
+                    "q": "How does AIVideosUGC generate a video ad from a product link?",
+                    "a": "The platform extracts product details from the URL, builds an ad plan, generates presenter video with script and voiceover, and assembles the final cut — all through an automated pipeline."
+                  },
+                  {
+                    "q": "Does AIVideosUGC require a subscription?",
+                    "a": "No. It uses [buy-once, credits-delivered-monthly packages](/pricing): Starter at $24/month for 200 credits, Pro at $59/month for 500, and Studio at $129/month for 1,200. Failed jobs are refunded automatically."
+                  },
+                  {
+                    "q": "What are the AI presenter options in AIVideosUGC?",
+                    "a": "[AI Actor](/ai-actors) generates UGC-style talking-head video from an avatar and script. AI Twin creates a digital clone of the user for founder-led content. AI Presenter covers product explanations, feature demos, and social content."
+                  }
+                ]
+              },
+              "author": {
+                "initials": "JD",
+                "name": "Jim Doepker",
+                "role": "CTO · BLYDEY INC",
+                "paras": [
+                  "Leads engineering and platform architecture at BLYDEY INC, the company behind AIVideosUGC. His focus is the unglamorous part: making AI UGC video predictable enough that teams can plan around it."
+                ]
+              },
+              "final": {
+                "h2": "See the pipeline for yourself.",
+                "lead": "Start from a product link, an image, or a prompt — free trial, then a one-time $1 first product video. No subscription, no camera crew.",
+                "ctas": [
+                  {
+                    "label": "Start free — $1 first video",
+                    "href": "/app/create/starter-offer",
+                    "kind": "primary"
+                  },
+                  {
+                    "label": "View pricing",
+                    "href": "/pricing",
+                    "kind": "ghost"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "hub": {
+    "slug": "/blog",
+    "card": {
+      "href": "/blog/how-aivideosugc-works",
+      "image": {
+        "alt": "Young man with wavy light-brown hair and freckles, wearing a blue shirt over a blue tee, smiling in front of a framed world map.",
+        "src": "/ai-image-generation/actors/noah-640.webp",
+        "width": 640,
+        "height": 1138
+      },
+      "title": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO",
+      "minutes": 7,
+      "summary": "The engineering behind AI UGC video ads: ingestion, planning, generation, credit metering, and reliability."
+    }
+  }
+}

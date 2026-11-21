@@ -1,5 +1,6 @@
 import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
 import { BlogLandingPage } from "./blog-landing";
+import { BlogEngineeringPage } from "./blog-engineering";
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
@@ -1330,6 +1331,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
   if (layout === "blog-landing") return <BlogLandingPage data={data as never} r={r} />;
+  if (layout === "blog-engineering") return <BlogEngineeringPage data={data as never} r={r} />;
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {
     return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;
   }
