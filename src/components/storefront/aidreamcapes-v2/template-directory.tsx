@@ -1,6 +1,6 @@
 import { preload } from "react-dom";
 import styles from "./template-directory.module.css";
-import { Crumbs, Faq } from "./parts";
+import { Crumbs, Faq, Section, ThematicLinkChips } from "./parts";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
@@ -92,11 +92,21 @@ function preloadMediaGridLcp(items: ReadonlyArray<GalleryItem | DirectoryMediaCa
   covers.forEach((src, index) => preload(r.asset(src), { as: "image", ...(index === 0 ? { fetchPriority: "high" } : {}) }));
 }
 
+/** The owner-approved internal-link module ("Related Pages" cards). Data-driven:
+ * every directory page carries its own relatedLinks list, so the module renders
+ * wherever the page provides it without per-page code. */
+function DirectoryRelatedSection({ data, r }: { data: V2Data; r: V2Resolvers }) {
+  const links = data.relatedLinks as { label: string; href: string }[] | undefined;
+  if (!Array.isArray(links) || !links.length) return null;
+  const title = typeof data.relatedH2 === "string" && data.relatedH2 ? data.relatedH2 : "Related Pages";
+  return <Section eyebrow="Related Pages" title={title}><ThematicLinkChips links={links} r={r} /></Section>;
+}
+
 /** The gallery card grid shared by the /templates directory and hub galleries. */
 function GalleryCards({ items, r }: { items: GalleryItem[]; r: V2Resolvers }) {
   return <>{items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
     <a className="ti" href={r.href(item.href)}>{item.video ? (
-      <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} posterEager={index < 6} />
+      <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} posterEager={index < 6} forceAspectRatio="9 / 16" />
     ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
     <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
   </article>)}</>;
@@ -180,13 +190,14 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           </div>
           <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
             <a className="ti" href={r.href(item.href)}>{item.video ? (
-              <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} posterEager={index < 6} />
+              <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} posterEager={index < 6} forceAspectRatio="9 / 16" />
             ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
             <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
           </article>)}</div>
           {mediaPager ? <DiscretePager page={mediaPager.page} totalPages={mediaPager.totalPages} basePath={mediaPager.basePath} r={r} ariaLabel="Browse more examples by page" /> : null}
         </section> : null}
       </div></section>
+      <DirectoryRelatedSection data={data} r={r} />
       {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
     </>;
   }
@@ -226,6 +237,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         </article>)}</div>
       </section> : null}
     </div></section>
+    <DirectoryRelatedSection data={data} r={r} />
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;
 }

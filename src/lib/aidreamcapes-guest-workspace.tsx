@@ -155,7 +155,11 @@ export async function renderAidreamcapesMediaWatchPage({ slug, basePath = "" }: 
     loadAidreamcapesChrome(),
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
   ]);
-  if (!detail || !detail.card.video?.src || !chrome) notFound();
+  if (!detail || !chrome) notFound();
+  // A video card without a rendered file (placeholder card) has no watch page:
+  // the watch URL must never 404, so it permanently redirects to the detail
+  // page, which stays 200 and carries the workspace entry.
+  if (!detail.card.video?.src) permanentRedirect(`${basePath === "/" ? "" : basePath}${detail.path}`);
   if (detail.slug !== slug) permanentRedirect(`${basePath === "/" ? "" : basePath}${mediaWatchPath("video", detail.slug)}`);
   const prefix = basePath === "/" ? "" : basePath;
   const headerAccount = customer ? { href: `${prefix}/account`, label: "My account" } : undefined;

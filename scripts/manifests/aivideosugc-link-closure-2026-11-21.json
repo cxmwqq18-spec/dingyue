@@ -1,0 +1,1445 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "Link-closure pass 2026-11-21 (owner-approved): every category/directory page gets the Related Pages internal-link module forming a cycle (a-b-c-d-a) without duplicates; 2 tool pages re-enable the module via blockOrder; 5 brand pages get Where-to-Go-Next links; watch pages for placeholder video cards 308 to the detail page instead of 404ing (code change shipped separately).",
+  "changes": [
+    {
+      "slug": "/ai-video-generation/url-to-video",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "reasons",
+        "steps",
+        "benefits",
+        "uses",
+        "trust",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "reasons",
+        "steps",
+        "benefits",
+        "uses",
+        "trust",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/social-ad-photos",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "benefits",
+        "uses",
+        "features",
+        "steps",
+        "reasons",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "benefits",
+        "uses",
+        "features",
+        "steps",
+        "reasons",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/industries/beauty-skincare",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/beauty-routine",
+          "label": "Beauty Product Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Product Photos From Every Angle"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Instagram Story Ad Images"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/beauty-routine",
+          "label": "Beauty Product Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Product Photos From Every Angle"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Instagram Story Ad Images"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/industries/fashion-clothing",
+          "label": "Clothing"
+        },
+        {
+          "href": "/industries/shoes",
+          "label": "Footwear"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/fashion-clothing",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/fashion-try-on-reel",
+          "label": "AI Short Fashion Videos"
+        },
+        {
+          "href": "/ai-image-generation/virtual-try-on",
+          "label": "AI Clothing Try-On"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Photos of Every Side"
+        },
+        {
+          "href": "/ai-image-generation/model-photos",
+          "label": "AI Model Photos for Clothing"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/fashion-try-on-reel",
+          "label": "AI Short Fashion Videos"
+        },
+        {
+          "href": "/ai-image-generation/virtual-try-on",
+          "label": "AI Clothing Try-On"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Photos of Every Side"
+        },
+        {
+          "href": "/ai-image-generation/model-photos",
+          "label": "AI Model Photos for Clothing"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/industries/shoes",
+          "label": "Footwear"
+        },
+        {
+          "href": "/industries/jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/shoes",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-image-generation/colorway-variations",
+          "label": "Product Color Variations"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Casual Creator-Style Video Ads"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-image-generation/colorway-variations",
+          "label": "Product Color Variations"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Casual Creator-Style Video Ads"
+        },
+        {
+          "href": "/industries/jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        },
+        {
+          "href": "/industries/electronics",
+          "label": "Tech & Electronics"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/jewelry-accessories",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-image-generation/jewelry-positioning",
+          "label": "Jewelry Photos on a Person"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-image-generation/colorway-variations",
+          "label": "Color Variants"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-image-generation/jewelry-positioning",
+          "label": "Jewelry Photos on a Person"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-image-generation/colorway-variations",
+          "label": "Color Variants"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/industries/electronics",
+          "label": "Tech & Electronics"
+        },
+        {
+          "href": "/industries/health-wellness",
+          "label": "Health & Fitness"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/electronics",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Plain Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/cinematic-video",
+          "label": "Cinematic Product Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Creator-Style Video Ads"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Plain Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/cinematic-video",
+          "label": "Cinematic Product Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Creator-Style Video Ads"
+        },
+        {
+          "href": "/industries/health-wellness",
+          "label": "Health & Fitness"
+        },
+        {
+          "href": "/industries/food-drinks",
+          "label": "Food & Beverage"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/health-wellness",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-image-generation/ugc-still-ad",
+          "label": "Casual Creator-Style Photos"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "AI Ad Image Generator"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Casual Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-image-generation/ugc-still-ad",
+          "label": "Casual Creator-Style Photos"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "AI Ad Image Generator"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "AI Product Photo Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Casual Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/industries/food-drinks",
+          "label": "Food & Beverage"
+        },
+        {
+          "href": "/industries/home-living",
+          "label": "Home & Living"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/food-drinks",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/food-video",
+          "label": "AI Food and Drink Videos"
+        },
+        {
+          "href": "/ai-image-generation/packaging-mockup",
+          "label": "Packaging Photo Maker"
+        },
+        {
+          "href": "/ai-video-generation/spark-ads-style-video",
+          "label": "In-Feed Style Product Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/food-video",
+          "label": "AI Food and Drink Videos"
+        },
+        {
+          "href": "/ai-image-generation/packaging-mockup",
+          "label": "Packaging Photo Maker"
+        },
+        {
+          "href": "/ai-video-generation/spark-ads-style-video",
+          "label": "In-Feed Style Product Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/industries/home-living",
+          "label": "Home & Living"
+        },
+        {
+          "href": "/industries/pet",
+          "label": "Pet"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/home-living",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/home-organization",
+          "label": "Home Product Videos"
+        },
+        {
+          "href": "/ai-video-generation/how-to-video",
+          "label": "AI How-To Video Maker"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-video-generation/before-after-video",
+          "label": "Before and After Video Maker"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/home-organization",
+          "label": "Home Product Videos"
+        },
+        {
+          "href": "/ai-video-generation/how-to-video",
+          "label": "AI How-To Video Maker"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-video-generation/before-after-video",
+          "label": "Before and After Video Maker"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/industries/pet",
+          "label": "Pet"
+        },
+        {
+          "href": "/industries/kids-toy",
+          "label": "Kids & Toy"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/pet",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/kids-toy",
+          "label": "Kids & Toy"
+        },
+        {
+          "href": "/industries/e-commerce",
+          "label": "E-Commerce"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "AI Ad Image Generator"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/kids-toy",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/e-commerce",
+          "label": "E-Commerce"
+        },
+        {
+          "href": "/industries/education",
+          "label": "Education"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/e-commerce",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/education",
+          "label": "Education"
+        },
+        {
+          "href": "/industries/financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/education",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "href": "/industries/sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "AI Ad Image Generator"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/financial-services",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "href": "/industries/apps",
+          "label": "Apps"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/ai-video-generation/text-to-video",
+          "label": "Text to Video"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/sports-gym",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/apps",
+          "label": "Apps"
+        },
+        {
+          "href": "/industries/ugc",
+          "label": "UGC"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/apps",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/ugc",
+          "label": "UGC"
+        },
+        {
+          "href": "/industries/viral",
+          "label": "Viral"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/ugc",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/viral",
+          "label": "Viral"
+        },
+        {
+          "href": "/industries/explainer",
+          "label": "Explainer"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/text-to-video",
+          "label": "Text to Video"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/viral",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/explainer",
+          "label": "Explainer"
+        },
+        {
+          "href": "/industries/other",
+          "label": "Other"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "AI Creator-Style Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "AI Ad Image Generator"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/explainer",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/other",
+          "label": "Other"
+        },
+        {
+          "href": "/industries/beauty-skincare",
+          "label": "Beauty & Personal Care"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "AI Lifestyle Product Photos"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "AI Product Video Generator"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/industries/other",
+      "field": "relatedLinks",
+      "before": null,
+      "after": [
+        {
+          "href": "/industries/beauty-skincare",
+          "label": "Beauty & Personal Care"
+        },
+        {
+          "href": "/industries/fashion-clothing",
+          "label": "Clothing"
+        },
+        {
+          "href": "/industries",
+          "label": "All Industries"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Product Photos"
+        },
+        {
+          "href": "/templates",
+          "label": "All Examples"
+        }
+      ],
+      "relatedH2": "More Ways to Make the Ad"
+    },
+    {
+      "slug": "/platforms/tiktok-ads",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/ugc-still-ad",
+          "label": "Creator-Style Photo"
+        },
+        {
+          "href": "/ai-video-generation/spark-ads-style-video",
+          "label": "Spark Ads Style Video"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/ugc-still-ad",
+          "label": "Creator-Style Photo"
+        },
+        {
+          "href": "/ai-video-generation/spark-ads-style-video",
+          "label": "Spark Ads Style Video"
+        },
+        {
+          "href": "/platforms/instagram-ads",
+          "label": "Instagram"
+        },
+        {
+          "href": "/platforms/facebook-ads",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/instagram-ads",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "Social Ad Photos"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Story Ad"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/model-photos",
+          "label": "Model Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "Social Ad Photos"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Story Ad"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/model-photos",
+          "label": "Model Photos"
+        },
+        {
+          "href": "/platforms/facebook-ads",
+          "label": "Facebook"
+        },
+        {
+          "href": "/platforms/youtube-shorts-ads",
+          "label": "YouTube Shorts"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/facebook-ads",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "Social Ad Photos"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Story Ad"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "Product Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-image-generation/social-ad-photos",
+          "label": "Social Ad Photos"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/story-ad-vertical",
+          "label": "Story Ad"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "Product Photos"
+        },
+        {
+          "href": "/platforms/youtube-shorts-ads",
+          "label": "YouTube Shorts"
+        },
+        {
+          "href": "/platforms/amazon-product-photos",
+          "label": "Amazon"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/youtube-shorts-ads",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "Product Video"
+        },
+        {
+          "href": "/ai-video-generation/how-to-video",
+          "label": "How-To Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/video-ads",
+          "label": "Video Ads"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "Product Video"
+        },
+        {
+          "href": "/ai-video-generation/how-to-video",
+          "label": "How-To Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/platforms/amazon-product-photos",
+          "label": "Amazon"
+        },
+        {
+          "href": "/platforms/shopify-product-photos",
+          "label": "Shopify"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/amazon-product-photos",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        },
+        {
+          "href": "/ai-image-generation/change-background",
+          "label": "Change Background"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/packaging-mockup",
+          "label": "Packaging Preview"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        },
+        {
+          "href": "/ai-image-generation/change-background",
+          "label": "Change Background"
+        },
+        {
+          "href": "/ai-image-generation/packshot-multi-angle",
+          "label": "Every Angle"
+        },
+        {
+          "href": "/ai-image-generation",
+          "label": "Product Photos"
+        },
+        {
+          "href": "/ai-image-generation/packaging-mockup",
+          "label": "Packaging Preview"
+        },
+        {
+          "href": "/platforms/shopify-product-photos",
+          "label": "Shopify"
+        },
+        {
+          "href": "/platforms/tiktok-ads",
+          "label": "TikTok"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/shopify-product-photos",
+      "field": "relatedLinks",
+      "before": [
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "Product Video"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        }
+      ],
+      "after": [
+        {
+          "href": "/ai-video-generation/product-video",
+          "label": "Product Video"
+        },
+        {
+          "href": "/ai-video-generation/url-to-video",
+          "label": "URL to Video"
+        },
+        {
+          "href": "/ai-video-generation/spokesperson-video",
+          "label": "Spokesperson Video"
+        },
+        {
+          "href": "/ai-video-generation/image-to-video",
+          "label": "Image to Video"
+        },
+        {
+          "href": "/ai-image-generation/white-background-photos",
+          "label": "White Background Photos"
+        },
+        {
+          "href": "/ai-image-generation/lifestyle-photos",
+          "label": "Lifestyle Photos"
+        },
+        {
+          "href": "/platforms/tiktok-ads",
+          "label": "TikTok"
+        },
+        {
+          "href": "/platforms/instagram-ads",
+          "label": "Instagram"
+        }
+      ]
+    },
+    {
+      "slug": "/about-us",
+      "field": "next",
+      "before": null,
+      "after": [
+        {
+          "href": "/trust-and-safety",
+          "label": "Trust & Safety",
+          "text": "Consent, content rules, and how customer assets are treated."
+        },
+        {
+          "href": "/contact-us",
+          "label": "Contact Us",
+          "text": "Email support for plans, credits, and media questions."
+        },
+        {
+          "href": "/faq",
+          "label": "All Questions",
+          "text": "Credits, refunds, formats, and how generation works."
+        },
+        {
+          "href": "/pricing",
+          "label": "Pricing",
+          "text": "Credit packs, monthly delivery, and what each job costs."
+        }
+      ]
+    },
+    {
+      "slug": "/trust-and-safety",
+      "field": "next",
+      "before": null,
+      "after": [
+        {
+          "href": "/contact-us",
+          "label": "Contact Us",
+          "text": "Email support for plans, credits, and media questions."
+        },
+        {
+          "href": "/ai-info",
+          "label": "AI Info",
+          "text": "The facts AI systems should cite about AIVideosUGC."
+        },
+        {
+          "href": "/faq",
+          "label": "All Questions",
+          "text": "Credits, refunds, formats, and how generation works."
+        },
+        {
+          "href": "/pricing",
+          "label": "Pricing",
+          "text": "Credit packs, monthly delivery, and what each job costs."
+        }
+      ]
+    },
+    {
+      "slug": "/contact-us",
+      "field": "next",
+      "before": null,
+      "after": [
+        {
+          "href": "/ai-info",
+          "label": "AI Info",
+          "text": "The facts AI systems should cite about AIVideosUGC."
+        },
+        {
+          "href": "/glossary",
+          "label": "Glossary",
+          "text": "Photo and video production terms, explained plainly."
+        },
+        {
+          "href": "/faq",
+          "label": "All Questions",
+          "text": "Credits, refunds, formats, and how generation works."
+        },
+        {
+          "href": "/pricing",
+          "label": "Pricing",
+          "text": "Credit packs, monthly delivery, and what each job costs."
+        }
+      ]
+    },
+    {
+      "slug": "/ai-info",
+      "field": "next",
+      "before": null,
+      "after": [
+        {
+          "href": "/glossary",
+          "label": "Glossary",
+          "text": "Photo and video production terms, explained plainly."
+        },
+        {
+          "href": "/about-us",
+          "label": "About Us",
+          "text": "Who runs AIVideosUGC and what the platform promises."
+        },
+        {
+          "href": "/faq",
+          "label": "All Questions",
+          "text": "Credits, refunds, formats, and how generation works."
+        },
+        {
+          "href": "/pricing",
+          "label": "Pricing",
+          "text": "Credit packs, monthly delivery, and what each job costs."
+        }
+      ]
+    },
+    {
+      "slug": "/glossary",
+      "field": "next",
+      "before": null,
+      "after": [
+        {
+          "href": "/about-us",
+          "label": "About Us",
+          "text": "Who runs AIVideosUGC and what the platform promises."
+        },
+        {
+          "href": "/trust-and-safety",
+          "label": "Trust & Safety",
+          "text": "Consent, content rules, and how customer assets are treated."
+        },
+        {
+          "href": "/faq",
+          "label": "All Questions",
+          "text": "Credits, refunds, formats, and how generation works."
+        },
+        {
+          "href": "/pricing",
+          "label": "Pricing",
+          "text": "Credit packs, monthly delivery, and what each job costs."
+        }
+      ]
+    }
+  ]
+}

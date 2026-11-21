@@ -1306,6 +1306,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
       <section className="sec glossary-section"><div className="wrap"><GlossaryEntries entries={list(data.entries) as never} r={r} /></div></section>
+      <NextLinks data={data} r={r} />
     </>;
   }
   return hero;
