@@ -73,7 +73,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   );
   const aidreamcapesThemeCssHref = isAidreamcapesHost ? aidreamcapesV2ThemeCssHref() : undefined;
   return (
-    <html lang={language} suppressHydrationWarning translate="yes">
+    {/* translate="no" keeps Chrome's auto-translate from rewriting text nodes
+      * before React hydrates: pre-hydration mutation throws React #418 and the
+      * client render then blanks the main content (2026-11-21, 17 occurrences
+      * in one day, all on the storefront root). Manual translation from the
+      * address bar still works because it mutates after hydration. The
+      * chat-page incident on 2026-11-14 was the same family, fixed per-page. */}
+    <html lang={language} suppressHydrationWarning translate="no">
       <head>
         <script dangerouslySetInnerHTML={{ __html: EARLY_ERROR_BEACON }} />
         <meta httpEquiv="Content-Language" content={language} />
@@ -91,7 +97,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <link rel="preload" href="/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="stylesheet" href="/fonts/aivideosugc-fonts.css?v=20261121" />
       </head>
-      <body translate="yes">
+      <body translate="no">
         <ChunkLoadRecovery />
         <ClientErrorReporter />
         {children}
