@@ -24,13 +24,13 @@ export type Adc2VideoPreviewMedia = {
   name?: string;
 };
 
-export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true, forceAspectRatio }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean; forceAspectRatio?: string }) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const label = ariaLabel ?? media.name;
-  const ratio = media.width && media.height ? `${media.width} / ${media.height}` : undefined;
+  const ratio = forceAspectRatio ?? (media.width && media.height ? `${media.width} / ${media.height}` : undefined);
   const mediaStyle = {
     display: "block",
     width: "100%",

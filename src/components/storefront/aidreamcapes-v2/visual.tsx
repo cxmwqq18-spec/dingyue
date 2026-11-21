@@ -283,12 +283,18 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
-  const paginated = Boolean(paginateWith) && picker.cards.length > MEDIA_PAGE_SIZE;
+  // Video cards lead every list; image-only cards follow in their original
+  // order. Sorting happens before paging so each page keeps the same rule.
+  const orderedCards = picker.cards
+    .map((card, index) => ({ card, index }))
+    .sort((a, b) => Number(!a.card.video) - Number(!b.card.video) || a.index - b.index)
+    .map((entry) => entry.card);
+  const paginated = Boolean(paginateWith) && orderedCards.length > MEDIA_PAGE_SIZE;
   const cards = pagination
-    ? picker.cards.slice((pagination.page - 1) * MEDIA_PAGE_SIZE, pagination.page * MEDIA_PAGE_SIZE)
+    ? orderedCards.slice((pagination.page - 1) * MEDIA_PAGE_SIZE, pagination.page * MEDIA_PAGE_SIZE)
     : paginated
-      ? picker.cards.slice(0, MEDIA_PAGE_SIZE)
-      : maxCards === undefined ? picker.cards : picker.cards.slice(0, Math.max(0, maxCards));
+      ? orderedCards.slice(0, MEDIA_PAGE_SIZE)
+      : maxCards === undefined ? orderedCards : orderedCards.slice(0, Math.max(0, maxCards));
   const sectionEyebrow = eyebrow ?? visual.titles?.m3?.eyebrow ?? "Choose a scene";
   const pickerId = `visual-picker-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
   if (!cards.length) return null;
@@ -310,7 +316,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>
               {card.video ? (
-                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} posterEager={index < 4} showDuration={!hideDuration} />
+                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} forceAspectRatio="9 / 16" posterEager={index < 4} showDuration={!hideDuration} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>
