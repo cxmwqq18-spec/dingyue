@@ -13,7 +13,7 @@ import {
 } from "@/lib/stores/asset-store";
 import { customerAssetFilePath, customerAssetRoot } from "@/lib/customer-asset-storage";
 import { generateVideoPosterBytes } from "@/lib/media-watermark";
-import { previewXAccelPathFor, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
+import { previewXAccelPathFor, resolvePreviewVideo, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
 import { signWorkerAssetDownload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -114,6 +114,7 @@ export async function GET(
   const isInlinePreview = url.searchParams.get("preview") === "1";
   const wantsPoster = url.searchParams.get("poster") === "1";
   const wantsWeb = url.searchParams.get("web") === "1";
+  const wantsPreviewSize = url.searchParams.get("size") === "preview";
   const expiresAt = url.searchParams.get("expiresAt") ?? "";
   const signature = url.searchParams.get("signature") ?? "";
   const workerSignatureValid = Boolean(
@@ -139,7 +140,7 @@ export async function GET(
       return await serveAssetFile(request, poster.filePath, "image/jpeg", poster.size, `inline; filename="${asset.id}.jpg"`);
     }
     if (localVideo && wantsWeb) {
-      const web = await resolveWebVideo(localVideo);
+      const web = wantsPreviewSize ? await resolvePreviewVideo(localVideo) : await resolveWebVideo(localVideo);
       return await serveAssetFile(request, web.filePath, "video/mp4", web.size, `inline; filename="${asset.id}-preview.mp4"`);
     }
     const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });

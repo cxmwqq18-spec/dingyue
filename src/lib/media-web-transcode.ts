@@ -10,15 +10,19 @@ import ffmpegPath from "ffmpeg-static";
 /**
  * Web playback copies for generated videos.
  *
- * The library plays a 720p / ~3 Mbps copy while downloads keep the untouched
- * original render. A copy is generated once per source file, cached next to
- * the original, and invalidated when the source changes. Only two ffmpeg runs
- * are allowed at a time so a burst of card clicks cannot starve generation.
+ * The library card stage plays a 480p / ~1.2 Mbps preview copy while the
+ * detail view plays a 720p / ~3 Mbps copy and downloads keep the untouched
+ * original render. Copies are generated once per source file, cached next to
+ * the original, and invalidated when the source changes. Completion-time
+ * prewarming (AIVIDEOSUGC_PREWARM_MEDIA=1) builds every copy when the video
+ * finishes so first playback never waits on ffmpeg; only
+ * AIVIDEOSUGC_TRANSCODE_CONCURRENCY ffmpeg runs are allowed at a time so a
+ * burst of card clicks cannot starve generation.
  */
 
 const execFileAsync = promisify(execFile);
 const inflight = new Map<string, Promise<{ filePath: string; size: number }>>();
-const MAX_CONCURRENT_TRANSCODES = 2;
+const MAX_CONCURRENT_TRANSCODES = Math.max(1, Math.trunc(Number(process.env.AIVIDEOSUGC_TRANSCODE_CONCURRENCY?.trim()) || 2));
 let activeTranscodes = 0;
 const waitingTranscodes: Array<() => void> = [];
 
@@ -42,6 +46,11 @@ export function previewRoot(): string {
 
 export function webVideoPathFor(filePath: string): string {
   return path.join(previewRoot(), `${fileKey(filePath)}.web.mp4`);
+}
+
+/** Light 480p card-stage copy, cached next to the 720p one. */
+export function previewVideoPathFor(filePath: string): string {
+  return path.join(previewRoot(), `${fileKey(filePath)}.preview.mp4`);
 }
 
 export function webPosterPathFor(filePath: string): string {
@@ -123,7 +132,7 @@ async function freshSidecar(sourcePath: string, sidecarPath: string): Promise<{ 
 }
 
 /**
- * Cached 720p copy used by in-app playback. The original render stays the only
+ * Cached 720p copy used by the detail view. The original render stays the only
  * download source.
  */
 export async function resolveWebVideo(sourcePath: string): Promise<{ filePath: string; size: number }> {
@@ -243,10 +252,104 @@ export async function resolveVideoPosterFile(sourcePath: string): Promise<{ file
   }
 }
 
+/**
+ * Cached 480p copy used by the library card stage. Half the pixels and a
+ * third of the bitrate of the 720p copy: the small card stage cannot tell the
+ * difference, and cross-border first play starts on far fewer bytes.
+ */
+export async function resolvePreviewVideo(sourcePath: string): Promise<{ filePath: string; size: number }> {
+  const cached = await freshSidecar(sourcePath, previewVideoPathFor(sourcePath));
+  if (cached) return cached;
+  const target = previewVideoPathFor(sourcePath);
+  const pending = inflight.get(target);
+  if (pending) return pending;
+  const promise = (async () => {
+    const releaseSlot = await acquireTranscodeSlot();
+    try {
+      const tmpPath = `${target}.${process.pid}.${Date.now()}.tmp.mp4`;
+      await mkdir(path.dirname(target), { recursive: true, mode: 0o755 });
+      try {
+        await runFfmpeg([
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-y",
+          "-i",
+          sourcePath,
+          "-map",
+          "0:v:0",
+          "-map",
+          "0:a?",
+          "-c:v",
+          "libx264",
+          "-preset",
+          process.env.AIVIDEOSUGC_WEB_VIDEO_PRESET?.trim() || "veryfast",
+          "-crf",
+          process.env.AIVIDEOSUGC_PREVIEW_VIDEO_CRF?.trim() || "27",
+          "-maxrate",
+          process.env.AIVIDEOSUGC_PREVIEW_VIDEO_MAXRATE?.trim() || "1200k",
+          "-bufsize",
+          process.env.AIVIDEOSUGC_PREVIEW_VIDEO_BUFSIZE?.trim() || "2400k",
+          "-vf",
+          process.env.AIVIDEOSUGC_PREVIEW_VIDEO_FILTER?.trim() || "scale=480:854:force_original_aspect_ratio=decrease:force_divisible_by=2",
+          "-pix_fmt",
+          "yuv420p",
+          "-c:a",
+          "aac",
+          "-b:a",
+          process.env.AIVIDEOSUGC_PREVIEW_VIDEO_AUDIO_BITRATE?.trim() || "96k",
+          "-ac",
+          "2",
+          "-movflags",
+          "+faststart",
+          tmpPath
+        ], 180_000);
+        await rename(tmpPath, target);
+      } catch (error) {
+        await unlink(tmpPath).catch(() => {});
+        throw error;
+      }
+      const result = await stat(target);
+      if (!result.isFile() || result.size === 0) throw new Error("preview_transcode_empty");
+      return { filePath: target, size: result.size };
+    } finally {
+      releaseSlot();
+    }
+  })();
+  inflight.set(target, promise);
+  try {
+    return await promise;
+  } finally {
+    inflight.delete(target);
+  }
+}
+
+/**
+ * Completion-time prewarm: build the 720p copy, the 480p card copy and the
+ * poster the moment a video finishes, so the first play never waits on
+ * ffmpeg. Enabled by AIVIDEOSUGC_PREWARM_MEDIA=1; without it this is a no-op
+ * and first play keeps the lazy transcode path. Failures are logged and
+ * swallowed — playback falls back to the lazy path automatically.
+ */
+export async function prewarmWorkspaceVideoArtifacts(sourcePath: string): Promise<void> {
+  if (process.env.AIVIDEOSUGC_PREWARM_MEDIA?.trim() !== "1") return;
+  const results = await Promise.allSettled([
+    resolveWebVideo(sourcePath),
+    resolvePreviewVideo(sourcePath),
+    resolveVideoPosterFile(sourcePath)
+  ]);
+  for (const [index, result] of results.entries()) {
+    if (result.status === "rejected") {
+      console.error(`[aivideosugc-workspace] prewarm artifact ${index} failed for ${sourcePath}`, result.reason);
+    }
+  }
+}
+
 /** Retention and delete flows remove the generated sidecars with the source. */
 export async function removeVideoSidecars(sourcePath: string): Promise<void> {
   await Promise.all([
     unlink(webVideoPathFor(sourcePath)).catch(() => {}),
+    unlink(previewVideoPathFor(sourcePath)).catch(() => {}),
     unlink(webPosterPathFor(sourcePath)).catch(() => {})
   ]);
 }

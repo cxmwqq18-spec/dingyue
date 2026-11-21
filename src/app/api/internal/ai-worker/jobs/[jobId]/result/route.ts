@@ -37,12 +37,41 @@ function scheduleWorkspaceDirectContinuation(siteId: string, status: string, alr
 }
 
 function recordTiming(value: unknown): Record<string, string> | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  if (!value || typeof value === "object" || Array.isArray(value)) return undefined;
   const timing: Record<string, string> = {};
   for (const [key, entry] of Object.entries(value)) {
     if (typeof entry === "string" && entry) timing[key] = entry;
   }
   return Object.keys(timing).length ? timing : undefined;
+}
+
+/**
+ * Completion-time media prewarm (AIVIDEOSUGC_PREWARM_MEDIA=1): every finished
+ * video asset gets its 720p copy, 480p card copy and poster built now, so the
+ * customer's first play streams a ready file instead of waiting on ffmpeg.
+ * Idempotent (sidecars are cached by source mtime) and failure-tolerant —
+ * playback falls back to the lazy transcode path when anything is missing.
+ */
+function scheduleWorkspaceMediaPrewarm(siteId: string, status: string, alreadyProcessed: boolean, outputs: WorkerResultPayload["outputs"]) {
+  if (alreadyProcessed || status !== "succeeded") return;
+  if (siteId !== "site_aidreamcapes") return;
+  const videoKeys = (outputs ?? [])
+    .map((output) => output.storageKey)
+    .filter((storageKey) => /\.(mp4|webm|mov)$/i.test(storageKey));
+  if (!videoKeys.length) return;
+  after(async () => {
+    try {
+      const [{ customerAssetFileExists, customerAssetFilePath }, { prewarmWorkspaceVideoArtifacts }] = await Promise.all([
+        import("@/lib/customer-asset-storage"),
+        import("@/lib/media-web-transcode")
+      ]);
+      for (const storageKey of videoKeys) {
+        const filePath = customerAssetFilePath(storageKey);
+        if (!customerAssetFileExists(storageKey)) continue;
+        await prewarmWorkspaceVideoArtifacts(filePath);
+      }
+    } catch (error) { console.error("[aivideosugc-workspace] media prewarm", error); }
+  });
 }
 
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
@@ -77,6 +106,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       timing: recordTiming(result.job.resultJson?.timing) ?? body.timing
     });
     scheduleWorkspaceDirectContinuation(body.siteId, body.status, result.alreadyProcessed, result.job);
+    scheduleWorkspaceMediaPrewarm(body.siteId, body.status, result.alreadyProcessed, body.outputs);
     return NextResponse.json({
       accepted: true,
       idempotencyKey: `${body.siteId}:${jobId}:${body.requestId}:result`,

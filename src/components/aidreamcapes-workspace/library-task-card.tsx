@@ -15,9 +15,13 @@ function videoPosterUrl(src: string): string {
   return `${src}${src.includes("?") ? "&" : "?"}poster=1`;
 }
 
-/** 720p playback copy; the download link keeps the original file. */
+/**
+ * 480p card-stage playback copy (`size=preview`); the detail view keeps the
+ * 720p copy and the download link keeps the original file. When the 480p
+ * sidecar is not prewarmed yet, the route transcodes it once and caches it.
+ */
 function videoWebUrl(src: string): string {
-  return `${src}${src.includes("?") ? "&" : "?"}web=1`;
+  return `${src}${src.includes("?") ? "&" : "?"}web=1&size=preview`;
 }
 
 export interface LibraryTaskCardProps {
@@ -78,8 +82,9 @@ export function LibraryTaskCard({
   // <video> for every card made the library fetch metadata from 100MB+ files
   // on first paint.
   const [playing, setPlaying] = useState(false);
-  // The first play may transcode the 720p copy; keep a label on the stage
-  // until the browser can actually play it.
+  // The first play may transcode the 480p card copy; keep a label on the
+  // stage until the browser can actually play it. Completion-time prewarm
+  // (AIVIDEOSUGC_PREWARM_MEDIA=1) usually has this ready before first play.
   const [playReady, setPlayReady] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -156,7 +161,7 @@ export function LibraryTaskCard({
                     ? playing
                       ? <>
                         <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={videoWebUrl(item.url)} onCanPlay={() => setPlayReady(true)} onPlaying={() => setPlayReady(true)} onWaiting={() => setPlayReady(false)} />
-                        {!playReady && <span className={styles.stagePreparing} role="status">Preparing 720p preview…</span>}
+                        {!playReady && <span className={styles.stagePreparing} role="status">Preparing preview…</span>}
                       </>
                       : <button type="button" className={styles.stagePoster} onClick={() => setPlaying(true)} aria-label={`Play ${title}`}>
                         <img loading="lazy" decoding="async" src={videoPosterUrl(item.url)} alt="" />
@@ -175,7 +180,7 @@ export function LibraryTaskCard({
           <div className={styles.stageChips}>
             {imageCount > 0 && <span className={styles.stageChip}>{imageCount === 1 ? "1 photo" : `${imageCount} photos`}</span>}
             {hasVideo && <span className={styles.stageChip}>Video</span>}
-            {hasVideo && <span className={styles.stageChip}>720p preview</span>}
+            {hasVideo && <span className={styles.stageChip}>480p preview</span>}
             <span className={styles.stageChip}>{aspect} · {duration}s</span>
           </div>
         )}

@@ -230,6 +230,11 @@ export async function renderTaskVideo(args: { task: WorkspaceTask; onProgress?: 
     await progress(3, "done");
     video.status = "done"; video.finalUrl = `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=video`; video.completedAt = new Date().toISOString();
     await args.onProgress?.(structuredClone(video));
+    // Fire-and-forget prewarm (AIVIDEOSUGC_PREWARM_MEDIA=1): build the 720p,
+    // 480p and poster copies now so first playback streams a ready file. The
+    // render root is also swept below — final.mp4 itself stays, so sidecar
+    // generation after this point is safe.
+    void import("@/lib/media-web-transcode").then(({ prewarmWorkspaceVideoArtifacts }) => prewarmWorkspaceVideoArtifacts(path.join(dir, "final.mp4"))).catch(() => {});
     // Keep only customer deliverables. Intermediate files can contain uncaptioned and unnormalised private media.
     for (const entry of await fs.readdir(dir)) if (!["final.mp4", "subtitles.srt"].includes(entry)) await fs.rm(path.join(dir, entry), { force: true });
     return video;

@@ -6,7 +6,7 @@ import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceFailure } from "@/lib/aidreamcapes-workspace/api";
 import { getTask } from "@/lib/aidreamcapes-workspace/store";
 import { resolveWorkspaceOutput, type WorkspaceOutputKind } from "@/lib/aidreamcapes-workspace/output";
-import { previewXAccelPathFor, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
+import { previewXAccelPathFor, resolvePreviewVideo, resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
 import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
 
 export const runtime = "nodejs";
@@ -85,20 +85,22 @@ export async function GET(request: NextRequest, { params }: Context) {
 
     const rawKind = request.nextUrl.searchParams.get("kind");
     if (rawKind !== "video" && rawKind !== "subtitles" && rawKind !== "clip") throw new WorkspaceError("workspace_output_kind_invalid", 400);
-    // `poster` and `web` are the library playback pair: a small JPEG first
-    // frame and a 720p copy. `web` also applies to mock clips.
+    // `poster`, `web` and `size` are the library playback trio: a small JPEG
+    // first frame, a 720p copy and a 480p card-stage copy. `web` also applies
+    // to mock clips.
     const wantsPoster = request.nextUrl.searchParams.get("poster") === "1";
     const wantsWeb = request.nextUrl.searchParams.get("web") === "1";
+    const wantsPreviewSize = request.nextUrl.searchParams.get("size") === "preview";
     const allowedQuery = rawKind === "clip"
-      ? new Set(["kind", "shotId", "versionId", "web"])
-      : rawKind === "video" ? new Set(["kind", "renderId", "web", "poster"]) : new Set(["kind"]);
+      ? new Set(["kind", "shotId", "versionId", "web", "size"])
+      : rawKind === "video" ? new Set(["kind", "renderId", "web", "poster", "size"]) : new Set(["kind"]);
     if (request.nextUrl.searchParams.getAll("kind").length !== 1 ||
-        ["poster", "web"].some((key) => request.nextUrl.searchParams.getAll(key).length > 1) ||
+        ["poster", "web", "size"].some((key) => request.nextUrl.searchParams.getAll(key).length > 1) ||
         [...request.nextUrl.searchParams.keys()].some((key) => !allowedQuery.has(key))) {
       throw new WorkspaceError("workspace_output_kind_invalid", 400);
     }
     const kind: WorkspaceOutputKind = rawKind;
-    if ((wantsPoster && kind !== "video") || (wantsWeb && kind === "subtitles")) throw new WorkspaceError("workspace_output_kind_invalid", 400);
+    if ((wantsPoster && kind !== "video") || (wantsWeb && kind === "subtitles") || (wantsPreviewSize && !wantsWeb)) throw new WorkspaceError("workspace_output_kind_invalid", 400);
     const shotId = request.nextUrl.searchParams.get("shotId") || undefined;
     const versionId = request.nextUrl.searchParams.get("versionId") || undefined;
     const renderId = request.nextUrl.searchParams.get("renderId") || undefined;
@@ -131,7 +133,7 @@ export async function GET(request: NextRequest, { params }: Context) {
     }
     if (wantsWeb) {
       await output.handle.close();
-      const web = await resolveWebVideo(output.path);
+      const web = wantsPreviewSize ? await resolvePreviewVideo(output.path) : await resolveWebVideo(output.path);
       const webRange = parseByteRange(request.headers.get("range"), web.size);
       if (webRange === "unsatisfiable") {
         return new Response(null, {
