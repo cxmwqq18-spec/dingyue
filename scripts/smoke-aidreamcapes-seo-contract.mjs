@@ -376,7 +376,11 @@ for (const path of ["/", "/ai-video-generation", "/guides/how-do-ai-video", "/gu
     assert(typeof alt === "string", `${path}: <img> without alt attribute: ${$(img).attr("src")}`);
     assert(!altJunkPattern.test(alt), `${path}: junk alt copy: ${JSON.stringify(alt)}`);
   }
-  const visibleText = $("body").clone().remove("script,style").text();
+  // cheerio 1.2 quirk: on a clone, remove(selector) fails to drop script
+  // elements, so body-level JSON-LD (storefront-json-ld-0) leaks into the text
+  // and this gate false-flags JSON strings as visible markdown. Remove through
+  // find() on the live tree instead, which provably strips every script.
+  const visibleText = $("body").find("script,style").remove().end().text();
   assert(!/\*\*[^*\n]{1,120}\*\*/.test(visibleText), `${path}: raw **bold** markdown is visible`);
   assert(!/\[[^\]\n]{1,120}\]\((?:\/|https?:)[^)\n]{1,160}\)/.test(visibleText), `${path}: raw [text](url) markdown is visible`);
 }
