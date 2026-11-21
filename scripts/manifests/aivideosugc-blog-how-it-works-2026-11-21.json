@@ -291,22 +291,6 @@
                 "paras": [
                   "Leads engineering and platform architecture at BLYDEY INC, the company behind AIVideosUGC. His focus is the unglamorous part: making AI UGC video predictable enough that teams can plan around it."
                 ]
-              },
-              "final": {
-                "h2": "See the pipeline for yourself.",
-                "lead": "Start from a product link, an image, or a prompt — free trial, then a one-time $1 first product video. No subscription, no camera crew.",
-                "ctas": [
-                  {
-                    "label": "Start free — $1 first video",
-                    "href": "/app/create/starter-offer",
-                    "kind": "primary"
-                  },
-                  {
-                    "label": "View pricing",
-                    "href": "/pricing",
-                    "kind": "ghost"
-                  }
-                ]
               }
             }
           }
