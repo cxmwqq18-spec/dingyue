@@ -1275,7 +1275,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <Flows filterChips={visual.picker.chips} flows={list<V2Flow>(data.flows)} r={r} />
         <div className="v-directory-related">
           <h3>Results by Template</h3>
-          <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
+          <ThematicLinkChips links={list<{ label: string; href: string }>(data.relatedTemplates)} r={r} />
         </div>
       </VisualDirectoryFilter>
       <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
