@@ -492,6 +492,7 @@ function TemplatePage({ data, r }: Props) {
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const gallery = data.gallery as { images: V2Image[] } | undefined;
   const visual = data.visual as V2Visual | undefined;
+  const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -518,6 +519,7 @@ function TemplatePage({ data, r }: Props) {
     ) : null],
     ["examples", <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />],
     ...pageOwnBlocks(data, r),
+    ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />],
     ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />],
     ["cta", <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />]
   ])}</>;
@@ -545,6 +547,7 @@ function TemplatePage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       {list<V2Card>(data.more).length ? <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section> : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      <RelatedLinksSection links={relatedLinks} r={r} />
       <Faq items={data.faq} title="Questions about this template" r={r} />
       <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />
     </>

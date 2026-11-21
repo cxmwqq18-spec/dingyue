@@ -1,0 +1,412 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "Link-closure completion 2026-11-22 (owner-approved): 15 template-layout tool pages render their pre-written relatedLinks (blockOrder gains 'related' before reviews/faq), and the /industries hub's 19 industry card titles get their display labels (were empty anchors).",
+  "changes": [
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/professional-headshot",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "steps",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "steps",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "features",
+        "steps",
+        "definition",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "features",
+        "steps",
+        "definition",
+        "related",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/virtual-try-on",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/beauty-routine",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "examples",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "examples",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "definition",
+        "reasons",
+        "steps",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "definition",
+        "reasons",
+        "steps",
+        "related",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/cinematic-video",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "examples",
+        "steps",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "examples",
+        "steps",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/food-video",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "examples",
+        "steps",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "examples",
+        "steps",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/home-organization",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/how-to-video",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/promo-video",
+      "field": "blockOrder",
+      "before": [
+        "hero",
+        "picker",
+        "steps",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "after": [
+        "hero",
+        "picker",
+        "steps",
+        "related",
+        "reviews",
+        "faq",
+        "cta"
+      ]
+    },
+    {
+      "slug": "/industries",
+      "field": "itemLabels",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        {
+          "href": "/industries/beauty-skincare",
+          "label": "Beauty & Personal Care"
+        },
+        {
+          "href": "/industries/fashion-clothing",
+          "label": "Clothing"
+        },
+        {
+          "href": "/industries/shoes",
+          "label": "Footwear"
+        },
+        {
+          "href": "/industries/jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        },
+        {
+          "href": "/industries/electronics",
+          "label": "Tech & Electronics"
+        },
+        {
+          "href": "/industries/health-wellness",
+          "label": "Health & Fitness"
+        },
+        {
+          "href": "/industries/food-drinks",
+          "label": "Food & Beverage"
+        },
+        {
+          "href": "/industries/home-living",
+          "label": "Home & Living"
+        },
+        {
+          "href": "/industries/pet",
+          "label": "Pet"
+        },
+        {
+          "href": "/industries/kids-toy",
+          "label": "Kids & Toy"
+        },
+        {
+          "href": "/industries/e-commerce",
+          "label": "E-Commerce"
+        },
+        {
+          "href": "/industries/education",
+          "label": "Education"
+        },
+        {
+          "href": "/industries/financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "href": "/industries/sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "href": "/industries/apps",
+          "label": "Apps"
+        },
+        {
+          "href": "/industries/ugc",
+          "label": "UGC"
+        },
+        {
+          "href": "/industries/viral",
+          "label": "Viral"
+        },
+        {
+          "href": "/industries/explainer",
+          "label": "Explainer"
+        },
+        {
+          "href": "/industries/other",
+          "label": "Other"
+        }
+      ]
+    }
+  ]
+}
