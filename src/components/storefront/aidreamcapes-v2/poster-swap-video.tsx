@@ -11,9 +11,16 @@ import { useEffect, useRef, useState } from "react";
  * by default: the <video> mounts and autoplays as soon as the slot scrolls
  * into view (and immediately on hover or focus). Because the swap happens
  * after hydration, the crawlable markup never contains a video element, and
- * the dedicated /watch/<slug> page stays the single indexable player. The
- * wrapper is display:contents so the slot keeps the exact layout contract of
- * the element it replaces.
+ * the dedicated /watch/<slug> page stays the single indexable player.
+ *
+ * The poster <img> is never removed. Mobile browsers with built-in
+ * translation (UC Browser, Quark, and translated Safari pages) rewrite the
+ * DOM and can move a React-managed node under a wrapper element; React then
+ * throws `NotFoundError` from removeChild and the app error page replaces the
+ * document. Keeping both nodes mounted and toggling `display` means React only
+ * updates attributes and appends the player, operations that survive a
+ * rewritten tree. The wrapper is display:contents so the slot keeps the exact
+ * layout contract of the element it replaces.
  */
 export function PosterSwapVideo({
   alt,
@@ -46,16 +53,13 @@ export function PosterSwapVideo({
       setActive(true);
       return;
     }
-    // Low-end phones: release the player back to its poster once the slot
-    // leaves the 240px margin, so a long landing page never keeps dozens of
-    // decoders alive. Desktops keep the paused player for instant resume.
-    const mobile = window.matchMedia("(max-width: 768px)").matches;
     const observer = new IntersectionObserver((entries) => {
-      const intersecting = entries.some((entry) => entry.isIntersecting);
-      if (intersecting) {
+      // Mount once; never unmount. Repeatedly creating and destroying media
+      // elements while scrolling is what makes mobile browsers crash, and the
+      // browser already pauses off-screen video on its own.
+      if (entries.some((entry) => entry.isIntersecting)) {
         setActive(true);
-      } else if (mobile) {
-        setActive(false);
+        observer.disconnect();
       }
     }, { rootMargin: "240px 0px" });
     observer.observe(element);
@@ -64,10 +68,23 @@ export function PosterSwapVideo({
 
   return (
     <span
+      className="notranslate"
       onFocus={() => setActive(true)}
       onPointerEnter={() => setActive(true)}
       style={{ display: "contents" }}
+      translate="no"
     >
+      <img
+        alt={alt}
+        className={className}
+        decoding="async"
+        height={height}
+        loading={eager ? "eager" : "lazy"}
+        ref={imageRef}
+        src={poster}
+        style={active ? { display: "none" } : undefined}
+        width={width}
+      />
       {active ? (
         <video
           aria-label={alt}
@@ -83,18 +100,7 @@ export function PosterSwapVideo({
           src={src}
           width={width}
         />
-      ) : (
-        <img
-          alt={alt}
-          className={className}
-          decoding="async"
-          height={height}
-          loading={eager ? "eager" : "lazy"}
-          ref={imageRef}
-          src={poster}
-          width={width}
-        />
-      )}
+      ) : null}
     </span>
   );
 }

@@ -72,7 +72,29 @@ export function MediaDetailPlay({
   }, [visible, mounted]);
 
   return (
-    <div className="v-detail-play" ref={boxRef}>
+    <div className="v-detail-play notranslate" ref={boxRef} translate="no">
+      {/* The poster button stays mounted and is only hidden: mobile browsers
+          with built-in translation rewrite the DOM, and removing a rewritten
+          node makes React throw NotFoundError from removeChild. */}
+      <button
+        aria-hidden={mounted}
+        aria-label={`Play ${label}`}
+        className="v-detail-play-poster"
+        onClick={() => { setMounted(true); setVisible(true); }}
+        style={mounted ? { display: "none" } : undefined}
+        type="button"
+      >
+        <img
+          alt={posterAlt}
+          decoding="async"
+          height={height}
+          loading="eager"
+          src={posterSrc}
+          style={mediaStyle}
+          width={width}
+        />
+        <span className="v-detail-play-cta">▶ Play video</span>
+      </button>
       {mounted ? (
         <video
           aria-label={label}
@@ -89,20 +111,7 @@ export function MediaDetailPlay({
           style={mediaStyle}
           width={width}
         />
-      ) : (
-        <button aria-label={`Play ${label}`} className="v-detail-play-poster" onClick={() => { setMounted(true); setVisible(true); }} type="button">
-          <img
-            alt={posterAlt}
-            decoding="async"
-            height={height}
-            loading="eager"
-            src={posterSrc}
-            style={mediaStyle}
-            width={width}
-          />
-          <span className="v-detail-play-cta">▶ Play video</span>
-        </button>
-      )}
+      ) : null}
       {watchHref ? <a className="v-detail-play-link" href={watchHref}>Open the standalone watch page →</a> : null}
     </div>
   );
