@@ -16,7 +16,7 @@ import {
 } from "@/lib/customer-asset-storage";
 import { customerSessionCookie, siteAdminSessionCookie } from "@/lib/session";
 import { verifyWorkerLocalAssetDownload } from "@/lib/worker";
-import { resolveWebVideo } from "@/lib/media-web-transcode";
+import { previewXAccelPathFor, resolveWebVideo } from "@/lib/media-web-transcode";
 
 export const runtime = "nodejs";
 
@@ -159,7 +159,7 @@ function xAccelRedirectPathForFile(filePath: string | undefined): string | undef
 
 function xAccelAssetResponse(asset: ResolvedAsset, extra?: HeadersInit): Response | undefined {
   if (asset.placeholder || asset.bytes) return undefined;
-  const redirectPath = xAccelRedirectPathForFile(asset.filePath);
+  const redirectPath = xAccelRedirectPathForFile(asset.filePath) ?? previewXAccelPathFor(asset.filePath);
   if (!redirectPath) return undefined;
   return new Response(null, {
     headers: {

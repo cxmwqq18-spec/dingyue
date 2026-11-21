@@ -26,12 +26,37 @@ function fileKey(filePath: string): string {
   return crypto.createHash("sha256").update(filePath).digest("hex").slice(0, 16);
 }
 
+/**
+ * Preview artifacts (720p copy + card poster) live in their own directory so
+ * nginx can read them without opening the private render tree. The directory
+ * is created world-readable; the originals stay owner-only.
+ */
+export function previewRoot(): string {
+  const configured = process.env.AIVIDEOSUGC_PREVIEW_ROOT?.trim();
+  if (configured) return path.resolve(configured);
+  if (process.env.NODE_ENV === "production" && process.cwd().includes(`${path.sep}releases${path.sep}`)) {
+    return path.resolve(process.cwd(), "..", "..", "data", "aidreamcapes-workspace-preview");
+  }
+  return path.join(process.cwd(), "data", "aidreamcapes-workspace-preview");
+}
+
 export function webVideoPathFor(filePath: string): string {
-  return `${filePath}.${fileKey(filePath)}.web.mp4`;
+  return path.join(previewRoot(), `${fileKey(filePath)}.web.mp4`);
 }
 
 export function webPosterPathFor(filePath: string): string {
-  return `${filePath}.${fileKey(filePath)}.poster.jpg`;
+  return path.join(previewRoot(), `${fileKey(filePath)}.poster.jpg`);
+}
+
+/** Internal nginx path for a preview file, when the prefix is configured. */
+export function previewXAccelPathFor(filePath: string | undefined): string | undefined {
+  const configured = process.env.AIVIDEOSUGC_PREVIEW_X_ACCEL_PREFIX?.trim();
+  if (!configured || !filePath) return undefined;
+  const root = previewRoot();
+  const relative = path.relative(root, filePath);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) return undefined;
+  const prefix = configured.endsWith("/") ? configured : `${configured}/`;
+  return `${prefix}${relative.split(path.sep).map(encodeURIComponent).join("/")}`;
 }
 
 async function acquireTranscodeSlot(): Promise<() => void> {
@@ -111,7 +136,7 @@ export async function resolveWebVideo(sourcePath: string): Promise<{ filePath: s
     const releaseSlot = await acquireTranscodeSlot();
     try {
       const tmpPath = `${target}.${process.pid}.${Date.now()}.tmp.mp4`;
-      await mkdir(path.dirname(target), { recursive: true });
+      await mkdir(path.dirname(target), { recursive: true, mode: 0o755 });
       try {
         await runFfmpeg([
           "-hide_banner",
@@ -179,7 +204,7 @@ export async function resolveVideoPosterFile(sourcePath: string): Promise<{ file
     const releaseSlot = await acquireTranscodeSlot();
     try {
       const tmpPath = `${target}.${process.pid}.${Date.now()}.tmp.jpg`;
-      await mkdir(path.dirname(target), { recursive: true });
+      await mkdir(path.dirname(target), { recursive: true, mode: 0o755 });
       try {
         await runFfmpeg([
           "-hide_banner",
