@@ -10,6 +10,7 @@ import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-con
 import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, mediaWatchPath, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
 import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
+import { prisma } from "@/lib/prisma";
 import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
 import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
@@ -155,7 +156,19 @@ export async function renderAidreamcapesMediaWatchPage({ slug, basePath = "" }: 
     loadAidreamcapesChrome(),
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
   ]);
-  if (!detail || !chrome) notFound();
+  if (!detail) {
+    // Not a video card at all. Tool and hub pages live under the same
+    // /ai-video-generation/<slug> prefix, so a pattern guess like
+    // /watch/home-organization lands here. If the slug belongs to a real
+    // storefront page, redirect to it instead of serving a 404.
+    const page = await prisma.livePage.findFirst({
+      where: { siteId: AIVIDEOSUGC_SITE_ID, slug: `/ai-video-generation/${slug}` },
+      select: { id: true }
+    });
+    if (page) permanentRedirect(`${basePath === "/" ? "" : basePath}/ai-video-generation/${slug}`);
+    notFound();
+  }
+  if (!chrome) notFound();
   // A video card without a rendered file (placeholder card) has no watch page:
   // the watch URL must never 404, so it permanently redirects to the detail
   // page, which stays 200 and carries the workspace entry.
