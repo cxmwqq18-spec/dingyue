@@ -1,6 +1,7 @@
 import "server-only";
 
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
+import { maskAiProviderKey } from "@/lib/ai-provider-config";
 import type { RelayModelClassification } from "@/lib/relay-model-catalog";
 import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
 import { addAuditLogRelational, relationalUid, toPlatformAiProvider } from "./prisma-mappers";
@@ -430,4 +431,47 @@ export async function listPlatformAiProvidersByRelayRelational(relayId: string):
     { label: "platform AI providers by relay" }
   );
   return records.map(toPlatformAiProvider);
+}
+
+/** 中转平台 + 已同步通道总览：/api/platform/ai-relays 与平台页 SSR 共用同一份形状，避免页面挂载后再补一次请求。 */
+export type PlatformAiRelayOverview = Awaited<ReturnType<typeof getPlatformAiRelayOverviewRelational>>;
+
+export async function getPlatformAiRelayOverviewRelational() {
+  const relays = await listPlatformAiRelaysRelational();
+  const providers = await Promise.all(relays.map(async (relay) => ({
+    relayId: relay.id,
+    rows: (await listPlatformAiProvidersByRelayRelational(relay.id)).map((provider) => ({
+      id: provider.id,
+      label: provider.label,
+      modelType: provider.modelType,
+      providerType: provider.providerType,
+      apiProtocol: provider.apiProtocol,
+      priority: provider.priority,
+      preferred: provider.preferred,
+      enabled: provider.enabled,
+      videoModelFamily: provider.videoModelFamily,
+      syncState: provider.syncState,
+      upstreamModelId: provider.upstreamModelId
+    }))
+  })));
+  return {
+    ok: true as const,
+    relays: relays.map((relay) => ({
+      id: relay.id,
+      label: relay.label,
+      baseUrl: relay.baseUrl,
+      apiKeyPreview: maskAiProviderKey(relay.apiKey),
+      apiKeyConfigured: Boolean(relay.apiKey?.trim()),
+      protocol: relay.protocol,
+      enabled: relay.enabled,
+      lastSyncedAt: relay.lastSyncedAt,
+      lastSyncStatus: relay.lastSyncStatus,
+      lastSyncError: relay.lastSyncError,
+      lastSyncModelCount: relay.lastSyncModelCount,
+      createdAt: relay.createdAt,
+      updatedAt: relay.updatedAt,
+      updatedBy: relay.updatedBy
+    })),
+    providers: Object.fromEntries(providers.map((entry) => [entry.relayId, entry.rows]))
+  };
 }

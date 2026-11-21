@@ -5,15 +5,15 @@ import { fetchRelayModelList } from "@/lib/relay-model-list";
 import { splitRelayModelsByVisibility } from "@/lib/relay-model-catalog";
 import {
   deletePlatformAiRelayRelational,
+  getPlatformAiRelayOverviewRelational,
   getPlatformAiRelayRelational,
-  listPlatformAiProvidersByRelayRelational,
-  listPlatformAiRelaysRelational,
   markPlatformAiRelaySyncFailedRelational,
   planPlatformAiRelaySyncRelational,
   syncPlatformAiRelayModelsRelational,
   upsertPlatformAiRelayRelational
 } from "@/lib/stores/ai-relay-store";
 import { maskAiProviderKey } from "@/lib/ai-provider-config";
+import type { PlatformAiRelay } from "@/lib/types";
 
 async function requirePlatformRead() {
   const current = await getCurrentPlatformAdmin();
@@ -21,7 +21,7 @@ async function requirePlatformRead() {
   return { ok: true as const, current };
 }
 
-function relayPayload(relay: Awaited<ReturnType<typeof listPlatformAiRelaysRelational>>[number]) {
+function relayPayload(relay: PlatformAiRelay) {
   return {
     id: relay.id,
     label: relay.label,
@@ -43,28 +43,7 @@ function relayPayload(relay: Awaited<ReturnType<typeof listPlatformAiRelaysRelat
 export async function GET() {
   const permission = await requirePlatformRead();
   if (!permission.ok) return permission.response;
-  const relays = await listPlatformAiRelaysRelational();
-  const providers = await Promise.all(relays.map(async (relay) => ({
-    relayId: relay.id,
-    rows: (await listPlatformAiProvidersByRelayRelational(relay.id)).map((provider) => ({
-      id: provider.id,
-      label: provider.label,
-      modelType: provider.modelType,
-      providerType: provider.providerType,
-      apiProtocol: provider.apiProtocol,
-      priority: provider.priority,
-      preferred: provider.preferred,
-      enabled: provider.enabled,
-      videoModelFamily: provider.videoModelFamily,
-      syncState: provider.syncState,
-      upstreamModelId: provider.upstreamModelId
-    }))
-  })));
-  return NextResponse.json({
-    ok: true,
-    relays: relays.map(relayPayload),
-    providers: Object.fromEntries(providers.map((entry) => [entry.relayId, entry.rows]))
-  });
+  return NextResponse.json(await getPlatformAiRelayOverviewRelational());
 }
 
 export async function PUT(request: NextRequest) {
@@ -149,12 +128,16 @@ export async function POST(request: NextRequest) {
     entries: plan.entries,
     actor: permission.current.platformAdmin.id
   });
+  // 同步结果直接带回最新总览，前端不再追加一次 GET（远程访问下每次往返都要 1 秒上下）。
+  const overview = await getPlatformAiRelayOverviewRelational();
   return NextResponse.json({
     ok: true,
     message: `同步完成：新增 ${applied.created}，更新 ${applied.updated}，移除 ${applied.removed}，未变 ${applied.unchanged}${hiddenNote}`,
     plan,
     hidden,
-    applied
+    applied,
+    relays: overview.relays,
+    providers: overview.providers
   });
 }
 

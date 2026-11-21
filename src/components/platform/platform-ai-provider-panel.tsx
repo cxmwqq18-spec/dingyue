@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { Bot, Eye, EyeOff, PlugZap, Power, PowerOff, Plus, Save, Search, ShieldCheck, Trash2, X } from "lucide-react";
 import {
@@ -778,9 +778,11 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
   const [testing, setTesting] = useState(false);
   const [keyVisible, setKeyVisible] = useState(false);
   const [revealingKey, setRevealingKey] = useState(false);
-  const [currentActionId, setCurrentActionId] = useState<string | null>(null);
-  const [enableActionId, setEnableActionId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  // 乐观动作的序号：只有最新一次动作的结果才允许落地，防止快速连点时旧响应乱序覆盖新状态。
+  const providerActionSeqRef = useRef(0);
+  // 编辑器打开时的表单快照：后台刷新回来的最新数据只替换“用户尚未改动”的表单，避免覆盖输入。
+  const editRefreshRef = useRef<{ id: string; snapshot: string } | null>(null);
 
   const modelTypes = useMemo(() => Array.from(new Set(["gpt-image-2", "gpt-5.5", ...status.modelTypes])).filter(Boolean), [status.modelTypes]);
   const filtered = useMemo(() => {
@@ -813,16 +815,25 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
   }
 
   async function edit(provider: AiProviderRow) {
-    // 每次都从服务端读取最新一行再回填表单：页面初始数据可能早于最近一次同步/保存，
-    // 用旧快照回填后再保存会把已维护的档位、参考素材上限和价格覆盖回旧值。
-    let source = provider;
+    // 先用当前快照立即打开编辑器；后台再读一次服务端最新行。
+    // 远程访问下等一次完整往返才弹窗会显得卡住；刷新结果只在用户尚未改动表单时落地，
+    // 防止把已维护的档位、参考素材上限和价格静默替换掉。
+    const snapshot = JSON.stringify(providerForm(provider));
+    editRefreshRef.current = { id: provider.id, snapshot };
+    setEditorMode("edit"); setEditorForm(providerForm(provider)); setEditorMessage("修改协议或能力配置会影响后续新任务；正在运行的任务保持原有 provider ID。"); setKeyVisible(false); setRevealingKey(false);
     try {
       const fresh = await request("/api/platform/ai-providers", {});
-      source = fresh.providers?.find((row) => row.id === provider.id) ?? provider;
+      const source = fresh.providers?.find((row) => row.id === provider.id);
+      if (!source) return;
+      const freshForm = providerForm(source);
+      setEditorForm((current) => {
+        if (!current || current.id !== provider.id) return current;
+        if (editRefreshRef.current?.id !== provider.id || JSON.stringify(current) !== editRefreshRef.current.snapshot) return current;
+        return freshForm;
+      });
     } catch {
-      // 读取失败时仍允许编辑当前快照。
+      // 读取失败时仍允许继续编辑当前快照；保存时服务端会再做校验。
     }
-    setEditorMode("edit"); setEditorForm(providerForm(source)); setEditorMessage("修改协议或能力配置会影响后续新任务；正在运行的任务保持原有 provider ID。"); setKeyVisible(false); setRevealingKey(false);
   }
 
   function validateForm(form: ProviderFormState, action: "save" | "test") {
@@ -881,31 +892,32 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
     finally { setRevealingKey(false); }
   }
 
-  // 乐观更新：点击后立即改变本地状态，请求失败再回滚。状态切换只改一个字段，
-  // 等待一次完整往返再刷新界面会让远程访问显得“卡住”。
+  // 乐观更新：点击后立即改变本地状态并恢复按钮可用，请求失败再回滚。
+  // 状态切换只改一个字段且可重复提交（幂等），等待一次完整往返再解除按钮
+  // 会让远程访问显得“卡住”；序号守卫保证旧响应不会覆盖更新的状态。
   async function makeCurrent(providerId: string) {
     const target = status.providers.find((provider) => provider.id === providerId); if (!target) return;
     const previous = status;
+    const actionSeq = ++providerActionSeqRef.current;
     setStatus((current) => ({
       ...current,
       providers: current.providers.map((provider) => provider.providerType === target.providerType ? { ...provider, isCurrent: provider.id === providerId } : provider)
     }));
-    setCurrentActionId(providerId); setMessage(`${platformAiProviderTypeLabel(target.providerType)}优先供应商已切换。`);
-    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ providerId }) }); setStatus(result); }
-    catch (error) { setStatus(previous); setMessage(`切换失败：${error instanceof Error ? error.message : "unknown error"}`); }
-    finally { setCurrentActionId(null); }
+    setMessage(`${platformAiProviderTypeLabel(target.providerType)}优先供应商已切换。`);
+    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ providerId }) }); if (actionSeq !== providerActionSeqRef.current) return; setStatus(result); }
+    catch (error) { if (actionSeq !== providerActionSeqRef.current) return; setStatus(previous); setMessage(`切换失败：${error instanceof Error ? error.message : "unknown error"}`); }
   }
 
   async function setProviderEnabled(provider: AiProviderRow, enabled: boolean) {
     const previous = status;
+    const actionSeq = ++providerActionSeqRef.current;
     setStatus((current) => ({
       ...current,
       providers: current.providers.map((item) => item.id === provider.id ? { ...item, enabled } : item)
     }));
-    setEnableActionId(provider.id); setMessage(`AI 通道「${provider.label}」已${enabled ? "启用" : "禁用"}。`);
-    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ action: "enabled", providerId: provider.id, enabled }) }); setStatus(result); }
-    catch (error) { setStatus(previous); setMessage(`${enabled ? "启用" : "禁用"}失败：${error instanceof Error ? error.message : "unknown error"}`); }
-    finally { setEnableActionId(null); }
+    setMessage(`AI 通道「${provider.label}」已${enabled ? "启用" : "禁用"}。`);
+    try { const result = await request("/api/platform/ai-providers", { method: "POST", body: JSON.stringify({ action: "enabled", providerId: provider.id, enabled }) }); if (actionSeq !== providerActionSeqRef.current) return; setStatus(result); }
+    catch (error) { if (actionSeq !== providerActionSeqRef.current) return; setStatus(previous); setMessage(`${enabled ? "启用" : "禁用"}失败：${error instanceof Error ? error.message : "unknown error"}`); }
   }
 
   async function deleteProvider(provider: AiProviderRow) {
@@ -949,7 +961,7 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
             <div className="flex flex-wrap items-center gap-2"><StatusPill label={platformAiProviderTypeLabel(provider.providerType)} tone={provider.providerType === "video" ? "neutral" : "good"} /><span className="font-mono text-[11px] text-[#98a2b3]">P{provider.priority}</span></div>
             <div className="truncate font-mono text-[12px] text-[#667085]" title={provider.aiUrl}>{provider.aiUrl || "未配置"}</div>
             <div className="flex flex-wrap gap-2"><StatusPill label={provider.enabled ? "启用" : "禁用"} tone={provider.enabled ? "good" : "warn"} /><StatusPill label={provider.status.configured ? "已配置" : "缺失"} tone={provider.status.configured ? "good" : "warn"} />{provider.isCurrent && provider.enabled ? <StatusPill label="优先" tone="good" /> : null}<span className="w-full truncate font-mono text-[10px] text-[#98a2b3]">{provider.status.apiKeyConfigured ? provider.status.apiKeyPreview : "no API key"}</span></div>
-            <div className="flex flex-wrap gap-2"><button className="admin_btn inline-flex h-[32px] items-center px-3 text-[12px]" onClick={() => edit(provider)} type="button">编辑配置</button><button className="admin_btn inline-flex h-[32px] items-center px-3 text-[12px]" disabled={provider.isCurrent || currentActionId === provider.id} onClick={() => void makeCurrent(provider.id)} type="button">{currentActionId === provider.id ? "切换中" : "设为优先"}</button><button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px] disabled:opacity-55" disabled={enableActionId === provider.id} onClick={() => void setProviderEnabled(provider, !provider.enabled)} type="button">{provider.enabled ? <PowerOff className="h-3.5 w-3.5" /> : <Power className="h-3.5 w-3.5" />}{enableActionId === provider.id ? "处理中" : provider.enabled ? "禁用" : "启用"}</button><button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px] text-[#b42318] disabled:opacity-55" disabled={status.providers.length <= 1 || deletingId === provider.id} onClick={() => void deleteProvider(provider)} type="button"><Trash2 className="h-3.5 w-3.5" />{deletingId === provider.id ? "删除中" : "删除"}</button></div>
+            <div className="flex flex-wrap gap-2"><button className="admin_btn inline-flex h-[32px] items-center px-3 text-[12px]" onClick={() => edit(provider)} type="button">编辑配置</button><button className="admin_btn inline-flex h-[32px] items-center px-3 text-[12px]" disabled={provider.isCurrent} onClick={() => void makeCurrent(provider.id)} type="button">设为优先</button><button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px]" onClick={() => void setProviderEnabled(provider, !provider.enabled)} type="button">{provider.enabled ? <PowerOff className="h-3.5 w-3.5" /> : <Power className="h-3.5 w-3.5" />}{provider.enabled ? "禁用" : "启用"}</button><button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px] text-[#b42318] disabled:opacity-55" disabled={status.providers.length <= 1 || deletingId === provider.id} onClick={() => void deleteProvider(provider)} type="button"><Trash2 className="h-3.5 w-3.5" />{deletingId === provider.id ? "删除中" : "删除"}</button></div>
           </WorkbenchTableRow>) : <div className="px-5 py-12 text-center text-[13px] text-[#98a2b3]">没有匹配的 AI 供应商。检查筛选条件，或新增一个模型通道。</div>}
         </WorkbenchTableShell>
         <div aria-live="polite" className="mt-3 rounded-md bg-[#f8fafc] px-3 py-2 text-[12px] leading-5 text-[#667085]">{message}</div>

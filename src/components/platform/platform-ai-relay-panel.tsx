@@ -91,9 +91,9 @@ function relayErrorLabel(code?: string, message?: string) {
   }[code ?? ""] ?? code ?? "unknown error";
 }
 
-export function PlatformAiRelayPanel() {
+export function PlatformAiRelayPanel({ initialPayload }: { initialPayload?: RelayPayload }) {
   const router = useRouter();
-  const [payload, setPayload] = useState<RelayPayload>({ ok: true, relays: [], providers: {} });
+  const [payload, setPayload] = useState<RelayPayload>(initialPayload ?? { ok: true, relays: [], providers: {} });
   const [message, setMessage] = useState("配置中转平台后，可一键读取上游模型目录并同步为平台通道。API Key 只保存在服务端。");
   const [editing, setEditing] = useState<RelayRow | null>(null);
   const [creating, setCreating] = useState(false);
@@ -103,6 +103,8 @@ export function PlatformAiRelayPanel() {
   const [plan, setPlan] = useState<RelayPlan | null>(null);
   const [keyVisible, setKeyVisible] = useState(false);
   const [revealingKey, setRevealingKey] = useState(false);
+  // SSR 已注入首屏数据时跳过挂载请求；手动「刷新」与变更后的加载仍然可用。
+  const [hasInitialPayload] = useState(Boolean(initialPayload));
 
   const load = useCallback(async () => {
     const response = await fetch("/api/platform/ai-relays", { credentials: "same-origin", cache: "no-store" });
@@ -112,12 +114,13 @@ export function PlatformAiRelayPanel() {
   }, []);
 
   useEffect(() => {
+    if (hasInitialPayload) return;
     void load();
-  }, [load]);
+  }, [hasInitialPayload, load]);
 
   async function request(endpoint: string, init: RequestInit) {
     const response = await fetch(endpoint, { ...init, credentials: "same-origin", headers: platformJsonHeaders(init.headers) });
-    const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; message?: string; plan?: RelayPlan; apiKey?: string; relay?: RelayRow };
+    const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; message?: string; plan?: RelayPlan; apiKey?: string; relay?: RelayRow; relays?: RelayRow[]; providers?: Record<string, RelayProviderRow[]> };
     if (!response.ok) {
       if (response.status === 401 && result.error === "platform_login_required") router.push("/platform/login");
       throw new Error(relayErrorLabel(result.error, result.message));
@@ -227,7 +230,9 @@ export function PlatformAiRelayPanel() {
         body: JSON.stringify({ action: "sync", relayId: relay.id })
       });
       setMessage(result.message ?? "同步完成。");
-      await load();
+      // 同步响应已带回最新总览，直接落地；旧服务端没有这两个字段时再退回完整拉取。
+      if (result.relays && result.providers) setPayload({ ok: true, relays: result.relays, providers: result.providers });
+      else await load();
     } catch (error) {
       setMessage(`同步失败：${error instanceof Error ? error.message : "unknown error"}`);
     } finally {

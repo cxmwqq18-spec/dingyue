@@ -43,6 +43,7 @@ import {
   getPlatformGatewaySummaryRelational,
   type PlatformDashboardSnapshot
 } from "@/lib/stores/platform-store";
+import { getPlatformAiRelayOverviewRelational, type PlatformAiRelayOverview } from "@/lib/stores/ai-relay-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -294,12 +295,14 @@ async function PlatformModuleContent({
   querySiteId,
   shellSnapshots,
   aiProviderPayload,
+  relayPayload,
   preloadedModulePayload
 }: {
   activeModule: PlatformModuleParam;
   querySiteId?: string;
   shellSnapshots: PlatformDashboardSnapshot[];
   aiProviderPayload: PlatformAiProviderPayload;
+  relayPayload?: PlatformAiRelayOverview;
   preloadedModulePayload?: PlatformModulePayload;
 }) {
   const modulePayload = preloadedModulePayload ?? (
@@ -447,7 +450,7 @@ async function PlatformModuleContent({
           <PlatformAiProviderPanel initialStatus={platformAiProviderStatus} />
         </ErpSection>
 
-        <PlatformAiRelayPanel />
+        <PlatformAiRelayPanel initialPayload={relayPayload} />
 
         <ErpSection description="AI 中转默认对所有站点域名可用；域名新增仍在站点工厂处理，这里只查看全平台使用范围和少量兜底策略。" eyebrow="域名与网关" title="域名与网关工作台">
           {selectedSnapshot ? (
@@ -581,10 +584,11 @@ export default async function PlatformPage({
         platformActivity
       }))
     : getPlatformDashboardSummaryRelational();
-  const [shellSummary, aiProviderPayload, preloadedModulePayload] = await Promise.all([
+  const [shellSummary, aiProviderPayload, preloadedModulePayload, relayPayload] = await Promise.all([
     shellSummaryPromise,
     getPlatformAiProviderStatusRelational(),
-    preloadedModulePayloadPromise ?? Promise.resolve(undefined)
+    preloadedModulePayloadPromise ?? Promise.resolve(undefined),
+    activeModule === "gateway" ? getPlatformAiRelayOverviewRelational() : Promise.resolve(undefined)
   ]);
   const shellSnapshots = shellSummary.snapshots;
   const totalCustomers = shellSnapshots.reduce((sum, snapshot) => sum + snapshot.customerCount, 0);
@@ -657,6 +661,7 @@ export default async function PlatformPage({
           aiProviderPayload={aiProviderPayload}
           preloadedModulePayload={preloadedModulePayload}
           querySiteId={query?.site}
+          relayPayload={relayPayload}
           shellSnapshots={shellSnapshots}
         />
       </Suspense>
