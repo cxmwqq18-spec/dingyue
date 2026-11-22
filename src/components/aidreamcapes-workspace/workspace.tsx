@@ -2191,7 +2191,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                   <div className={starterStyles.body}>
                     <div className={starterStyles.top}>
                       <span className={starterStyles.tag}>First video offer</span>
-                      <span className={starterStyles.index}>Option 01</span>
                     </div>
                     <h2>
                       {starterOffer.state === "eligible" || starterOffer.state === "purchased"
@@ -2275,7 +2274,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                       <div className={starterStyles.body}>
                         <div className={starterStyles.top}>
                           <span className={`${starterStyles.tag} ${starterStyles.tagGreen}`}>Free credits for creators</span>
-                          <span className={starterStyles.index}>Option 02</span>
                         </div>
                         <h2>Get your first video free</h2>
                         <p className={starterStyles.sub}>

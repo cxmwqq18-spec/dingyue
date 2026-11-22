@@ -69,13 +69,12 @@
   font-weight: 700;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--brand-ink);
-  background: var(--brand-soft);
+  color: #fff;
+  background: var(--brand);
   border-radius: 999px;
   padding: 5px 11px;
 }
-.tagGreen { color: var(--success); background: var(--success-soft); }
-.index { font-size: 12px; font-weight: 700; color: var(--ink-3); }
+.tagGreen { color: #fff; background: var(--success); }
 
 .card h2 {
   margin: 14px 0 0;
