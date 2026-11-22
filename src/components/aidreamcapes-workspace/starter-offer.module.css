@@ -171,6 +171,18 @@
   color: #fff;
   box-shadow: 0 12px 30px -14px rgba(109, 94, 252, .7);
 }
+/* Keep the CTA label white in every link state, including visited, and for the
+   label/arrow children. The primary button previously relied on inheritance,
+   so a visited-link or extension colour could tint the text. */
+.buttonPrimary,
+.buttonPrimary:visited,
+.buttonPrimary:hover,
+.buttonPrimary:focus,
+.buttonPrimary:active,
+.buttonPrimary span,
+.buttonPrimary svg {
+  color: #fff !important;
+}
 .buttonPrimary:hover { background: var(--brand-ink); }
 .buttonPrimary:disabled { cursor: wait; opacity: .8; }
 .buttonGhost { background: #fff; color: var(--ink-2); border: 1px solid var(--line-2); }
