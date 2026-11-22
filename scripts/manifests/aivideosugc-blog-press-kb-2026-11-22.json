@@ -1,7 +1,7 @@
 {
   "date": "2026-11-22",
   "siteId": "site_aidreamcapes",
-  "target": "local",
+  "target": "production",
   "mode": "applied",
   "slugs": [
     "/blog/aivideosugc-launches-ai-ugc-video-generator",
@@ -10,10 +10,10 @@
   "hub": {
     "slug": "/blog",
     "action": "update",
-    "baseHash": "b308295fa7eca138f15c5d4bcfe2870afb0527c627a7a6b14f7c437cfe8ca477",
-    "nextHash": "f31dd3ac558fc6354d11c15d38d98f2bcb66745bb30aa76c14e142c736de3c58",
+    "baseHash": "2a1e605e105f2638730c2bea08e6e5b298bb48852b188f480b9e161f62589601",
+    "nextHash": "57688cd28536fecc62112d611d5f619ea8c846c50203880b6c91c020ae9620cb",
     "resolvedCounts": {
-      "articles": 8,
+      "articles": 9,
       "tutorials": 6
     }
   },
@@ -21,17 +21,17 @@
     {
       "slug": "/blog/aivideosugc-launches-ai-ugc-video-generator",
       "rowId": "aidreamcapes_v2_blog_aivideosugc_launches_ai_ugc_video_generator",
-      "action": "unchanged",
-      "changed": false,
-      "baseHash": "7737f697bd9b041575549a288541cbba8ad9b0b6eb771370336c6c027c8de113",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
       "nextHash": "7737f697bd9b041575549a288541cbba8ad9b0b6eb771370336c6c027c8de113"
     },
     {
       "slug": "/blog/aivideosugc-company-knowledge-base",
       "rowId": "aidreamcapes_v2_blog_aivideosugc_company_knowledge_base",
-      "action": "unchanged",
-      "changed": false,
-      "baseHash": "9f58eedfbf566b29ca0f28cb1ac708269911dc47efbc81e3767dd5b7a12075c5",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
       "nextHash": "9f58eedfbf566b29ca0f28cb1ac708269911dc47efbc81e3767dd5b7a12075c5"
     }
   ],
