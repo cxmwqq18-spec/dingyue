@@ -253,6 +253,36 @@ export async function resolveMediaPlacements(detail: MediaDetail): Promise<Media
 }
 
 /**
+ * Count the cards each facet directory renders, for sitemap pagination. One
+ * query covers every requested directory; the per-card validation, template
+ * skip and product-identity dedupe mirror resolveDirectoryMedia() exactly.
+ */
+export async function resolveDirectoryMediaCounts(directorySlugs: string[]): Promise<Map<string, number>> {
+  const wanted = new Set(directorySlugs.filter((slug) => MEDIA_PLACEMENT_PATTERN.test(slug)));
+  const seen = new Map([...wanted].map((slug) => [slug, new Set<string>()]));
+  if (!wanted.size) return new Map();
+  const pages = await prisma.$queryRaw<Array<{ slug: string; contentJson: unknown }>>`
+    SELECT "slug", "contentJson"
+    FROM "LivePage"
+    WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
+      AND jsonb_path_exists("contentJson", '$.**.placement[*]')
+    ORDER BY "slug"
+  `;
+  for (const page of pages) {
+    const templateCardSlug = templateDefinitionFrom(page.contentJson, page.slug)?.cardSlug;
+    for (const value of cardsFromContent(page.contentJson)) {
+      const card = toDetailCard(value);
+      if (!card?.publicSlug || !card.placement?.length) continue;
+      if (templateCardSlug && card.publicSlug === templateCardSlug) continue;
+      const identity = productIdentityOfDetailCard(card);
+      if (!identity || !mediaDetailPath(card.kind, card.publicSlug)) continue;
+      for (const slug of card.placement) seen.get(slug)?.add(identity.key);
+    }
+  }
+  return new Map([...seen].map(([slug, identities]) => [slug, identities.size]));
+}
+
+/**
  * Media cards directly placed in one facet directory, in deterministic source
  * order. The query prefilters pages with a cheap JSONB path; the shared card
  * extractor then validates every card shape.

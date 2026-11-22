@@ -1,6 +1,6 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
 import { aidreamcapesV2ResponsivePosterSrc } from "./aidreamcapes-v2-responsive-images";
-import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
+import { resolveDirectoryMedia, resolveDirectoryMediaCounts } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { listAidreamcapesMediaDetailEntries, listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { mediaDetailPath, mediaWatchPath } from "@/lib/aidreamcapes-workspace/media-detail";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
@@ -1105,6 +1105,13 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
     // deep page through the pager alone; page 1 keeps the bare URL.
     if (aidreamcapesListingEntries.length) {
       const galleryEntries = await listAidreamcapesExampleGalleryEntries();
+      const facetPaths = aidreamcapesListingEntries
+        .filter((listing) => {
+          const data = aidreamcapesListingSitemapData(listing.page);
+          return Boolean(data?.templateDirectory) && !data?.exampleDirectory && data?.id !== "video-hub";
+        })
+        .map((listing) => listing.path);
+      const facetCounts = await resolveDirectoryMediaCounts(facetPaths);
       const addListingPages = (basePath: string, totalPages: number, params: Record<string, string> = {}) => {
         const base = aidreamcapesListingEntries.find((item) => item.path === basePath)?.entry;
         if (!base) return;
@@ -1134,12 +1141,8 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           continue;
         }
         if (data.templateDirectory) {
-          // Facet directories paginate from their placed-media count, which is
-          // only known after resolveDirectoryMedia() scans every placement.
-          // Doing that for ~28 directories inside the sitemap read transaction
-          // pushed the whole response past its 15s limit, so those pages stay
-          // crawlable through their pager and self canonicals instead of
-          // being enumerated here. Their page 1 entries are still submitted.
+          const total = facetCounts.get(listing.path) ?? 0;
+          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE));
           continue;
         }
         if (data.id === "video-hub") {
