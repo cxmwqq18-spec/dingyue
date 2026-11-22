@@ -132,17 +132,37 @@ await check("tracking parameters do not create a pagination variant", async () =
   assert.equal(canonical(response.body), `${origin}/templates?page=2`);
 });
 
-await check("every paginated sitemap URL answers 200 with a self canonical", async () => {
+await check("every paginated sitemap URL is indexable with a unique snippet", async () => {
   const response = await get("/sitemap.xml");
   assert.equal(response.status, 200);
-  const paginated = [...response.body.matchAll(/<loc>([^<]*\/templates\?[^<]*page=[^<]+)<\/loc>/g)]
-    .map((match) => match[1].replaceAll("&amp;", "&"));
+  const paginated = [...response.body.matchAll(/<loc>([^<]*page=[^<]+)<\/loc>/g)]
+    .map((match) => match[1].replaceAll("&amp;", "&"))
+    .filter((url) => /\/(?:templates|ai-video-generation|industries\/[^/?]+|platforms\/[^/?]+|occasions\/[^/?]+|tools\/[^/?]+)\?/.test(url));
   assert(paginated.length > 0, "expected the paginated listing URLs in the sitemap");
+  const seen = new Map();
+  const baseDescription = new Map();
   for (const url of paginated) {
     const parsed = new URL(url, origin);
-    const page = await get(`${parsed.pathname}${parsed.search}`);
-    assert.equal(page.status, 200, `${parsed.pathname}${parsed.search} answered ${page.status}`);
-    assert.equal(canonical(page.body), `${origin}${parsed.pathname}${parsed.search}`, `${parsed.search} is not self canonical`);
+    const path = `${parsed.pathname}${parsed.search}`;
+    const page = await get(path);
+    assert.equal(page.status, 200, `${path} answered ${page.status}`);
+    assert.equal(canonical(page.body), `${origin}${path}`, `${path} is not self canonical`);
+    assert.match(robots(page.body), /index/i, `${path} is not indexable`);
+    const description = (page.body.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i)?.[1] ?? "").replaceAll("&amp;", "&");
+    assert(description, `${path} has no meta description`);
+    assert(description.length <= 160, `${path} description is ${description.length} characters`);
+    if (seen.has(description)) throw new Error(`${path} repeats the description of ${seen.get(description)}`);
+    seen.set(description, path);
+    const title = page.body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] ?? "";
+    const pageNumber = parsed.searchParams.get("page");
+    assert(title.includes(`Page ${pageNumber}`), `${path} title lacks the page marker: ${title}`);
+    const baseKey = `${parsed.pathname}?${[...parsed.searchParams].filter(([key]) => key !== "page").map(([key, value]) => `${key}=${value}`).join("&")}`;
+    if (!baseDescription.has(baseKey)) {
+      const base = await get(baseKey);
+      assert.equal(base.status, 200, `${baseKey} answered ${base.status}`);
+      baseDescription.set(baseKey, (base.body.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i)?.[1] ?? "").replaceAll("&amp;", "&"));
+    }
+    assert.notEqual(description, baseDescription.get(baseKey), `${path} repeats its page-1 description`);
   }
 });
 

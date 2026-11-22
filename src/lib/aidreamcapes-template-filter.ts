@@ -26,6 +26,24 @@ export function aidreamcapesListingPageTitle(title: string | undefined, page: nu
   return brandAt > 0 ? `${title.slice(0, brandAt)}${marker}${title.slice(brandAt)}` : `${title}${marker}`;
 }
 
+/** A page-distinct meta description for a deeper listing page. The base copy
+ * keeps its module identity; a page marker makes every paginated URL carry a
+ * different search snippet. Trimmed to the 150-character snippet target so the
+ * serialized meta tag stays below the 160-character limit. */
+export function aidreamcapesListingPageDescription(description: string | undefined, page: number): string | undefined {
+  if (!description || !page) return description;
+  if (description.startsWith(`Page ${page}`)) return description;
+  const prefix = `Page ${page}: `;
+  const limit = 150;
+  const room = Math.max(40, limit - prefix.length - 1);
+  let base = description.replace(/\s+/g, " ").trim();
+  if (base.length > room) {
+    const cut = base.slice(0, room + 1).replace(/\s+\S*$/, "").trim();
+    base = `${(cut || base.slice(0, room).trim()).replace(/[\s,;:|–—-]+$/, "")}…`;
+  }
+  return `${prefix}${base}`;
+}
+
 /** Self-referencing canonical for a deeper listing page: the base canonical
  * keeps its other parameters (the kind catalogs) and gains ?page=N. */
 export function aidreamcapesListingPageCanonical(canonical: string | undefined, page: number): string | undefined {
