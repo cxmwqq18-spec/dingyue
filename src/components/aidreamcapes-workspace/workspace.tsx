@@ -11,6 +11,7 @@ import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import styles from "./workspace.module.css";
+import starterStyles from "./starter-offer.module.css";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 import { confirmedBriefFromSnapshot, type ConfirmedProductBrief, type ImportedProductAsset, type ProductBriefSnapshotLike } from "./product-url-import";
@@ -2165,66 +2166,165 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {customer && tasks.length > 0 && <section className={styles.section}><div className={styles.sectionHead}><h2>Recent videos</h2><button className={styles.linkButton} onClick={() => void navigate("library")}><span>View Library </span><ArrowRight size={15} /></button></div>{renderTaskCards(tasks.slice(0, 3))}</section>}
         </>}
 
-        {view === "starterOffer" && <>
-          <div className={styles.pageTitle}><h1>First Video Offer</h1><p>A one-time starter offer for your first product video.</p></div>
-          {!customer && <section className={styles.panel}><h2 style={{ margin: "0 0 4px" }}>Log in to claim your offer</h2><p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is for new customers. Log in to check your eligibility.</p><div className={styles.footerActions}><a className={`${styles.button} ${styles.primary}`} href={loginHref}>Log in</a></div></section>}
-          {customer && !starterOffer && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Checking your offer…</span></div>}
-          {customer && starterOffer?.state === "eligible" && starterOffer.priceId && <section className={styles.panel} aria-live="polite">
-            <span className={styles.badge}>FIRST VIDEO OFFER</span>
-            <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
-            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.80</span> · <strong>64% OFF</strong> · 20 credits — enough for one 15-second video at the normal price.</p>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>Full quality. No watermark. No subscription.</p>
-            <div className={styles.footerActions}>
-              <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
-            </div>
-          </section>}
-          {customer && starterOffer?.state === "eligible" && !starterOffer.priceId && <section className={styles.panel}>
-            <h2 style={{ margin: "0 0 4px" }}>This offer isn't available right now</h2>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is being set up. Check back soon — your eligibility is saved to your account.</p>
-            <div className={styles.footerActions}>
-              <button className={styles.linkButton} onClick={() => void navigate("home")}><span>Back to Home</span><ArrowRight size={15} /></button>
-            </div>
-          </section>}
-          {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
-            <h2 style={{ margin: "0 0 4px" }}>20 credits added — create your first 15s video</h2>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>Your 20 credits cover one 15-second video at the normal price. The composer uses them automatically.</p>
-            <div className={styles.footerActions}>
-              <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("home")}><span>Create your first video</span><ArrowRight size={15} /></button>
-            </div>
-          </section>}
-          {customer && (starterOffer?.state === "consumed" || starterOffer?.state === "ineligible") && <section className={styles.panel}>
-            <h2 style={{ margin: "0 0 4px" }}>{starterOffer.state === "consumed" ? "This offer has been used" : "This offer is for new customers"}</h2>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is one-time and new-customer only. Standard credit packs are available any time.</p>
-            <div className={styles.footerActions}>
-              <button className={styles.linkButton} onClick={() => void navigate("home")}><span>Back to Home</span><ArrowRight size={15} /></button>
-            </div>
-          </section>}
-          {customer && starterOffer && (() => {
-            // Creator free credits reuse the public /partners#free-credits
-            // programme; the starter page only mirrors its status and points
-            // the visitor at the right place to act.
-            const freeCredits = starterOffer.freeCredits;
-            const state = freeCredits?.state ?? "not_applied";
-            const programHref = `${basePath}/partners#free-credits`;
-            return (
-              <section className={styles.panel} aria-live="polite">
-                <span className={styles.badge}>FREE CREDITS FOR CREATORS</span>
-                <h2 style={{ margin: "10px 0 0" }}>Get your first video free</h2>
-                <p className={styles.help} style={{ margin: "6px 0 0" }}>
-                  Post a video with <b>#AIVideosUGC</b>, submit the link, and once we review it your account gets <b>20&ndash;60 credits</b> &mdash; enough for a full 15s video. One grant per creator &middot; Credits never expire &middot; Reviewed by hand, usually within 48 hours.
-                </p>
-                {state === "pending" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>Your application is <b>pending review</b>. A real person reads every application &mdash; you&rsquo;ll get an email either way, usually within 48 hours.</p> : null}
-                {state === "approved" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>You received <b>{freeCredits?.state === "approved" ? freeCredits.grantedCredits : 0} free credits</b>. Use them to create your first video now.</p> : null}
-                {state === "rejected" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>Your last application was not approved. You can submit another video post from the programme page.</p> : null}
-                <div className={styles.footerActions}>
-                  {state === "approved"
-                    ? <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("video")}><span>Create your video</span><ArrowRight size={15} /></button>
-                    : <a className={`${styles.button} ${state === "pending" ? "" : styles.primary}`} href={programHref}>{state === "pending" ? "View your application" : state === "rejected" ? "Try again on the programme page" : "Join the free-credits program"}<ArrowRight size={15} /></a>}
-                </div>
+        {view === "starterOffer" && (
+          <div className={starterStyles.page}>
+            <header className={starterStyles.hero}>
+              <span className={starterStyles.eyebrow}>Starter offers</span>
+              <h1>Start with a video — pick the offer that fits you</h1>
+              <p className={starterStyles.lead}>
+                Buy your first 15-second product video for <b>$1</b>, or join the creator programme and get it <b>free</b>. Both are one-time starter offers for new accounts.
+              </p>
+            </header>
+
+            {!customer && <section className={starterStyles.loginCard}>
+              <h2>Log in to claim your offer</h2>
+              <p>The $1 first-video offer and the creator free credits are for signed-in accounts. Log in to check your eligibility.</p>
+              <a className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} href={loginHref}>Log in</a>
+            </section>}
+
+            {customer && !starterOffer && <div className={starterStyles.loading}><Loader2 size={22} className={styles.spin} /><span>Checking your offer…</span></div>}
+
+            {customer && starterOffer && (
+              <section className={starterStyles.offers} aria-label="Starter offers">
+                {/* 01 · one-time $1 pack: 20 credits, normal pricing afterwards */}
+                <article className={starterStyles.card}>
+                  <div className={starterStyles.body}>
+                    <div className={starterStyles.top}>
+                      <span className={starterStyles.tag}>First video offer</span>
+                      <span className={starterStyles.index}>Option 01</span>
+                    </div>
+                    <h2>
+                      {starterOffer.state === "eligible" || starterOffer.state === "purchased"
+                        ? starterOffer.state === "purchased" ? "20 credits added — create your first 15s video" : "Your first 15s product video — just $1"
+                        : starterOffer.state === "consumed" ? "This offer has been used" : "This offer is for new customers"}
+                    </h2>
+                    <p className={starterStyles.sub}>
+                      {starterOffer.state === "eligible" && starterOffer.priceId
+                        ? "A complete, ready-to-post video with full quality and no watermark."
+                        : starterOffer.state === "purchased"
+                          ? "Your 20 credits cover one 15-second video at the normal price. The composer uses them automatically."
+                          : starterOffer.state === "consumed"
+                            ? "The $1 starter offer is one-time. Standard credit packs are available any time."
+                            : starterOffer.state === "ineligible"
+                              ? "The $1 starter offer is one-time and new-customer only. Standard credit packs are available any time."
+                              : "The $1 starter offer is being set up. Your eligibility stays on your account."}
+                    </p>
+
+                    {starterOffer.state === "eligible" && starterOffer.priceId ? (
+                      <>
+                        <ul className={starterStyles.bullets}>
+                          <li><Check size={15} strokeWidth={2.4} />20 credits — enough for one 15-second video</li>
+                          <li><Check size={15} strokeWidth={2.4} />Full resolution, no watermark</li>
+                          <li><Check size={15} strokeWidth={2.4} />One-time payment, no subscription</li>
+                        </ul>
+                        <div className={starterStyles.note}>
+                          <b>What happens next</b>
+                          After checkout, 20 credits are added to your balance automatically — enough for one 15-second video at the normal price. Create it straight from this page.
+                        </div>
+                      </>
+                    ) : null}
+
+                    {starterOffer.state === "eligible" && !starterOffer.priceId ? (
+                      <div className={starterStyles.note}>
+                        <b>Not available right now</b>
+                        The $1 starter offer is being set up. Check back soon — your eligibility stays on your account.
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className={starterStyles.action}>
+                    {starterOffer.state === "eligible" && starterOffer.priceId ? (
+                      <>
+                        <div className={starterStyles.priceRow}>
+                          <span className={starterStyles.price}>$1</span>
+                          <span className={starterStyles.strike}>$2.80</span>
+                          <span className={starterStyles.save}>64% off</span>
+                        </div>
+                        <button
+                          className={`${starterStyles.button} ${starterStyles.buttonPrimary}`}
+                          disabled={starterOfferClaiming || working || !starterOffer.priceId}
+                          onClick={() => void claimStarterOffer()}
+                          type="button"
+                        >
+                          {starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}
+                        </button>
+                        <span className={starterStyles.footnote}>Takes about a minute.</span>
+                      </>
+                    ) : starterOffer.state === "purchased" ? (
+                      <>
+                        <div className={starterStyles.value}>20 credits<small>One 15-second video</small></div>
+                        <button className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} onClick={() => void navigate("video")} type="button">
+                          <span>Create your video</span><ArrowRight size={15} />
+                        </button>
+                      </>
+                    ) : (
+                      <button className={`${starterStyles.button} ${starterStyles.buttonGhost}`} onClick={() => void navigate("home")} type="button">
+                        <span>Back to Home</span><ArrowRight size={15} />
+                      </button>
+                    )}
+                  </div>
+                </article>
+
+                {/* 02 · creator free credits (reuses /partners#free-credits) */}
+                {(() => {
+                  const freeCredits = starterOffer.freeCredits;
+                  const state = freeCredits?.state ?? "not_applied";
+                  const programHref = `${basePath}/partners#free-credits`;
+                  return (
+                    <article className={`${starterStyles.card} ${starterStyles.featured}`}>
+                      <div className={starterStyles.body}>
+                        <div className={starterStyles.top}>
+                          <span className={`${starterStyles.tag} ${starterStyles.tagGreen}`}>Free credits for creators</span>
+                          <span className={starterStyles.index}>Option 02</span>
+                        </div>
+                        <h2>Get your first video free</h2>
+                        <p className={starterStyles.sub}>
+                          Post a video with <b>#AIVideosUGC</b> and we will credit your account once we review it.
+                        </p>
+                        <ol className={starterStyles.steps}>
+                          <li>
+                            <span className={starterStyles.n}>1</span>
+                            <span><b>Post your video</b><span>Share it on TikTok, Instagram or YouTube Shorts with #AIVideosUGC.</span></span>
+                          </li>
+                          <li>
+                            <span className={starterStyles.n}>2</span>
+                            <span><b>Send us the link</b><span>Paste the post link on the programme page.</span></span>
+                          </li>
+                          <li>
+                            <span className={starterStyles.n}>3</span>
+                            <span><b>Get 20–60 credits</b><span>Reviewed by hand, usually within 48 hours.</span></span>
+                          </li>
+                        </ol>
+                        <p className={starterStyles.metaLine}>One grant per creator<i>·</i>20–60 credits<i>·</i>Credits never expire</p>
+                        {state === "pending" ? <p className={starterStyles.sub} style={{ marginTop: 8 }}>Your application is <b>pending review</b> — you&rsquo;ll get an email either way, usually within 48 hours.</p> : null}
+                        {state === "approved" ? <p className={starterStyles.sub} style={{ marginTop: 8 }}>You received <b>{freeCredits?.state === "approved" ? freeCredits.grantedCredits : 0} free credits</b>. Use them to create your first video now.</p> : null}
+                        {state === "rejected" ? <p className={starterStyles.sub} style={{ marginTop: 8 }}>Your last application was not approved. You can submit another video post from the programme page.</p> : null}
+                      </div>
+                      <div className={starterStyles.action}>
+                        <div className={starterStyles.value}>
+                          {state === "approved" ? `${freeCredits?.state === "approved" ? freeCredits.grantedCredits : 0} credits` : "20–60 credits"}
+                          <small>Enough for one 15s video</small>
+                        </div>
+                        {state === "approved" ? (
+                          <button className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} onClick={() => void navigate("video")} type="button">
+                            <span>Create your video</span><ArrowRight size={15} />
+                          </button>
+                        ) : (
+                          <a className={`${starterStyles.button} ${state === "pending" ? starterStyles.buttonGhost : starterStyles.buttonPrimary}`} href={programHref}>
+                            <span>{state === "pending" ? "View your application" : state === "rejected" ? "Try again on the programme page" : "Join the free-credits programme"}</span><ArrowRight size={15} />
+                          </a>
+                        )}
+                        <span className={starterStyles.footnote}>Reviewed by hand.</span>
+                      </div>
+                    </article>
+                  );
+                })()}
               </section>
-            );
-          })()}
-        </>}
+            )}
+
+            <p className={starterStyles.metaLine} style={{ marginTop: 24 }}>Both offers are for new accounts. Standard credit packs are always available from the pricing page.</p>
+          </div>
+        )}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
         {view === "inspirations" && <EmbeddedInspirations initialPage={initialInspirations} endpoint={`${api}/inspirations`} basePath={basePath} />}
