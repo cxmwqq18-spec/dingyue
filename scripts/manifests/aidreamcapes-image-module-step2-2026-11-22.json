@@ -1,0 +1,262 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-22T12:56:35.177Z",
+  "applying": false,
+  "editCount": 41,
+  "pages": [
+    "/",
+    "/ai-image-generation",
+    "/ai-image-generation/change-background",
+    "/ai-image-generation/colorway-variations",
+    "/ai-image-generation/packshot-multi-angle",
+    "/ai-image-generation/packaging-mockup"
+  ],
+  "edits": [
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/1/image",
+      "beforeHash": "558728bf441379225b685c4b65348229a52dce0aedc478aca70ef545c2703ef8",
+      "afterHash": "b732874eaa429e1798f692175935dffdea2e86ec4b70e8ffc5d0ec88a96910c1"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/1/alt",
+      "beforeHash": "6321a783e127e88f2408f460cb45116da3eb109b79beff5111d61ce45fbbf93d",
+      "afterHash": "c38d6e4b7e7b64f0bde86941f5e2550ad8a55e3f7255aebf23476227133c5dab"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/2/image",
+      "beforeHash": "ca1757f61af7b7152a9b357af3bd59a144b73360e719984cd988b4447eb7e66c",
+      "afterHash": "88d0b3abc7e564a7b50cd08a28204f78375a5e2dc880f48c6a8ded86f2b1809e"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/2/alt",
+      "beforeHash": "b513a33c37e87bfb35a005229607b2f0e74dfe1d0eb10cc5fb7ed41aa14dc194",
+      "afterHash": "f8e39b80d5aa36dd97913d301d3ba0191621c0b1d49e54e8bfdef4c0e57be110"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/3/image",
+      "beforeHash": "8a0eb426792ca5081005bd470d312a957fd133f9c6ecab90700c2fc3ed252bb4",
+      "afterHash": "be755609d69fc59ab6b1429d7d69313872e46a2f9b43bf6818771e6fc8180a43"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/3/alt",
+      "beforeHash": "4b3234ec6e2d3390a86f30983ff8932a5ac261d2bf3c2cac0997cd9dd5e2e82f",
+      "afterHash": "d79ef050833eb7af5141eb98cc518c5b8d08bc0b4658487dbb61873e2e3a7f23"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/4/image",
+      "beforeHash": "c0c621ee22931e456566b40996187c24c69b0e225b3e1947a29ce6986693fc75",
+      "afterHash": "7b14938d968c0888825ea8126307d022346a0aad468ded1e122e5de2e9c17ca3"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/groups/0/items/4/alt",
+      "beforeHash": "803eecd153e8c2cfb0d23ad5eb6a48151fba7ebccfd7e29936ce3a2e689a31b4",
+      "afterHash": "4156f7a080a3c58574a41d6fc49f060f717a3adfdf9479ff3c105c173953be56"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/0/image",
+      "beforeHash": "d113e3a0a5a13ee82264e670c12720059a3fae90b40ab03faa646e796ad16908",
+      "afterHash": "976e9fbd650ef46c426ae0fb3892b95543b275f5079e1f17dd3454427ac11d25"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/0/alt",
+      "beforeHash": "46921d258339f80c073fa31becf6ffae2201292e5fe9984f5a61ee8b3e82abff",
+      "afterHash": "c9c83fdf40b93130aa95ae69c27d8431bad35934f025fd1d078206b578e5499f"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/1/image",
+      "beforeHash": "88486ec8d96dfbfc7f3d3b93bd66878837fa84209d9ee239f0ab9fd27baf67f2",
+      "afterHash": "58a38033a2a76fc11add29b40f1dd9d6fdb32b29c50f71bb2026d701ea69e2d7"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/1/alt",
+      "beforeHash": "58368ebd8c4eb690b796dcec430358bfced70a83aa20367a1b247708e492f2c9",
+      "afterHash": "dc4b6f696e19449598333f1bbdcc8397f7cf22e10eced0c28588c3accb83e517"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/2/image",
+      "beforeHash": "571a418ee52b1279b0e34dafd1b451e74ebee261b0d36814c9d8dd8ecfba0931",
+      "afterHash": "84a7c74c36e08d70eb6624d9e2d32283584f63225d7205b405479cab9bf3cf43"
+    },
+    {
+      "slug": "/",
+      "path": "siteNavigation/menus/1/popular/2/alt",
+      "beforeHash": "c0c94048d5aae79b8e728d68812ba96160c8245d234c6735d1387aadf7215136",
+      "afterHash": "673e763735ffe121c98e10f01bb2cf6f528d87d0573c5a8db5f1b23a3ec27702"
+    },
+    {
+      "slug": "/ai-image-generation",
+      "path": "photoTools/lifestyle-photos/image",
+      "beforeHash": "c96aa07e8278a70c64bbd7bd0290e3fd7be26c12d1ac93aa44e8930715d75d85",
+      "afterHash": "623c2594244acf92f87d0e6e386c50bdba8e3fceab0c98508027ca6f78300175"
+    },
+    {
+      "slug": "/ai-image-generation",
+      "path": "photoTools/model-photos/image",
+      "beforeHash": "e91e51241739ebbeb87c80c82642d882d76938f563923835824bb514b56c260c",
+      "afterHash": "45aa9e495cc13ecefa67ea45bd2e35dde3a7d82cff66b9c3e5eee1cc77161d3c"
+    },
+    {
+      "slug": "/ai-image-generation",
+      "path": "photoTools/change-background/image",
+      "beforeHash": "999975f474af40854f74277e5a9ec25b6c78a9287c412c9ed229ea44fa41f22e",
+      "afterHash": "884c6010429b9fed97b6d0a884fa3c5bed468f128074f3ee3b48015c7c205215"
+    },
+    {
+      "slug": "/ai-image-generation",
+      "path": "photoTools/social-ad-photos/image",
+      "beforeHash": "df3975b4161b931b288357ad87801c53d7325ace18319270356ae3bcb643352e",
+      "afterHash": "1340791726c671df42ea652ee9619a5396620acadd22594014a3a877a5d8afcd"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "heroMedia/before",
+      "beforeHash": "d5ccb742135c4cc0328556c5fbb2fee67bee713b593e77d70928c2e13b62bef0",
+      "afterHash": "e585d3fa0b9710a3a2a02a2d0192cd33a4c9accbbfa804d8cf0803e12cfedd15"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "heroMedia/after",
+      "beforeHash": "da95f3e3430036b74d03c8870ec48e1d2f62fe6bf8615d8257c6903577c9fb89",
+      "afterHash": "d92ee2e8991820b9a79d77cb9dc5fc5fe75fb331722d0356aa56d54568427b2b"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "visual/steps/source",
+      "beforeHash": "fc565ce7f214fbe6fb62276d87c97142b0f597d89eb726b35763a73688759546",
+      "afterHash": "9707c61b22581b7467ffb4fa6b41d50b47ac121ed4e160d88aa7227fa90f09e8"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "visual/steps/result",
+      "beforeHash": "7a7b344f0d04d80b02ea1ab929b4a8bb7400853b9b3cc6867141f3de9c874b61",
+      "afterHash": "ea967ceb4caf108dc8326fa81e191d227bfe48824f2dade7e27311e8c214db03"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "visual/steps/prompt",
+      "beforeHash": "a15a9909a0fdd566178352e63bfc57c7f797055d68339d3359d75198f63222ec",
+      "afterHash": "341867c7b19a1e48f7d17b1de69a9d747f134bcabb922417136d89d435f7abdb"
+    },
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "path": "visual/steps/result",
+      "beforeHash": "48b76ae942d0fe800f5e74b2ad1ae8d474f5fa05d089fed76b7347c00d92625b",
+      "afterHash": "b285f143c74f8b4b2bd05901d558ea12b94b8b5bc43b74e93cf5dd22dd7423f5"
+    },
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "path": "visual/picker/cards/0/image",
+      "beforeHash": "48b76ae942d0fe800f5e74b2ad1ae8d474f5fa05d089fed76b7347c00d92625b",
+      "afterHash": "b285f143c74f8b4b2bd05901d558ea12b94b8b5bc43b74e93cf5dd22dd7423f5"
+    },
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "path": "templateDefinition/card/image",
+      "beforeHash": "48b76ae942d0fe800f5e74b2ad1ae8d474f5fa05d089fed76b7347c00d92625b",
+      "afterHash": "b285f143c74f8b4b2bd05901d558ea12b94b8b5bc43b74e93cf5dd22dd7423f5"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "heroMedia/before",
+      "beforeHash": "508ac06f7977fac1316480703fa7765bef511b1e9ee7941a1d3d3a20a0f9c889",
+      "afterHash": "eb44922301e0caa25bc8cef073cf1fe0da46098f859c039724571a81d0e2c0c2"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "heroMedia/after",
+      "beforeHash": "48b37c8117130d728e461476dae0ff1343e2eab9093a5d4d1ed0aa2dbb7c7be4",
+      "afterHash": "602a0b90c166fd9d152694d5741032ee3b8d1c541f62bdee5039471f60a519ec"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/steps/source",
+      "beforeHash": "7bcd18d374adc4c09dae3d3a123402ec4fd1e222f73d5b9fa95a15a8af1e8e30",
+      "afterHash": "82cf49b92d492276f69e7afea66957388a3a67ef01ddafe09156250d1363371b"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/steps/result",
+      "beforeHash": "facc8a82d010718b8b5debef90ff0fb4a3f39771f4a71d9a2b653fd21dbfbc8f",
+      "afterHash": "96b5d225d9a4fa8e4a5e99d2cfe148f34e6a2c1e9daa174b8c7892d193598cad"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/picker/cards/0/image",
+      "beforeHash": "facc8a82d010718b8b5debef90ff0fb4a3f39771f4a71d9a2b653fd21dbfbc8f",
+      "afterHash": "96b5d225d9a4fa8e4a5e99d2cfe148f34e6a2c1e9daa174b8c7892d193598cad"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "templateDefinition/card/image",
+      "beforeHash": "facc8a82d010718b8b5debef90ff0fb4a3f39771f4a71d9a2b653fd21dbfbc8f",
+      "afterHash": "96b5d225d9a4fa8e4a5e99d2cfe148f34e6a2c1e9daa174b8c7892d193598cad"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/steps/prompt",
+      "beforeHash": "3ead9ad0a842e7cb5fdf81d333736f96547cad53808d3b0af06ea1ed16f7c600",
+      "afterHash": "ca7ba80ff282c88739cdb9be28e9ab2656c951ffafc0bbb16cdbeff21f94cd00"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "gallery/images",
+      "beforeHash": "452487fa52f8e21d9342b30e9532b121b84723aea488a8d88738e9a16a6df58b",
+      "afterHash": "28ac52001c5333455818373defe13ad437b70df958890b0ba3c3e0eed9e7e6e9"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/strip",
+      "beforeHash": "97f760d5514b1b98203ebb8a6b8d2065414bb3ade0c797f88964219aec2a1149",
+      "afterHash": "dcd855328e37dacf0f78c689458e521d4b881e25f13b14a0eb62c7c883949892"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "heroMedia/image",
+      "beforeHash": "cb8a26417c71cb0eda1795a12620b2120317b6b991ddfa9c7b9cd6a9a665a415",
+      "afterHash": "bbcdce26c01be3092e49cdcb017a34f26467f7bb63a85b3d35f2019283bfe609"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "visual/steps/source",
+      "beforeHash": "36edaaf4c6e8dce8eb5517e3e84edc3ff3a3efaa2d50899032507af7feceb807",
+      "afterHash": "1417cb697c4eb7f0b7b9e93eae4737ba2a0c3f5330d73eb676809ff4ccbe6fed"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "visual/steps/result",
+      "beforeHash": "40dd27a96cf3041e12cbf57f7be9067f194eea240d4ee11fec4041b98799f45e",
+      "afterHash": "37697bd4a73c7d18ef517dfd7175839758841ea6eb1934671f683998a920c5d9"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "visual/picker/cards/0/image",
+      "beforeHash": "40dd27a96cf3041e12cbf57f7be9067f194eea240d4ee11fec4041b98799f45e",
+      "afterHash": "37697bd4a73c7d18ef517dfd7175839758841ea6eb1934671f683998a920c5d9"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "templateDefinition/card/image",
+      "beforeHash": "40dd27a96cf3041e12cbf57f7be9067f194eea240d4ee11fec4041b98799f45e",
+      "afterHash": "37697bd4a73c7d18ef517dfd7175839758841ea6eb1934671f683998a920c5d9"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "visual/steps/prompt",
+      "beforeHash": "19028ffe31fa82c1f66386164cc5e524c399fd8c815634e074effba14f65b402",
+      "afterHash": "548bb83a2f57facf9b661ed377495be7c6a5e6894c280fa2951984f6cc20b346"
+    }
+  ]
+}
