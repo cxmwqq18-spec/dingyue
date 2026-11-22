@@ -84,7 +84,12 @@ type ActionQuote = { available: boolean; credits: number | null; currency: "cred
 type PendingProductBrief = Omit<ConfirmedProductBrief, "candidateImages">;
 type ImageResult = { jobs: { id: string; status: string; creditsReserved: number; createdAt?: string }[]; assets: { id: string; jobId?: string; label: string; previewUrl: string; downloadUrl?: string }[] };
 /** $1 first-video offer state resolved server-side (never from client hints). */
-type StarterOfferState = { state: "eligible" | "purchased" | "consumed" | "ineligible"; priceId: string | null };
+type StarterFreeCredits =
+  | { state: "not_applied" }
+  | { state: "pending"; appliedAt: string }
+  | { state: "approved"; grantedCredits: number }
+  | { state: "rejected" };
+type StarterOfferState = { state: "eligible" | "purchased" | "consumed" | "ineligible"; priceId: string | null; freeCredits?: StarterFreeCredits };
 
 type GuestDraftHandoff = {
   version: 1;
@@ -947,8 +952,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const loadStarterOffer = useCallback(async () => {
     if (!customerId) return;
     try {
-      const result = await request<{ state: StarterOfferState["state"]; priceId?: string | null }>("/starter-offer");
-      setStarterOffer({ state: result.state, priceId: result.priceId ?? null });
+      const result = await request<{ state: StarterOfferState["state"]; priceId?: string | null; freeCredits?: StarterFreeCredits }>("/starter-offer");
+      setStarterOffer({ state: result.state, priceId: result.priceId ?? null, freeCredits: result.freeCredits });
     } catch { /* The offer entry stays hidden until the state resolves. */ }
   }, [customerId, request]);
   useEffect(() => {
@@ -2194,6 +2199,31 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <button className={styles.linkButton} onClick={() => void navigate("home")}><span>Back to Home</span><ArrowRight size={15} /></button>
             </div>
           </section>}
+          {customer && starterOffer && (() => {
+            // Creator free credits reuse the public /partners#free-credits
+            // programme; the starter page only mirrors its status and points
+            // the visitor at the right place to act.
+            const freeCredits = starterOffer.freeCredits;
+            const state = freeCredits?.state ?? "not_applied";
+            const programHref = `${basePath}/partners#free-credits`;
+            return (
+              <section className={styles.panel} aria-live="polite">
+                <span className={styles.badge}>FREE CREDITS FOR CREATORS</span>
+                <h2 style={{ margin: "10px 0 0" }}>Get your first video free</h2>
+                <p className={styles.help} style={{ margin: "6px 0 0" }}>
+                  Post a video with <b>#AIVideosUGC</b>, submit the link, and once we review it your account gets <b>20&ndash;60 credits</b> &mdash; enough for a full 15s video. One grant per creator &middot; Credits never expire &middot; Reviewed by hand, usually within 48 hours.
+                </p>
+                {state === "pending" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>Your application is <b>pending review</b>. A real person reads every application &mdash; you&rsquo;ll get an email either way, usually within 48 hours.</p> : null}
+                {state === "approved" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>You received <b>{freeCredits?.state === "approved" ? freeCredits.grantedCredits : 0} free credits</b>. Use them to create your first video now.</p> : null}
+                {state === "rejected" ? <p className={styles.help} style={{ margin: "8px 0 0" }}>Your last application was not approved. You can submit another video post from the programme page.</p> : null}
+                <div className={styles.footerActions}>
+                  {state === "approved"
+                    ? <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("video")}><span>Create your video</span><ArrowRight size={15} /></button>
+                    : <a className={`${styles.button} ${state === "pending" ? "" : styles.primary}`} href={programHref}>{state === "pending" ? "View your application" : state === "rejected" ? "Try again on the programme page" : "Join the free-credits program"}<ArrowRight size={15} /></a>}
+                </div>
+              </section>
+            );
+          })()}
         </>}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
