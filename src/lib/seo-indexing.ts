@@ -1134,8 +1134,12 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           continue;
         }
         if (data.templateDirectory) {
-          const cards = await resolveDirectoryMedia(listing.path);
-          addListingPages(listing.path, sitemapPageCount(cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          // Facet directories paginate from their placed-media count, which is
+          // only known after resolveDirectoryMedia() scans every placement.
+          // Doing that for ~28 directories inside the sitemap read transaction
+          // pushed the whole response past its 15s limit, so those pages stay
+          // crawlable through their pager and self canonicals instead of
+          // being enumerated here. Their page 1 entries are still submitted.
           continue;
         }
         if (data.id === "video-hub") {
