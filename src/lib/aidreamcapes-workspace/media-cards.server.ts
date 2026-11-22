@@ -254,8 +254,17 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
   // treats both as ownership). A slug claimed as an alias anywhere therefore
   // has more than one owner row and must stay out of the sitemap.
   const aliasClaims = new Set<string>();
+  // Labels let the enumeration tell the two alias kinds apart: a same-title
+  // alias is a duplicate shortcut (the resolver redirects it, so it stays out
+  // of the sitemap), a distinct-title alias is its own example page and must be
+  // listed (approved 2026-11-22).
+  const labelBySlug = new Map<string, string>();
   for (const { cards } of rowCards) {
     for (const raw of cards) {
+      if (!raw) continue;
+      const slug = str(raw.publicSlug);
+      const label = (str((raw as { label?: unknown }).label) ?? "").trim().toLowerCase();
+      if (slug && label && !labelBySlug.has(slug)) labelBySlug.set(slug, label);
       const aliases = raw.publicAliases;
       if (!Array.isArray(aliases)) continue;
       for (const alias of aliases) {
@@ -268,8 +277,13 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
   const byKey = new Map<string, Candidate>();
   for (const { row, cards } of rowCards) {
     for (const raw of cards) {
+      if (!raw) continue;
       const card = toDetailCard(raw);
-      if (!card || !card.publicSlug || str(raw.detailAliasOf) || aliasClaims.has(card.publicSlug)) continue;
+      const aliasOf = str(raw.detailAliasOf);
+      const aliasLabel = (str((raw as { label?: unknown }).label) ?? "").trim().toLowerCase();
+      const targetLabel = aliasOf ? labelBySlug.get(aliasOf) : undefined;
+      const distinctAlias = Boolean(aliasOf) && targetLabel !== undefined && targetLabel !== aliasLabel;
+      if (!card || !card.publicSlug || (aliasOf && !distinctAlias) || aliasClaims.has(card.publicSlug)) continue;
       const key = `${card.kind}:${card.publicSlug}`;
       const existing = byKey.get(key);
       if (existing) {

@@ -169,6 +169,16 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
       const targetCard = cardsFromContent(targetPage.contentJson)
         .find((card) => card.publicSlug === aliasOf && toDetailCard(card)?.kind === kind);
       const targetIdentity = presetGenerationIdentity(presetFromCard(targetPage, targetPage.slug, targetCard));
+      // Same-title shortcuts are duplicates of the target detail page: the alias
+      // URL keeps answering with a permanent redirect so its inbound links and
+      // ranking signals consolidate instead of competing (approved 2026-11-22).
+      // Distinct-title aliases are separate examples and keep their own page.
+      const aliasLabel = (str((rawCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
+      const targetLabel = (str((targetCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
+      const sameTitleAlias = Boolean(aliasLabel) && aliasLabel === targetLabel;
+      if (sameTitleAlias && !str(targetCard?.detailAliasOf)) {
+        return resolveMediaDetail(kind, aliasOf, false, targetPages);
+      }
       // Chains/cycles fail closed to the original detail. Single-hop refs only.
       // A placeholder alias (no video of its own) completes its merge into the
       // target even when the target carries the real mp4 — the alias URL must
