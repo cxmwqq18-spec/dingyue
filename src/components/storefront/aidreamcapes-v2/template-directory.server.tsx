@@ -1,5 +1,6 @@
 import "server-only";
 import { cache } from "react";
+import { permanentRedirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { ThemeRenderer } from "@/components/theme-renderer";
@@ -74,6 +75,37 @@ function toGalleryItem(entry: Awaited<ReturnType<typeof listAidreamcapesExampleG
   };
 }
 
+/** The page number a listing request asks for; invalid values resolve to 1. */
+function requestedListingPage(query: Record<string, string | string[] | undefined> | undefined): number {
+  const raw = Array.isArray(query?.page) ? query?.page[0] : query?.page;
+  const value = Math.floor(Number(raw));
+  return Number.isFinite(value) && value >= 1 ? value : 1;
+}
+
+/** Keep only the listing filters that change the result set; tracking params
+ * and the page parameter itself do not belong on the redirect target. */
+const LISTING_FILTER_KEYS = new Set(["kind", "type", "industries", "platforms", "occasions"]);
+
+/** A page past the last real page has no content of its own. Send it to the
+ * last page instead of rendering a clamped copy with a "Page N" canonical. */
+function redirectPastLastPage(
+  path: string | undefined,
+  requested: number,
+  totalPages: number,
+  query: Record<string, string | string[] | undefined> | undefined
+): void {
+  if (!path || requested <= totalPages) return;
+  const search = new URLSearchParams();
+  for (const [key, raw] of Object.entries(query ?? {})) {
+    if (!LISTING_FILTER_KEYS.has(key)) continue;
+    for (const value of Array.isArray(raw) ? raw : raw === undefined ? [] : [raw]) {
+      if (value) search.append(key, value);
+    }
+  }
+  if (totalPages > 1) search.set("page", String(totalPages));
+  permanentRedirect(`${path}${search.size ? `?${search.toString()}` : ""}`);
+}
+
 export async function AidreamcapesTemplateRenderer(props: Parameters<typeof ThemeRenderer>[0]) {
   const sections = { ...props.page.sections };
   for (const [id, section] of Object.entries(sections)) {
@@ -92,7 +124,9 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const kind = props.query?.kind === "video" || props.query?.kind === "photo" ? props.query.kind : undefined;
       const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => !kind || entry.kind === kind);
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
-      const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
+      const requestedPage = requestedListingPage(props.query);
+      redirectPastLastPage(props.pagePath ?? "/templates", requestedPage, totalPages, props.query);
+      const page = Math.min(requestedPage, totalPages);
       const start = (page - 1) * pageSize;
       const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
       resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
@@ -133,7 +167,9 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const orderedMedia = [...filteredMedia].sort((left, right) => ((left.video ? 0 : 1) - (right.video ? 0 : 1)));
       const mediaTotal = orderedMedia.length;
       const mediaTotalPages = Math.max(1, Math.ceil(mediaTotal / MEDIA_PAGE_SIZE));
-      const mediaPage = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), mediaTotalPages);
+      const requestedPage = requestedListingPage(props.query);
+      redirectPastLastPage(props.pagePath, requestedPage, mediaTotalPages, props.query);
+      const mediaPage = Math.min(requestedPage, mediaTotalPages);
       const mediaStart = (mediaPage - 1) * MEDIA_PAGE_SIZE;
       resolved = {
         ...data,
@@ -192,11 +228,15 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       // first-page slice and never paginates.
       const visual = resolved.visual as { picker?: { cards?: unknown[] } } | undefined;
       const cards = visual?.picker?.cards;
-      if (props.pagePath && resolved.id !== "home" && Array.isArray(cards) && cards.length > MEDIA_PAGE_SIZE) {
+      if (props.pagePath && resolved.id !== "home" && Array.isArray(cards)) {
         const total = cards.length;
         const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
-        const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
-        resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };
+        const requestedPage = requestedListingPage(props.query);
+        redirectPastLastPage(props.pagePath, requestedPage, totalPages, props.query);
+        if (total > MEDIA_PAGE_SIZE) {
+          const page = Math.min(requestedPage, totalPages);
+          resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };
+        }
       }
     }
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
