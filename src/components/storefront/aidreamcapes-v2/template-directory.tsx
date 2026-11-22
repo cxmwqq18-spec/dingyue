@@ -95,7 +95,7 @@ function preloadMediaGridLcp(items: ReadonlyArray<GalleryItem | DirectoryMediaCa
 /** The owner-approved internal-link module ("Related Pages" cards). Data-driven:
  * every directory page carries its own relatedLinks list, so the module renders
  * wherever the page provides it without per-page code. */
-function DirectoryRelatedSection({ data, r }: { data: V2Data; r: V2Resolvers }) {
+export function DirectoryRelatedSection({ data, r }: { data: V2Data; r: V2Resolvers }) {
   const links = data.relatedLinks as { label: string; href: string }[] | undefined;
   if (!Array.isArray(links) || !links.length) return null;
   const title = typeof data.relatedH2 === "string" && data.relatedH2 ? data.relatedH2 : "Related Pages";

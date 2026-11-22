@@ -1,4 +1,5 @@
 import { Crumbs, Img, PageHero } from "./parts";
+import { DirectoryRelatedSection } from "./template-directory";
 import type { V2Data, V2Image, V2Resolvers } from "./types";
 import styles from "./platform-directory.module.css";
 
@@ -16,5 +17,6 @@ export function PlatformDirectory({ data, r }: { data: V2Data; r: V2Resolvers })
         </article>)}
       </div>
     </section>
+    <DirectoryRelatedSection data={data} r={r} />
   </>;
 }

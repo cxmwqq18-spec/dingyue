@@ -54,7 +54,7 @@ const PATCHES = [
     { label: "Browse by occasion", href: "/occasions" },
     { label: "Beauty & Skincare", href: "/industries/beauty-skincare" },
     { label: "E-commerce", href: "/industries/e-commerce" }
-  ] },
+  ], ensureBlockOrderRelated: true },
   { slug: "/industries/beauty-skincare", links: [{ label: "All examples", href: "/templates" }] },
   { slug: "/industries/e-commerce", links: [{ label: "All examples", href: "/templates" }] },
   { slug: "/platforms/tiktok-ads", links: [{ label: "All examples", href: "/templates" }] }
@@ -100,6 +100,10 @@ try {
     assert.equal(links.length, links.filter((link, index) => links.findIndex((other) => other.href === link.href) === index).length, `${patch.slug}: duplicate href remained.`);
     assert(!links.some((link) => link.href === patch.slug), `${patch.slug}: self link remained.`);
     data.relatedLinks = links;
+    if (patch.ensureBlockOrderRelated && Array.isArray(data.blockOrder) && !data.blockOrder.includes("related")) {
+      const faqAt = data.blockOrder.indexOf("faq");
+      data.blockOrder.splice(faqAt >= 0 ? faqAt : data.blockOrder.length, 0, "related");
+    }
     plans.push({
       slug: patch.slug,
       row,
