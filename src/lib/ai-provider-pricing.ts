@@ -33,12 +33,7 @@ export type AiProviderPriceInput = {
   audioInputCount?: number | null;
   audioInputSeconds?: number | null;
   outputCount?: number | null;
-  /** 首条视频 $1 专享价：仅 15s 视频档生效（其他时长/模型不折扣；provider 作用域由调用方限定） */
-  trialOffer?: boolean;
 };
-
-/** 新用户首条 15s 视频的专享积分价（正常 15s 档为 20）。 */
-export const FIRST_VIDEO_TRIAL_15S_CREDITS = 8;
 
 export type AiProviderPriceBreakdown = {
   /** null 表示该模型未启用模型级计价，调用方应回落到主题价/应用价 */
@@ -151,12 +146,6 @@ export function resolveAiProviderPrice(input: AiProviderPriceInput): AiProviderP
   inputSurcharge += nonNegative(input.priceVideoInputPerSecond) * nonNegative(input.videoInputSeconds);
   inputSurcharge += nonNegative(input.priceAudioInput) * nonNegative(input.audioInputCount);
   inputSurcharge += nonNegative(input.priceAudioInputPerSecond) * nonNegative(input.audioInputSeconds);
-
-  // 首条视频专享价：命中 15s 视频档时覆盖时长价（保持附加费口径不变）。
-  if (input.trialOffer && input.capabilityType === "video" && input.durationSeconds === 15) {
-    unitCredits = FIRST_VIDEO_TRIAL_15S_CREDITS;
-    appliedDimension = "duration";
-  }
 
   const finalUnit = Math.max(0, unitCredits + inputSurcharge);
   return {

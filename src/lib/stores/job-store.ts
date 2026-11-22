@@ -12,7 +12,7 @@ import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDura
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
 import { videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
-import { firstVideoTrialAppliesToProvider, providerCreditsForRequest, selectBillingProvider } from "@/lib/ai-provider-billing";
+import { providerCreditsForRequest, selectBillingProvider } from "@/lib/ai-provider-billing";
 import { consumeFirstVideoOfferTx } from "@/lib/stores/first-video-offer-store";
 import { isGeminiVideoFrameMimeType, type VideoProviderFailure } from "@/lib/video-provider-policy";
 import { videoProviderCreateTimeoutMs, videoProviderWorkerTimeoutMs } from "@/lib/video-provider-timeouts";
@@ -745,8 +745,7 @@ function providerRecordIsRunnable(provider: {
 
 /**
  * 计算模型级价格；返回 null 表示本次请求没有命中开启 priceEnabled 的通道，
- * 调用方应回落到主题价/应用价。trialApplied 标记专享价确实生效（同一次
- * 报价/扣费口径必须一致，见 createGenerationJobInTx 的 offer 消费）。
+ * 调用方应回落到主题价/应用价。
  */
 async function resolveModelPricedCreditsForJob(
   tx: Tx,
@@ -761,7 +760,7 @@ async function resolveModelPricedCreditsForJob(
     outputCount: number;
     firstVideoTrial?: boolean;
   }
-): Promise<{ credits: number | null; trialApplied: boolean }> {
+): Promise<{ credits: number | null }> {
   const providerType = platformProviderTypeForAppType(params.siteAiApp.aiApp.appType);
   const selection = jsonObject<Record<string, unknown>>(params.requestJson?.providerSelection as Prisma.JsonValue | undefined);
   const fields = jsonObject<Record<string, unknown>>(params.requestJson?.fields as Prisma.JsonValue | undefined);
@@ -798,7 +797,7 @@ async function resolveModelPricedCreditsForJob(
     },
     orderBy: [{ priority: "asc" }, { preferred: "desc" }]
   });
-  if (!providers.some((provider) => provider.priceEnabled)) return { credits: null, trialApplied: false };
+  if (!providers.some((provider) => provider.priceEnabled)) return { credits: null };
 
   const family = typeof params.requestJson?.videoModelFamily === "string"
     ? params.requestJson.videoModelFamily
@@ -809,7 +808,7 @@ async function resolveModelPricedCreditsForJob(
   const billingProvider = selectionProviderId
     ? providers.find((provider) => provider.id === selectionProviderId) ?? null
     : selectBillingProvider({ providers, providerType, modelOverride, modelFamily: family });
-  if (!billingProvider?.priceEnabled) return { credits: null, trialApplied: false };
+  if (!billingProvider?.priceEnabled) return { credits: null };
 
   // 输入模态计费：按客户实际提供的素材类型统计。
   // 素材表不持久化时长，视频/音频的按秒计费只统计明确传入时长的输入，
@@ -849,13 +848,9 @@ async function resolveModelPricedCreditsForJob(
     videoInputSeconds,
     audioInputCount,
     audioInputSeconds,
-    outputCount: 1,
-    trialOffer: Boolean(params.firstVideoTrial)
+    outputCount: 1
   });
-  // 与 resolveAiProviderPrice 的生效条件保持一致：trialOffer 只有在命中
-  // 专享通道的 15s 视频档时才真正折扣（provider 作用域在 providerCreditsForRequest 内再校验）。
-  const trialApplied = Boolean(params.firstVideoTrial) && providerType === "video" && params.durationSeconds === 15 && firstVideoTrialAppliesToProvider(billingProvider?.id);
-  return { credits: breakdown ? breakdown.unitCredits : null, trialApplied };
+  return { credits: breakdown ? breakdown.unitCredits : null };
 }
 
 async function normalizeProviderSelectionForAvailability(
@@ -1781,10 +1776,12 @@ async function createGenerationJobInTx(tx: Tx, params: {
     }
     const reserve = await reserveCreditsForJob(tx, job);
     ledger = reserve.ledger;
-    // 首条视频专享价：本次扣费确实按 8 积分档生效时，同事务把 offer 置为 consumed。
-    // 唯一 customerId 保证并发下单条 job 消费成功，失败方按正常价重报价（409）。
-    // P0 简化：后续 job 失败不回滚 consumed——积分退款兜底损失，offer 不重新开放。
-    if (reserve.reserved && params.firstVideoTrial && modelPriced.trialApplied) {
+    // $1 starter offer: the 20 credits are granted at purchase (normal pricing
+    // afterwards), so the offer row is consumed with the first billed 15s video.
+    // The unique customerId keeps concurrent jobs single-shot; a losing job
+    // re-quotes at the normal price (409). A later failure does not reopen the
+    // offer — the credits refund covers the loss.
+    if (reserve.reserved && params.firstVideoTrial) {
       const consumed = await consumeFirstVideoOfferTx(tx, { siteId: params.siteId, customerId: params.customerId });
       if (!consumed) throw new StoreError("workspace_price_quote_changed", 409);
     }

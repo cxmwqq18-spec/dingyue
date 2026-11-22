@@ -1,0 +1,35 @@
+{
+  "confirmName": "aivideosugc-first-video-20-credits-2026-11-22",
+  "siteId": "site_aidreamcapes",
+  "description": "The $1 starter offer becomes a one-time 20-credit pack (enough for one 15s video at the normal price); the per-video 8-credit discount copy is replaced everywhere.",
+  "priceId": "price_aidreamcapes_first_video",
+  "creditsGranted": 20,
+  "productId": "prod_aidreamcapes_first_video",
+  "productSummary": "One-time $1 starter offer: 20 credits for the customer's first 15s product video.",
+  "pages": [
+    {
+      "slug": "/",
+      "path": "sections/v2_main/settings/data/promoStrip/cards/1/body",
+      "before": "New here? Full quality, no watermark, no subscription. 8 credits instead of 20.",
+      "after": "New here? Full quality, no watermark, no subscription. 20 credits — one full 15s video."
+    },
+    {
+      "slug": "/pricing",
+      "path": "sections/v2_main/settings/data/promoPopup/priceWas",
+      "before": "$2.40 list",
+      "after": "$2.80 list"
+    },
+    {
+      "slug": "/pricing",
+      "path": "sections/v2_main/settings/data/promoPopup/priceOff",
+      "before": "58% OFF",
+      "after": "64% OFF"
+    },
+    {
+      "slug": "/pricing",
+      "path": "sections/v2_main/settings/data/promoPopup/priceNote",
+      "before": "8 credits · auto-applied",
+      "after": "20 credits · one 15s video"
+    }
+  ]
+}

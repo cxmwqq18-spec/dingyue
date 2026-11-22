@@ -14,7 +14,7 @@ import { videoProviderAvailabilityReason } from "@/lib/video-provider-availabili
 import type { PlatformAiProvider } from "@/lib/types";
 import { videoDurationCreditCost, videoResolutionCreditCost, normalizeVideoDurationSecondsForFrameCount, normalizeVideoResolution } from "@/lib/video-frame-config";
 import { videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
-import { firstVideoTrialAppliesToProvider, providerCreditsForRequest } from "@/lib/ai-provider-billing";
+import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
 import { purchasedFirstVideoOfferExists } from "@/lib/stores/first-video-offer-store";
 import type { VideoModelFamily } from "@/lib/video-frame-config";
 import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, assertWorkspaceSite, sceneSchema } from "./catalogs";
@@ -92,7 +92,6 @@ function workspaceShotCredits(params: {
   imageInputCount: number;
   videoInputCount?: number;
   audioInputCount?: number;
-  trialOffer?: boolean;
 }): number {
   const modelPrice = providerCreditsForRequest(params.provider, {
     capabilityType: "video",
@@ -101,8 +100,7 @@ function workspaceShotCredits(params: {
     imageInputCount: params.imageInputCount,
     videoInputCount: params.videoInputCount ?? 0,
     audioInputCount: params.audioInputCount ?? 0,
-    outputCount: 1,
-    trialOffer: params.trialOffer
+    outputCount: 1
   });
   if (modelPrice) return modelPrice.unitCredits;
   // The shared theme pricing table covers 6/10/15 only. A direct 30s clip
@@ -438,9 +436,10 @@ export async function submitShotGeneration(args: {
   const resolution = normalizeVideoResolution(args.input.options.resolution);
   // 计价统一入口：优先用模型通道价格，未定价时回落到主题价。
   // 与 quoteWorkspaceAction 使用同一函数，避免报价与扣费不一致触发 409。
-  // 首条视频专享价与报价侧同口径：offer 行 + 主打 Wan 通道；job 创建事务会消费 offer。
-  const trialOffer = billedDuration === 15 && firstVideoTrialAppliesToProvider(provider.id)
-    && await purchasedFirstVideoOfferExists(args.siteId, args.customerId);
+  // The $1 starter offer grants its 20 credits at purchase; the video itself is
+  // billed at the normal price. The offer row is consumed with the first 15s
+  // video so the starter page can show "used" instead of "ready" afterwards.
+  const firstVideoTrial = billedDuration === 15 && await purchasedFirstVideoOfferExists(args.siteId, args.customerId);
   const billedCredits = workspaceShotCredits({
     provider,
     theme,
@@ -448,13 +447,12 @@ export async function submitShotGeneration(args: {
     modelFamily,
     resolution,
     imageInputCount: imageAssetIds.length,
-    audioInputCount: audioAssetIds.length,
-    trialOffer
+    audioInputCount: audioAssetIds.length
   });
   if (args.expectedCredits === undefined || args.expectedCredits !== billedCredits) throw new WorkspaceError("workspace_price_quote_changed", 409);
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
-    skipWorkerDispatch: true, includeWorkerPayload: true, reserveFromTaskHold: args.holdTaskId ? { taskId: args.holdTaskId } : undefined, firstVideoTrial: trialOffer,
+    skipWorkerDispatch: true, includeWorkerPayload: true, reserveFromTaskHold: args.holdTaskId ? { taskId: args.holdTaskId } : undefined, firstVideoTrial,
     params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds: imageAssetIds,
       // Reference audio rides in a dedicated list so the shared frame pipeline
       // (frame limits, duration normalization, image pricing counts) is untouched.
@@ -557,8 +555,6 @@ export async function quoteComposerGeneration(args: {
     : undefined;
   if (!theme) return { available: false, reason: "workspace_video_theme_binding_required" };
   const duration = capability.durations.find((candidate) => candidate >= planned) ?? args.duration;
-  const trialOffer = Boolean(args.customerId) && duration === 15 && firstVideoTrialAppliesToProvider(provider.id)
-    && await purchasedFirstVideoOfferExists(args.siteId, args.customerId!);
   const credits = workspaceShotCredits({
     provider,
     theme,
@@ -570,13 +566,12 @@ export async function quoteComposerGeneration(args: {
     // reference audio to the relay; video references are not transported and
     // stay unpriced. The composer and the task hold quote on that same basis.
     videoInputCount: args.direct ? 0 : args.videoInputCount ?? 0,
-    audioInputCount: Math.min(args.audioInputCount ?? 0, 1),
-    trialOffer
+    audioInputCount: Math.min(args.audioInputCount ?? 0, 1)
   });
   return { available: true, credits, providerId: provider.id };
 }
 
-export async function quoteWorkspaceAction(args: { siteId: string; action: "generate_shot" | "compose_shot" | "generate_image"; task?: WorkspaceTask; shotId?: string }): Promise<{ available: boolean; credits?: number; providerId?: string; priceBinding?: string; trialOffer?: boolean; reason?: string }> {  assertWorkspaceSite(args.siteId);
+export async function quoteWorkspaceAction(args: { siteId: string; action: "generate_shot" | "compose_shot" | "generate_image"; task?: WorkspaceTask; shotId?: string }): Promise<{ available: boolean; credits?: number; providerId?: string; priceBinding?: string; reason?: string }> {  assertWorkspaceSite(args.siteId);
   if (isWorkspaceStabilityMockMode()) {
     if (args.action === "generate_shot") {
       const shot = args.task?.storyboard?.shots.find((candidate) => candidate.shotId === args.shotId);
@@ -635,9 +630,6 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
       : 1), 0)
     : shot.refKinds.length;
   const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, quotedImageCount, 15, family, args.task.input.direct ? [15, 30] : undefined);
-  // 首条视频专享价：服务端按 offer 行判定，客户端不可传入；只有主打 Wan 通道 15s 档生效。
-  const trialOffer = duration === 15 && firstVideoTrialAppliesToProvider(provider.id)
-    && await purchasedFirstVideoOfferExists(args.siteId, args.task.customerId);
   const credits = workspaceShotCredits({
     provider,
     theme,
@@ -645,15 +637,14 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     modelFamily: family,
     resolution: args.task.input.options.resolution ?? "720p",
     imageInputCount: quotedImageCount,
-    audioInputCount: Math.min(args.task.input.referenceAudios?.length ?? 0, 1),
-    trialOffer
+    audioInputCount: Math.min(args.task.input.referenceAudios?.length ?? 0, 1)
   });
   // The approved per-shot price is 4 credits per second at 720p; higher
   // resolutions carry the same multiplier the composer already quotes, so the
   // guard has to compare against the resolution-adjusted amount.
   const approvedCredits = videoResolutionCreditCost(plannedDuration * 4, args.task.input.options.resolution ?? "720p");
   if (!provider.priceEnabled && credits !== approvedCredits) return { available: false, reason: "workspace_pricing_configuration_mismatch" };
-  return { available: true, credits, providerId: provider.id, trialOffer, priceBinding: crypto.createHash("sha256").update(JSON.stringify({ theme: theme.id, pricing: theme.modelPricing, duration, credits, providerId: provider.id, model: provider.modelType, scene: args.task.sceneId, input: args.task.input, shot })).digest("hex") };
+  return { available: true, credits, providerId: provider.id, priceBinding: crypto.createHash("sha256").update(JSON.stringify({ theme: theme.id, pricing: theme.modelPricing, duration, credits, providerId: provider.id, model: provider.modelType, scene: args.task.sceneId, input: args.task.input, shot })).digest("hex") };
 }
 export async function refreshShotGeneration(args: { siteId: string; customerId: string; generationJobId: string }) {
   assertWorkspaceSite(args.siteId);

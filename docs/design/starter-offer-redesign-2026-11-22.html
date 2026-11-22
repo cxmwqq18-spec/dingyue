@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Starter Offers — design mockup (stacked)</title>
+<style>
+  /* ============ design tokens (existing theme colors kept) ============ */
+  :root {
+    --ink: #141824;
+    --ink-2: #3d4759;
+    --ink-3: #6b7486;
+    --line: #e7eaf3;
+    --line-2: #d9deec;
+    --page: #f5f6fa;
+    --card: #ffffff;
+    --brand: #6d5efc;
+    --brand-soft: #f0edff;
+    --brand-ink: #4b3fd6;
+    --success: #10895f;
+    --success-soft: #e8f7f0;
+    --warn-soft: #fff6e6;
+    --warn-ink: #8a5a12;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --font: "Outfit", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    --shadow: 0 18px 50px -30px rgba(26, 32, 64, .25);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ page shell mockup (workspace chrome is illustrative) ============ */
+  .shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100vh; }
+  .side { background: #fff; border-right: 1px solid var(--line); padding: 22px 16px; }
+  .side-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; margin-bottom: 26px; }
+  .side-brand i { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), #b07cff); display: grid; place-items: center; color: #fff; font-style: normal; font-size: 15px; }
+  .side-group { margin: 18px 0 8px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .side a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: var(--ink-2); text-decoration: none; font-size: 14px; }
+  .side a.active { background: var(--brand-soft); color: var(--brand-ink); font-weight: 600; }
+
+  .main { padding: 28px 40px 56px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 34px; }
+  .topbar .left { display: flex; align-items: center; gap: 12px; }
+  .pill-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-2); background: #fff; color: var(--ink-2); border-radius: 999px; padding: 8px 16px; font: inherit; font-size: 13px; }
+  .topbar .right { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-3); }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: #efe9ff; color: var(--brand-ink); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+
+  /* ============ page header ============ */
+  .page { max-width: 960px; margin: 0 auto; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-ink); background: var(--brand-soft); border-radius: 999px; padding: 6px 12px; }
+  h1 { margin: 16px 0 0; font-size: 32px; line-height: 1.2; letter-spacing: -.02em; font-weight: 700; }
+  .lead { margin: 10px 0 0; max-width: 680px; color: var(--ink-3); font-size: 15px; }
+  .lead b { color: var(--ink-2); font-weight: 600; }
+
+  /* ============ stacked offers ============ */
+  .offers { margin: 26px 0 0; display: grid; gap: 20px; }
+
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 290px;
+    gap: 40px;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 34px;
+    box-shadow: var(--shadow);
+  }
+  .card.featured { border-color: #cfc6ff; background: linear-gradient(100deg, #fbfaff 0%, #ffffff 55%); }
+
+  .card-body { min-width: 0; }
+  .card-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; color: var(--brand-ink); background: var(--brand-soft); border-radius: 999px; padding: 5px 11px; }
+  .tag.green { color: var(--success); background: var(--success-soft); }
+  .index { font-size: 12px; font-weight: 700; color: var(--ink-3); }
+
+  .card h2 { margin: 14px 0 0; font-size: 22px; line-height: 1.28; letter-spacing: -.015em; font-weight: 700; }
+  .card .sub { margin: 8px 0 0; color: var(--ink-3); font-size: 14px; max-width: 600px; }
+  .card .sub b { color: var(--ink-2); }
+
+  .bullets { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .bullets li { display: flex; gap: 10px; color: var(--ink-2); font-size: 14px; }
+  .bullets svg { flex: none; margin-top: 3px; color: var(--brand); }
+
+  .note { margin: 16px 0 0; border: 1px solid var(--line); border-radius: 12px; background: #fafbff; padding: 12px 14px; font-size: 13px; color: var(--ink-3); max-width: 620px; }
+  .note b { display: block; color: var(--ink-2); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+
+  /* steps inside the free-credits card: horizontal on desktop */
+  .steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .steps li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; }
+  .steps .n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--brand-ink); background: #efebff; }
+  .steps b { display: block; font-size: 13.5px; color: var(--ink); }
+  .steps span { display: block; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+  .meta-line { margin: 16px 0 0; font-size: 12px; color: var(--ink-3); }
+  .meta-line i { font-style: normal; opacity: .5; margin: 0 6px; }
+
+  /* right action column */
+  .action { display: flex; flex-direction: column; align-items: stretch; gap: 12px; padding-left: 32px; border-left: 1px solid var(--line); }
+  .price-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .price { font-size: 40px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+  .strike { color: var(--ink-3); font-size: 14px; text-decoration: line-through; }
+  .save { font-size: 12px; font-weight: 700; color: var(--success); background: var(--success-soft); border-radius: 999px; padding: 3px 9px; }
+  .value { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .value small { display: block; font-size: 12px; font-weight: 500; color: var(--ink-3); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 12px; padding: 13px 22px; font: inherit; font-size: 14px; font-weight: 650; cursor: pointer; text-decoration: none; text-align: center; }
+  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 12px 30px -14px rgba(109, 94, 252, .7); }
+  .btn-primary:hover { background: var(--brand-ink); }
+  .btn-ghost { background: #fff; color: var(--ink-2); border: 1px solid var(--line-2); }
+  .btn-note { font-size: 12px; color: var(--ink-3); text-align: center; }
+
+  /* status variants */
+  .states { margin: 34px 0 0; }
+  .states h3 { margin: 0 0 12px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; }
+  .state-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 18px; margin-bottom: 10px; }
+  .state-name { font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .state-copy { font-size: 13px; color: var(--ink-3); }
+  .status { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700; }
+  .status.pending { background: var(--warn-soft); color: var(--warn-ink); }
+  .status.approved { background: var(--success-soft); color: var(--success); }
+  .status.rejected { background: #fdecec; color: #a32626; }
+  .footnote { margin: 30px 0 0; font-size: 12px; color: var(--ink-3); }
+
+  @media (max-width: 1080px) {
+    .card { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+    .action { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 20px; }
+    .steps { grid-template-columns: 1fr; gap: 12px; }
+  }
+  @media (max-width: 980px) {
+    .shell { grid-template-columns: 1fr; }
+    .side { display: none; }
+    .main { padding: 20px 18px 44px; }
+    h1 { font-size: 26px; }
+    .state-row { grid-template-columns: 1fr; }
+    .state-row .status, .state-row .btn { justify-self: start; }
+    .card { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <!-- workspace chrome (illustrative only) -->
+  <aside class="side" aria-hidden="true">
+    <div class="side-brand"><i>A</i> AI Video</div>
+    <a class="active" href="#">Gift&nbsp;&nbsp;First Video Offer</a>
+    <a href="#">Home</a>
+    <a href="#">AI Assistant</a>
+    <a href="#">All Tools</a>
+    <a href="#">Library</a>
+    <div class="side-group">Create</div>
+    <a href="#">Text to Video</a>
+    <a href="#">AI Video</a>
+    <a href="#">AI Image</a>
+    <a href="#">Product Links</a>
+    <a href="#">AI Actors</a>
+    <a href="#">Subtitle Studio</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="left"><span class="pill-btn">▶ Watch tutorial</span></div>
+      <div class="right"><span>88,271 credits</span><span class="pill-btn">Book a call</span><span class="avatar">NW</span></div>
+    </div>
+
+    <div class="page">
+      <!-- ============ page header ============ -->
+      <header>
+        <span class="eyebrow">Starter offers</span>
+        <h1>Start with a video — pick the offer that fits you</h1>
+        <p class="lead">Buy your first 15-second product video for <b>$1</b>, or join the creator programme and get it <b>free</b>. Both are one-time starter offers for new accounts.</p>
+      </header>
+
+      <!-- ============ stacked offers ============ -->
+      <section class="offers" aria-label="Starter offers">
+        <!-- 01 · $1 offer -->
+        <article class="card">
+          <div class="card-body">
+            <div class="card-top">
+              <span class="tag">First video offer</span>
+              <span class="index">Option 01</span>
+            </div>
+            <h2>Your first 15-second product video — just $1</h2>
+            <p class="sub">A complete, ready-to-post video with full quality and no watermark.</p>
+
+            <ul class="bullets">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>20 credits — enough for one 15-second video</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Full resolution, no watermark</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>One-time payment, no subscription</li>
+            </ul>
+
+            <div class="note">
+              <b>What happens next</b>
+              After checkout, 20 credits are added to your balance automatically — enough for one 15-second video at the normal price. Create it straight from this page.
+            </div>
+          </div>
+
+          <div class="action">
+            <div class="price-row">
+              <span class="price">$1</span>
+              <span class="strike">$2.80</span>
+              <span class="save">64% off</span>
+            </div>
+            <a class="btn btn-primary" href="#claim">Claim your $1 video</a>
+            <span class="btn-note">Takes about a minute.</span>
+          </div>
+        </article>
+
+        <!-- 02 · free credits -->
+        <article class="card featured">
+          <div class="card-body">
+            <div class="card-top">
+              <span class="tag green">Free credits for creators</span>
+              <span class="index">Option 02</span>
+            </div>
+            <h2>Get your first video free</h2>
+            <p class="sub">Post a video with <b>#AIVideosUGC</b> and we will credit your account once we review it.</p>
+
+            <ol class="steps">
+              <li>
+                <span class="n">1</span>
+                <span><b>Post your video</b><span>Share it on TikTok, Instagram or YouTube Shorts with #AIVideosUGC.</span></span>
+              </li>
+              <li>
+                <span class="n">2</span>
+                <span><b>Send us the link</b><span>Paste the post link on the programme page.</span></span>
+              </li>
+              <li>
+                <span class="n">3</span>
+                <span><b>Get 20–60 credits</b><span>Reviewed by hand, usually within 48 hours.</span></span>
+              </li>
+            </ol>
+
+            <p class="meta-line">One grant per creator<i>·</i>20–60 credits<i>·</i>Credits never expire</p>
+          </div>
+
+          <div class="action">
+            <div class="value">20–60 credits<small>Enough for a full 15s video</small></div>
+            <a class="btn btn-primary" href="#join">Join the free-credits programme</a>
+            <span class="btn-note">Reviewed by hand.</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ state variants (for review, not on production) ============ -->
+      <section class="states" aria-label="Application states">
+        <h3>Application states</h3>
+        <div class="state-row">
+          <span class="state-name">Not applied</span>
+          <span class="state-copy">Join the programme from this page — we open the form for you.</span>
+          <a class="btn btn-ghost" href="#join">Join the programme</a>
+        </div>
+        <div class="state-row">
+          <span class="state-name">Under review</span>
+          <span class="state-copy">Your post is in the queue. We email you either way, usually within 48 hours.</span>
+          <span class="status pending">● Pending review</span>
+        </div>
+        <div class="state-row">
+          <span class="state-name">Approved</span>
+          <span class="state-copy">20–60 credits are in your balance — enough for a full 15-second video.</span>
+          <a class="btn btn-primary" href="#create">Create your video</a>
+        </div>
+        <div class="state-row">
+          <span class="state-name">Not approved</span>
+          <span class="state-copy">You can submit another post from the programme page.</span>
+          <span class="status rejected">● Not approved</span>
+        </div>
+      </section>
+
+      <p class="footnote">Both offers are for new accounts. Standard credit packs are always available from the pricing page.</p>
+    </div>
+  </main>
+</div>
+</body>
+</html>

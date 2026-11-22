@@ -1997,7 +1997,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const editorLanguageOptions = (catalog?.languages ?? []).map((item) => ({ value: item.value, label: item.label }));
   // Default the composer to the published pricing channel (Wan 2.6 1080p):
   // it matches the 15s=20cr rate card on the pricing page and is the channel
-  // the first-video trial price applies to (server: FIRST_VIDEO_TRIAL_PROVIDER_ID).
+  // the $1 starter offer grants 20 credits at purchase; videos use normal pricing.
   // Catalog order follows provider priority, which currently surfaces a
   // 30cr/15s row first.
   const FIRST_VIDEO_CHANNEL_MODEL_ID = "aiprov_aivideosugc_wan1080";
@@ -2145,7 +2145,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {customer && starterOffer?.state === "eligible" && starterOffer.priceId && <section className={styles.panel} aria-live="polite">
             <span className={styles.badge}>FIRST VIDEO OFFER</span>
             <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
-            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · 58% OFF · Full quality. No watermark. No subscription.</p>
+            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.80</span> · 64% OFF · 20 credits — enough for one 15-second video.</p>
             <div className={styles.footerActions}>
               <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
               <button className={styles.linkButton} onClick={() => void navigate("starterOffer")}><span>See the offer</span><ArrowRight size={15} /></button>
@@ -2153,7 +2153,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           </section>}
           {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
             <h2 style={{ margin: "0 0 4px" }}>Your $1 first-video credits are ready</h2>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>8 credits added — your first 15s video costs 8 credits instead of 20. Finish it from the composer below; the special price applies automatically.</p>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>20 credits added — enough for one 15-second video at the normal price. Finish it from the composer below; the credits are used automatically.</p>
             <div className={styles.footerActions}>
               <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("video")}><span>Finish your first video</span><ArrowRight size={15} /></button>
             </div>
@@ -2172,7 +2172,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {customer && starterOffer?.state === "eligible" && starterOffer.priceId && <section className={styles.panel} aria-live="polite">
             <span className={styles.badge}>FIRST VIDEO OFFER</span>
             <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
-            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · <strong>58% OFF</strong> · 8 credits toward one 15s video at full quality.</p>
+            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.80</span> · <strong>64% OFF</strong> · 20 credits — enough for one 15-second video at the normal price.</p>
             <p className={styles.help} style={{ margin: "4px 0 0" }}>Full quality. No watermark. No subscription.</p>
             <div className={styles.footerActions}>
               <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
@@ -2186,8 +2186,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             </div>
           </section>}
           {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
-            <h2 style={{ margin: "0 0 4px" }}>8 credits added — create your first 15s video</h2>
-            <p className={styles.help} style={{ margin: "4px 0 0" }}>Your first 15s video is priced at 8 credits (normally 20). The special price applies automatically in the composer.</p>
+            <h2 style={{ margin: "0 0 4px" }}>20 credits added — create your first 15s video</h2>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>Your 20 credits cover one 15-second video at the normal price. The composer uses them automatically.</p>
             <div className={styles.footerActions}>
               <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("home")}><span>Create your first video</span><ArrowRight size={15} /></button>
             </div>

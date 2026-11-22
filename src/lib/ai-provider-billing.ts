@@ -49,17 +49,7 @@ export type BillingRequestContext = {
   audioInputCount?: number | null;
   audioInputSeconds?: number | null;
   outputCount?: number | null;
-  /** 首条视频专享价意图：仅作用于 FIRST_VIDEO_TRIAL_PROVIDER_ID 的 15s 档 */
-  trialOffer?: boolean;
 };
-
-/** site_aidreamcapes 的 Wan 主打通道（apply-aivideosugc-credit-reprice-2026-11-12 建立的专用计价行）。 */
-export const FIRST_VIDEO_TRIAL_PROVIDER_ID = "aiprov_aivideosugc_wan1080";
-
-/** 首条视频专享价只允许命中主打 Wan 通道。 */
-export function firstVideoTrialAppliesToProvider(providerId: string | null | undefined): boolean {
-  return Boolean(providerId) && providerId === FIRST_VIDEO_TRIAL_PROVIDER_ID;
-}
 
 /** 判断某个通道是否开启了模型级计价。 */
 export function providerUsesModelPricing(provider?: Pick<BillingProviderRow, "priceEnabled"> | null): boolean {
@@ -95,8 +85,7 @@ export function providerCreditsForRequest(
     videoInputSeconds: context.videoInputSeconds,
     audioInputCount: context.audioInputCount,
     audioInputSeconds: context.audioInputSeconds,
-    outputCount: context.outputCount,
-    trialOffer: Boolean(context.trialOffer) && firstVideoTrialAppliesToProvider(provider.id)
+    outputCount: context.outputCount
   });
   return breakdown.credits === null ? null : breakdown;
 }
