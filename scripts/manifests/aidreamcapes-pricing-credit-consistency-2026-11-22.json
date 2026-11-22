@@ -1,0 +1,41 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-22T04:29:35.866Z",
+  "applying": true,
+  "editCount": 5,
+  "pages": [
+    "/pricing"
+  ],
+  "edits": [
+    {
+      "slug": "/pricing",
+      "path": "costs/2/1",
+      "beforeHash": "f8b13ab656193c2aef60604e083fb5ca9ff5ab42261375e17d709b25f80d886e",
+      "afterHash": "4f55dd5b357154f971976e794da998ac8b9507d94edb93c6a8e19587777b6357"
+    },
+    {
+      "slug": "/pricing",
+      "path": "packs/0/note",
+      "beforeHash": "d300207fd97bc886af3eba7dc18e65d523194ce936d9db5154df311fac3000df",
+      "afterHash": "b519414123c5d02709a648a06283e07e74b30cdc4f02eb949cc154f91b6a0ce9"
+    },
+    {
+      "slug": "/pricing",
+      "path": "packs/1/note",
+      "beforeHash": "0715d6e3b4cc7a634e9ae3b34958f533cb83a57ada7e13f4704232415cfc84a6",
+      "afterHash": "b6682c878caffccbcde4ee57b1fdfa2651e3e490b852d89f6a0e125bd4f4fb9f"
+    },
+    {
+      "slug": "/pricing",
+      "path": "packs/2/note",
+      "beforeHash": "f1a10ca896eeb414827a90ff238cf265240d5e39a4878f608c31c230092934e8",
+      "afterHash": "f453d1bc0e91798d3373092467abec971f788815d62031bdb7e802134fe95002"
+    },
+    {
+      "slug": "/pricing",
+      "path": "credits/2",
+      "beforeHash": "5abf0e9db3e74bdff969d27c9756ef84af84e3a7905a475dab0341419b1990e6",
+      "afterHash": "ab18cbba6bdfe672ce1aef07c3958a4c4cceebd328ecea30954ae8e3b64f4e37"
+    }
+  ]
+}
