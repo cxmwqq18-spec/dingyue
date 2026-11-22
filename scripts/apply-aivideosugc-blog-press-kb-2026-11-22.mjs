@@ -46,7 +46,7 @@ function assertDocumentData(article) {
   assert.equal(article.pageType, "article", `Article pageType must be article: ${article.slug}`);
   assert.ok(data?.h1 && data?.variant, `Article ${article.slug} is missing its document data.`);
   assert.ok(Array.isArray(data.sections) && data.sections.length, `Article ${article.slug} has no sections.`);
-  assert.ok(data.cover?.src && data.cover?.alt, `Article ${article.slug} needs a cover with src and alt.`);
+  assert.ok(article.cover?.src && article.cover?.alt, `Article ${article.slug} needs a cover with src and alt for the card and search image.`);
   assert.equal(article.card?.href, article.slug, `Hub card must point at ${article.slug}.`);
   for (const section of data.sections) {
     assert.ok(section.h2, `Article ${article.slug} has a section without a heading.`);
@@ -69,7 +69,7 @@ function contentJsonFor(article, organization) {
   });
   graph.push({
     "@type": "BlogPosting",
-    image: article.data.cover.src,
+    image: article.cover.src,
     author: organization?.["@id"] ? { "@id": organization["@id"] } : { "@id": `${ORIGIN}/#organization` },
     publisher: organization?.["@id"] ? { "@id": organization["@id"] } : { "@id": `${ORIGIN}/#organization` },
     inLanguage: "en",
@@ -88,7 +88,7 @@ function contentJsonFor(article, organization) {
       mediaSource: "LivePage.contentJson",
       sourceRevision: "aidreamcapes-site-v2"
     },
-    mediaManifest: [article.data.cover],
+    mediaManifest: [article.cover],
     seo: {
       index: true,
       title: article.seoTitle,
@@ -97,8 +97,8 @@ function contentJsonFor(article, organization) {
       primaryKeyword: article.keywords.split(",")[0].trim(),
       canonical,
       canonicalPath: article.slug,
-      ogImage: article.data.cover.src,
-      ogImageAlt: article.data.cover.alt,
+      ogImage: article.cover.src,
+      ogImageAlt: article.cover.alt,
       robots: { index: true, follow: true, maxImagePreview: "large" },
       twitterDescription: description,
       jsonLd: { "@graph": graph }

@@ -57,6 +57,7 @@ export const ARTICLES = [
     seoDescription: "AIVideosUGC launches an AI UGC video and image ad generator: turn a product link, image, or prompt into a UGC video in minutes.",
     keywords: "AIVideosUGC launch, AI UGC video generator, press release, BLYDEYUS INC, product link to video, AI actors",
     minutes: 4,
+    cover: LAUNCH_COVER,
     card: {
       href: "/blog/aivideosugc-launches-ai-ugc-video-generator",
       kind: "news",
@@ -70,7 +71,6 @@ export const ARTICLES = [
       kicker: "Press Release",
       h1: "AIVideosUGC Launches AI UGC Video Generator: Turn a Product Link, Image, or Prompt Into a Video in Minutes",
       byline: "BLYDEYUS INC · Official Announcement",
-      cover: LAUNCH_COVER,
       lead: "BLYDEYUS INC has announced that [AIVideosUGC](/), its AI UGC video and image ad generation platform, is now available to ecommerce brands, marketing teams, and content creators. The core promise is simple: **input a product URL, an image, or a text prompt and receive HD, watermark-free, creator-style video in minutes — with no camera crew, no human actors, no editing software, and no subscription.**",
       sections: [
         {
@@ -157,6 +157,7 @@ export const ARTICLES = [
     seoDescription: "Official company knowledge base for AIVideosUGC, an AI UGC video and image ad generator by BLYDEYUS INC.",
     keywords: "AIVideosUGC company, BLYDEYUS INC, company knowledge base, AI UGC video, AI actors, pricing, support contacts",
     minutes: 6,
+    cover: KNOWLEDGE_COVER,
     card: {
       href: "/blog/aivideosugc-company-knowledge-base",
       kind: "reference",
@@ -169,7 +170,6 @@ export const ARTICLES = [
       variant: "knowledge",
       h1: "AIVideosUGC — Company Knowledge Base",
       byline: "BLYDEYUS INC · Official Reference",
-      cover: KNOWLEDGE_COVER,
       sections: [
         {
           h2: "Company Overview",
