@@ -1404,6 +1404,11 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
       // strip that query and collapse these rows into /templates, so leave
       // them untouched here.
       if (path === "/templates" && ["photo", "video"].includes(url.searchParams.get("kind") ?? "")) continue;
+      // Paginated listing views are indexable SSR documents whose canonical
+      // keeps the ?page=N query. Without this exception the normalization
+      // below collapses every deep page back into page 1.
+      if (/^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation|\/tools\/[^/]+)$/.test(path)
+        && url.searchParams.has("page")) continue;
       const canonicalLoc = sitemapUrl(site, path);
       if (canonicalLoc === loc) continue;
       entries.delete(loc);
