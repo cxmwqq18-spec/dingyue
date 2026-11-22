@@ -1,0 +1,289 @@
+{
+  "date": "2026-11-22",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "confirm": "aivideosugc-templates-related-2026-11-22",
+  "pages": [
+    {
+      "slug": "/templates",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876",
+      "nextHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876",
+      "links": [
+        {
+          "label": "Vertical Video Ads for the Phone",
+          "href": "/ai-video-generation/video-ads"
+        },
+        {
+          "label": "AI Lifestyle Product Photos",
+          "href": "/ai-image-generation/lifestyle-photos"
+        },
+        {
+          "label": "White Background Product Photos",
+          "href": "/ai-image-generation/white-background-photos"
+        },
+        {
+          "label": "AI Model Photos for Clothing",
+          "href": "/ai-image-generation/model-photos"
+        },
+        {
+          "label": "Browse by Industry",
+          "href": "/industries"
+        },
+        {
+          "label": "Product Photos From Every Angle",
+          "href": "/ai-image-generation/packshot-multi-angle"
+        },
+        {
+          "label": "Browse by platform",
+          "href": "/platforms"
+        },
+        {
+          "label": "Browse by occasion",
+          "href": "/occasions"
+        },
+        {
+          "label": "Beauty & Skincare",
+          "href": "/industries/beauty-skincare"
+        },
+        {
+          "label": "E-commerce",
+          "href": "/industries/e-commerce"
+        },
+        {
+          "label": "TikTok Ads",
+          "href": "/platforms/tiktok-ads"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "d6a946b42b4b9731ec4a4b8796bf1af6e8960b855c05daef4895f08143d68b28",
+      "nextHash": "d6a946b42b4b9731ec4a4b8796bf1af6e8960b855c05daef4895f08143d68b28",
+      "links": [
+        {
+          "label": "All examples",
+          "href": "/templates"
+        },
+        {
+          "label": "Browse by industry",
+          "href": "/industries"
+        },
+        {
+          "label": "Browse by occasion",
+          "href": "/occasions"
+        },
+        {
+          "label": "TikTok Ads",
+          "href": "/platforms/tiktok-ads"
+        },
+        {
+          "label": "Instagram Ads",
+          "href": "/platforms/instagram-ads"
+        }
+      ]
+    },
+    {
+      "slug": "/occasions",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "f2d94cd01318045f933763b511b17a3478738ecfa06f09b60378eee212753c08",
+      "nextHash": "f2d94cd01318045f933763b511b17a3478738ecfa06f09b60378eee212753c08",
+      "links": [
+        {
+          "label": "All examples",
+          "href": "/templates"
+        },
+        {
+          "label": "Browse by industry",
+          "href": "/industries"
+        },
+        {
+          "label": "Browse by platform",
+          "href": "/platforms"
+        },
+        {
+          "label": "Black Friday",
+          "href": "/occasions/black-friday"
+        },
+        {
+          "label": "Sale & Discount",
+          "href": "/occasions/sale-discount"
+        }
+      ]
+    },
+    {
+      "slug": "/industries",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "348e979f8107f80794a44f2a239eeadf253571f20dc8e6714f66299b0bc750c1",
+      "nextHash": "348e979f8107f80794a44f2a239eeadf253571f20dc8e6714f66299b0bc750c1",
+      "links": [
+        {
+          "label": "URL to Video",
+          "href": "/ai-video-generation/url-to-video"
+        },
+        {
+          "label": "Spokesperson Video",
+          "href": "/ai-video-generation/spokesperson-video"
+        },
+        {
+          "label": "Image to Video",
+          "href": "/ai-video-generation/image-to-video"
+        },
+        {
+          "label": "Video Ads",
+          "href": "/ai-video-generation/video-ads"
+        },
+        {
+          "label": "Templates",
+          "href": "/templates"
+        },
+        {
+          "label": "Browse by platform",
+          "href": "/platforms"
+        },
+        {
+          "label": "Browse by occasion",
+          "href": "/occasions"
+        },
+        {
+          "label": "Beauty & Skincare",
+          "href": "/industries/beauty-skincare"
+        },
+        {
+          "label": "E-commerce",
+          "href": "/industries/e-commerce"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/beauty-skincare",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "d7af90542239736f92f42e73f1adb8ccdc5c32cc3e0528dd8a9c32818e7aeb98",
+      "nextHash": "d7af90542239736f92f42e73f1adb8ccdc5c32cc3e0528dd8a9c32818e7aeb98",
+      "links": [
+        {
+          "label": "Beauty Product Video Ads",
+          "href": "/ai-video-generation/beauty-routine"
+        },
+        {
+          "label": "Product Photos From Every Angle",
+          "href": "/ai-image-generation/packshot-multi-angle"
+        },
+        {
+          "label": "Instagram Story Ad Images",
+          "href": "/ai-image-generation/story-ad-vertical"
+        },
+        {
+          "label": "AI Creator-Style Video Ads",
+          "href": "/ai-video-generation/video-ads"
+        },
+        {
+          "label": "AI Lifestyle Product Photos",
+          "href": "/ai-image-generation/lifestyle-photos"
+        },
+        {
+          "label": "White Background Product Photos",
+          "href": "/ai-image-generation/white-background-photos"
+        },
+        {
+          "label": "Clothing",
+          "href": "/industries/fashion-clothing"
+        },
+        {
+          "label": "Footwear",
+          "href": "/industries/shoes"
+        },
+        {
+          "label": "All examples",
+          "href": "/templates"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/e-commerce",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "3c9532d05441f413ee3f2af6b4911936cbf339a383dce29ac1ce07365a5a318f",
+      "nextHash": "3c9532d05441f413ee3f2af6b4911936cbf339a383dce29ac1ce07365a5a318f",
+      "links": [
+        {
+          "label": "Education",
+          "href": "/industries/education"
+        },
+        {
+          "label": "Financial Services",
+          "href": "/industries/financial-services"
+        },
+        {
+          "label": "All Industries",
+          "href": "/industries"
+        },
+        {
+          "label": "URL to Video",
+          "href": "/ai-video-generation/url-to-video"
+        },
+        {
+          "label": "White Background Product Photos",
+          "href": "/ai-image-generation/white-background-photos"
+        },
+        {
+          "label": "All Examples",
+          "href": "/templates"
+        }
+      ]
+    },
+    {
+      "slug": "/platforms/tiktok-ads",
+      "action": "unchanged",
+      "addedLinks": 0,
+      "baseHash": "24b4eac31c16135804efd14def9d01fed3282fbe0af85f6e6d17c73ed12366a7",
+      "nextHash": "24b4eac31c16135804efd14def9d01fed3282fbe0af85f6e6d17c73ed12366a7",
+      "links": [
+        {
+          "label": "Video Ads",
+          "href": "/ai-video-generation/video-ads"
+        },
+        {
+          "label": "URL to Video",
+          "href": "/ai-video-generation/url-to-video"
+        },
+        {
+          "label": "Spokesperson Video",
+          "href": "/ai-video-generation/spokesperson-video"
+        },
+        {
+          "label": "Image to Video",
+          "href": "/ai-video-generation/image-to-video"
+        },
+        {
+          "label": "Creator-Style Photo",
+          "href": "/ai-image-generation/ugc-still-ad"
+        },
+        {
+          "label": "Spark Ads Style Video",
+          "href": "/ai-video-generation/spark-ads-style-video"
+        },
+        {
+          "label": "Instagram",
+          "href": "/platforms/instagram-ads"
+        },
+        {
+          "label": "Facebook",
+          "href": "/platforms/facebook-ads"
+        },
+        {
+          "label": "All examples",
+          "href": "/templates"
+        }
+      ]
+    }
+  ],
+  "note": "Adds /templates category recommendations and reciprocal /templates links from the five recommended pages. Existing links are preserved; duplicates and self-links are removed."
+}

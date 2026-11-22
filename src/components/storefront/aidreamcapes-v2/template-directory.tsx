@@ -156,6 +156,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
       <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
       {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
     </div></section>
+    <DirectoryRelatedSection data={data} r={r} />
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;
 }

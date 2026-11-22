@@ -956,12 +956,37 @@ function mydreamshootsVideoWatchPagesForSnapshot(
   });
 }
 
+type AidreamcapesListingSitemapData = {
+  exampleDirectory?: { pageSize?: number };
+  templateDirectory?: { paths?: string[]; hideTemplates?: boolean };
+  kind?: string;
+  id?: string;
+  visual?: { picker?: { cards?: Array<{ publicSlug?: string; label?: string }> } };
+};
+
+function aidreamcapesListingSitemapData(page: ThemePage): AidreamcapesListingSitemapData | undefined {
+  for (const section of Object.values(page.publishedJson.sections ?? {})) {
+    if (section.type !== "aidreamcapes_v2_page") continue;
+    const data = (section.settings as { data?: AidreamcapesListingSitemapData } | undefined)?.data;
+    if (data?.exampleDirectory || data?.templateDirectory || data?.id === "video-hub" || data?.visual?.picker?.cards) return data;
+  }
+  return undefined;
+}
+
+function sitemapPageCount(total: number, pageSize: number): number {
+  return Math.max(1, Math.ceil(total / Math.max(1, pageSize)));
+}
+
 export async function sitemapEntriesForSite(state: PlatformState, site: Site): Promise<SitemapEntry[]> {
   const snapshot = createPublishedSiteSnapshot(state, site);
   const videoWatchPages = mydreamshootsVideoWatchPagesForSnapshot(state, site, snapshot);
   const videoWatchSourcePaths = new Set(videoWatchPages.flatMap((video) => video.sourcePaths));
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
+  // Listing pages whose ?page=N views are indexable SSR documents. Collected
+  // during the main pass so the pagination loop can only add pages whose page 1
+  // already passed the same route/indexability gate.
+  const aidreamcapesListingEntries: Array<{ page: ThemePage; path: string; entry: SitemapEntry }> = [];
   for (const page of snapshot.pages) {
     const isRegisteredImageTheme = isAidreamcapesImageThemePath(site.slug, page.slug);
     if (isRegisteredImageTheme && !isRenderableAidreamcapesImageThemePage(page)) continue;
@@ -1013,6 +1038,9 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
       });
+    if (site.id === AIDREAMCAPES_SITE_ID && /^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation|\/tools\/[^/]+)$/.test(publicSitemapPath)) {
+      aidreamcapesListingEntries.push({ page, path: publicSitemapPath, entry: entries.get(loc)! });
+    }
   }
   if (site.id === "site_aidreamcapes_xby") {
     // EU owns all 39 photo themes under /ai-image-generation. Remove stale
@@ -1069,6 +1097,56 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
             changefreq: sitemapChangeFrequencyForPath("/templates"),
             priority: sitemapPriorityForPath("/templates")
           });
+        }
+      }
+    }
+    // Paginated listing views are standalone SSR documents with self
+    // canonicals. Submit pages 2..N so crawlers do not have to discover every
+    // deep page through the pager alone; page 1 keeps the bare URL.
+    if (aidreamcapesListingEntries.length) {
+      const galleryEntries = await listAidreamcapesExampleGalleryEntries();
+      const addListingPages = (basePath: string, totalPages: number, params: Record<string, string> = {}) => {
+        const base = aidreamcapesListingEntries.find((item) => item.path === basePath)?.entry;
+        if (!base) return;
+        for (let pageNumber = 2; pageNumber <= totalPages; pageNumber += 1) {
+          const search = new URLSearchParams(params);
+          search.set("page", String(pageNumber));
+          const loc = sitemapUrl(site, `${basePath}?${search.toString()}`);
+          if (entries.has(loc)) continue;
+          entries.set(loc, {
+            loc,
+            images: [],
+            lastmod: base.lastmod,
+            changefreq: base.changefreq,
+            priority: base.priority
+          });
+        }
+      };
+      for (const listing of aidreamcapesListingEntries) {
+        const data = aidreamcapesListingSitemapData(listing.page);
+        if (!data) continue;
+        if (data.exampleDirectory) {
+          const pageSize = Math.max(1, Math.min(50, Math.floor(Number(data.exampleDirectory.pageSize)) || 12));
+          for (const kind of [undefined, "photo", "video"] as const) {
+            const total = kind ? galleryEntries.filter((entry) => entry.kind === kind).length : galleryEntries.length;
+            addListingPages("/templates", sitemapPageCount(total, pageSize), kind ? { kind } : {});
+          }
+          continue;
+        }
+        if (data.templateDirectory) {
+          const cards = await resolveDirectoryMedia(listing.path);
+          addListingPages(listing.path, sitemapPageCount(cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          continue;
+        }
+        if (data.id === "video-hub") {
+          const curated = data.visual?.picker?.cards ?? [];
+          const curatedKeys = new Set(curated.map((card) => card.publicSlug ?? card.label));
+          const total = curated.length + galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug)).length;
+          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          continue;
+        }
+        if (listing.path.startsWith("/tools/") && Array.isArray(data.visual?.picker?.cards)) {
+          addListingPages(listing.path, sitemapPageCount(data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
         }
       }
     }
