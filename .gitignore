@@ -82,3 +82,8 @@ public/assets/sites/site_aidreamcapes/guides/*
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-original.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-captioned-en.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-poster.jpg
+# Blog covers ship with the code so a release cannot publish a page whose
+# cover is missing from the deployed static root.
+!public/assets/sites/site_aidreamcapes/blog/
+public/assets/sites/site_aidreamcapes/blog/*
+!public/assets/sites/site_aidreamcapes/blog/*.webp

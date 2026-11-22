@@ -1,5 +1,6 @@
 import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
 import { BlogLandingPage } from "./blog-landing";
+import { BlogDocumentPage } from "./blog-document";
 import { BlogEngineeringPage } from "./blog-engineering";
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
@@ -631,6 +632,15 @@ function CollectionPage({ data, r }: Props) {
   );
 }
 
+// Hub copy stores its counts as tokens so a new card never leaves the page
+// claiming an outdated number. `kind` on a card decides which set it belongs
+// to; cards without a kind count as articles but not as tutorials.
+function withArticleCounts(value: unknown, counts: { articles: number; tutorials: number }): string {
+  return text(value)
+    .replace(/\{articleCount\}/g, String(counts.articles))
+    .replace(/\{tutorialCount\}/g, String(counts.tutorials));
+}
+
 function IndexPage({ data, r }: Props) {
   // Derived AI-actor directory pages carry their own kind and layout.
   if (data.id === "ai-actors") return <ActorDirectoryPage data={data} r={r} />;
@@ -641,7 +651,12 @@ function IndexPage({ data, r }: Props) {
   const cards = list<V2Card>(data.cards);
   const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
   const items = list<{ label: string; href: string; text: string; image: V2Image; filterTags?: string[] }>(data.items);
-  const articles = list<{ title: string; summary: string; minutes: number; href: string; image: V2Image }>(data.articles);
+  const articles = list<{ title: string; summary: string; minutes: number; href: string; image: V2Image; kind?: string }>(data.articles);
+  const articleCounts = {
+    articles: articles.length,
+    tutorials: articles.filter((article) => article.kind === "tutorial").length
+  };
+  const hubCopy = (value: unknown) => withArticleCounts(value, articleCounts);
   const cta = data.cta as { title: string; lead: string; href: string } | undefined;
   const visual = data.visual as V2Visual | undefined;
   const filterRow = (label: string, key: string, options: [string, string][]) => (
@@ -701,8 +716,8 @@ function IndexPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
-      <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
+      <PageHero eyebrow={hubCopy(data.eyebrow)} lead={hubCopy(data.lead)} title={data.h1} />
+      <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro).map(hubCopy)} r={r} /></div></section>
       <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
       {list<V2Item>(data.steps).length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section> : null}
       <MoreSections r={r} sections={data.more_sections as never} />
@@ -1335,6 +1350,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
   if (layout === "blog-landing") return <BlogLandingPage data={data as never} r={r} />;
+  if (layout === "blog-document") return <BlogDocumentPage data={data as never} r={r} />;
   if (layout === "blog-engineering") return <BlogEngineeringPage data={data as never} r={r} />;
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {
     return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;

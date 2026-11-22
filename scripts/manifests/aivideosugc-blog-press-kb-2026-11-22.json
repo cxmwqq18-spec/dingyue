@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-22",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "mode": "applied",
+  "slugs": [
+    "/blog/aivideosugc-launches-ai-ugc-video-generator",
+    "/blog/aivideosugc-company-knowledge-base"
+  ],
+  "hub": {
+    "slug": "/blog",
+    "action": "update",
+    "baseHash": "b308295fa7eca138f15c5d4bcfe2870afb0527c627a7a6b14f7c437cfe8ca477",
+    "nextHash": "f31dd3ac558fc6354d11c15d38d98f2bcb66745bb30aa76c14e142c736de3c58",
+    "resolvedCounts": {
+      "articles": 8,
+      "tutorials": 6
+    }
+  },
+  "articles": [
+    {
+      "slug": "/blog/aivideosugc-launches-ai-ugc-video-generator",
+      "rowId": "aidreamcapes_v2_blog_aivideosugc_launches_ai_ugc_video_generator",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "7737f697bd9b041575549a288541cbba8ad9b0b6eb771370336c6c027c8de113",
+      "nextHash": "7737f697bd9b041575549a288541cbba8ad9b0b6eb771370336c6c027c8de113"
+    },
+    {
+      "slug": "/blog/aivideosugc-company-knowledge-base",
+      "rowId": "aidreamcapes_v2_blog_aivideosugc_company_knowledge_base",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "9f58eedfbf566b29ca0f28cb1ac708269911dc47efbc81e3767dd5b7a12075c5",
+      "nextHash": "9f58eedfbf566b29ca0f28cb1ac708269911dc47efbc81e3767dd5b7a12075c5"
+    }
+  ],
+  "note": "Content-only addition. Covers are owner-provided posters provisioned under /assets/sites/site_aidreamcapes/blog/. Rollback is a field-level inverse: delete the two LivePage rows and remove their hub cards."
+}
