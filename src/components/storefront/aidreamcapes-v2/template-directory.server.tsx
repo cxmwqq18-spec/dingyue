@@ -86,7 +86,11 @@ function requestedListingPage(query: Record<string, string | string[] | undefine
  * and the page parameter itself do not belong on the redirect target. */
 const LISTING_FILTER_KEYS = new Set(["kind", "type", "industries", "platforms", "occasions", "galleryPage"]);
 
-function listingUrl(path: string, query: Record<string, string | string[] | undefined> | undefined, page?: number): string {
+/** Keep only listing filters on a canonical redirect target. */
+function listingSearch(
+  query: Record<string, string | string[] | undefined> | undefined,
+  page?: number
+): URLSearchParams {
   const search = new URLSearchParams();
   for (const [key, raw] of Object.entries(query ?? {})) {
     if (!LISTING_FILTER_KEYS.has(key)) continue;
@@ -94,21 +98,27 @@ function listingUrl(path: string, query: Record<string, string | string[] | unde
       if (value) search.append(key, value);
     }
   }
-  if (page && page > 1) search.set("page", String(page));
-  return `${path}${search.size ? `?${search.toString()}` : ""}`;
+  if (page !== undefined && page > 1) search.set("page", String(page));
+  return search;
 }
 
-/** An explicit ?page=1 is a duplicate of the bare listing URL. */
-function redirectExplicitFirstPage(
+function listingRedirect(path: string, search: URLSearchParams): never {
+  permanentRedirect(`${path}${search.size ? `?${search.toString()}` : ""}`);
+}
+
+/** `page=1` and unparseable values have no address of their own. A permanent
+ * redirect keeps the parameter space finite and never answers 404: the base
+ * listing is the canonical address for both. */
+function redirectNonCanonicalPage(
   path: string | undefined,
   query: Record<string, string | string[] | undefined> | undefined
 ): void {
   if (!path) return;
   const raw = Array.isArray(query?.page) ? query?.page[0] : query?.page;
-  if (raw === undefined || raw === "") return;
-  const value = Math.floor(Number(raw));
-  if (!Number.isFinite(value) || value > 1) return;
-  permanentRedirect(listingUrl(path, query));
+  if (raw === undefined) return;
+  const value = String(raw).trim();
+  if (/^[1-9][0-9]*$/.test(value) && Number(value) > 1) return;
+  listingRedirect(path, listingSearch(query));
 }
 
 /** A page past the last real page has no content of its own. Send it to the
@@ -120,11 +130,10 @@ function redirectPastLastPage(
   query: Record<string, string | string[] | undefined> | undefined
 ): void {
   if (!path || requested <= totalPages) return;
-  permanentRedirect(listingUrl(path, query, totalPages));
+  listingRedirect(path, listingSearch(query, totalPages));
 }
 
 export async function AidreamcapesTemplateRenderer(props: Parameters<typeof ThemeRenderer>[0]) {
-  redirectExplicitFirstPage(props.pagePath, props.query);
   const sections = { ...props.page.sections };
   for (const [id, section] of Object.entries(sections)) {
     if (section.type !== "aidreamcapes_v2_page") continue;
@@ -143,7 +152,9 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => !kind || entry.kind === kind);
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       const requestedPage = requestedListingPage(props.query);
-      redirectPastLastPage(props.pagePath ?? "/templates", requestedPage, totalPages, props.query);
+      const listingPath = props.pagePath ?? "/templates";
+      redirectNonCanonicalPage(listingPath, props.query);
+      redirectPastLastPage(listingPath, requestedPage, totalPages, props.query);
       const page = Math.min(requestedPage, totalPages);
       const start = (page - 1) * pageSize;
       const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
@@ -186,6 +197,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const mediaTotal = orderedMedia.length;
       const mediaTotalPages = Math.max(1, Math.ceil(mediaTotal / MEDIA_PAGE_SIZE));
       const requestedPage = requestedListingPage(props.query);
+      redirectNonCanonicalPage(props.pagePath, props.query);
       redirectPastLastPage(props.pagePath, requestedPage, mediaTotalPages, props.query);
       const mediaPage = Math.min(requestedPage, mediaTotalPages);
       const mediaStart = (mediaPage - 1) * MEDIA_PAGE_SIZE;
@@ -250,6 +262,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         const total = cards.length;
         const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
         const requestedPage = requestedListingPage(props.query);
+        redirectNonCanonicalPage(props.pagePath, props.query);
         redirectPastLastPage(props.pagePath, requestedPage, totalPages, props.query);
         if (total > MEDIA_PAGE_SIZE) {
           const page = Math.min(requestedPage, totalPages);
