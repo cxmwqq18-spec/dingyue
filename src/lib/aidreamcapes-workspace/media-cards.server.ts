@@ -7,6 +7,7 @@ import { AIVIDEOSUGC_SITE_ID } from "./types";
 import type { MediaDetailCard, MediaDetailKind } from "./media-detail";
 import { mediaDetailDescription, mediaDetailPath } from "./media-detail";
 import { placementValues } from "./media-placement";
+import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 
 // Every public media card shape is stored in LivePage.contentJson. The detail
 // page, the directory media grid and the audit script all have to read the same
@@ -239,11 +240,12 @@ type EnumeratedDetailCard = {
  * Detail pages are rendering projections of card data, so the sitemap, the
  * /templates gallery and the detail resolver all read the same relational
  * rows. A card is listed only when exactly one LivePage row owns it — the
- * same single-owner rule the detail resolver applies — and alias cards
- * (detailAliasOf) are skipped because their canonical detail page is the
- * alias target's.
+ * same single-owner rule the detail resolver applies. Alias cards
+ * (detailAliasOf) stay out by default because their canonical detail page is
+ * the alias target's; the sitemap path opts in to reviewed `detailAliasPublish`
+ * examples and never lists a `detailAliasMerge` shortcut that answers 308.
  */
-async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]> {
+async function enumerateSingleOwnerDetailCards(includePublishedAliases = false): Promise<EnumeratedDetailCard[]> {
   const rows = await prisma.livePage.findMany({
     where: { siteId: AIVIDEOSUGC_SITE_ID },
     select: { slug: true, contentJson: true, updatedAt: true }
@@ -254,17 +256,19 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
   // treats both as ownership). A slug claimed as an alias anywhere therefore
   // has more than one owner row and must stay out of the sitemap.
   const aliasClaims = new Set<string>();
-  // Labels let the enumeration tell the two alias kinds apart: a same-title
-  // alias is a duplicate shortcut (the resolver redirects it, so it stays out
-  // of the sitemap), a distinct-title alias is its own example page and must be
-  // listed (approved 2026-11-22).
-  const labelBySlug = new Map<string, string>();
-  for (const { cards } of rowCards) {
+  // Alias cards carry two reviewed flags:
+  //   detailAliasMerge   - a duplicate shortcut; the resolver answers 308, so it
+  //                        is never listed in the sitemap.
+  //   detailAliasPublish - a distinct example that renders its own page and is
+  //                        explicitly approved for the sitemap.
+  // Without either flag an alias keeps its historical behaviour (renders, not
+  // listed). The index below resolves the target card for the identity guard.
+  const cardIndex = new Map<string, { raw: RecordValue; row: (typeof rowCards)[number]["row"] }>();
+  for (const { row, cards } of rowCards) {
     for (const raw of cards) {
       if (!raw) continue;
       const slug = str(raw.publicSlug);
-      const label = (str((raw as { label?: unknown }).label) ?? "").trim().toLowerCase();
-      if (slug && label && !labelBySlug.has(slug)) labelBySlug.set(slug, label);
+      if (slug && !cardIndex.has(slug)) cardIndex.set(slug, { raw, row });
       const aliases = raw.publicAliases;
       if (!Array.isArray(aliases)) continue;
       for (const alias of aliases) {
@@ -280,10 +284,25 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
       if (!raw) continue;
       const card = toDetailCard(raw);
       const aliasOf = str(raw.detailAliasOf);
-      const aliasLabel = (str((raw as { label?: unknown }).label) ?? "").trim().toLowerCase();
-      const targetLabel = aliasOf ? labelBySlug.get(aliasOf) : undefined;
-      const distinctAlias = Boolean(aliasOf) && targetLabel !== undefined && targetLabel !== aliasLabel;
-      if (!card || !card.publicSlug || (aliasOf && !distinctAlias) || aliasClaims.has(card.publicSlug)) continue;
+      let includeAlias = false;
+      if (aliasOf && includePublishedAliases) {
+        const publishAlias = (raw as { detailAliasPublish?: unknown }).detailAliasPublish === true;
+        const mergeAlias = (raw as { detailAliasMerge?: unknown }).detailAliasMerge === true;
+        // A published alias is still skipped when the resolver would merge it
+        // through reviewed preset identity; the sitemap must only list URLs
+        // that answer 200.
+        const target = cardIndex.get(aliasOf);
+        const targetDetail = target ? toDetailCard(target.raw) : undefined;
+        const currentIdentity = presetGenerationIdentity(presetFromCard(row, row.slug, raw));
+        const targetIdentity = target
+          ? presetGenerationIdentity(presetFromCard(target.row, target.row.slug, target.raw))
+          : undefined;
+        const identityMerges = Boolean(target && currentIdentity && currentIdentity === targetIdentity
+          && !str(target.raw.detailAliasOf)
+          && (!card?.video?.src || card?.video?.src === targetDetail?.video?.src));
+        includeAlias = publishAlias && !mergeAlias && !identityMerges;
+      }
+      if (!card || !card.publicSlug || (aliasOf && !includeAlias) || aliasClaims.has(card.publicSlug)) continue;
       const key = `${card.kind}:${card.publicSlug}`;
       const existing = byKey.get(key);
       if (existing) {
@@ -309,25 +328,47 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
 const MEDIA_CARD_CACHE_TTL_MS = 90_000;
 let mediaCardCache: { at: number; entries: EnumeratedDetailCard[] } | null = null;
 let mediaCardInflight: Promise<EnumeratedDetailCard[]> | null = null;
+// The sitemap is the only consumer that also lists reviewed `detailAliasPublish`
+// example pages. The gallery and the inspiration library keep the historical
+// enumeration (no alias cards), so publishing an alias never adds a duplicate
+// card to the public galleries.
+let publishedAliasCache: { at: number; entries: EnumeratedDetailCard[] } | null = null;
+let publishedAliasInflight: Promise<EnumeratedDetailCard[]> | null = null;
 
 export function invalidateAidreamcapesMediaCardCaches(): void {
   mediaCardCache = null;
   mediaCardInflight = null;
+  publishedAliasCache = null;
+  publishedAliasInflight = null;
 }
 
-async function enumerateSingleOwnerDetailCardsCached(): Promise<EnumeratedDetailCard[]> {
-  if (mediaCardCache && Date.now() - mediaCardCache.at < MEDIA_CARD_CACHE_TTL_MS) return mediaCardCache.entries;
-  if (!mediaCardInflight) {
-    mediaCardInflight = enumerateSingleOwnerDetailCards()
+async function enumerateSingleOwnerDetailCardsCached(includePublishedAliases = false): Promise<EnumeratedDetailCard[]> {
+  if (!includePublishedAliases) {
+    if (mediaCardCache && Date.now() - mediaCardCache.at < MEDIA_CARD_CACHE_TTL_MS) return mediaCardCache.entries;
+    if (!mediaCardInflight) {
+      mediaCardInflight = enumerateSingleOwnerDetailCards()
+        .then((entries) => {
+          mediaCardCache = { at: Date.now(), entries };
+          return entries;
+        })
+        .finally(() => {
+          mediaCardInflight = null;
+        });
+    }
+    return mediaCardInflight;
+  }
+  if (publishedAliasCache && Date.now() - publishedAliasCache.at < MEDIA_CARD_CACHE_TTL_MS) return publishedAliasCache.entries;
+  if (!publishedAliasInflight) {
+    publishedAliasInflight = enumerateSingleOwnerDetailCards(true)
       .then((entries) => {
-        mediaCardCache = { at: Date.now(), entries };
+        publishedAliasCache = { at: Date.now(), entries };
         return entries;
       })
       .finally(() => {
-        mediaCardInflight = null;
+        publishedAliasInflight = null;
       });
   }
-  return mediaCardInflight;
+  return publishedAliasInflight;
 }
 
 /**
@@ -335,7 +376,7 @@ async function enumerateSingleOwnerDetailCardsCached(): Promise<EnumeratedDetail
  * Future videos added to any card are picked up automatically.
  */
 export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
-  const cards = await enumerateSingleOwnerDetailCardsCached();
+  const cards = await enumerateSingleOwnerDetailCardsCached(true);
   return cards.map(({ card, slug, kind, updatedAt }) => ({
     kind,
     slug,

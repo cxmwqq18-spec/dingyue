@@ -1,0 +1,730 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-22T14:48:49.440Z",
+  "merge": 22,
+  "publish": 16,
+  "operations": [
+    {
+      "publicSlug": "app-reaction-clip",
+      "mode": "publish",
+      "aliasOf": "streamer-reaction-app",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        5
+      ],
+      "beforeHash": "90d353488a240de3a0153a21116b78508af978bfbf183b7ab6b3fcf4253cad18",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "pageSlug": "/ai-image-generation/sale-campaign-key-visual",
+      "rowUpdatedAt": "2026-11-21T17:43:42.063Z",
+      "rowHash": "966d60e0d5c28145f5666febbc07d69b33f977705ad48e72cb06dac0ad51c7cb"
+    },
+    {
+      "publicSlug": "asmr-unboxing-makeup-tools",
+      "mode": "publish",
+      "aliasOf": "quiet-unboxing-makeup-tools",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        0
+      ],
+      "beforeHash": "470f4990cc94983087af84f69012e0d18bc19a2707e49debe143fbfa7518e0f3",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_jewelry_positioning",
+      "pageSlug": "/ai-image-generation/jewelry-positioning",
+      "rowUpdatedAt": "2026-11-21T11:53:21.114Z",
+      "rowHash": "ae7a04b7dd3d1cb1f746929134a2bedc72ed6d954dfc627f0ab115b5570c3a82"
+    },
+    {
+      "publicSlug": "bathroom-review-moisturizer-templates",
+      "mode": "merge",
+      "aliasOf": "bathroom-review-moisturizer",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        7
+      ],
+      "beforeHash": "43f53521376eec56b52c0eac1fed7d1ef782835c77c368fae727d56e9a20687f",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "bathroom-routine-with-moisturizer",
+      "mode": "publish",
+      "aliasOf": "pump-moisturizer-routine-reel",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        33
+      ],
+      "beforeHash": "d5199e75f157d90d76bc6e2d6311be1bcbc08348281820c05b45bbdaceeeeb86",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "bedroom-try-on-knitwear-templates",
+      "mode": "merge",
+      "aliasOf": "bedroom-try-on-knitwear",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        2
+      ],
+      "beforeHash": "58cd44fb7009c3733b58d16f615940baa8ca469acac9b283f7636b72eb5b285c",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "close-up-unboxing-makeup-tools-templates",
+      "mode": "publish",
+      "aliasOf": "quiet-unboxing-makeup-tools",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        0
+      ],
+      "beforeHash": "6b4cad06f82a2af83c16e38c142c29ab583cca494ebb88cc0edaa8adb5d38629",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "desk-review-of-a-thin-keyboard",
+      "mode": "publish",
+      "aliasOf": "low-profile-keyboard-review",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        32
+      ],
+      "beforeHash": "5a654e279f599227ad1e2464d3bcb040006bf6be71dda0594f78b92a745e423d",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "dog-harness-park-setup-templates",
+      "mode": "merge",
+      "aliasOf": "dog-harness-park-setup",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        27
+      ],
+      "beforeHash": "05fa7873270a713721d5a22356696469ead919be2fbe1c4e5cfb6994c3763eb8",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "evening-demo-of-a-kitchen-appliance",
+      "mode": "publish",
+      "aliasOf": "kitchen-appliance-evening-demo-reel",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        31
+      ],
+      "beforeHash": "353978a8bf8a81601d8e243c9a0266eb4787e3d43014e6214d24fb109afccdc7",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "first-bite-of-a-berry-bowl",
+      "mode": "publish",
+      "aliasOf": "berry-bowl-first-bite-reel",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        22
+      ],
+      "beforeHash": "75c541ce331eda5ce827a083a106e58fdc7e7bd5486baf552f754b987e430551",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "first-sip-of-a-citrus-drink",
+      "mode": "publish",
+      "aliasOf": "sensory-hook-citrus-sip",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        18
+      ],
+      "beforeHash": "ad4ec49bca10c908b26b080485c73fb47ee8d809406ada35892bcee653b3e4c7",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "full-turn-of-a-linen-shirt",
+      "mode": "publish",
+      "aliasOf": "360-showcase-linen-shirt",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        10
+      ],
+      "beforeHash": "7f39febbe251c3eddcdf5796fc79d29d84cec23e2adeb7d8da75afea42fe6370",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "grwm-unboxing-knitwear",
+      "mode": "publish",
+      "aliasOf": "get-ready-unboxing-knitwear",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        8
+      ],
+      "beforeHash": "e29ac5fc969ec742d93239e62738f3454c6668ed55b07e910c6d9eb6a6b3656e",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_jewelry_positioning",
+      "pageSlug": "/ai-image-generation/jewelry-positioning",
+      "rowUpdatedAt": "2026-11-21T11:53:21.114Z",
+      "rowHash": "ae7a04b7dd3d1cb1f746929134a2bedc72ed6d954dfc627f0ab115b5570c3a82"
+    },
+    {
+      "publicSlug": "home-app-walkthrough-opener",
+      "mode": "publish",
+      "aliasOf": "hook-home-app-walkthrough",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        15
+      ],
+      "beforeHash": "30f2a1f842691816e45a9205965ba6b66bcb3790ef9c87e30298a1ed155cf895",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "kettlebell-powder-reveal-reel-templates",
+      "mode": "merge",
+      "aliasOf": "kettlebell-powder-reveal-reel",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        30
+      ],
+      "beforeHash": "c6721c1c22ef4020dba529dac086b11a5d6476ff6c1eae504b7dd8292f5deeaa",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "mint-face-mist-hook-templates",
+      "mode": "merge",
+      "aliasOf": "mint-face-mist-hook",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        35
+      ],
+      "beforeHash": "5758b85fc9a157f2afb7b312a2d8f98c592356fc73e9d5d88f5fb480b52b6783",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "mirror-selfie-denim-templates",
+      "mode": "merge",
+      "aliasOf": "mirror-selfie-denim",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        9
+      ],
+      "beforeHash": "648ce1d247d5a997c7a0939db45f2db8f27ef4f79aa2bf54d23c2593d64b177c",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "opening-line-phone-demo",
+      "mode": "publish",
+      "aliasOf": "finance-hook-phone-demo",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        16
+      ],
+      "beforeHash": "79e3b52e084bcf4d5a4d2a3c4d6c95fa929b3507f4f7434517ddcbe2328eb906",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "pendant-creator-try-on-templates",
+      "mode": "merge",
+      "aliasOf": "pendant-creator-try-on",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        24
+      ],
+      "beforeHash": "386acbf116e514118eafe4075e83575931ae49cdec1a8e92057ad95408b4857d",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "pet-brush-living-room-demo-templates",
+      "mode": "merge",
+      "aliasOf": "pet-brush-living-room-demo",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        28
+      ],
+      "beforeHash": "73861412478e0ba2bae1b229abec411ffe2d18ffa9cddf2ffe010f8a92f0e7c6",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "post-workout-bottle-check-in-templates",
+      "mode": "merge",
+      "aliasOf": "post-workout-bottle-check-in",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        29
+      ],
+      "beforeHash": "95a00d0fbb80def8157533fe79cfe529a869ab6c5f0ddfb0f91ae20d6dd3704f",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "pov-discovery-court-gear",
+      "mode": "publish",
+      "aliasOf": "first-person-discovery-court-gear",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        14
+      ],
+      "beforeHash": "080ac7b56832f38b40a3ead3fd8e63c48a310fff8e85a39bdfd85db11d7854ab",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_jewelry_positioning",
+      "pageSlug": "/ai-image-generation/jewelry-positioning",
+      "rowUpdatedAt": "2026-11-21T11:53:21.114Z",
+      "rowHash": "ae7a04b7dd3d1cb1f746929134a2bedc72ed6d954dfc627f0ab115b5570c3a82"
+    },
+    {
+      "publicSlug": "powder-burst-around-a-kettlebell",
+      "mode": "publish",
+      "aliasOf": "kettlebell-powder-reveal-reel",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        30
+      ],
+      "beforeHash": "de00ec2f07d827dddadb57018fad2a7056b60917622ef1d9da468a78a2c7973d",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "realtor-walkthrough-home-templates",
+      "mode": "merge",
+      "aliasOf": "realtor-walkthrough-home",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        17
+      ],
+      "beforeHash": "45a5ccd6533c07e801ba410c38640fa6096df02216ace1ae386551fd4da62449",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "resistance-band-home-demo-templates",
+      "mode": "merge",
+      "aliasOf": "resistance-band-home-demo",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        23
+      ],
+      "beforeHash": "71d8ac125c1bdcdeecab8ac545fea58cb2371b8d833b8115391a8ebdfaf604be",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "routine-demo-cream-templates",
+      "mode": "merge",
+      "aliasOf": "routine-demo-cream",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        6
+      ],
+      "beforeHash": "577302bfbf2bbe244b0464a37217751362bdd6027c92f51c5b1a6efd61749384",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "running-shoe-creator-showcase-templates",
+      "mode": "merge",
+      "aliasOf": "running-shoe-creator-showcase",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        20
+      ],
+      "beforeHash": "3478f4beb11376c4e811854e4b60c43ba0a0ef6ae6bafa3d18583c98c48f632f",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "sage-overshirt-unboxing-templates",
+      "mode": "merge",
+      "aliasOf": "sage-overshirt-unboxing",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        34
+      ],
+      "beforeHash": "1c75f2126eea59b5992d55fa005b135463ad3a27689a2bc49fd58204f5033210",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "silver-signet-macro-reveal-templates",
+      "mode": "merge",
+      "aliasOf": "silver-signet-macro-reveal",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        25
+      ],
+      "beforeHash": "c507c09cbe2759118db2d65deff20cb1e76d9f83cd99a27c3fc8c128a0ffb09e",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "spoken-lesson-about-skin-care",
+      "mode": "publish",
+      "aliasOf": "talking-head-skin-lesson",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        13
+      ],
+      "beforeHash": "3436203126264748c0f98c118227eb8c193b68075df04e76808aaebd459d79fd",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "pageSlug": "/ai-image-generation/colorway-variations",
+      "rowUpdatedAt": "2026-11-22T06:08:21.681Z",
+      "rowHash": "b1de5d25999000e9ce50069da76cb4441ff545b65d020ff7ebc9f5ee8145f4be"
+    },
+    {
+      "publicSlug": "stadium-hydration-fan-moment-templates",
+      "mode": "merge",
+      "aliasOf": "stadium-hydration-fan-moment",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        36
+      ],
+      "beforeHash": "a032ad3390cdd75e328dcf7e534bd3922a6b1d78f6eb28770adaf18f873f6ac7",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "street-interview-fitness-gear-templates",
+      "mode": "merge",
+      "aliasOf": "street-interview-fitness-gear",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        11
+      ],
+      "beforeHash": "f22167bb1770c64403b4244c3af21cf34ac8d06bfb6f460f8cd6b0d263e8dc8f",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "street-interview-snack-bite-templates",
+      "mode": "merge",
+      "aliasOf": "street-interview-snack-bite",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        19
+      ],
+      "beforeHash": "905991bad5d9a6c581fc413f8633d89c522d78345632460c0ede735f0ff59b27",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "street-style-linen-set-templates",
+      "mode": "merge",
+      "aliasOf": "street-style-linen-set",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        3
+      ],
+      "beforeHash": "4b8dafeeff0b17ec7494df79235381750fffc751c9662ffcd9af5c8ab085e693",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "studio-style-watch-close-up",
+      "mode": "publish",
+      "aliasOf": "cinematic-watch-detail",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        1
+      ],
+      "beforeHash": "8f6dd04816d7fbba40e127b5bd768b44621dbf31e53ca5e37be422de81996e95",
+      "flag": "detailAliasPublish",
+      "pageId": "aidreamcapes_promo_category_beauty_routine",
+      "pageSlug": "/ai-video-generation/beauty-routine",
+      "rowUpdatedAt": "2026-11-21T17:43:42.188Z",
+      "rowHash": "678c0367728b04cc527dafe9880a6a504d5fcc6be5584a92f072fe825ccf41ba"
+    },
+    {
+      "publicSlug": "trail-shoe-lace-up-demo-templates",
+      "mode": "merge",
+      "aliasOf": "trail-shoe-lace-up-demo",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        21
+      ],
+      "beforeHash": "94c3a1324df645dd57046540226d38ed5e377fe69edd84886e1492ba8b68b638",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "tutor-demo-study-tool-templates",
+      "mode": "merge",
+      "aliasOf": "tutor-demo-study-tool",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        12
+      ],
+      "beforeHash": "ef96038f356f0c90168f51efaaeba65f6705368858c11fb1cf7ddfdd3b16808a",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    },
+    {
+      "publicSlug": "wooden-toy-parent-play-templates",
+      "mode": "merge",
+      "aliasOf": "wooden-toy-parent-play",
+      "cardPath": [
+        "sections",
+        "v2_main",
+        "settings",
+        "data",
+        "workspaceCases",
+        26
+      ],
+      "beforeHash": "04374e92cbc12ee1bdd9e2eb3c87ed8a9c8708b0a3dda75bd73a3085916e01d4",
+      "flag": "detailAliasMerge",
+      "pageId": "aidreamcapes_v2_templates",
+      "pageSlug": "/templates",
+      "rowUpdatedAt": "2026-11-22T13:14:41.611Z",
+      "rowHash": "550d157d9b6382267f38c90b357b88afb32cee7ce85013c4e99179d91d843876"
+    }
+  ]
+}

@@ -169,14 +169,13 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
       const targetCard = cardsFromContent(targetPage.contentJson)
         .find((card) => card.publicSlug === aliasOf && toDetailCard(card)?.kind === kind);
       const targetIdentity = presetGenerationIdentity(presetFromCard(targetPage, targetPage.slug, targetCard));
-      // Same-title shortcuts are duplicates of the target detail page: the alias
-      // URL keeps answering with a permanent redirect so its inbound links and
-      // ranking signals consolidate instead of competing (approved 2026-11-22).
-      // Distinct-title aliases are separate examples and keep their own page.
-      const aliasLabel = (str((rawCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
-      const targetLabel = (str((targetCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
-      const sameTitleAlias = Boolean(aliasLabel) && aliasLabel === targetLabel;
-      if (sameTitleAlias && !str(targetCard?.detailAliasOf)) {
+      // Reviewed duplicate shortcuts carry `detailAliasMerge` on the alias card
+      // itself. They answer with a permanent redirect so inbound links and
+      // ranking signals consolidate on the target example instead of competing
+      // with a same-titled copy (approved 2026-11-22). Preset identity is not
+      // compared for these: the duplicate was reviewed and marked explicitly.
+      const mergesIntoTarget = (rawCard as { detailAliasMerge?: unknown } | undefined)?.detailAliasMerge === true;
+      if (mergesIntoTarget && !str(targetCard?.detailAliasOf)) {
         return resolveMediaDetail(kind, aliasOf, false, targetPages);
       }
       // Chains/cycles fail closed to the original detail. Single-hop refs only.
