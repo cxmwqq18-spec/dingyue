@@ -497,7 +497,7 @@ function TemplatePage({ data, r }: Props) {
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
@@ -518,7 +518,10 @@ function TemplatePage({ data, r }: Props) {
         <TemplateGrid cards={list<V2Card>(data.more)} r={r} />
       </Section>
     ) : null],
-    ["examples", <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />],
+    ["examples", <>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} /></Section> : null}
+      <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
+    </>],
     ...pageOwnBlocks(data, r),
     ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />],
     ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />],

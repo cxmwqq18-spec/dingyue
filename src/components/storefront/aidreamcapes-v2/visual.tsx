@@ -52,6 +52,14 @@ function visualRatio(image: V2VisualImage): string {
   return image.w < image.h ? "9:16" : "16:9";
 }
 
+/** Photo cards keep their own shape; only video scenes use the 9:16 frame. */
+function photoCardShape(image: { w: number; h: number }): "square" | "portrait" | "wide" {
+  const ratio = image.w / image.h;
+  if (ratio < 0.9) return "portrait";
+  if (ratio > 1.1) return "wide";
+  return "square";
+}
+
 export function VisualStrip({ visual, r, includeOverview = false, heading, lead }: { visual: V2Visual; r: V2Resolvers; includeOverview?: boolean; heading?: string; lead?: string }) {
   // The v2 visual styles ride the shared theme stylesheet (see shell.tsx);
   // re-injecting them here duplicated the payload once per section.
@@ -314,7 +322,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         </div>
         <div className="v-picker-grid">
           {cards.map((card, index) => (
-            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>
+            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} data-kind={card.kind} data-ratio={card.video ? "portrait" : photoCardShape(card.image)} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>
               {card.video ? (
                 <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} forceAspectRatio="9 / 16" posterEager={index < 4} showDuration={!hideDuration} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}

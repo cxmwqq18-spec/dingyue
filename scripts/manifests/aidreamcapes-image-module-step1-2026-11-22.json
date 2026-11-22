@@ -1,0 +1,82 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-22T06:08:21.323Z",
+  "applying": true,
+  "editCount": 11,
+  "pages": [
+    "/ai-image-generation",
+    "/ai-image-generation/change-background",
+    "/ai-image-generation/colorway-variations",
+    "/ai-image-generation/packshot-multi-angle",
+    "/ai-image-generation/packaging-mockup",
+    "/ai-image-generation/social-ad-photos"
+  ],
+  "edits": [
+    {
+      "slug": "/ai-image-generation",
+      "path": "examples/groups/More photo examples/items",
+      "beforeHash": "83dd28db333b624febaaa2053ef7efbabd9de71ff0495c603686b6724b9bd025",
+      "afterHash": "5be22f568962b7107e1c447c26dc3ef4e94c2b65f4c1b211fbb405ab2561b607"
+    },
+    {
+      "slug": "/ai-image-generation",
+      "path": "examples/groups/More photo examples/items/Instagram Story Image Maker/image/alt",
+      "beforeHash": "e151dce61dded0172d7f36ac26bd2a449a786d2265225dc404e17589efe8d785",
+      "afterHash": "d5a7148fe4eed4106694dfa88aa6d21d0159cfd68bddc1b9b7a650074d42c465"
+    },
+    {
+      "slug": "/ai-image-generation/change-background",
+      "path": "visual/steps/prompt",
+      "beforeHash": "2f0d582f2bc3819ec29aeaf8cef5b915c22cf8d0641e320b3c57e7d24d1271b5",
+      "afterHash": "a15a9909a0fdd566178352e63bfc57c7f797055d68339d3359d75198f63222ec"
+    },
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "path": "blockOrder",
+      "beforeHash": "03ff9dea6c34e303db239e8275734fc3f4a606e823244b2e38d2cb2aa4dc57d3",
+      "afterHash": "1c83d7eb86c00f1750b0642203c3500e621e8ffcf580aeedbef299ee86db4fd0"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "blockOrder",
+      "beforeHash": "f4fc1fbdb0cee779f7df605dfe00032c969b1ceafe3ac6f4f1b97a3e9b6f97b4",
+      "afterHash": "3e134a72d5ea41c9589c3c0804e92136aa02543340b517000d7c20d844172521"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "blockOrder",
+      "beforeHash": "3e134a72d5ea41c9589c3c0804e92136aa02543340b517000d7c20d844172521",
+      "afterHash": "a26463fd34d78eb65d24bbabaf391c4d7bf2f6154cd95ccb87480be41e4f7a46"
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "path": "visual/strip",
+      "beforeHash": "60b5bc93a827e0ac0239ef6b1de1a90f665c431b8503b59a5f98dc104cb20d8b",
+      "afterHash": "97f760d5514b1b98203ebb8a6b8d2065414bb3ade0c797f88964219aec2a1149"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "blockOrder",
+      "beforeHash": "03ff9dea6c34e303db239e8275734fc3f4a606e823244b2e38d2cb2aa4dc57d3",
+      "afterHash": "1c83d7eb86c00f1750b0642203c3500e621e8ffcf580aeedbef299ee86db4fd0"
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "path": "visual/strip",
+      "beforeHash": "42942f36b2cb4296d628fc24c3e411690c4c4f6946fd3203eb783eb4a772d4db",
+      "afterHash": "7a34a485f8b8b440e6bca35baa100770c8865230e711af150c95387e9d2e1d19"
+    },
+    {
+      "slug": "/ai-image-generation/social-ad-photos",
+      "path": "t",
+      "beforeHash": "60e932d351549b656f4d7c7cd45fde88b47457cfa977e5e8f88451f3a9e1dc9e",
+      "afterHash": "feed3af2f715b0b43c8d41a9be31a9c54ca41dafe4f1cdc5fcb25bd42e3a0f97"
+    },
+    {
+      "slug": "/ai-image-generation/social-ad-photos",
+      "path": "t",
+      "beforeHash": "c214b7b4bb7b7d4ddb718e558f1400815270a0a3c4715c6e5305329026c1d198",
+      "afterHash": "bb633ca88dadf3e17a3390ab8f9148f89b0ed474ce8309c63e991b70ee323655"
+    }
+  ]
+}

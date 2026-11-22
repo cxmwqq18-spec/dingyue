@@ -302,6 +302,8 @@ export function ImageItemRows({ items, r, numbered = false }: { items: V2ImageIt
       .adc2 .v-image-item-media figure{margin:0;width:min(100%,440px);overflow:hidden;border:1px solid var(--line-2);border-radius:20px;background:#0b0b0d}
       .adc2 .v-image-item-media figure.v-image-frame-none{border-radius:16px}
       .adc2 .v-image-item-media img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+      .adc2 .v-image-item-media figure.v-image-ratio-portrait img{aspect-ratio:4/5}
+      .adc2 .v-image-item-media figure.v-image-ratio-wide img{aspect-ratio:16/9}
       .adc2 .v-image-item-media figure.v-image-frame-phone{width:min(100%,300px);padding:10px;border-radius:28px;background:#070709;box-shadow:0 18px 44px rgba(0,0,0,.38)}
       .adc2 .v-image-item-media figure.v-image-frame-phone img{border-radius:19px;aspect-ratio:9/16}
       .adc2 .v-image-item-media figure.v-image-frame-browser{padding:38px 10px 10px;position:relative}
@@ -315,9 +317,13 @@ export function ImageItemRows({ items, r, numbered = false }: { items: V2ImageIt
         if (!item.img) return null;
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
+        const mediaRatio = image.width && image.height ? image.width / image.height : 1;
+        const ratioClass = frame === "v-image-frame-none"
+          ? mediaRatio < 0.9 ? "v-image-ratio-portrait" : mediaRatio > 1.1 ? "v-image-ratio-wide" : ""
+          : "";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
           <div className="v-image-item-copy"><h3>{numbered ? <CardNumber index={index} /> : null}{item.href ? <WorkspaceEntryLink href={r.href(item.href)}>{item.t}</WorkspaceEntryLink> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
-          <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
+          <div className="v-image-item-media"><figure className={`${frame}${ratioClass ? ` ${ratioClass}` : ""}`}><Img image={image} r={r} /></figure></div>
         </article>;
       })}
     </div>
@@ -592,11 +598,24 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
   );
 }
 
+function cardShape(card: Pick<V2Card, "aspect" | "image">): "square" | "portrait" | "wide" {
+  if (card.aspect === "1:1") return "square";
+  if (card.aspect === "9:16") return "portrait";
+  if (card.aspect === "16:9") return "wide";
+  const width = card.image.width;
+  const height = card.image.height;
+  if (!width || !height) return "square";
+  const ratio = width / height;
+  if (ratio < 0.9) return "portrait";
+  if (ratio > 1.1) return "wide";
+  return "square";
+}
+
 export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   if (card.cardType === "case") return <CaseCard card={card} r={r} filterIndexes={filterIndexes} />;
   const href = mediaCardHref(card.kind, mediaCardCanonicalSlug(card), card.href);
   return (
-    <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+    <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind} data-kind={card.kind} data-ratio={cardShape(card)}>
       <div className="ti">
         <Img image={card.image} r={r} />
       </div>
@@ -614,7 +633,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
   const video = card.video;
   const href = mediaCardHref(card.kind, mediaCardCanonicalSlug(card), card.href);
   return (
-    <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+    <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind} data-kind={card.kind} data-ratio={cardShape(card)}>
       <div className="ti">
         {video ? (
           <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? "")), previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined, src: r.asset(video.src), width: video.width }} />
@@ -942,7 +961,8 @@ export function PairGrid({ pairs, r }: { pairs: { before: V2Image; after: V2Imag
 export function Gallery({ images, r }: { images: V2Image[]; r: V2Resolvers }) {
   if (!images.length) return null;
   const ratio = (images[0].width ?? 16) / (images[0].height ?? 10);
-  return <div className="gal" data-n={images.length} data-shape={ratio > 0.9 && ratio < 1.1 ? "square" : "wide"}>{images.map((image) => <figure key={image.src}><Img image={image} r={r} /></figure>)}</div>;
+  const shape = ratio > 1.1 ? "wide" : ratio < 0.9 ? "portrait" : "square";
+  return <div className="gal" data-n={images.length} data-shape={shape}>{images.map((image) => <figure key={image.src}><Img image={image} r={r} /></figure>)}</div>;
 }
 
 // On phones the example picture sits between the lead and the full start box, so a compact start button follows the lead.
@@ -1008,6 +1028,8 @@ const cardBlockCss = `
 .adc2 .v1-card{position:relative;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);display:flex;flex-direction:column;counter-increment:v1card}
 .adc2 .v1-card figure{margin:0;aspect-ratio:4/3;overflow:hidden;background:#0d0d10}
 .adc2 .v1-card figure img{width:100%;height:100%;object-fit:cover;display:block}
+.adc2 .v1-reviews .v1-card figure{aspect-ratio:4/5}
+.adc2 .v1-reviews .v1-card figure img{object-position:center top}
 .adc2 .v1-card-copy{display:flex;flex:1;flex-direction:column;gap:9px;padding:20px 22px 22px}
 .adc2 .v1-card h3{margin:0;font-size:18px;line-height:1.3;color:var(--ink)}
 .adc2 .v1-card p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.6}
