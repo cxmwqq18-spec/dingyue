@@ -42,6 +42,7 @@ export async function renderAidreamcapesWorkspace({
   handoff,
   resumeDraft = false,
   requireCustomer = false,
+  initialVideoTool,
 }: {
   routeSlug: "aivideosugc" | "aidreamcapes";
   initialView?: WorkspaceView;
@@ -57,6 +58,7 @@ export async function renderAidreamcapesWorkspace({
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
   requireCustomer?: boolean;
+  initialVideoTool?: string;
 }) {
   if (!taskId && invalidPreset) notFound();
   const entryCookies = await cookies();
@@ -131,6 +133,7 @@ export async function renderAidreamcapesWorkspace({
     initialHandoff={safeHandoff}
     initialTemplateGallery={templateGallery}
     initialInspirations={inspirations}
+    initialVideoTool={initialView === "video" ? initialVideoTool : undefined}
     initialCatalog={catalog}
     csrfToken={cookieStore.get(csrfCookieName(`customer:${AIVIDEOSUGC_SITE_ID}`))?.value}
     customer={current ? { id: current.customer.id, name: current.customer.name, email: current.customer.email, balance: current.customer.balance.available } : undefined}
@@ -175,5 +178,6 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
     taskId: value("task"), sceneId, initialView, imageTool,
     initialProductUrl: createIntent?.kind === "video" ? createIntent.productUrl : undefined,
     presetRequest, invalidPreset, handoff, resumeDraft: value("resumeDraft") === "1",
+    initialVideoTool: intentView === "video" && createIntent?.kind === "video" ? canonicalWorkspaceTool(createIntent.tool) : undefined,
   };
 }

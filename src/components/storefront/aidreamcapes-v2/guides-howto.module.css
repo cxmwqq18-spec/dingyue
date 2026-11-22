@@ -6,6 +6,28 @@
    monochrome (#fff / #d4d4d8 / #9494a2); the gradient appears only as a
    button fill. Pure static HTML, no client behavior. */
 
+/* ---------- guide header ----------
+   The tutorial hero is centered; the article body stays left-aligned for
+   reading. Applies to every /guides/how-do-* page. */
+.crumbsCenter :global(.crumbs) {
+  justify-content: center;
+}
+.headerCenter {
+  text-align: center;
+}
+:global(.adc2) :global(.ahero) .headerCenter h1,
+:global(.adc2) :global(.ahero) .headerCenter :global(.lead) {
+  margin-left: auto;
+  margin-right: auto;
+}
+.headerCenter :global(.eyebrow),
+.headerCenter :global(.meta-line) {
+  text-align: center;
+}
+.headerCenter .meta {
+  justify-content: center;
+}
+
 /* ---------- hero meta chips ---------- */
 .meta {
   display: flex;

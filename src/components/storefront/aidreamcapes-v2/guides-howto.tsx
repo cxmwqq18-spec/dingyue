@@ -320,9 +320,11 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
   return (
     <>
       <article>
-        <Crumbs items={crumbs} r={r} />
+        <div className={styles.crumbsCenter}>
+          <Crumbs items={crumbs} r={r} />
+        </div>
         <section className="ahero">
-          <div className="wrap">
+          <div className={`wrap ${styles.headerCenter}`}>
             {howto.eyebrow ? <div className="eyebrow">{howto.eyebrow}</div> : null}
             <h1>{howto.h1}</h1>
             {howto.lead ? <p className="lead">{howto.lead}</p> : null}

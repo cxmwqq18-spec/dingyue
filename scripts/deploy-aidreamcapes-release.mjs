@@ -293,6 +293,16 @@ trap - EXIT
 ${buildWindow ? `# The switch phase has its own rollback trap; keep the window restore armed
 # until the release finishes so a failure here cannot leave the EU sites down.
 trap 'restore_build_window' EXIT` : ""}
+# Chunk reachability: nginx serves /_next/static/ from this shared directory
+# first, so a tab opened before a deploy keeps resolving the previous release's
+# hashed chunk names (a 404 here surfaced as a client-side exception on scroll).
+# Chunk names are content-hashed and immutable, so hardlink them and prune only
+# months-old leftovers.
+mkdir -p "$ROOT/shared/next-static/_next/static"
+if [ -d "$BASE/.next-build/static" ]; then cp -al -n "$BASE/.next-build/static/." "$ROOT/shared/next-static/_next/static/" 2>/dev/null || true; fi
+if [ -d "$RELEASE/.next-build/static" ]; then cp -al -n "$RELEASE/.next-build/static/." "$ROOT/shared/next-static/_next/static/" 2>/dev/null || true; fi
+find "$ROOT/shared/next-static/_next/static" -type f -mtime +30 -delete 2>/dev/null || true
+
 # Apply the exact release's forward-only schema migrations after the built
 # candidate passes its SSR contract and before it receives production traffic.
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js migrate deploy

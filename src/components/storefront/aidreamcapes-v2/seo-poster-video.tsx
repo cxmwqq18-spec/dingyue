@@ -67,38 +67,17 @@ export function SeoPosterVideo({
     return () => observer.disconnect();
   }, [active]);
 
-  if (active) {
-    return (
-      <video
-        aria-label={alt}
-        autoPlay={autoPlay}
-        className={className}
-        controls={controls}
-        height={height}
-        loop={loop || autoStarted}
-        muted={muted || autoStarted}
-        playsInline
-        poster={poster}
-        preload="metadata"
-        src={src}
-        width={width}
-      >
-        {tracks?.map((track) => (
-          <track default={track.default} key={track.src} kind="subtitles" label={track.label} src={track.src} srcLang={track.srcLang} />
-        ))}
-      </video>
-    );
-  }
-
   return (
-    <button
-      aria-label={`Play ${alt}`}
-      className={posterClassName ?? className}
-      onClick={() => setActive(true)}
-      ref={posterRef}
-      style={{ position: "relative", display: "block", width: "100%", padding: 0, border: 0, background: "transparent", cursor: "pointer", overflow: "hidden", borderRadius: "inherit" }}
-      type="button"
-    >
+    <span className="notranslate" style={{ display: "contents" }} translate="no">
+      <button
+        aria-label={`Play ${alt}`}
+        aria-hidden={active}
+        className={posterClassName ?? className}
+        onClick={() => setActive(true)}
+        ref={posterRef}
+        style={{ position: "relative", display: active ? "none" : "block", width: "100%", padding: 0, border: 0, background: "transparent", cursor: "pointer", overflow: "hidden", borderRadius: "inherit" }}
+        type="button"
+      >
       {poster ? (
         <img
           alt={alt}
@@ -139,6 +118,27 @@ export function SeoPosterVideo({
           ▶
         </span>
       </span>
-    </button>
+      </button>
+      {active ? (
+        <video
+          aria-label={alt}
+          autoPlay={autoPlay}
+          className={className}
+          controls={controls}
+          height={height}
+          loop={loop || autoStarted}
+          muted={muted || autoStarted}
+          playsInline
+          poster={poster}
+          preload="metadata"
+          src={src}
+          width={width}
+        >
+          {tracks?.map((track) => (
+            <track default={track.default} key={track.src} kind="subtitles" label={track.label} src={track.src} srcLang={track.srcLang} />
+          ))}
+        </video>
+      ) : null}
+    </span>
   );
 }
