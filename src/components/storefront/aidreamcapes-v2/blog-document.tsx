@@ -18,7 +18,8 @@ type DocumentBlock =
   | { kind: "facts"; items: string[] }
   | { kind: "table"; head: string[]; rows: string[][] }
   | { kind: "quote"; text: string }
-  | { kind: "contact"; items: string[] };
+  | { kind: "contact"; items: string[] }
+  | { kind: "video"; src: string; poster: V2Image; alt?: string; href?: string; label?: string };
 
 export type DocumentData = {
   variant: "press" | "knowledge";
@@ -28,6 +29,7 @@ export type DocumentData = {
   cover?: V2Image;
   lead?: string;
   sections: { h2: string; blocks: DocumentBlock[] }[];
+  faq?: { question: string; answer: string }[];
   facts?: string[];
   contacts?: string[];
   footerNote?: string;
@@ -38,6 +40,24 @@ function Block({ block, r }: { block: DocumentBlock; r: V2Resolvers }) {
   if (block.kind === "h3") return <h3>{block.text}</h3>;
   if (block.kind === "h4") return <h4>{block.text}</h4>;
   if (block.kind === "quote") return <blockquote><p><RichText r={r} text={block.text} /></p></blockquote>;
+  if (block.kind === "video") {
+    return (
+      <figure className="bdoc-video">
+        <video
+          aria-label={block.alt ?? "Example video"}
+          controls
+          height={block.poster.height}
+          playsInline
+          poster={r.asset(block.poster.src)}
+          preload="metadata"
+          width={block.poster.width}
+        >
+          <source src={r.asset(block.src)} type="video/mp4" />
+        </video>
+        {block.href ? <figcaption><a href={r.href(block.href)}>{block.label ?? "Watch the full example"}</a></figcaption> : null}
+      </figure>
+    );
+  }
   if (block.kind === "list") {
     const items = block.items.map((item) => <li key={item}><RichText r={r} text={item} /></li>);
     return block.ordered ? <ol>{items}</ol> : <ul>{items}</ul>;
@@ -104,6 +124,18 @@ export function BlogDocumentPage({ data, r }: { data: DocumentData; r: V2Resolve
           </section>
         ))}
 
+        {data.faq?.length ? (
+          <section className="bdoc-faq">
+            <h2>Frequently Asked Questions</h2>
+            {data.faq.map((item) => (
+              <div key={item.question}>
+                <h3>{item.question}</h3>
+                <p><RichText r={r} text={item.answer} /></p>
+              </div>
+            ))}
+          </section>
+        ) : null}
+
         {data.facts?.length ? (
           <div className="bdoc-facts">
             {data.facts.map((item) => <p key={item}><RichText r={r} text={item} /></p>)}
@@ -141,6 +173,11 @@ const BDOC_CSS = `
 .adc2 .bdoc .bdoc-cover{display:flex;justify-content:center;margin:0 0 30px}
 .adc2 .bdoc .bdoc-cover img{display:block;width:min(340px,100%);height:auto;border:1px solid #e3e7ec;border-radius:10px;box-shadow:0 18px 44px rgba(20,22,26,.14)}
 .adc2 .bdoc .bdoc-lead{margin:0 0 16px;color:#14161a;font-size:1.1rem;font-weight:500;line-height:1.7}
+.adc2 .bdoc .bdoc-video{display:flex;flex-direction:column;align-items:center;gap:8px;margin:22px 0 30px}
+.adc2 .bdoc .bdoc-video video{display:block;width:min(320px,100%);height:auto;aspect-ratio:9/16;background:#0a0a0a;border:1px solid #e3e7ec;border-radius:12px;box-shadow:0 18px 44px rgba(20,22,26,.14)}
+.adc2 .bdoc .bdoc-video figcaption{color:#5b6470;font-size:.88rem}
+.adc2 .bdoc .bdoc-video figcaption a{color:#1f6feb}
+.adc2 .bdoc .bdoc-faq h3{margin-top:22px}
 .adc2 .bdoc-kb .bdoc-lead{font-size:1.06rem;margin-bottom:16px;line-height:1.65}
 .adc2 .bdoc p{margin:0 0 16px;color:#14161a}
 .adc2 .bdoc-kb p{margin:0 0 13px;line-height:1.65}
