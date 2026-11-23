@@ -518,6 +518,16 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
                   V{version.number} · {version.hasCaptions ? "With subtitles" : "Original"}
                 </button>
               ))}
+              {activeVersion?.hasCaptions && (
+                <a
+                  className={styles.versionTab}
+                  href={`/api/sites/${selectedTask.siteId}/aivideosugc/tasks/${selectedTask.taskId}/output?kind=subtitles&renderId=${encodeURIComponent(activeVersion.renderId)}`}
+                  download
+                  aria-label="Download the subtitle file for this version"
+                >
+                  Download .srt
+                </a>
+              )}
             </div>
             <div className={styles.previewStage}>
               {activeVersion && <video className={styles.preview} style={{ aspectRatio }} src={activeVersion.url} controls preload="metadata" aria-label={`Preview of ${selectedTask.title}`} />}

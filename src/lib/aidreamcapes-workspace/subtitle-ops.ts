@@ -34,6 +34,12 @@ export interface SubtitleOpSettings {
   backdrop?: SubtitleBackdrop;
   /** Customer-written copy for the promo/marketing operations; captions always come from the video's speech. */
   text?: string;
+  /**
+   * Measured caption lines (start/end/text) supplied by the caller. When present
+   * for captions_polish the plan uses these timings verbatim instead of asking
+   * the text model to guess them.
+   */
+  lines?: SubtitleCue[];
 }
 
 export const SUBTITLE_SIZES = ["small", "medium", "large"] as const;
@@ -62,7 +68,7 @@ export function parseSubtitleOpSettings(value: unknown): SubtitleOpSettings {
   if (value === undefined || value === null) return {};
   if (typeof value !== "object" || Array.isArray(value)) throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
   const raw = value as Record<string, unknown>;
-  if (Object.keys(raw).some((key) => !["style", "size", "position", "color", "backdrop", "text"].includes(key))) {
+  if (Object.keys(raw).some((key) => !["style", "size", "position", "color", "backdrop", "text", "lines"].includes(key))) {
     throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
   }
   const pick = <T extends string>(candidate: unknown, allowed: readonly T[]): T => {
@@ -80,6 +86,19 @@ export function parseSubtitleOpSettings(value: unknown): SubtitleOpSettings {
     const text = raw.text.trim().replace(/\s*\n+\s*/g, "\n").slice(0, 800);
     if (!text) throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
     settings.text = text;
+  }
+  if (raw.lines !== undefined) {
+    if (!Array.isArray(raw.lines) || raw.lines.length === 0 || raw.lines.length > 500) {
+      throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
+    }
+    settings.lines = raw.lines.map((candidate) => {
+      const line = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate as Record<string, unknown> : null;
+      if (!line || Object.keys(line).some((key) => !["start", "end", "text"].includes(key)) ||
+          typeof line.text !== "string" || !Number.isFinite(line.start) || !Number.isFinite(line.end)) {
+        throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
+      }
+      return { start: Number(line.start), end: Number(line.end), text: String(line.text) };
+    });
   }
   return settings;
 }

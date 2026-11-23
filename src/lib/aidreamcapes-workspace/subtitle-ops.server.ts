@@ -202,17 +202,22 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
   const settings = args.settings ?? {};
   let task = await getTask(args.siteId, args.customerId, args.taskId);
   assertSubtitleOpTask(task, args);
-  const decision = settings.text && args.opId !== "captions_polish"
+  const suppliedLines = Boolean(settings.lines?.length);
+  const decision = suppliedLines || (settings.text && args.opId !== "captions_polish")
     ? null
     : await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, editedDuration(task)));
+  // Measured lines supplied by the caller win: their timings are already the
+  // ground truth, so neither the text model nor the snapping pass may move them.
   // Customer-written promo/copy text replaces the text model entirely; caption
   // dialogue still comes from the model so it can follow the actual speech.
-  let plan: SubtitleOpPlan = decision
-    ? validateSubtitleOpPlan(decision, editedDuration(task))
-    : { style: "classic", lines: planLinesFromCustomText(settings.text!.trim(), editedDuration(task)) };
+  let plan: SubtitleOpPlan = suppliedLines
+    ? { style: "classic", lines: validateCaptionLines(settings.lines!, editedDuration(task)) }
+    : decision
+      ? validateSubtitleOpPlan(decision, editedDuration(task))
+      : { style: "classic", lines: planLinesFromCustomText(settings.text!.trim(), editedDuration(task)) };
   // Lip-sync guarantee: for dialogue captions, clamp the plan onto the measured
   // speech timings so lines appear and disappear with the actual voice track.
-  const speechCues = args.opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;
+  const speechCues = !suppliedLines && args.opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;
   if (speechCues?.length) plan = { style: plan.style, lines: snapPlanLinesToSpeech(plan.lines, speechCues) };
   // Customer overrides win over the plan's style choice; unchosen dimensions stay automatic.
   const style = settings.style ?? plan.style;
@@ -240,10 +245,14 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
       uncommittedRenderId = rendered.renderId;
 
       const previous = task.video!;
-      if (!task.videoHistory.some((entry) => entry.renderId === previous.renderId)) {
-        task.videoHistory.push(structuredClone(previous));
+      // The subtitle operation adds a subtitled version WITHOUT replacing the
+      // task's main video. The library keeps showing the original render; the
+      // new version lives in the history and is served per-render so the
+      // studio can switch between Original and With subtitles.
+      if (!task.videoHistory.some((entry) => entry.renderId === rendered.renderId)) {
+        task.videoHistory.push(rendered);
       }
-      task.video = rendered;
+      task.videoHistory = task.videoHistory.slice(-20);
       task.captionEdits = undefined;
       task.status = "completed";
       const at = new Date().toISOString();
@@ -274,7 +283,7 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
     taskId: task.taskId,
     revision: saved!.revision,
     renderId: committed!.renderId,
-    finalUrl: committed!.finalUrl ?? "",
+    finalUrl: `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=video&renderId=${encodeURIComponent(committed!.renderId)}`,
     opId: args.opId,
     style,
     linesCount: plan.lines.length,

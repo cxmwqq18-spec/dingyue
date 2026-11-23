@@ -93,7 +93,7 @@ export async function GET(request: NextRequest, { params }: Context) {
     const wantsPreviewSize = request.nextUrl.searchParams.get("size") === "preview";
     const allowedQuery = rawKind === "clip"
       ? new Set(["kind", "shotId", "versionId", "web", "size"])
-      : rawKind === "video" ? new Set(["kind", "renderId", "web", "poster", "size"]) : new Set(["kind"]);
+      : rawKind === "video" ? new Set(["kind", "renderId", "web", "poster", "size"]) : rawKind === "subtitles" ? new Set(["kind", "renderId"]) : new Set(["kind"]);
     if (request.nextUrl.searchParams.getAll("kind").length !== 1 ||
         ["poster", "web", "size"].some((key) => request.nextUrl.searchParams.getAll(key).length > 1) ||
         [...request.nextUrl.searchParams.keys()].some((key) => !allowedQuery.has(key))) {
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest, { params }: Context) {
     const renderId = request.nextUrl.searchParams.get("renderId") || undefined;
     if ((kind === "clip" && (!shotId || !versionId || request.nextUrl.searchParams.getAll("shotId").length !== 1 || request.nextUrl.searchParams.getAll("versionId").length !== 1)) ||
         (kind !== "clip" && (shotId !== undefined || versionId !== undefined)) ||
-        (renderId !== undefined && (!/^[a-zA-Z0-9_-]{1,180}$/.test(renderId) || request.nextUrl.searchParams.getAll("renderId").length !== 1 || kind !== "video"))) throw new WorkspaceError("workspace_output_kind_invalid", 400);
+        (renderId !== undefined && (!/^[a-zA-Z0-9_-]{1,180}$/.test(renderId) || request.nextUrl.searchParams.getAll("renderId").length !== 1 || (kind !== "video" && kind !== "subtitles")))) throw new WorkspaceError("workspace_output_kind_invalid", 400);
     const task = await getTask(siteId, auth.current.customer.id, taskId);
     if (task.siteId !== siteId || task.taskId !== taskId || task.customerId !== auth.current.customer.id) {
       throw new WorkspaceError("task_not_found", 404);
