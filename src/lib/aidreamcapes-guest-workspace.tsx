@@ -209,7 +209,7 @@ export async function aidreamcapesMediaWatchMetadata({ slug }: {
   const watchPath = mediaWatchPath("video", detail.slug);
   if (!watchPath) return undefined;
   const canonical = `${MEDIA_DETAIL_PUBLIC_ORIGIN}${watchPath}`;
-  const description = mediaDetailDescription(detail.card, detail.kind);
+  const description = mediaDetailDescription(detail.card, detail.kind, "watch");
   return {
     title: `${title} | Watch | AIVideosUGC`,
     description,

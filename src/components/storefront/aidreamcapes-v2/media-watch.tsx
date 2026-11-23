@@ -67,7 +67,7 @@ export function AidreamcapesMediaWatchPage({
   const thumbnailUrl = absoluteAsset(card.video.poster?.src ?? card.image.src);
   const duration = isoDuration(Number(card.duration) || undefined);
   const published = detail.ownerUpdatedAt;
-  const description = mediaDetailDescription(card, detail.kind);
+  const description = mediaDetailDescription(card, detail.kind, "watch");
   const crumbs = [
     { label: "Home", href: r.href("/") },
     { label: "AI Video Generation", href: r.href("/ai-video-generation") },
@@ -154,7 +154,7 @@ export function AidreamcapesMediaWatchPage({
             ))}
           </ol>
         </nav>
-        <h1>{card.label}</h1>
+        <h1>Watch: {card.label}</h1>
         <p className="v-watch-lead">{description}</p>
         <figure className="v-watch-player">
           <video

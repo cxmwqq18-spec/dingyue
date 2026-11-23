@@ -317,7 +317,7 @@ export function ImageItemRows({ items, r, numbered = false }: { items: V2ImageIt
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
           <div className="v-image-item-copy"><h3>{numbered ? <CardNumber index={index} /> : null}{item.href ? <WorkspaceEntryLink href={r.href(item.href)}>{item.t}</WorkspaceEntryLink> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
-          <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
+          <div className="v-image-item-media"><figure className={frame}><Img fallbackAlt={item.t} image={image} r={r} /></figure></div>
         </article>;
       })}
     </div>
@@ -598,7 +598,7 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
   return (
     <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
-        <Img image={card.image} r={r} />
+        <Img fallbackAlt={card.name} image={card.image} r={r} />
       </div>
       <div className="tb">
         <h3><a className="card-title" href={r.href(href)}>{card.name}</a><SoonLabel soon={card.soon} /></h3>
@@ -618,7 +618,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
       <div className="ti">
         {video ? (
           <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? "")), previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined, src: r.asset(video.src), width: video.width }} />
-        ) : <Img image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
+        ) : <Img fallbackAlt={card.name} image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
       </div>
       <div className="tb">
         <h3>{card.name}<SoonLabel soon={card.soon} /></h3>

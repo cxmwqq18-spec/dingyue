@@ -140,9 +140,19 @@ export function mediaDetailPrompt(card: Pick<MediaDetailCard, "prompt">): string
   return text.length > 4000 ? `${text.slice(0, 3999).trimEnd()}…` : text;
 }
 
-export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "line" | "prompt" | "video">, kind?: MediaDetailKind): string {
+export function mediaDetailDescription(
+  card: Pick<MediaDetailCard, "label" | "line" | "prompt" | "video" | "duration">,
+  kind?: MediaDetailKind,
+  surface: "detail" | "watch" = "detail"
+): string {
   const intro = mediaDetailIntro(card);
   const label = mediaDetailTitle(card);
+  if (surface === "watch") {
+    const seconds = Math.round(Number(card.duration) || 0);
+    const length = seconds > 0 ? `${seconds}-second ` : "";
+    const lead = intro ? ` ${intro}` : "";
+    return `Watch ${label} — the finished ${length}AI product video made with AIVideosUGC.${lead} See the prompt and template page to recreate it with your own product.`.slice(0, 300);
+  }
   if (intro) return `${label}: ${intro}`.slice(0, 300);
   // A card without a one-line intro would otherwise repeat its label as the
   // whole search description. Describe what the page actually shows instead:

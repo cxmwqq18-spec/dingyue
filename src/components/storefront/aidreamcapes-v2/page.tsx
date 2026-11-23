@@ -778,6 +778,12 @@ const actorWorkspaceEntry = (actor: Pick<V2ActorCard, "id">) => ({ view: "actors
 function actorCardHref(actor: Pick<V2ActorCard, "name">): string {
   return actorDetailPath(actor.name) ?? `/${ACTOR_DETAIL_ROOT}`;
 }
+/** Descriptive fallback for actor cards whose stored image alt is empty. */
+function actorImageAlt(actor: Pick<V2ActorCard, "name" | "style" | "scene" | "gender" | "age">): string {
+  return [actor.name, actor.style, `${actor.gender} presenter in ${actor.scene}, ${actor.age}`]
+    .filter(Boolean)
+    .join(", ");
+}
 // Stored related links still name the gendered actor folder; show them flat.
 function actorFlatLinkHref(href: string): string {
   const path = href.replace(/^https?:\/\/[^/]+/i, "").split(/[?#]/)[0] ?? "";
@@ -855,7 +861,7 @@ function ActorDirectoryPage({ data, r }: Props) {
                   <div className="actor-grid">
                     {group.map((actor, actorIndex) => <article className="actor-card" data-age={actor.age} data-gender={actor.gender} data-scene={actor.scene} data-use={actor.use} key={actor.id}>
                       {/* Only the first card of the first scene group is the page's LCP candidate, so it is the one image that asks for priority. */}
-                      <Img className="actor-card-image" eager={index === 0 && actorIndex === 0} image={actor.image} r={r} {...aidreamcapesV2ResponsiveImageProps(actor.image.src, AIDREAMCAPES_V2_ACTOR_CARD_SIZES)} />
+                      <Img className="actor-card-image" eager={index === 0 && actorIndex === 0} fallbackAlt={actorImageAlt(actor)} image={actor.image} r={r} {...aidreamcapesV2ResponsiveImageProps(actor.image.src, AIDREAMCAPES_V2_ACTOR_CARD_SIZES)} />
                       <div className="actor-card-copy">
                         <h3>{actor.name}</h3>
                         <p className="actor-style">{actor.style}</p>
@@ -945,7 +951,7 @@ function ActorCategoryPage({ data, r }: Props) {
         <style>{actorDirectoryCss}</style>
         <ul className="actor-grid actorgroup-list">
           {actors.map((actor, index) => <li className="actor-card" key={actor.id}>
-            <Img className="actor-card-image" eager={index < 2} image={actor.image} r={r} />
+            <Img className="actor-card-image" eager={index < 2} fallbackAlt={actorImageAlt(actor)} image={actor.image} r={r} />
             <div className="actor-card-copy">
               <h3>{actor.name}</h3>
               <p className="actor-style">{actor.style}</p>
