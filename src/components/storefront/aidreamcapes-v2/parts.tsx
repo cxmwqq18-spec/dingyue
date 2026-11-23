@@ -161,7 +161,7 @@ export function ActorScenePanel({ picker, r, pageId }: { picker: V2ActorScenePic
             <div className="actor-scene-choices" role="radiogroup" aria-label="Choose an avatar">
               {picker.actors.map((actor) => <label className="actor-scene-choice" key={actor.id}>
                 <input data-actor-prompt={actor.promptTemplate} defaultChecked={actor.id === firstActor.id} name={`actor-choice-${pageId}`} type="radio" value={actor.id} />
-                <Img image={actor.image} r={r} />
+                <Img fallbackAlt={actor.name} image={actor.image} r={r} />
                 <span>{actor.name}</span>
               </label>)}
             </div>
@@ -1053,7 +1053,7 @@ function BlockCard({ item, r, children, before, mark }: { item: V2CardBlockItem;
   return (
     <article className="v1-card">
       {before}
-      {item.img?.src ? <figure><Img image={item.img} r={r} /></figure> : null}
+      {item.img?.src ? <figure><Img fallbackAlt={item.t} image={item.img} r={r} /></figure> : null}
       <div className="v1-card-copy">
         {item.img?.src ? null : mark ?? <span aria-hidden="true" className="v1-mark" />}
         <h3>{item.t}<SoonLabel soon={item.soon} /></h3>

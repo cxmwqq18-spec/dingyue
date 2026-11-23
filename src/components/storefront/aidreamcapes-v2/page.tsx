@@ -299,7 +299,7 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
             {flow.steps.map((step, index) => (
               <Fragment key={`${step.label}-${index}`}>
                 {index > 0 ? <div aria-hidden="true" className="fsep">›</div> : null}
-                <div className="fcell" style={{ "--a": flowAspect(step) } as CSSProperties}><figure><Img className={step.tall ? "v916" : undefined} image={step.image} r={r} /></figure><small>{normalizeStepLabel(step.label)}</small></div>
+                <div className="fcell" style={{ "--a": flowAspect(step) } as CSSProperties}><figure><Img className={step.tall ? "v916" : undefined} fallbackAlt={normalizeStepLabel(step.label)} image={step.image} r={r} /></figure><small>{normalizeStepLabel(step.label)}</small></div>
               </Fragment>
             ))}
           </div>
