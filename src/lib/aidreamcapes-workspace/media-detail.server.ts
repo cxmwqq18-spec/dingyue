@@ -47,7 +47,20 @@ const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
   // address promises, so the same-shape example detail page is used instead.
   "product-ad-video": "/ai-video-generation/candle-cozy-gift",
   "bottle-ad-with-a-person": "/ai-video-generation/water-bottle-demo-cap-twists-open",
-  "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools"
+  "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools",
+  // 2026-11-23: legacy photo example cards that rendered under the video
+  // prefix without a playable file. They have no valid photo detail page, so
+  // the public video address permanently redirects to the image directory
+  // instead of staying an orphan page.
+  "evening-demo-of-a-kitchen-appliance": "/ai-image-generation",
+  "desk-review-of-a-thin-keyboard": "/ai-image-generation",
+  "bathroom-routine-with-moisturizer": "/ai-image-generation",
+  "asmr-unboxing-makeup-tools": "/ai-image-generation",
+  "grwm-unboxing-knitwear": "/ai-image-generation",
+  "pov-discovery-court-gear": "/ai-image-generation",
+  "app-reaction-clip": "/ai-image-generation",
+  "close-up-unboxing-makeup-tools-templates": "/ai-image-generation",
+  "opening-line-phone-demo": "/ai-image-generation"
 };
 
 /** Living page a retired address still redirects to, if any. */
@@ -169,13 +182,14 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
       const targetCard = cardsFromContent(targetPage.contentJson)
         .find((card) => card.publicSlug === aliasOf && toDetailCard(card)?.kind === kind);
       const targetIdentity = presetGenerationIdentity(presetFromCard(targetPage, targetPage.slug, targetCard));
-      // Reviewed duplicate shortcuts carry `detailAliasMerge` on the alias card
-      // itself. They answer with a permanent redirect so inbound links and
-      // ranking signals consolidate on the target example instead of competing
-      // with a same-titled copy (approved 2026-11-22). Preset identity is not
-      // compared for these: the duplicate was reviewed and marked explicitly.
-      const mergesIntoTarget = (rawCard as { detailAliasMerge?: unknown } | undefined)?.detailAliasMerge === true;
-      if (mergesIntoTarget && !str(targetCard?.detailAliasOf)) {
+      // Same-title shortcuts are duplicates of the target detail page: the alias
+      // URL keeps answering with a permanent redirect so its inbound links and
+      // ranking signals consolidate instead of competing (approved 2026-11-22).
+      // Distinct-title aliases are separate examples and keep their own page.
+      const aliasLabel = (str((rawCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
+      const targetLabel = (str((targetCard as { label?: unknown } | undefined)?.label) ?? "").trim().toLowerCase();
+      const sameTitleAlias = Boolean(aliasLabel) && aliasLabel === targetLabel;
+      if (sameTitleAlias && !str(targetCard?.detailAliasOf)) {
         return resolveMediaDetail(kind, aliasOf, false, targetPages);
       }
       // Chains/cycles fail closed to the original detail. Single-hop refs only.

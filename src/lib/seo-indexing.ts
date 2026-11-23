@@ -1,8 +1,9 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
 import { aidreamcapesV2ResponsivePosterSrc } from "./aidreamcapes-v2-responsive-images";
-import { resolveDirectoryMedia, resolveDirectoryMediaCounts } from "@/lib/aidreamcapes-workspace/media-placement.server";
+import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { listAidreamcapesMediaDetailEntries, listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { mediaDetailPath, mediaWatchPath } from "@/lib/aidreamcapes-workspace/media-detail";
+import { retiredMediaPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
 import nodePath from "node:path";
@@ -956,58 +957,12 @@ function mydreamshootsVideoWatchPagesForSnapshot(
   });
 }
 
-type AidreamcapesListingSitemapData = {
-  exampleDirectory?: { pageSize?: number };
-  templateDirectory?: { paths?: string[]; hideTemplates?: boolean };
-  templateDefinition?: unknown;
-  kind?: string;
-  id?: string;
-  visual?: { picker?: { cards?: Array<{ publicSlug?: string; label?: string }> } };
-};
-
-function aidreamcapesListingSitemapData(page: ThemePage): AidreamcapesListingSitemapData | undefined {
-  for (const section of Object.values(page.publishedJson.sections ?? {})) {
-    if (section.type !== "aidreamcapes_v2_page") continue;
-    const data = (section.settings as { data?: AidreamcapesListingSitemapData } | undefined)?.data;
-    if (data?.exampleDirectory || data?.templateDirectory || data?.id === "video-hub" || data?.visual?.picker?.cards) return data;
-  }
-  return undefined;
-}
-
-/** A sitemap lastmod must be a real, past date. A future timestamp is a data
- * error; omitting it is better than advertising a date crawlers will distrust. */
-function usableLastmod(value: Date | string | undefined): string | undefined {
-  if (!value) return undefined;
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime()) || date.getTime() > Date.now()) return undefined;
-  return date.toISOString();
-}
-
-/** Newest card timestamp on one paginated slice. Empty or future-only slices
- * fall back to the owning page timestamp instead of inventing "now". */
-function latestCardLastmod(items: ReadonlyArray<{ updatedAt?: Date }>): string | undefined {
-  let newest = 0;
-  for (const item of items) {
-    const time = item.updatedAt instanceof Date ? item.updatedAt.getTime() : NaN;
-    if (Number.isFinite(time) && time > newest) newest = time;
-  }
-  return newest ? usableLastmod(new Date(newest)) : undefined;
-}
-
-function sitemapPageCount(total: number, pageSize: number): number {
-  return Math.max(1, Math.ceil(total / Math.max(1, pageSize)));
-}
-
 export async function sitemapEntriesForSite(state: PlatformState, site: Site): Promise<SitemapEntry[]> {
   const snapshot = createPublishedSiteSnapshot(state, site);
   const videoWatchPages = mydreamshootsVideoWatchPagesForSnapshot(state, site, snapshot);
   const videoWatchSourcePaths = new Set(videoWatchPages.flatMap((video) => video.sourcePaths));
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
-  // Listing pages whose ?page=N views are indexable SSR documents. Collected
-  // during the main pass so the pagination loop can only add pages whose page 1
-  // already passed the same route/indexability gate.
-  const aidreamcapesListingEntries: Array<{ page: ThemePage; path: string; entry: SitemapEntry }> = [];
   for (const page of snapshot.pages) {
     const isRegisteredImageTheme = isAidreamcapesImageThemePath(site.slug, page.slug);
     if (isRegisteredImageTheme && !isRenderableAidreamcapesImageThemePage(page)) continue;
@@ -1059,9 +1014,6 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
       });
-    if (site.id === AIDREAMCAPES_SITE_ID && /^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation(?:\/[^/]+)?|\/tools\/[^/]+)$/.test(publicSitemapPath)) {
-      aidreamcapesListingEntries.push({ page, path: publicSitemapPath, entry: entries.get(loc)! });
-    }
   }
   if (site.id === "site_aidreamcapes_xby") {
     // EU owns all 39 photo themes under /ai-image-generation. Remove stale
@@ -1118,86 +1070,6 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
             changefreq: sitemapChangeFrequencyForPath("/templates"),
             priority: sitemapPriorityForPath("/templates")
           });
-        }
-      }
-    }
-    // Paginated listing views are standalone SSR documents with self
-    // canonicals. Submit pages 2..N so crawlers do not have to discover every
-    // deep page through the pager alone; page 1 keeps the bare URL.
-    if (aidreamcapesListingEntries.length) {
-      const galleryEntries = await listAidreamcapesExampleGalleryEntries();
-      const facetPaths = aidreamcapesListingEntries
-        .filter((listing) => {
-          const data = aidreamcapesListingSitemapData(listing.page);
-          return Boolean(data?.templateDirectory) && !data?.exampleDirectory && data?.id !== "video-hub";
-        })
-        .map((listing) => listing.path);
-      const facetCounts = await resolveDirectoryMediaCounts(facetPaths);
-      const addListingPages = (
-        basePath: string,
-        totalPages: number,
-        params: Record<string, string> = {},
-        pageLastmod?: (pageNumber: number) => string | undefined
-      ) => {
-        const base = aidreamcapesListingEntries.find((item) => item.path === basePath)?.entry;
-        if (!base) return;
-        for (let pageNumber = 2; pageNumber <= totalPages; pageNumber += 1) {
-          const search = new URLSearchParams(params);
-          search.set("page", String(pageNumber));
-          const loc = sitemapUrl(site, `${basePath}?${search.toString()}`);
-          if (entries.has(loc)) continue;
-          entries.set(loc, {
-            loc,
-            images: [],
-            // The slice's newest card time is a stable signal: it only moves
-            // when a card on that page changed. Pages whose per-card times are
-            // unknown keep the owning page timestamp rather than a guessed one.
-            lastmod: usableLastmod(pageLastmod?.(pageNumber)) ?? base.lastmod,
-            changefreq: base.changefreq,
-            priority: base.priority
-          });
-        }
-      };
-      for (const listing of aidreamcapesListingEntries) {
-        const data = aidreamcapesListingSitemapData(listing.page);
-        if (!data) continue;
-        if (data.exampleDirectory) {
-          const pageSize = Math.max(1, Math.min(50, Math.floor(Number(data.exampleDirectory.pageSize)) || 12));
-          for (const kind of [undefined, "photo", "video"] as const) {
-            const pool = kind ? galleryEntries.filter((entry) => entry.kind === kind) : galleryEntries;
-            addListingPages("/templates", sitemapPageCount(pool.length, pageSize), kind ? { kind } : {}, (pageNumber) => {
-              const start = (pageNumber - 1) * pageSize;
-              return latestCardLastmod(pool.slice(start, start + pageSize));
-            });
-          }
-          continue;
-        }
-        if (data.templateDirectory) {
-          const total = facetCounts.get(listing.path) ?? 0;
-          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE));
-          continue;
-        }
-        if (data.id === "video-hub") {
-          const curated = data.visual?.picker?.cards ?? [];
-          const curatedKeys = new Set(curated.map((card) => card.publicSlug ?? card.label));
-          const appended = galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug));
-          const total = curated.length + appended.length;
-          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE), {}, (pageNumber) => {
-            const start = (pageNumber - 1) * AIDREAMCAPES_MEDIA_PAGE_SIZE;
-            // Curated picker cards carry no per-card timestamp of their own;
-            // a page that includes one uses the page timestamp, which is the
-            // newest fact we can honestly claim for that slice.
-            if (start < curated.length) return undefined;
-            return latestCardLastmod(appended.slice(start - curated.length, start - curated.length + AIDREAMCAPES_MEDIA_PAGE_SIZE));
-          });
-          continue;
-        }
-        if (listing.path.startsWith("/ai-video-generation/") && !data.templateDefinition && Array.isArray(data.visual?.picker?.cards)) {
-          addListingPages(listing.path, sitemapPageCount(data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
-          continue;
-        }
-        if (listing.path.startsWith("/tools/") && Array.isArray(data.visual?.picker?.cards)) {
-          addListingPages(listing.path, sitemapPageCount(data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
         }
       }
     }
@@ -1451,11 +1323,6 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
       // strip that query and collapse these rows into /templates, so leave
       // them untouched here.
       if (path === "/templates" && ["photo", "video"].includes(url.searchParams.get("kind") ?? "")) continue;
-      // Paginated listing views are indexable SSR documents whose canonical
-      // keeps the ?page=N query. Without this exception the normalization
-      // below collapses every deep page back into page 1.
-      if (/^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation(?:\/[^/]+)?|\/tools\/[^/]+)$/.test(path)
-        && url.searchParams.has("page")) continue;
       const canonicalLoc = sitemapUrl(site, path);
       if (canonicalLoc === loc) continue;
       entries.delete(loc);
@@ -2351,6 +2218,9 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
     // Video cards additionally emit a <video:video> entry for Google video
     // indexing; cards added later are picked up automatically.
     for (const media of await listAidreamcapesMediaDetailEntries()) {
+      // Retired detail addresses redirect to a living page; they must not be
+      // submitted as canonical sitemap URLs.
+      if (retiredMediaPageRedirect(media.kind, media.slug)) continue;
       const detailPath = mediaDetailPath(media.kind, media.slug);
       if (!detailPath) continue;
       const loc = `${AIDREAMCAPES_ORIGIN}${detailPath}`;
