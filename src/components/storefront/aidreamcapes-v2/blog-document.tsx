@@ -48,7 +48,7 @@ function readingMinutes(data: DocumentData): number {
     ...(data.faq ?? []).flatMap((item) => [item.question, item.answer])
   ].join(" ");
   const words = text.split(/\s+/).filter(Boolean).length;
-  return Math.max(2, Math.round(words / 220));
+  return Math.max(2, Math.round(words / 180));
 }
 
 function Block({ block, r }: { block: DocumentBlock; r: V2Resolvers }) {
@@ -122,16 +122,14 @@ export function BlogDocumentPage({ data, r }: { data: DocumentData; r: V2Resolve
       <div className="bdoc-shell">
         <header className="bdoc-hero">
           <div className="bdoc-hero-copy">
-            <div className="bdoc-hero-top">
-              {data.kicker ? <p className="bdoc-kicker"><i aria-hidden="true" />{data.kicker}</p> : <span />}
-              <BlogThemeToggle />
-            </div>
+            {data.kicker ? <p className="bdoc-kicker"><i aria-hidden="true" />{data.kicker}</p> : null}
             <h1>{data.h1}</h1>
             {data.lead ? <p className="bdoc-lead"><RichText r={r} text={data.lead} /></p> : null}
             <div className="bdoc-meta">
               {data.byline ? <span>{data.byline}</span> : null}
               <span className="bdoc-dot" aria-hidden="true" />
               <span>{minutes} min read</span>
+              <BlogThemeToggle />
             </div>
           </div>
           {data.cover ? (
@@ -228,7 +226,7 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
 .adc2 .bdoc-hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(300px,.8fr);gap:52px;align-items:center}
 .adc2 .bdoc-hero-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
 .adc2 .bdoc-kicker{
-  display:inline-flex;align-items:center;gap:8px;margin:0;padding:6px 12px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:8px;margin:0 0 16px;padding:6px 12px;border-radius:999px;
   border:1px solid color-mix(in srgb,var(--bdoc-accent) 34%,transparent);background:var(--bdoc-chip);
   color:var(--bdoc-accent);font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
 }
@@ -239,6 +237,7 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
 }
 .adc2 .bdoc .bdoc-lead{margin:0 0 20px;color:var(--bdoc-ink2);font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.7;max-width:58ch}
 .adc2 .bdoc .bdoc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;color:var(--bdoc-muted);font-size:12.5px;font-weight:600}
+.adc2 .bdoc .bdoc-meta .bdoc-theme{margin-left:auto}
 .adc2 .bdoc .bdoc-dot{width:4px;height:4px;border-radius:50%;background:var(--bdoc-line2);display:block}
 .adc2 .bdoc-cover{
   margin:0;max-width:420px;justify-self:end;border-radius:26px;overflow:hidden;
@@ -346,6 +345,7 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
   .adc2 .bdoc .bdoc-shell{padding:22px 16px 0}
   .adc2 .bdoc .bdoc-hero-top{gap:10px}
   .adc2 .bdoc .bdoc-theme-label{display:none}
+  .adc2 .bdoc .bdoc-meta .bdoc-theme{margin-left:0}
   .adc2 .bdoc h1{font-size:1.95rem}
   .adc2 .bdoc .bdoc-body{margin-top:34px}
   .adc2 .bdoc h2{font-size:1.4rem}
