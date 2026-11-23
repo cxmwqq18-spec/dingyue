@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-23",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "confirm": "aivideosugc-legacy-canonical-2026-11-23",
+  "pages": [
+    {
+      "slug": "/policies/content",
+      "canonical": "https://www.aivideosugc.com/content",
+      "canonicalPath": "/content",
+      "changed": false
+    },
+    {
+      "slug": "/policies/shipping",
+      "canonical": "https://www.aivideosugc.com/digital-delivery",
+      "canonicalPath": "/digital-delivery",
+      "changed": false
+    },
+    {
+      "slug": "/policies/children-privacy",
+      "canonical": "https://www.aivideosugc.com/children-privacy",
+      "canonicalPath": "/children-privacy",
+      "changed": false
+    },
+    {
+      "slug": "/policies/privacy",
+      "canonical": "https://www.aivideosugc.com/privacy",
+      "canonicalPath": "/privacy",
+      "changed": false
+    },
+    {
+      "slug": "/help",
+      "canonical": "https://www.aivideosugc.com/faq",
+      "canonicalPath": "/faq",
+      "changed": false
+    },
+    {
+      "slug": "/cookie-policy",
+      "canonical": "https://www.aivideosugc.com/cookies",
+      "canonicalPath": "/cookies",
+      "changed": false
+    },
+    {
+      "slug": "/policies/cookies",
+      "canonical": "https://www.aivideosugc.com/cookies",
+      "canonicalPath": "/cookies",
+      "changed": false
+    },
+    {
+      "slug": "/policies/terms",
+      "canonical": "https://www.aivideosugc.com/terms",
+      "canonicalPath": "/terms",
+      "changed": false
+    },
+    {
+      "slug": "/terms-of-service",
+      "canonical": "https://www.aivideosugc.com/terms",
+      "canonicalPath": "/terms",
+      "changed": false
+    },
+    {
+      "slug": "/privacy-policy",
+      "canonical": "https://www.aivideosugc.com/privacy",
+      "canonicalPath": "/privacy",
+      "changed": false
+    },
+    {
+      "slug": "/policies/refunds",
+      "canonical": "https://www.aivideosugc.com/refunds",
+      "canonicalPath": "/refunds",
+      "changed": false
+    },
+    {
+      "slug": "/policies/state-privacy",
+      "canonical": "https://www.aivideosugc.com/state-privacy",
+      "canonicalPath": "/state-privacy",
+      "changed": false
+    }
+  ],
+  "note": "Stored canonical cleanup only; routes already 308 to these canonical pages."
+}

@@ -40,8 +40,8 @@ const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:no
 .adc2 .v-directory-related a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:720px){.adc2 .v-directory-related ul{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
 
-function VisualImage({ image, r, className, eager, sizes }: { image: V2VisualImage; r: V2Resolvers; className?: string; eager?: boolean; sizes?: string }) {
-  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} eager={eager} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} {...(sizes ? aidreamcapesV2ResponsiveImageProps(image.src, sizes) : {})} />;
+function VisualImage({ image, r, className, eager, sizes, fallbackAlt }: { image: V2VisualImage; r: V2Resolvers; className?: string; eager?: boolean; sizes?: string; fallbackAlt?: string }) {
+  return <Img fallbackAlt={fallbackAlt} image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} eager={eager} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} {...(sizes ? aidreamcapesV2ResponsiveImageProps(image.src, sizes) : {})} />;
 }
 
 function visualRatio(image: V2VisualImage): string {
@@ -162,7 +162,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
               <div aria-label={copyLabel(r, "Choose an actor")} className="maker v-step-maker v-step-actor-maker">
                 <div aria-label={actions ? copyLabel(r, "Example selection") : undefined} className="v-step-actor-grid" role={actions ? "group" : "list"}>
                   {actorCards.map((card, index) => <SourceTag aria-pressed={actions ? Boolean(card.selected) : undefined} type={actions ? "button" : undefined} data-home-local={actions ? `visualActor${index + 1}` : undefined} data-hx-select-group={actions ? "visual-actor" : undefined} data-hx-select-value={actions ? String(index) : undefined} aria-label={card.label} className={`v-step-actor-card${!actions && card.selected ? " is-selected" : ""}`} key={`v-step-actor-${index}`} role={actions ? undefined : "listitem"}>
-                    <VisualImage image={card.image} r={r} className="v-step-actor-image" />
+                    <VisualImage fallbackAlt={card.label} image={card.image} r={r} className="v-step-actor-image" />
                     <span>{card.label}</span>
                   </SourceTag>)}
                 </div>
