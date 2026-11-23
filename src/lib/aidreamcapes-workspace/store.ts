@@ -37,28 +37,36 @@ function assertWritable() {
  * many tasks the filter matches. Both queries share one WHERE fragment; the
  * count is a single indexed aggregate over the same customer/site scope.
  */
-function taskListScope(options: { filter?: "subtitle_ready"; query?: string } = {}): Prisma.Sql {
+function taskListScope(options: { filter?: "subtitle_ready"; query?: string; subtitle?: "with" | "without" } = {}): Prisma.Sql {
   // subtitle_ready keeps the Subtitle Studio pager meaningful: it pages over
   // the finished videos themselves instead of the whole task window, so the
   // studio shows the same complete set on every visit.
   const ready = options.filter === "subtitle_ready"
     ? Prisma.sql`AND "data"->'video'->>'status' = 'done' AND COALESCE("data"->'video'->>'finalUrl','') <> '' AND COALESCE("data"->'video'->>'stale','false') <> 'true'`
     : Prisma.sql``;
+  // Captions live on the current render or on any kept version; the studio
+  // filter must see both.
+  const captioned = Prisma.sql`(jsonb_array_length(COALESCE("data"->'video'->'captionLines', '[]'::jsonb)) > 0 OR EXISTS (SELECT 1 FROM jsonb_array_elements(COALESCE("data"->'videoHistory', '[]'::jsonb)) AS entry WHERE jsonb_array_length(COALESCE(entry->'captionLines', '[]'::jsonb)) > 0))`;
+  const subtitle = options.subtitle === "with"
+    ? Prisma.sql`AND ${captioned}`
+    : options.subtitle === "without"
+      ? Prisma.sql`AND NOT ${captioned}`
+      : Prisma.sql``;
   const rawQuery = options.query?.trim();
   // Search matches the title and any prompt/brief text stored in the input.
   const search = rawQuery
     ? Prisma.sql`AND ("data"->>'title' ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`} OR ("data"->'input')::text ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`})`
     : Prisma.sql``;
-  return Prisma.sql`${ready} ${search}`;
+  return Prisma.sql`${ready} ${subtitle} ${search}`;
 }
-export async function listTasks(siteId: string, customerId: string, options: { limit?: number; offset?: number; filter?: "subtitle_ready"; query?: string } = {}): Promise<StoredTask[]> {
+export async function listTasks(siteId: string, customerId: string, options: { limit?: number; offset?: number; filter?: "subtitle_ready"; query?: string; subtitle?: "with" | "without" } = {}): Promise<StoredTask[]> {
   assertWorkspaceSite(siteId);
   const limit = Math.min(Math.max(Math.trunc(options.limit ?? 100), 1), 100);
   const offset = Math.max(Math.trunc(options.offset ?? 0), 0);
   const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${taskListScope(options)} ORDER BY "updatedAt" DESC, "id" DESC LIMIT ${limit} OFFSET ${offset}`;
   return rows.map(read);
 }
-export async function countTasks(siteId: string, customerId: string, options: { filter?: "subtitle_ready"; query?: string } = {}): Promise<number> {
+export async function countTasks(siteId: string, customerId: string, options: { filter?: "subtitle_ready"; query?: string; subtitle?: "with" | "without" } = {}): Promise<number> {
   assertWorkspaceSite(siteId);
   const rows = await prisma.$queryRaw<{ total: bigint }[]>`SELECT count(*)::bigint AS "total" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${taskListScope(options)}`;
   return Number(rows[0]?.total ?? 0);

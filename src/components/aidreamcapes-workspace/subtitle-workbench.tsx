@@ -115,6 +115,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
   const [loadingMore, setLoadingMore] = useState(false);
   const [listError, setListError] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [subtitleFilter, setSubtitleFilter] = useState<"all" | "with" | "without">("all");
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [versionId, setVersionId] = useState("");
@@ -153,6 +154,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
     try {
       const params = new URLSearchParams({ limit: String(PAGE_SIZE), offset: String(offset), filter: "subtitle_ready" });
       if (search) params.set("q", search);
+      if (subtitleFilter !== "all") params.set("subtitle", subtitleFilter);
       const response = await fetch(`${requestRoot}/tasks?${params.toString()}`, { credentials: "same-origin", cache: "no-store", headers: headers() });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(String(payload.error || `http_${response.status}`));
@@ -173,7 +175,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
     } finally {
       if (aliveRef.current) { setListLoading(false); setLoadingMore(false); }
     }
-  }, [requestRoot, headers, search]);
+  }, [requestRoot, headers, search, subtitleFilter]);
 
   // A fresh query restarts the pager from the first page.
   useEffect(() => { void fetchPage(0); }, [fetchPage]);
@@ -362,6 +364,14 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
         <header className={styles.listHead}>
           <h2>Your finished videos</h2>
         </header>
+        <div className={styles.chipRow} role="group" aria-label="Filter by subtitle status">
+          {([["all", "All videos"], ["with", "With subtitles"], ["without", "Without subtitles"]] as const).map(([value, label]) => (
+            <button key={value} type="button" className={chipClass(subtitleFilter === value)} aria-pressed={subtitleFilter === value}
+              onClick={() => { setSubtitleFilter(value); setError(""); }}>
+              <span className={styles.chipMain}>{label}</span>
+            </button>
+          ))}
+        </div>
         <label className={styles.searchBox}>
           <Search size={13} aria-hidden />
           <input

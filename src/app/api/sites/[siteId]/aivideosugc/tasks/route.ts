@@ -26,10 +26,12 @@ export async function GET(request: NextRequest, { params }: Context) {
     const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(Math.trunc(rawLimit), 100) : 20;
     const offset = Number.isFinite(rawOffset) && rawOffset > 0 ? Math.trunc(rawOffset) : 0;
     const filter = url.searchParams.get("filter") === "subtitle_ready" ? "subtitle_ready" as const : undefined;
+    const rawSubtitle = url.searchParams.get("subtitle");
+    const subtitle = rawSubtitle === "with" || rawSubtitle === "without" ? rawSubtitle : undefined;
     const query = url.searchParams.get("q")?.trim() || undefined;
     const [page, total] = await Promise.all([
-      listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query }),
-      countTasks(siteId, auth.current.customer.id, { filter, query })
+      listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query, subtitle }),
+      countTasks(siteId, auth.current.customer.id, { filter, query, subtitle })
     ]);
     const hasMore = page.length > limit;
     const tasks = page.slice(0, limit);
