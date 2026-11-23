@@ -632,12 +632,12 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");
-    return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
+    return page ? await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
   }
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
     if (!resolved || !resolved.page) return {};
-    return withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontDirectoryPage({
+    return await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontDirectoryPage({
       site: resolved.site,
       page: resolved.page,
       kind: "tool",
@@ -712,7 +712,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   if (resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") return {};
   const page = findPage(site, slug);
-  return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
+  return page ? await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), hostSiteSlug, requestedPath, query) : {};
 }
 
 export default async function HostStorefrontCatchAllPage({

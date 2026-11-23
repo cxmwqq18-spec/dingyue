@@ -22,10 +22,24 @@ const PAGINATED_LISTING_PATH_RE = /^(?:\/templates|\/industries\/[^/]+|\/platfor
 /** Patch already-built page metadata for a deeper listing page: self
  * canonical with the page parameter and a page-distinct title. Everything the
  * base metadata resolved (description, robots, OG image) stays as built. */
-export function withAidreamcapesListingPageMetadata(metadata: Metadata, hostSiteSlug: string | undefined, path: string, query: TemplateFilterQuery): Metadata {
+/** Tool pages live under /ai-video-generation/<slug>, the same prefix as
+ * example detail pages. Only the picker-heavy tool pages paginate; the detail
+ * pages carry a templateDefinition and must keep their base canonical. */
+async function isPaginatedToolListing(path: string, page: number): Promise<boolean> {
+  if (page < 2 || !/^\/ai-video-generation\/[^/]+$/.test(path)) return false;
+  const row = await prisma.livePage.findUnique({
+    where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } },
+    select: { contentJson: true }
+  });
+  const data = (row?.contentJson as { sections?: { v2_main?: { settings?: { data?: { templateDefinition?: unknown; visual?: { picker?: { cards?: unknown[] } } } } } } } | undefined)?.sections?.v2_main?.settings?.data;
+  return Boolean(data && !data.templateDefinition && Array.isArray(data.visual?.picker?.cards) && data.visual.picker.cards.length > 20);
+}
+
+export async function withAidreamcapesListingPageMetadata(metadata: Metadata, hostSiteSlug: string | undefined, path: string, query: TemplateFilterQuery): Promise<Metadata> {
   if (hostSiteSlug !== "aidreamcapes" || !metadata) return metadata;
   const page = aidreamcapesListingPageNumber(query);
-  if (!page || !PAGINATED_LISTING_PATH_RE.test(path)) return metadata;
+  if (!page) return metadata;
+  if (!PAGINATED_LISTING_PATH_RE.test(path) && !(await isPaginatedToolListing(path, page))) return metadata;
   const baseCanonical = typeof metadata.alternates?.canonical === "string" ? metadata.alternates.canonical : undefined;
   const canonical = aidreamcapesListingPageCanonical(baseCanonical, page);
   const baseTitle = typeof metadata.title === "string" ? metadata.title : (metadata.title as { absolute?: string } | undefined)?.absolute;

@@ -360,8 +360,24 @@ function isolateAidreamcapesVideoRouteState(siteSlug: string, state: Awaited<Ret
   return { ...state, videoThemeCategories: [], videoThemes: [] };
 }
 
+/** Public AIVideosUGC/Aidreamcapes hosts must not serve another storefront's
+ * pages through the path-mode prefix. Local and platform hosts keep path mode
+ * for previews. */
+async function assertAidreamcapesPathModeSite(siteSlug: string): Promise<void> {
+  const requestHeaders = await headers();
+  const host = String(requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, "");
+  const isAivideosugcHost = host === "www.aivideosugc.com" || host === "aivideosugc.com"
+    || host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
+  if (isAivideosugcHost && !isAidreamcapesPathModeSite(publicSiteSlug(siteSlug))) notFound();
+}
+
 export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string; path: string[] }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
+  await assertAidreamcapesPathModeSite(siteSlug);
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
@@ -581,7 +597,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");
-    return page ? withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery) : {};
+    return page ? await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery) : {};
   }
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, collectionPath) : undefined;
   if (isCollectionRequest && path.length === 2 && path[0] === "ai-image-generation" && isAidreamcapesPathModeSite(pathModePublicSlug)) {
@@ -657,7 +673,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: canonicalUrlForSite(site, canonicalRequestedSlug) } } };
     return metadataForPublishedStorefrontPage({ site, page: canonicalPage, products: state.products, creativePacks: state.creativePacks, snapshot });
   }
-  return withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery);
+  return await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }), pathModePublicSlug, requestedSlug, metadataQuery);
 }
 
 export default async function SiteCatchAllPage({
@@ -668,6 +684,7 @@ export default async function SiteCatchAllPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, path } = await params;
+  await assertAidreamcapesPathModeSite(siteSlug);
   const slug = `/${path.join("/")}`;
   const publicSlug = publicSiteSlug(siteSlug);
   const headerStore = await headers();
