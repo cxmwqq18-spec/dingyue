@@ -86,11 +86,17 @@ function Block({ block, r }: { block: DocumentBlock; r: V2Resolvers }) {
   if (block.kind === "contact") {
     return <div className="bdoc-contact">{block.items.map((item) => <p key={item}><RichText r={r} text={item} /></p>)}</div>;
   }
+  // The canonical video page is /watch/<slug>: it carries the VideoObject and
+  // the video sitemap entry. The blog keeps the player for readers, and links
+  // there instead of to the (non-video) detail page.
+  const watchHref = block.href?.startsWith("/ai-video-generation/")
+    ? block.href.replace("/ai-video-generation/", "/watch/")
+    : block.href;
   return (
     <figure className="bdoc-video">
       <div className="bdoc-video-stage">
         <video
-          aria-label={block.alt ?? "Example video"}
+          aria-label={block.alt ?? block.label ?? "Example video"}
           controls
           height={block.poster.height}
           playsInline
@@ -104,7 +110,7 @@ function Block({ block, r }: { block: DocumentBlock; r: V2Resolvers }) {
       <figcaption>
         <span className="bdoc-video-label">Example from our library</span>
         {block.label ? <strong>{block.label}</strong> : null}
-        {block.href ? <a href={r.href(block.href)}>Open the full example <span aria-hidden="true">→</span></a> : null}
+        {watchHref ? <a href={r.href(watchHref)}>Watch on the video page <span aria-hidden="true">→</span></a> : null}
       </figcaption>
     </figure>
   );
