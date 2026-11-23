@@ -1,4 +1,5 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
+import { isListingPublicPath, listingPagePath, templateKindPath } from "@/lib/listing-pagination";
 import { aidreamcapesV2ResponsivePosterSrc } from "./aidreamcapes-v2-responsive-images";
 import { resolveDirectoryMedia, resolveDirectoryMediaCounts } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { listAidreamcapesMediaDetailEntries, listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
@@ -1101,17 +1102,17 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
     const directoryEntry = entries.get(directoryLoc);
     if (directoryEntry) directoryEntry.images = collectAidreamcapesImageDirectorySitemapImages(snapshot, site);
     // The kind-only template catalogs are standalone indexable pages with
-    // self canonicals on the /templates gallery's ?kind= query. Submit both so
-    // crawlers discover them through the sitemap, not only through in-page
-    // links. Images stay off these rows: the shared tiles belong to the
-    // /templates entry that already lists them.
+    // self canonicals on their own paths (/templates/photo, /templates/video).
+    // Submit both so crawlers discover them through the sitemap, not only
+    // through in-page links. Images stay off these rows: the shared tiles
+    // belong to the /templates entry that already lists them.
     const templatesPage = snapshot.pages.find((page) => normalizePath(page.slug) === "/templates");
     if (templatesPage) {
       const templatesEffective = resolveEffectivePublishedPage(snapshot, templatesPage.slug);
       if (templatesEffective.routeDisposition.kind === "render" && templatesEffective.indexability.sitemapEligible) {
         const templatesLastmod = sitemapLastModifiedForPath(state, site, snapshot, "/templates", templatesPage);
-        for (const kind of ["photo", "video"]) {
-          const loc = sitemapUrl(site, `/templates?kind=${kind}`);
+        for (const kind of ["photo", "video"] as const) {
+          const loc = sitemapUrl(site, templateKindPath(kind));
           entries.set(loc, {
             loc,
             images: [],
@@ -1137,15 +1138,16 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
       const addListingPages = (
         basePath: string,
         totalPages: number,
-        params: Record<string, string> = {},
+        kind?: "photo" | "video",
         pageLastmod?: (pageNumber: number) => string | undefined
       ) => {
         const base = aidreamcapesListingEntries.find((item) => item.path === basePath)?.entry;
         if (!base) return;
+        // Page identity lives in the path: `/templates/page2`,
+        // `/templates/photo/page2`, `/ai-video-generation/page2`.
+        const publicBase = kind ? templateKindPath(kind) : basePath;
         for (let pageNumber = 2; pageNumber <= totalPages; pageNumber += 1) {
-          const search = new URLSearchParams(params);
-          search.set("page", String(pageNumber));
-          const loc = sitemapUrl(site, `${basePath}?${search.toString()}`);
+          const loc = sitemapUrl(site, listingPagePath(publicBase, pageNumber));
           if (entries.has(loc)) continue;
           entries.set(loc, {
             loc,
@@ -1166,7 +1168,7 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           const pageSize = Math.max(1, Math.min(50, Math.floor(Number(data.exampleDirectory.pageSize)) || 12));
           for (const kind of [undefined, "photo", "video"] as const) {
             const pool = kind ? galleryEntries.filter((entry) => entry.kind === kind) : galleryEntries;
-            addListingPages("/templates", sitemapPageCount(pool.length, pageSize), kind ? { kind } : {}, (pageNumber) => {
+            addListingPages("/templates", sitemapPageCount(pool.length, pageSize), kind, (pageNumber) => {
               const start = (pageNumber - 1) * pageSize;
               return latestCardLastmod(pool.slice(start, start + pageSize));
             });
@@ -1183,7 +1185,7 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           const curatedKeys = new Set(curated.map((card) => card.publicSlug ?? card.label));
           const appended = galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug));
           const total = curated.length + appended.length;
-          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE), {}, (pageNumber) => {
+          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE), undefined, (pageNumber) => {
             const start = (pageNumber - 1) * AIDREAMCAPES_MEDIA_PAGE_SIZE;
             // Curated picker cards carry no per-card timestamp of their own;
             // a page that includes one uses the page timestamp, which is the
@@ -1443,20 +1445,16 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
         entries.delete(loc);
         continue;
       }
+      // Kind catalogs (`/templates/photo`) and paginated listing views
+      // (`/templates/page2`, `/ai-video-generation/page3`) carry their identity
+      // in the path now, and they are projections of the owning listing row
+      // rather than LivePage rows of their own. They must be checked before the
+      // v2 path allowlist, which only knows published page paths.
+      if (isListingPublicPath(path)) continue;
       if (aidreamcapesSiteV2RedirectSources.has(path) || (aidreamcapesV2Paths && !aidreamcapesV2Paths.has(path))) {
         entries.delete(loc);
         continue;
       }
-      // Kind-only template catalogs are self-canonical WITH the ?kind= query
-      // on the /templates gallery. The pathname normalization below would
-      // strip that query and collapse these rows into /templates, so leave
-      // them untouched here.
-      if (path === "/templates" && ["photo", "video"].includes(url.searchParams.get("kind") ?? "")) continue;
-      // Paginated listing views are indexable SSR documents whose canonical
-      // keeps the ?page=N query. Without this exception the normalization
-      // below collapses every deep page back into page 1.
-      if (/^(?:\/templates|\/industries\/[^/]+|\/platforms\/[^/]+|\/occasions\/[^/]+|\/ai-video-generation(?:\/[^/]+)?|\/tools\/[^/]+)$/.test(path)
-        && url.searchParams.has("page")) continue;
       const canonicalLoc = sitemapUrl(site, path);
       if (canonicalLoc === loc) continue;
       entries.delete(loc);
