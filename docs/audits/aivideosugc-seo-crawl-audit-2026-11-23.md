@@ -2,7 +2,7 @@
 
 日期：2026-11-23  
 审计对象：`https://www.aivideosugc.com`  
-生产 commit：`207351656`  
+生产 commit：`c1ce7f004`  
 审计方式：生产库清单 + sitemap 全量抓取（审计时 792 URL；P0 修复后 797 URL）+ 内链图 + 爬取陷阱探针 + 移动端性能抽查 + 隐藏文案/脏数据扫描
 
 ---
@@ -17,9 +17,9 @@
 |---|---|---|
 | ✅ 已修复 | `/ai-video-generation/<tool>?page=N` 工具页分页已 self-canonical + sitemap | 分页收录已闭环 |
 | ✅ 已修复 | `/site/mydreamshoots` 在 AIVideosUGC 域名下已 404 | 跨站脏页已隔离 |
-| P1 | 9 个视频详情页在 sitemap 中，但没有任何内链指向 | 孤儿页，抓取深度和权重传递差 |
+| P1 | 9 个**图片示例**误挂在 `/ai-video-generation/` 下，无视频、无内链 | URL/内容类型不一致，孤儿页 |
 | P1 | 列表页视频预览导致 2–3MB 传输，LCP 是视频 | Core Web Vitals / 抓取预算 |
-| P2 | 仍有 94 张图片缺有效 alt（已从 340 降下来） | 可访问性/图片 SEO |
+| ✅ 已完成 | 图片 alt 已补齐到 0 缺失 | 可访问性/图片 SEO |
 | P2 | 14 组分页 H1 与第一页重复 | 轻微重复信号，非主因 |
 | P3 | `.env` / `.git/config` 返回 403 而非 404 | 暴露文件存在性，无内容泄露 |
 | P3 | HTTP→HTTPS→WWW 已改为一跳，但 HSTS 未开启 | 首访 HTTP 明文一跳，安全加固项 |
@@ -57,7 +57,7 @@
 | soft 404 | 0 |
 | 薄页（<80 words） | 0 |
 | 无内链的页面 | 0 |
-| 图片缺有效 alt | 94 / 21,879（0.43%） |
+| 图片缺有效 alt | **0 / 21,879** |
 | HTML 注释 | 0 |
 | 外部链接域名 | 9 个社交平台 + support.google.com，无垃圾站 |
 | 移动端横向溢出 | 0 |
@@ -158,23 +158,34 @@
 
 非 sitemap 的 200 目标主要是私有 `/app/*`、`/login`、`/checkout`（均 noindex）、已修复的工具页分页、以及被 HTML 转义误判的 `kind&page` 分页。
 
-### 孤儿页（9 个）
+### 孤儿页（9 个）：其实是“图片示例挂在了视频前缀下”
 
-以下视频详情页在 sitemap 中，但没有任何内链指向：
+以下页面在 sitemap 中，但没有任何内链指向：
 
-```text
-/ai-video-generation/evening-demo-of-a-kitchen-appliance
-/ai-video-generation/desk-review-of-a-thin-keyboard
-/ai-video-generation/bathroom-routine-with-moisturizer
-/ai-video-generation/asmr-unboxing-makeup-tools
-/ai-video-generation/grwm-unboxing-knitwear
-/ai-video-generation/pov-discovery-court-gear
-/ai-video-generation/app-reaction-clip
-/ai-video-generation/close-up-unboxing-makeup-tools-templates
-/ai-video-generation/opening-line-phone-demo
-```
+| URL | 标题 | 实际内容 |
+|---|---|---|
+| `/ai-video-generation/evening-demo-of-a-kitchen-appliance` | Evening Demo of a Kitchen Appliance | 图片示例，无 `<video>` |
+| `/ai-video-generation/desk-review-of-a-thin-keyboard` | Desk Review of a Thin Keyboard | 图片示例，无 `<video>` |
+| `/ai-video-generation/bathroom-routine-with-moisturizer` | Bathroom Routine with Moisturizer | 图片示例，无 `<video>` |
+| `/ai-video-generation/asmr-unboxing-makeup-tools` | ASMR Unboxing: Makeup Tools | 图片示例，无 `<video>` |
+| `/ai-video-generation/grwm-unboxing-knitwear` | GRWM Unboxing: Knitwear | 图片示例，无 `<video>` |
+| `/ai-video-generation/pov-discovery-court-gear` | POV Discovery: Court Gear | 图片示例，无 `<video>` |
+| `/ai-video-generation/app-reaction-clip` | App Reaction Clip | 图片示例，无 `<video>` |
+| `/ai-video-generation/close-up-unboxing-makeup-tools-templates` | Close-Up Unboxing: Makeup Tools | 图片示例，无 `<video>` |
+| `/ai-video-generation/opening-line-phone-demo` | Opening Line: Phone Demo | 图片示例，无 `<video>` |
 
-这 9 页本身 200、self-canonical、有独立 H1/标题，不是脏页；问题是**没有内链**，只能靠 sitemap 发现，权重传递弱。建议从相关分类页/详情页补内链，或确认是否应继续保留在 sitemap。
+这 9 页：
+
+- 200、self-canonical、有独立标题/H1；
+- description 自己写着 “an AI product **photo** example”；
+- 没有视频文件、没有 `<video>`；
+- 不在视频 gallery/picker 中，所以没有任何内链；
+- `/ai-image-generation/<slug>` 对应地址也不存在（404）。
+
+**结论**：这不是单纯“缺内链”，而是**内容类型和 URL 前缀不一致**。补内链会把错误的 URL 继续放大。建议二选一：
+
+1. 如果这些图片示例还要保留：迁移到 `/ai-image-generation/<slug>`，建立正确的详情页，再从图片分类页给内链；
+2. 如果是旧演示/占位数据：从 sitemap 移除，并 301 到 `/ai-image-generation` 或 410，不再作为独立页面。
 
 ---
 
@@ -232,20 +243,16 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 ## 7. 图片 alt
 
 - 修复前：340 张缺有效 alt。
-- 修复后：**94 张**，分布在 58 个页面。
-- 主要剩余页面：
-
-| 页面 | 缺失数 |
-|---|---:|
-| `/ai-actors/scene` | 26 |
-| `/blog` | 5 |
-| `/ai-actors/age-range` | 5 |
-| `/blog/ai-ugc-video-ads-guide` | 2 |
-| `/ai-video-generation?page=10` | 2 |
-| `/ai-video-generation/url-to-video` | 2 |
-| `/industries` | 1 |
-
-这些多为演员场景卡、博客作者头像/社交图标、工具页配图。建议继续用“人物/场景/用途”描述补齐；纯装饰图标保留 `alt=""` 即可。
+- 修复后：**0 张**（对审计覆盖的 792 个页面重新抓取，缺有效 alt 的图片为 0）。
+- 补齐方式：
+  - 演员目录/详情/场景卡：`姓名 + 风格 + 场景 + 性别/年龄`
+  - 示例卡/模板卡：卡片标题
+  - 流程步骤：步骤标签
+  - 审核卡：卡片标题
+  - 工具页 hero/inset：页面 H1
+  - 博客列表/文章图：文章标题或章节 H2
+  - MockFrame：用途标题
+- 纯装饰图标保持 `alt=""`，不重复页面标题，不堆关键词。
 
 ---
 
@@ -288,12 +295,12 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 | 变更 | 结果 |
 |---|---|
 | watch/detail 差异化 | 观看页 H1 改为 `Watch: ...`，description 独立；详情页保留 prompt/复刻意图 |
-| 图片 alt | 新增演员卡/示例卡/流程卡/审核卡 fallback，缺失从 340 降到 94 |
+| 图片 alt | 演员卡、示例卡、流程卡、审核卡、博客图、工具 hero、MockFrame 全部补齐；缺失 340 → **0** |
 | HTTP→HTTPS→WWW | 合并为一跳 301 |
 | 旧 policy canonical | 12 条旧地址的存储 canonical 清理为 www 正确 URL |
 | 分页质量（此前） | 页码范围、每页 description、ItemList、facet 进 sitemap、超范围 308 |
 
-生产 commit：`207351656`
+生产 commit：`c1ce7f004`
 
 ---
 
@@ -303,9 +310,9 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 |---|---|---|
 | ✅ 已完成 | 工具页分页 | 已 self-canonical + 页码标题/描述 + sitemap |
 | ✅ 已完成 | 隔离 `/site/mydreamshoots` | AIVideosUGC host 已 404 |
-| P1 | 9 个孤儿详情页补内链 | 从相关分类/详情页链接，或移出 sitemap |
+| P1 | 9 个“图片示例挂视频前缀”的孤儿页 | 迁移到 `/ai-image-generation/` 并补内链，或移出 sitemap + 301/410；不要直接补内链放大错误 URL |
 | P1 | 视频预览性能 A+B | 首屏只立即播第 1 张，其余进视口再播；视频延后到 LCP 之后 |
-| P2 | 剩余 94 张 alt | 演员场景、博客作者/图标、工具配图 |
+| ✅ 已完成 | 图片 alt | 缺失已降到 0 |
 | P2 | 分页 H1 加页码 | 可选，收益低 |
 | P3 | `.env` 403 改 404 | 减少文件指纹 |
 | P3 | HSTS + Cloudflare 一跳规则 | 安全加固，需 Cloudflare 写权限 |
@@ -330,4 +337,4 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 - **没有发现内部备注、密钥、调试文案或隐藏关键词**。
 - **没有发现无限爬取陷阱、断链或 soft 404**。
 - P0 已闭环：工具页分页进入 sitemap，跨站 `/site/` 页已 404。
-- 剩下的核心不是“能不能抓”，而是：9 个孤儿页内链、视频预览性能、少量 alt、旧文件 403、HSTS。
+- 剩下的核心不是“能不能抓”，而是：9 个图片示例的 URL/内容类型迁移、视频预览性能、旧文件 403、HSTS。
