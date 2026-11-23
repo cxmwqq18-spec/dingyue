@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Release gate for the AIVideosUGC listing pagination contract.
 //
-// The /templates pagination is a finite, canonical parameter space:
-//   - page 2..last           200, canonical self, index/follow
+// Listing pagination is a finite, path-owned identity:
+//   - /templates/page2..last 200, canonical self, index/follow
+//   - /templates/photo|video the kind catalogs, 200 and self canonical
+//   - ?page=2 / ?kind=photo  308 to the path form (single hop)
 //   - page 1, 0, negative, or an unparseable value
 //                            308 to the base listing (filters kept)
-//   - page past the last     308 to the last real page (filters kept)
-//   - pagination never appears in /sitemap.xml
+//   - a page past the last   308 to the last real /pageN
+//   - sitemap.xml lists only the path form, never ?page=
 // A redirect target must answer 200 within one hop; no chains and no 404.
 //
 //   AIDREAMCAPES_AUDIT_ORIGIN=https://www.aivideosugc.com \
@@ -51,6 +53,18 @@ function canonical(body) {
   return (body.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i)?.[1] ?? "").replaceAll("&amp;", "&");
 }
 
+/** Canonical identity without the host, so the gate also runs on loopback. */
+function canonicalPath(body) {
+  const value = canonical(body);
+  if (!value) return "";
+  try {
+    const parsed = new URL(value, origin);
+    return `${parsed.pathname}${parsed.search}`;
+  } catch {
+    return value;
+  }
+}
+
 function robots(body) {
   return body.match(/<meta[^>]+name="robots"[^>]+content="([^"]*)"/i)?.[1] ?? "";
 }
@@ -66,21 +80,47 @@ async function expectRedirect(path, expectedPath) {
   return target;
 }
 
+/** Follow permanent redirects on the origin under test; returns the final
+ * response plus the path it settled on. Bounded so a loop fails the gate. */
+async function follow(path, maxHops = 3) {
+  let current = path;
+  const seen = new Set([path]);
+  for (let hop = 0; hop <= maxHops; hop += 1) {
+    const response = await get(current);
+    if (response.status !== 308) return { response, path: current };
+    const location = new URL(response.location, origin);
+    const next = `${location.pathname}${location.search}`;
+    if (seen.has(next)) throw new Error(`redirect loop at ${next}`);
+    seen.add(next);
+    current = next;
+  }
+  throw new Error(`redirect chain too long for ${path}`);
+}
+
 await check("page 1 answers 200 with a self canonical", async () => {
   const response = await get("/templates");
   assert.equal(response.status, 200);
-  assert.equal(canonical(response.body), `${origin}/templates`);
+  assert.equal(canonicalPath(response.body), "/templates");
   assert.match(robots(response.body), /index/i);
 });
 
-await check("page 2 answers 200 with a self canonical", async () => {
-  const response = await get("/templates?page=2");
+await check("page 2 answers 200 on its path with a self canonical", async () => {
+  const response = await get("/templates/page2");
   assert.equal(response.status, 200);
-  assert.equal(canonical(response.body), `${origin}/templates?page=2`);
+  assert.equal(canonicalPath(response.body), "/templates/page2");
+  assert.match(robots(response.body), /index/i);
+});
+
+await check("the legacy ?page=2 address redirects to the path", async () => {
+  await expectRedirect("/templates?page=2", "/templates/page2");
 });
 
 await check("page=1 redirects to the base listing", async () => {
   await expectRedirect("/templates?page=1", "/templates");
+});
+
+await check("a path page segment of 1 redirects to the base listing", async () => {
+  await expectRedirect("/templates/page1", "/templates");
 });
 
 await check("page=0 redirects to the base listing", async () => {
@@ -100,55 +140,51 @@ await check("a fractional page redirects to the base listing", async () => {
 });
 
 await check("page=1 keeps the kind filter", async () => {
-  await expectRedirect("/templates?kind=video&page=1", "/templates?kind=video");
+  await expectRedirect("/templates?kind=video&page=1", "/templates/video");
 });
 
-await check("a page past the last redirects to the last real page", async () => {
-  const response = await get("/templates?page=999");
-  assert.equal(response.status, 308);
-  const location = new URL(response.location, origin);
-  assert.equal(location.pathname, "/templates");
-  const page = Number(location.searchParams.get("page"));
-  assert(Number.isInteger(page) && page >= 2, `last page resolved to ${location.search}`);
-  const target = await get(`${location.pathname}${location.search}`);
-  assert.equal(target.status, 200);
-  assert.equal(canonical(target.body), `${origin}${location.pathname}${location.search}`);
+await check("the legacy kind query redirects to the kind path", async () => {
+  await expectRedirect("/templates?kind=video", "/templates/video");
+  await expectRedirect("/templates?kind=photo", "/templates/photo");
+  await expectRedirect("/templates?kind=photo&page=2", "/templates/photo/page2");
 });
 
-await check("the video catalog keeps the kind filter past the last page", async () => {
-  const response = await get("/templates?kind=video&page=999");
-  assert.equal(response.status, 308);
-  const location = new URL(response.location, origin);
-  assert.equal(location.pathname, "/templates");
-  assert.equal(location.searchParams.get("kind"), "video");
-  assert(Number(location.searchParams.get("page")) >= 2, `last video page resolved to ${location.search}`);
-  const target = await get(`${location.pathname}${location.search}`);
-  assert.equal(target.status, 200);
+await check("a page past the last settles on the last real path", async () => {
+  const { response, path } = await follow("/templates?page=999");
+  assert.equal(response.status, 200, `last page answered ${response.status}`);
+  const match = /^\/templates\/page(\d+)$/.exec(path);
+  assert(match && Number(match[1]) >= 2, `last page resolved to ${path}`);
+  assert.equal(canonicalPath(response.body), path);
 });
 
-await check("tracking parameters do not create a pagination variant", async () => {
-  const response = await get("/templates?page=2&utm_source=newsletter");
+await check("the video catalog keeps its kind path past the last page", async () => {
+  const { response, path } = await follow("/templates?kind=video&page=999");
+  assert.equal(response.status, 200, `last video page answered ${response.status}`);
+  assert.match(path, /^\/templates\/video\/page\d+$/, `last video page resolved to ${path}`);
+});
+
+await check("tracking parameters keep the path canonical", async () => {
+  await expectRedirect("/templates?page=2&utm_source=newsletter", "/templates/page2?utm_source=newsletter");
+  const response = await get("/templates/page2?utm_source=newsletter");
   assert.equal(response.status, 200);
-  assert.equal(canonical(response.body), `${origin}/templates?page=2`);
+  assert.equal(canonicalPath(response.body), "/templates/page2");
 });
 
 await check("every paginated sitemap URL is indexable with a unique snippet", async () => {
   const response = await get("/sitemap.xml");
   assert.equal(response.status, 200);
-  const paginated = [...response.body.matchAll(/<loc>([^<]*page=[^<]+)<\/loc>/g)]
+  const paginated = [...response.body.matchAll(/<loc>([^<]*\/page\d+)<\/loc>/g)]
     .map((match) => match[1].replaceAll("&amp;", "&"))
-    .filter((url) => /\/(?:templates|ai-video-generation|industries\/[^/?]+|platforms\/[^/?]+|occasions\/[^/?]+|tools\/[^/?]+)\?/.test(url));
+    .filter((url) => /\/(?:templates|ai-video-generation|industries\/[^/?]+|platforms\/[^/?]+|occasions\/[^/?]+|tools\/[^/?]+)\/page\d+$/.test(url));
   assert(paginated.length > 0, "expected the paginated listing URLs in the sitemap");
   const seen = new Map();
   const baseDescription = new Map();
   for (const url of paginated) {
     const parsed = new URL(url, origin);
-    const path = `${parsed.pathname}${parsed.search}`;
+    const path = parsed.pathname;
     const page = await get(path);
     assert.equal(page.status, 200, `${path} answered ${page.status}`);
-    assert.equal(canonical(page.body), `${origin}${path}`, `${path} is not self canonical`);
-    // Next omits the robots meta when the page keeps the default index,follow;
-    // only an explicit noindex (meta or header) makes the URL non-indexable.
+    assert.equal(canonicalPath(page.body), path, `${path} is not self canonical`);
     const robotsHeader = page.headers?.get("x-robots-tag") ?? "";
     assert(!/noindex/i.test(robots(page.body)) && !/noindex/i.test(robotsHeader), `${path} is not indexable`);
     const description = (page.body.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i)?.[1] ?? "").replaceAll("&amp;", "&");
@@ -157,9 +193,9 @@ await check("every paginated sitemap URL is indexable with a unique snippet", as
     if (seen.has(description)) throw new Error(`${path} repeats the description of ${seen.get(description)}`);
     seen.set(description, path);
     const title = page.body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] ?? "";
-    const pageNumber = parsed.searchParams.get("page");
+    const pageNumber = /^\/page(\d+)$/.exec(path.slice(path.lastIndexOf("/")))?.[1] ?? "";
     assert(title.includes(`Page ${pageNumber}`), `${path} title lacks the page marker: ${title}`);
-    const baseKey = `${parsed.pathname}?${[...parsed.searchParams].filter(([key]) => key !== "page").map(([key, value]) => `${key}=${value}`).join("&")}`;
+    const baseKey = path.replace(/\/page\d+$/, "");
     if (!baseDescription.has(baseKey)) {
       const base = await get(baseKey);
       assert.equal(base.status, 200, `${baseKey} answered ${base.status}`);
