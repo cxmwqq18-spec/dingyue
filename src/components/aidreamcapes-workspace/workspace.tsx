@@ -1977,12 +1977,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo, chat: MessageSquare, subtitles: Captions, starterOffer: Gift };
-  // The $1 first-video offer module only navigates while the customer can buy
-  // or use the offer; once consumed (or for existing customers) it disappears.
-  // An eligible state without a purchasable price means Stripe isn't wired up
-  // yet, so the entry stays hidden instead of showing a claim button that
-  // cannot check out.
-  const starterOfferNavVisible = (starterOffer?.state === "eligible" && Boolean(starterOffer?.priceId)) || starterOffer?.state === "purchased";
+  // The First Video Offer page is readable without an account: guests get the
+  // same offer copy with a log-in CTA, so the entry is visible for them too.
+  // Signed-in customers only keep the entry while they can buy or use the
+  // offer; once consumed (or for existing customers) it disappears. An eligible
+  // state without a purchasable price means Stripe isn't wired up yet, so the
+  // entry stays hidden instead of showing a claim button that cannot check out.
+  const guestStarterOffer = !customer;
+  // Guests have no account state to read, so the page renders the offer copy
+  // with a log-in CTA instead of the customer's eligibility result.
+  const starterOfferView: StarterOfferState | undefined = customer
+    ? starterOffer ?? undefined
+    : { state: "eligible", priceId: "login-required", freeCredits: undefined };
+  const starterPricingHref = `${basePath}/pricing`;
+  const starterOfferNavVisible = guestStarterOffer || (starterOffer?.state === "eligible" && Boolean(starterOffer?.priceId)) || starterOffer?.state === "purchased";
   const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group && (item.id !== "starterOffer" || starterOfferNavVisible)).map((item) => {
     const Icon = moduleIcons[item.id as keyof typeof moduleIcons];
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
@@ -2176,15 +2184,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               </p>
             </header>
 
-            {!customer && <section className={starterStyles.loginCard}>
-              <h2>Log in to claim your offer</h2>
-              <p>The $1 first-video offer and the creator free credits are for signed-in accounts. Log in to check your eligibility.</p>
-              <a className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} href={loginHref}>Log in</a>
-            </section>}
-
             {customer && !starterOffer && <div className={starterStyles.loading}><Loader2 size={22} className={styles.spin} /><span>Checking your offer…</span></div>}
 
-            {customer && starterOffer && (
+            {starterOfferView && (
               <section className={starterStyles.offers} aria-label="Starter offers">
                 {/* 01 · one-time $1 pack: 20 credits, normal pricing afterwards */}
                 <article className={starterStyles.card}>
@@ -2193,23 +2195,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                       <span className={starterStyles.tag}>First video offer</span>
                     </div>
                     <h2>
-                      {starterOffer.state === "eligible" || starterOffer.state === "purchased"
-                        ? starterOffer.state === "purchased" ? "20 credits added — create your first 15s video" : "Your first 15s product video — just $1"
-                        : starterOffer.state === "consumed" ? "This offer has been used" : "This offer is for new customers"}
+                      {starterOfferView.state === "eligible" || starterOfferView.state === "purchased"
+                        ? starterOfferView.state === "purchased" ? "20 credits added — create your first 15s video" : "Your first 15s product video — just $1"
+                        : starterOfferView.state === "consumed" ? "This offer has been used" : "This offer is for new customers"}
                     </h2>
                     <p className={starterStyles.sub}>
-                      {starterOffer.state === "eligible" && starterOffer.priceId
+                      {starterOfferView.state === "eligible" && starterOfferView.priceId
                         ? "A complete, ready-to-post video with full quality and no watermark."
-                        : starterOffer.state === "purchased"
+                        : starterOfferView.state === "purchased"
                           ? "Your 20 credits cover one 15-second video at the normal price. The composer uses them automatically."
-                          : starterOffer.state === "consumed"
+                          : starterOfferView.state === "consumed"
                             ? "The $1 starter offer is one-time. Standard credit packs are available any time."
-                            : starterOffer.state === "ineligible"
+                            : starterOfferView.state === "ineligible"
                               ? "The $1 starter offer is one-time and new-customer only. Standard credit packs are available any time."
                               : "The $1 starter offer is being set up. Your eligibility stays on your account."}
                     </p>
 
-                    {starterOffer.state === "eligible" && starterOffer.priceId ? (
+                    {starterOfferView.state === "eligible" && starterOfferView.priceId ? (
                       <>
                         <ul className={starterStyles.bullets}>
                           <li><Check size={15} strokeWidth={2.4} />20 credits — enough for one 15-second video</li>
@@ -2223,7 +2225,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                       </>
                     ) : null}
 
-                    {starterOffer.state === "eligible" && !starterOffer.priceId ? (
+                    {starterOfferView.state === "eligible" && !starterOfferView.priceId ? (
                       <div className={starterStyles.note}>
                         <b>Not available right now</b>
                         The $1 starter offer is being set up. Check back soon — your eligibility stays on your account.
@@ -2232,7 +2234,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                   </div>
 
                   <div className={starterStyles.action}>
-                    {starterOffer.state === "eligible" && starterOffer.priceId ? (
+                    {guestStarterOffer ? (
+                      <>
+                        <div className={starterStyles.priceRow}>
+                          <span className={starterStyles.price}>$1</span>
+                          <span className={starterStyles.strike}>$2.80</span>
+                          <span className={starterStyles.save}>64% off</span>
+                        </div>
+                        <a className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} href={loginHref}>
+                          <span>Log in to claim your $1 video</span>
+                        </a>
+                        <a className={starterStyles.footnoteLink} href={starterPricingHref}>See pricing</a>
+                        <span className={starterStyles.footnote}>Takes about a minute.</span>
+                      </>
+                    ) : starterOfferView.state === "eligible" && starterOfferView.priceId ? (
                       <>
                         <div className={starterStyles.priceRow}>
                           <span className={starterStyles.price}>$1</span>
@@ -2241,7 +2256,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                         </div>
                         <button
                           className={`${starterStyles.button} ${starterStyles.buttonPrimary}`}
-                          disabled={starterOfferClaiming || working || !starterOffer.priceId}
+                          disabled={starterOfferClaiming || working || !starterOfferView.priceId}
                           onClick={() => void claimStarterOffer()}
                           type="button"
                         >
@@ -2249,7 +2264,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                         </button>
                         <span className={starterStyles.footnote}>Takes about a minute.</span>
                       </>
-                    ) : starterOffer.state === "purchased" ? (
+                    ) : starterOfferView.state === "purchased" ? (
                       <>
                         <div className={starterStyles.value}>20 credits<small>One 15-second video</small></div>
                         <button className={`${starterStyles.button} ${starterStyles.buttonPrimary}`} onClick={() => void navigate("video")} type="button">
@@ -2266,7 +2281,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
                 {/* 02 · creator free credits (reuses /partners#free-credits) */}
                 {(() => {
-                  const freeCredits = starterOffer.freeCredits;
+                  const freeCredits = starterOfferView.freeCredits;
                   const state = freeCredits?.state ?? "not_applied";
                   const programHref = `${basePath}/partners#free-credits`;
                   return (
