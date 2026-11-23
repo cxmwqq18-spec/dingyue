@@ -12,6 +12,8 @@ import { AIDREAMCAPES_KIND_CATALOG_COPY, resolveAidreamcapesTemplateFilter } fro
 import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { MEDIA_PAGE_SIZE } from "./types";
+import { listingPagePath } from "@/lib/listing-pagination";
+import { publicSiteSlug } from "@/lib/domain-routing";
 import type { ExampleDirectoryConfig, GalleryItem } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
@@ -84,12 +86,14 @@ function requestedListingPage(query: Record<string, string | string[] | undefine
 
 /** Keep only the listing filters that change the result set; tracking params
  * and the page parameter itself do not belong on the redirect target. */
-const LISTING_FILTER_KEYS = new Set(["kind", "type", "industries", "platforms", "occasions", "galleryPage"]);
+/** Keep only the listing filters that change the result set; tracking params,
+ * the page parameter and the kind identity (now a path) do not belong on the
+ * redirect target. */
+const LISTING_FILTER_KEYS = new Set(["industries", "platforms", "occasions", "galleryPage"]);
 
 /** Keep only listing filters on a canonical redirect target. */
 function listingSearch(
-  query: Record<string, string | string[] | undefined> | undefined,
-  page?: number
+  query: Record<string, string | string[] | undefined> | undefined
 ): URLSearchParams {
   const search = new URLSearchParams();
   for (const [key, raw] of Object.entries(query ?? {})) {
@@ -98,12 +102,22 @@ function listingSearch(
       if (value) search.append(key, value);
     }
   }
-  if (page !== undefined && page > 1) search.set("page", String(page));
   return search;
 }
 
-function listingRedirect(path: string, search: URLSearchParams): never {
-  permanentRedirect(`${path}${search.size ? `?${search.toString()}` : ""}`);
+/** A kind catalog's public base: `/templates?kind=photo` → `/templates/photo`. */
+function listingBasePath(
+  path: string | undefined,
+  query: Record<string, string | string[] | undefined> | undefined
+): string | undefined {
+  if (!path) return undefined;
+  const kind = query?.kind === "photo" || query?.kind === "video" ? query.kind : undefined;
+  return kind && path === "/templates" ? `${path}/${kind}` : path;
+}
+
+function listingRedirect(path: string, page: number, search: URLSearchParams, routePrefix = ""): never {
+  const target = `${routePrefix}${listingPagePath(path, page)}${search.size ? `?${search.toString()}` : ""}`;
+  permanentRedirect(target);
 }
 
 /** `page=1` and unparseable values have no address of their own. A permanent
@@ -111,14 +125,15 @@ function listingRedirect(path: string, search: URLSearchParams): never {
  * listing is the canonical address for both. */
 function redirectNonCanonicalPage(
   path: string | undefined,
-  query: Record<string, string | string[] | undefined> | undefined
+  query: Record<string, string | string[] | undefined> | undefined,
+  routePrefix = ""
 ): void {
   if (!path) return;
   const raw = Array.isArray(query?.page) ? query?.page[0] : query?.page;
   if (raw === undefined) return;
   const value = String(raw).trim();
   if (/^[1-9][0-9]*$/.test(value) && Number(value) > 1) return;
-  listingRedirect(path, listingSearch(query));
+  listingRedirect(listingBasePath(path, query)!, 0, listingSearch(query), routePrefix);
 }
 
 /** A page past the last real page has no content of its own. Send it to the
@@ -127,14 +142,18 @@ function redirectPastLastPage(
   path: string | undefined,
   requested: number,
   totalPages: number,
-  query: Record<string, string | string[] | undefined> | undefined
+  query: Record<string, string | string[] | undefined> | undefined,
+  routePrefix = ""
 ): void {
   if (!path || requested <= totalPages) return;
-  listingRedirect(path, listingSearch(query, totalPages));
+  listingRedirect(listingBasePath(path, query)!, totalPages, listingSearch(query), routePrefix);
 }
 
 export async function AidreamcapesTemplateRenderer(props: Parameters<typeof ThemeRenderer>[0]) {
   const sections = { ...props.page.sections };
+  // Path mode ("/site/<slug>/...") needs the route prefix on redirects; host
+  // mode has an empty prefix. Mirrors hrefForDirectoryPath in storefront-render.
+  const routePrefix = props.routeMode === "host" ? "" : `/site/${publicSiteSlug(props.site.slug)}`;
   for (const [id, section] of Object.entries(sections)) {
     if (section.type !== "aidreamcapes_v2_page") continue;
     const settings = section.settings as Record<string, unknown>;
@@ -153,8 +172,8 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       const requestedPage = requestedListingPage(props.query);
       const listingPath = props.pagePath ?? "/templates";
-      redirectNonCanonicalPage(listingPath, props.query);
-      redirectPastLastPage(listingPath, requestedPage, totalPages, props.query);
+      redirectNonCanonicalPage(listingPath, props.query, routePrefix);
+      redirectPastLastPage(listingPath, requestedPage, totalPages, props.query, routePrefix);
       const page = Math.min(requestedPage, totalPages);
       const start = (page - 1) * pageSize;
       const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
@@ -197,8 +216,8 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const mediaTotal = orderedMedia.length;
       const mediaTotalPages = Math.max(1, Math.ceil(mediaTotal / MEDIA_PAGE_SIZE));
       const requestedPage = requestedListingPage(props.query);
-      redirectNonCanonicalPage(props.pagePath, props.query);
-      redirectPastLastPage(props.pagePath, requestedPage, mediaTotalPages, props.query);
+      redirectNonCanonicalPage(props.pagePath, props.query, routePrefix);
+      redirectPastLastPage(props.pagePath, requestedPage, mediaTotalPages, props.query, routePrefix);
       const mediaPage = Math.min(requestedPage, mediaTotalPages);
       const mediaStart = (mediaPage - 1) * MEDIA_PAGE_SIZE;
       resolved = {
@@ -263,7 +282,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
         const requestedPage = requestedListingPage(props.query);
         redirectNonCanonicalPage(props.pagePath, props.query);
-        redirectPastLastPage(props.pagePath, requestedPage, totalPages, props.query);
+        redirectPastLastPage(props.pagePath, requestedPage, totalPages, props.query, routePrefix);
         if (total > MEDIA_PAGE_SIZE) {
           const page = Math.min(requestedPage, totalPages);
           resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };

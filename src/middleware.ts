@@ -12,6 +12,7 @@ import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath,
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
 import { fetchAidreamcapesInternal } from "@/lib/aidreamcapes-internal-fetch";
+import { isListingPublicPath, isPaginatedListingBase, listingPagePath, matchListingPagePath, TEMPLATE_KIND_PATHS } from "@/lib/listing-pagination";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aivideosugc|(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|aivideosugc|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -467,6 +468,11 @@ function isSpanishXbyRequest(request: NextRequest): boolean {
 function isFrenchXbyRequest(request: NextRequest): boolean {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
   return storefrontLocaleForRequestIdentity(identity) === "fr";
+}
+
+function isListingHeadRewriteCandidate(request: NextRequest): boolean {
+  const path = request.nextUrl.pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/)/i, "");
+  return isListingPublicPath(path);
 }
 
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
@@ -1049,6 +1055,101 @@ function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
   return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 301);
 }
 
+const LISTING_IDENTITY_PARAMS = ["kind", "type", "page", "galleryPage"] as const;
+
+/** Split `(/site/aivideosugc)?/rest` into the route prefix and public path. */
+function aidreamcapesListingPathParts(pathname: string): { prefix: string; path: string } | undefined {
+  const match = /^(\/site\/(?:aidreamcapes|aivideosugc))?(\/.*)$/i.exec(pathname);
+  if (!match) return undefined;
+  return { prefix: match[1] ?? "", path: match[2] || "/" };
+}
+
+/**
+ * Listing pages are addressed by path only. Two directions run here, before
+ * the storefront renderer sees the request:
+ *
+ *   1. `?page=2`, `?kind=photo`, `?galleryPage=2` → 308 to `/page2`,
+ *      `/templates/photo`, `/gallery/page2` (single hop, no query identity).
+ *   2. `/templates/page2`, `/templates/photo`, `/gallery/page2` → rewritten
+ *      into the internal query contract (`?page=2`, `?kind=photo`) so the
+ *      renderer, metadata and pagers keep one slicing implementation.
+ *
+ * The rewrite is internal: middleware runs once, so the injected query never
+ * bounces back through rule 1.
+ */
+function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | undefined {
+  if (!["GET", "HEAD"].includes(request.method)) return undefined;
+  // Internal second passes already carry the rewritten path; normalizing them
+  // again would redirect an internal fetch.
+  if (request.headers.get(REORDER_SKIP_HEADER) === "1") return undefined;
+  // A trailing slash is normalized first by aidreamcapesTrailingSlashRedirect;
+  // normalizing here would rewrite the path and leak the internal route into
+  // that redirect target.
+  if (request.nextUrl.pathname.length > 1 && request.nextUrl.pathname.endsWith("/")) return undefined;
+  const parts = aidreamcapesListingPathParts(request.nextUrl.pathname);
+  if (!parts) return undefined;
+  const host = storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host"));
+  if (!parts.prefix && host !== "aidreamcapes") return undefined;
+  const { prefix, path } = parts;
+  const params = request.nextUrl.searchParams;
+  const kindRaw = params.get("kind") ?? params.get("type");
+  const pageRaw = params.get("page");
+  const galleryRaw = params.get("galleryPage");
+  const numericPage = (raw: string | null) => {
+    if (raw === null) return undefined;
+    const value = Math.floor(Number(raw));
+    return Number.isFinite(value) && value >= 2 && value <= 999 ? value : 0;
+  };
+
+  // A path may already carry its own page segment ("/templates/page2?page=3").
+  // The path base is the listing row either way; the query is normalized onto it.
+  const pathMatch = matchListingPagePath(path);
+  const pathBase = pathMatch?.basePath ?? path;
+  const pathPage = pathMatch?.kind === "page" ? pathMatch.page : undefined;
+
+  if (kindRaw !== null || pageRaw !== null || galleryRaw !== null) {
+    // An unknown kind keeps the noindexed utility-view treatment instead of
+    // inventing a path for it.
+    if (kindRaw && kindRaw !== "photo" && kindRaw !== "video") return undefined;
+    const kindApplies = (kindRaw === "photo" || kindRaw === "video") && (pathBase === "/templates" || pathBase in TEMPLATE_KIND_PATHS);
+    // A kind parameter on a non-template listing is not an identity we own.
+    if (kindRaw && !kindApplies) return undefined;
+    const basePath = kindApplies ? `/templates/${kindRaw}` : pathBase;
+    if (!isPaginatedListingBase(basePath)) return undefined;
+    const page = numericPage(pageRaw) ?? pathPage ?? 0;
+    const gallery = numericPage(galleryRaw);
+    // The secondary gallery pager only exists on the video hub; elsewhere the
+    // parameter has no address and folds straight into the listing base.
+    const galleryApplies = Boolean(gallery) && /^\/ai-video-generation(?:\/|$)/.test(basePath);
+    const rest = new URLSearchParams();
+    for (const [key, value] of params) {
+      if (!(LISTING_IDENTITY_PARAMS as readonly string[]).includes(key)) rest.append(key, value);
+    }
+    const targetPath = galleryApplies ? `${basePath}/gallery/page${gallery}` : listingPagePath(basePath, page);
+    const location = `${prefix}${targetPath}${rest.size ? `?${rest}` : ""}`;
+    return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 308);
+  }
+
+  const kindPath = TEMPLATE_KIND_PATHS[pathBase as keyof typeof TEMPLATE_KIND_PATHS];
+  const match = pathMatch;
+  if (!match && !kindPath) return undefined;
+  if (match?.kind === "invalid") {
+    return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}${match.basePath}`), 308);
+  }
+  if (match) {
+    const matchKind = TEMPLATE_KIND_PATHS[match.basePath as keyof typeof TEMPLATE_KIND_PATHS];
+    request.nextUrl.pathname = `${prefix}${matchKind ? "/templates" : match.basePath}`;
+    if (matchKind) request.nextUrl.searchParams.set("kind", matchKind);
+    request.nextUrl.searchParams.set(match.gallery ? "galleryPage" : "page", String(match.page));
+    return undefined;
+  }
+  if (kindPath) {
+    request.nextUrl.pathname = `${prefix}/templates`;
+    request.nextUrl.searchParams.set("kind", kindPath);
+  }
+  return undefined;
+}
+
 export async function middleware(request: NextRequest) {
   const canonicalHostResponse = aidreamcapesCanonicalHostRedirect(request);
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
@@ -1056,6 +1157,11 @@ export async function middleware(request: NextRequest) {
   if (duplicateSlashResponse) return finalizeStorefrontResponse(duplicateSlashResponse, request);
   const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
   if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
+  // Listing identity lives in the path: `?page=`/`?kind=` 308 to `/pageN`
+  // and `/templates/photo`, then the public path is rewritten into the
+  // internal query contract the renderer already understands.
+  const listingPathResponse = aidreamcapesListingPathNormalize(request);
+  if (listingPathResponse) return finalizeStorefrontResponse(listingPathResponse, request);
   // Normalize types before SSR without losing a facet or tracking parameter.
   const filterPathMatch = request.nextUrl.pathname.match(/^(\/site\/(?:aidreamcapes|aivideosugc))?(\/(?:templates(?:\/(?:photo|video))?|(?:industries|platforms|occasions)\/[a-z0-9-]+))$/);
   const filterHost = storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host"));
@@ -1096,6 +1202,16 @@ export async function middleware(request: NextRequest) {
 
   const redirectResponse = grownstrideLegacyHostRedirect(request) ?? aidreamcapesEuWwwRedirect(request) ?? aidreamcapesLegacyBlogRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
   if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
+  // Listing identities live in the path, so HEAD must reach the same internal
+  // route as GET; the HTML-rewrite path below is GET-only by design.
+  if (request.method === "HEAD" && isListingHeadRewriteCandidate(request)) {
+    const headHeaders = new Headers(request.headers);
+    headHeaders.set(REORDER_SKIP_HEADER, "1");
+    return finalizeStorefrontResponse(
+      NextResponse.rewrite(sameServerStorefrontUrl(request), { request: { headers: headHeaders } }),
+      request
+    );
+  }
   if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 
   const upstreamHeaders = new Headers(request.headers);

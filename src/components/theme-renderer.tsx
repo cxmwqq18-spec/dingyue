@@ -1,3 +1,4 @@
+import { normalizeListingHref } from "@/lib/listing-pagination";
 import NextImage from "next/image";
 import { Fragment } from "react";
 import type { CSSProperties, ReactNode } from "react";
@@ -360,7 +361,9 @@ function ThemeRendererBody({
     const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
     const v2PageSections = entries.map(([, section]) => section);
     const v2PolicyPage = !v2Entry && isAidreamcapesV2PolicyPage(v2PageSections, normalizedPath);
-    const v2Href = (value: string) => hrefFor(routedSite, value);
+    // Content-authored links may still carry the old query identity; project
+    // them onto the canonical path form at render time.
+    const v2Href = (value: string) => hrefFor(routedSite, normalizeListingHref(value));
     const v2Resolvers = {
       href: v2Href,
       asset: (value: string) => mediaAssetUrl(routedSite, value),

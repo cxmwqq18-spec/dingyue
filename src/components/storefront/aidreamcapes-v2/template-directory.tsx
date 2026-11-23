@@ -5,6 +5,7 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
 import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
+import { listingGalleryPagePath, listingPagePath } from "@/lib/listing-pagination";
 import { Adc2VideoPreview } from "./video-preview-card";
 import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-responsive-images";
 import { AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
@@ -80,20 +81,21 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
   params?: Record<string, string | undefined>;
   r: V2Resolvers;
   ariaLabel: string;
-  /** Query parameter carrying the page number. Grids that share a URL with
-   * another paginated grid (hub pickers use ?page) must use their own
-   * parameter so the two pagers never overwrite each other. */
+  /** Which pager this is. The page identity always lives in the path
+   * (`/page2`, or `/gallery/page2` for the secondary hub pager); the parameter
+   * name only selects that namespace. */
   pageParam?: string;
 }) {
   if (totalPages <= 1) return null;
   const href = (target: number) => {
+    const kind = params.kind;
+    const kindSuffix = (kind === "photo" || kind === "video") && basePath === "/templates" ? `/${kind}` : "";
+    const base = `${basePath}${kindSuffix}`;
+    const pagePath = pageParam === "galleryPage" ? listingGalleryPagePath(base, target) : listingPagePath(base, target);
     const search = new URLSearchParams();
-    for (const [key, value] of Object.entries(params)) if (value) search.set(key, value);
-    if (target > 1) search.set(pageParam, String(target));
-    const query = search.toString();
-    return r.href(query ? `${basePath}?${query}` : basePath);
+    for (const [key, value] of Object.entries(params)) if (value && key !== "kind") search.set(key, value);
+    return r.href(search.size ? `${pagePath}?${search}` : pagePath);
   };
-  const jumpParams = Object.entries(params).filter((entry): entry is [string, string] => Boolean(entry[1]));
   return <nav aria-label={ariaLabel} className={styles.galleryPages}>
     <span className={styles.pageRange}>Page {page} of {totalPages}</span>
     {page > 1 ? <a className="btn btn-ghost" href={href(page - 1)} rel="prev">Previous</a> : null}
@@ -103,11 +105,6 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
         ? <span key={`page-${entry}`} className={styles.pageNum} aria-current="page">{entry}</span>
         : <a key={`page-${entry}`} className={styles.pageNum} href={href(entry)}>{entry}</a>)}
     {page < totalPages ? <a className="btn btn-primary" href={href(page + 1)} rel="next">Next</a> : null}
-    <form className={styles.pageJump} method="get" action={r.href(basePath)}>
-      {jumpParams.map(([key, value]) => <input key={key} type="hidden" name={key} value={value} />)}
-      <input name={pageParam} type="number" inputMode="numeric" min={1} max={totalPages} defaultValue={page} aria-label={`Go to page, 1 to ${totalPages}`} />
-      <button type="submit" className="btn btn-ghost">Go</button>
-    </form>
   </nav>;
 }
 

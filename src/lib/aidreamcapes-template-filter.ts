@@ -1,4 +1,6 @@
 /** Pure URL rules for the Aidreamcapes SSR template directories. */
+import { listingPageCanonicalUrl } from "@/lib/listing-pagination";
+
 export type TemplateFilterQuery = Record<string, string | string[] | undefined>;
 export const TEMPLATE_FACETS = ["industries", "platforms", "occasions"] as const;
 export type TemplateFacetKey = typeof TEMPLATE_FACETS[number];
@@ -44,18 +46,10 @@ export function aidreamcapesListingPageDescription(description: string | undefin
   return `${prefix}${base}`;
 }
 
-/** Self-referencing canonical for a deeper listing page: the base canonical
- * keeps its other parameters (the kind catalogs) and gains ?page=N. */
+/** Self-referencing canonical for a deeper listing page: the page identity
+ * lives in the path (`/templates/page2`), never in a `?page=` query. */
 export function aidreamcapesListingPageCanonical(canonical: string | undefined, page: number): string | undefined {
-  if (!canonical || !page) return canonical;
-  try {
-    const url = new URL(canonical);
-    url.searchParams.delete("page");
-    url.searchParams.set("page", String(page));
-    return url.toString();
-  } catch {
-    return canonical;
-  }
+  return listingPageCanonicalUrl(canonical, page);
 }
 export type TemplateFilters = Partial<Record<TemplateFacetKey | "kind", string>>;
 export type TemplateFilterState = {
@@ -92,12 +86,10 @@ export function normalizeAidreamcapesTemplateFilter(path: string, query: Templat
     if (!new RegExp(`^/${key}/[a-z0-9]+(?:-[a-z0-9]+)*$`).test(value)) { invalid = true; badRequest = true; }
     filters[key] = value;
   }
-  // The retired /templates/photo and /templates/video catalogs fold into the
-  // /templates gallery; the kind dimension lives in the ?kind= query there.
-  const retiredKindPath = Boolean(catalog && pathKind);
-  const targetPath = retiredKindPath && !invalid ? "/templates" : path;
+  // `/templates/photo` and `/templates/video` are standalone catalogs: the
+  // kind dimension lives in the path, never in a `?kind=` query.
+  const targetPath = path;
   const params = new URLSearchParams();
-  if (effectiveKind && (retiredKindPath || !catalog || kind)) params.set("kind", effectiveKind);
   for (const key of TEMPLATE_FACETS) if (filters[key]) params.set(key, filters[key]!);
   // Keep invalid inputs distinguishable from an unfiltered, indexable catalog.
   if (invalid) {
@@ -108,22 +100,21 @@ export function normalizeAidreamcapesTemplateFilter(path: string, query: Templat
     }
   }
   const suffix = params.size ? `?${params}` : "";
-  const canonicalPath = targetPath + suffix;
-  // A valid kind filter on the /templates catalog is a standalone, indexable
-  // view — the video-examples / photo-examples catalogs — with its own copy
-  // and self canonical. Facet filters and any invalid input keep the
-  // noindexed utility-view treatment.
-  const kindOnlyCatalog = targetPath === "/templates" && !invalid
+  // The kind catalog's address is its path; a `?kind=`/`?type=` request is
+  // folded onto it so the two forms can never disagree.
+  const kindTargetPath = catalog && kind ? `/templates/${effectiveKind}` : undefined;
+  const canonicalPath = `${kindTargetPath ?? targetPath}${suffix}`;
+  // A valid kind catalog is a standalone, indexable view — the
+  // video-examples / photo-examples catalogs — with its own copy and self
+  // canonical. Facet filters and any invalid input keep the noindexed
+  // utility-view treatment.
+  const kindOnlyCatalog = Boolean(catalog) && !invalid
     && Boolean(filters.kind) && !filters.industries && !filters.platforms && !filters.occasions;
   // Tracking and unknown parameters stay on real navigation; they are excluded
-  // from canonical identity. They must never cause a redirect loop.
-  const hasUrlChange = targetPath !== path || Boolean(query.type) || Boolean(pathKind && query.kind);
-  const navigationParams = new URLSearchParams(params);
-  for (const [key, raw] of Object.entries(query)) {
-    if (["kind", "type", ...TEMPLATE_FACETS].includes(key)) continue;
-    for (const value of Array.isArray(raw) ? raw : raw === undefined ? [] : [raw]) navigationParams.append(key, value);
-  }
-  const redirectPath = !invalid && hasUrlChange ? targetPath + (navigationParams.size ? `?${navigationParams}` : "") : undefined;
+  // from canonical identity. The `?kind=` → `/templates/photo` redirect is
+  // owned by the middleware so an internal rewrite can never bounce back into
+  // a redirect loop.
+  const redirectPath = undefined as string | undefined;
   return { path: targetPath, filters, invalid, badRequest, canonicalPath, noindex: invalid || (params.size > 0 && !kindOnlyCatalog), ...(redirectPath ? { redirectPath } : {}) };
 }
 
