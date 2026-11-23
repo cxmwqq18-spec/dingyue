@@ -24,7 +24,7 @@ export type Adc2VideoPreviewMedia = {
   name?: string;
 };
 
-export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true, forceAspectRatio }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean; forceAspectRatio?: string }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true, posterEagerMobile, forceAspectRatio }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean; /** Mobile-only eager override; desktop keeps posterEager. */ posterEagerMobile?: boolean; forceAspectRatio?: string }) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const boxRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +46,9 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
     // (see PosterSwapVideo). Leaving the viewport only pauses playback.
     // The first visible row must play without waiting for an observer
     // callback: cards above the fold mount immediately after hydration.
-    if (posterEager) {
+    const mobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+    const eager = mobile && posterEagerMobile !== undefined ? posterEagerMobile : posterEager;
+    if (eager) {
       setMounted(true);
       setVisible(true);
     }
@@ -69,7 +71,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [posterEager]);
+  }, [posterEager, posterEagerMobile]);
 
   useEffect(() => {
     const video = videoRef.current;
