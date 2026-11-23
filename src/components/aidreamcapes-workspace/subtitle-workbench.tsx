@@ -228,6 +228,30 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
     setError("");
   }, [items, selectedId]);
 
+  // The studio list is a payload-light summary that strips videoHistory, so the
+  // version tabs would only ever show the current render. Load the full task
+  // for the selected video once so Original and earlier subtitled versions are
+  // listed (the subtitle op keeps the library video untouched and only adds a
+  // version).
+  const fullTaskIdsRef = useRef(new Set<string>());
+  useEffect(() => {
+    if (!selectedId || fullTaskIdsRef.current.has(selectedId)) return;
+    fullTaskIdsRef.current.add(selectedId);
+    void (async () => {
+      try {
+        const response = await fetch(`${requestRoot}/tasks/${encodeURIComponent(selectedId)}`, { credentials: "same-origin", cache: "no-store", headers: headers() });
+        if (!response.ok) { fullTaskIdsRef.current.delete(selectedId); return; }
+        const payload = await response.json().catch(() => ({}));
+        const task = payload.task as WorkspaceTask | undefined;
+        if (!aliveRef.current || !task) return;
+        setItems((current) => current.map((item) => item.taskId === task.taskId ? task : item));
+      } catch {
+        // A retry happens on the next selection change.
+        fullTaskIdsRef.current.delete(selectedId);
+      }
+    })();
+  }, [selectedId, requestRoot, headers]);
+
   // When the workspace reports the burn-in job finished, refresh that task so
   // the new version appears in the tabs without a manual reload.
   const prevJobRef = useRef<SubtitleActiveJob | null>(null);
