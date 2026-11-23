@@ -974,6 +974,26 @@ function aidreamcapesListingSitemapData(page: ThemePage): AidreamcapesListingSit
   return undefined;
 }
 
+/** A sitemap lastmod must be a real, past date. A future timestamp is a data
+ * error; omitting it is better than advertising a date crawlers will distrust. */
+function usableLastmod(value: Date | string | undefined): string | undefined {
+  if (!value) return undefined;
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime()) || date.getTime() > Date.now()) return undefined;
+  return date.toISOString();
+}
+
+/** Newest card timestamp on one paginated slice. Empty or future-only slices
+ * fall back to the owning page timestamp instead of inventing "now". */
+function latestCardLastmod(items: ReadonlyArray<{ updatedAt?: Date }>): string | undefined {
+  let newest = 0;
+  for (const item of items) {
+    const time = item.updatedAt instanceof Date ? item.updatedAt.getTime() : NaN;
+    if (Number.isFinite(time) && time > newest) newest = time;
+  }
+  return newest ? usableLastmod(new Date(newest)) : undefined;
+}
+
 function sitemapPageCount(total: number, pageSize: number): number {
   return Math.max(1, Math.ceil(total / Math.max(1, pageSize)));
 }
@@ -1113,7 +1133,12 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
         })
         .map((listing) => listing.path);
       const facetCounts = await resolveDirectoryMediaCounts(facetPaths);
-      const addListingPages = (basePath: string, totalPages: number, params: Record<string, string> = {}) => {
+      const addListingPages = (
+        basePath: string,
+        totalPages: number,
+        params: Record<string, string> = {},
+        pageLastmod?: (pageNumber: number) => string | undefined
+      ) => {
         const base = aidreamcapesListingEntries.find((item) => item.path === basePath)?.entry;
         if (!base) return;
         for (let pageNumber = 2; pageNumber <= totalPages; pageNumber += 1) {
@@ -1124,7 +1149,10 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           entries.set(loc, {
             loc,
             images: [],
-            lastmod: base.lastmod,
+            // The slice's newest card time is a stable signal: it only moves
+            // when a card on that page changed. Pages whose per-card times are
+            // unknown keep the owning page timestamp rather than a guessed one.
+            lastmod: usableLastmod(pageLastmod?.(pageNumber)) ?? base.lastmod,
             changefreq: base.changefreq,
             priority: base.priority
           });
@@ -1136,8 +1164,11 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
         if (data.exampleDirectory) {
           const pageSize = Math.max(1, Math.min(50, Math.floor(Number(data.exampleDirectory.pageSize)) || 12));
           for (const kind of [undefined, "photo", "video"] as const) {
-            const total = kind ? galleryEntries.filter((entry) => entry.kind === kind).length : galleryEntries.length;
-            addListingPages("/templates", sitemapPageCount(total, pageSize), kind ? { kind } : {});
+            const pool = kind ? galleryEntries.filter((entry) => entry.kind === kind) : galleryEntries;
+            addListingPages("/templates", sitemapPageCount(pool.length, pageSize), kind ? { kind } : {}, (pageNumber) => {
+              const start = (pageNumber - 1) * pageSize;
+              return latestCardLastmod(pool.slice(start, start + pageSize));
+            });
           }
           continue;
         }
@@ -1149,8 +1180,16 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
         if (data.id === "video-hub") {
           const curated = data.visual?.picker?.cards ?? [];
           const curatedKeys = new Set(curated.map((card) => card.publicSlug ?? card.label));
-          const total = curated.length + galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug)).length;
-          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          const appended = galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug));
+          const total = curated.length + appended.length;
+          addListingPages(listing.path, sitemapPageCount(total, AIDREAMCAPES_MEDIA_PAGE_SIZE), {}, (pageNumber) => {
+            const start = (pageNumber - 1) * AIDREAMCAPES_MEDIA_PAGE_SIZE;
+            // Curated picker cards carry no per-card timestamp of their own;
+            // a page that includes one uses the page timestamp, which is the
+            // newest fact we can honestly claim for that slice.
+            if (start < curated.length) return undefined;
+            return latestCardLastmod(appended.slice(start - curated.length, start - curated.length + AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          });
           continue;
         }
         if (listing.path.startsWith("/ai-video-generation/") && !data.templateDefinition && Array.isArray(data.visual?.picker?.cards)) {
