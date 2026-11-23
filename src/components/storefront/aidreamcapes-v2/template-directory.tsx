@@ -9,12 +9,41 @@ import { Adc2VideoPreview } from "./video-preview-card";
 import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-responsive-images";
 import { AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
+import { MEDIA_PAGE_SIZE } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
 export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
 export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
 export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; totalPages: number; kind?: "photo" | "video"; basePath?: string };
 export type MediaPaginationState = { page: number; totalPages: number; total: number; basePath: string };
+
+function listingAbsoluteUrl(href: string): string {
+  if (/^https?:\/\//i.test(href)) return href;
+  return `https://www.aivideosugc.com${href.startsWith("/") ? "" : "/"}${href}`;
+}
+
+/** ItemList for the cards actually rendered on this paginated page. Positions
+ * continue the global list, so page 2 starts at 21 instead of restarting at 1. */
+export function ListingItemListJsonLd({ items, startPosition }: { items: { name: string; url: string }[]; startPosition: number }) {
+  if (!items.length) return null;
+  const json = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: startPosition + index,
+      name: item.name,
+      url: listingAbsoluteUrl(item.url)
+    }))
+  }).replace(/</g, "\\u003c");
+  return <script dangerouslySetInnerHTML={{ __html: json }} type="application/ld+json" />;
+}
+
+function exampleRange(page: number, pageSize: number, count: number, total: number): { start: number; end: number } {
+  const start = Math.max(1, (page - 1) * pageSize + 1);
+  return { start, end: Math.max(start, Math.min(total, start + Math.max(0, count - 1))) };
+}
 
 /** The /templates example gallery: every public example, newest first.
  * Pages are independent SSR documents: the grid shows the requested number of
@@ -66,6 +95,7 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
   };
   const jumpParams = Object.entries(params).filter((entry): entry is [string, string] => Boolean(entry[1]));
   return <nav aria-label={ariaLabel} className={styles.galleryPages}>
+    <span className={styles.pageRange}>Page {page} of {totalPages}</span>
     {page > 1 ? <a className="btn btn-ghost" href={href(page - 1)} rel="prev">Previous</a> : null}
     {paginationWindow(page, totalPages).map((entry, index) => entry === "gap"
       ? <span key={`gap-${index}`} className={styles.pageGap} aria-hidden="true">…</span>
@@ -126,15 +156,17 @@ export function ExampleGallerySection({ gallery, r, eyebrow, title, lead, pagePa
   // The hub gallery renders below the page's own hero, so it is not the LCP
   // element — preloading its posters here would pull bandwidth away from the
   // element that is. Card posters stay on their normal image priorities.
+  const range = exampleRange(gallery.page, MEDIA_PAGE_SIZE, gallery.items.length, gallery.total);
   return <section className="sec"><div className="wrap">
     <div className="sec-head">
       <div className="eyebrow">{eyebrow}</div>
       <h2>{title}</h2>
       {lead ? <p>{lead}</p> : null}
-      <p className="meta-line">{gallery.total} examples</p>
+      <p className="meta-line">Examples {range.start}–{range.end} of {gallery.total}</p>
     </div>
     <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
     <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/"} r={r} pageParam={pageParam} ariaLabel="Browse more examples by page" />
+    <ListingItemListJsonLd items={gallery.items.map(item => ({ name: item.label, url: item.href }))} startPosition={range.start} />
   </div></section>;
 }
 
@@ -147,15 +179,18 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
   // display poster moves the discover-or-fetch-latency out of the critical
   // path; the second card covers the first row on multi-column layouts.
   preloadMediaGridLcp(gallery.items, r);
+  const pageSize = Math.max(1, Math.min(50, Math.floor(Number(directory.pageSize)) || 12));
+  const range = exampleRange(gallery.page, pageSize, gallery.items.length, gallery.total);
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
       <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
       <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
-      <p className="meta-line">{gallery.total} examples</p>
+      <p className="meta-line">Examples {range.start}–{range.end} of {gallery.total}</p>
       <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
       {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
     </div></section>
+    <ListingItemListJsonLd items={gallery.items.map(item => ({ name: item.label, url: item.href }))} startPosition={range.start} />
     <DirectoryRelatedSection data={data} r={r} />
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;
@@ -172,6 +207,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
   const label = (path: string) => labels[path] ?? path;
   const mediaHeading = String(data.label ?? "").trim() || "category";
   const mediaPager = data.directoryMediaPagination as MediaPaginationState | undefined;
+  const mediaRange = mediaPager ? exampleRange(mediaPager.page, MEDIA_PAGE_SIZE, media.length, mediaPager.total) : undefined;
   if (directory.hideTemplates) {
     // The directory is example-first: the template registry (paths) stays in
     // the row data, but the page presents the placed media grid only. Cards
@@ -188,6 +224,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
             <div className="eyebrow">Examples</div>
             <h2 id="category-media-heading">{data.mediaHeading ? String(data.mediaHeading) : `${mediaHeading} examples`}</h2>
             {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
+            {mediaPager && mediaRange ? <p className="meta-line">Examples {mediaRange.start}–{mediaRange.end} of {mediaPager.total}</p> : null}
           </div>
           <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
             <a className="ti" href={r.href(item.href)}>{item.video ? (
@@ -198,6 +235,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           {mediaPager ? <DiscretePager page={mediaPager.page} totalPages={mediaPager.totalPages} basePath={mediaPager.basePath} r={r} ariaLabel="Browse more examples by page" /> : null}
         </section> : null}
       </div></section>
+      <ListingItemListJsonLd items={media.map(item => ({ name: item.label, url: item.href }))} startPosition={mediaRange?.start ?? 1} />
       <DirectoryRelatedSection data={data} r={r} />
       {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
     </>;
@@ -231,6 +269,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           <div className="eyebrow">More examples</div>
           <h2 id="category-media-heading">{data.mediaHeading ? String(data.mediaHeading) : `More ${mediaHeading} examples`}</h2>
           {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
+          {mediaPager && mediaRange ? <p className="meta-line">Examples {mediaRange.start}–{mediaRange.end} of {mediaPager.total}</p> : null}
         </div>
         <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
           <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
@@ -238,6 +277,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         </article>)}</div>
       </section> : null}
     </div></section>
+    <ListingItemListJsonLd items={media.map(item => ({ name: item.label, url: item.href }))} startPosition={mediaRange?.start ?? 1} />
     <DirectoryRelatedSection data={data} r={r} />
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;

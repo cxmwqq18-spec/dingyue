@@ -8,7 +8,7 @@ import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-
 import { AIDREAMCAPES_V2_FRESH_MEDIA_SIZES, AIDREAMCAPES_V2_PICKER_CARD_SIZES } from "./image-sizes";
 import { ImageItemRows, Img, normalizeStepLabel, RelatedLinkGroups, RichText, Section } from "./parts";
 import { Adc2VideoPreview } from "./video-preview-card";
-import { DiscretePager } from "./template-directory";
+import { DiscretePager, ListingItemListJsonLd } from "./template-directory";
 import { MEDIA_PAGE_SIZE, type V2PickerPagination } from "./types";
 import type {
   V2AfterMock,
@@ -323,6 +323,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           ))}
         </div>
         {paginated && paginateWith && pagination ? <DiscretePager page={pagination.page} totalPages={pagination.totalPages} basePath={pagination.basePath} r={r} ariaLabel="Browse more tools by page" /> : null}
+        {pagination && cards.length ? <ListingItemListJsonLd items={cards.map(card => ({ name: card.label, url: card.href }))} startPosition={(pagination.page - 1) * MEDIA_PAGE_SIZE + 1} /> : null}
         {relatedGroups.length ? <div className="v-related-groups"><RelatedLinkGroups groups={relatedGroups} r={r} /></div> : null}
         <div className="v-picker-action"><WorkspaceEntryLink className="btn btn-grad" href={r.href(picker.href)}>{picker.button} →</WorkspaceEntryLink></div>
       </div>
