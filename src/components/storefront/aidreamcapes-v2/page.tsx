@@ -697,7 +697,7 @@ function IndexPage({ data, r }: Props) {
           {items.map((item) => {
             const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
             return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
-              <Img image={item.image} r={r} />
+              <Img fallbackAlt={item.label} image={item.image} r={r} />
               <div><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></div>
             </article>;
           })}
@@ -1100,7 +1100,7 @@ function ArticlePage({ data, r }: Props) {
             <h1>{data.h1}</h1>
             <p className="lead">{data.lead}</p>
             <p className="meta-line">{String(data.minutes)} min read · {BRAND_NAME}</p>
-            <Img eager image={data.image as V2Image} r={r} />
+            <Img eager fallbackAlt={String(data.h1 ?? "")} image={data.image as V2Image} r={r} />
           </div>
         </section>
         <div className="wrap prose" style={{ paddingBottom: 40 }}>

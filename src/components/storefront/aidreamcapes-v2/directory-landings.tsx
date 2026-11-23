@@ -172,8 +172,8 @@ export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data
         {string(data.notice) ? <p className="landing-disclosure">{string(data.notice)}</p> : null}
       </div>
       <div className={`landing-hero-art ${twin ? "twin-art" : "brief-art"}`}>
-        <div className="landing-hero-image">{pictureElement(heroImage, r)}</div>
-        {secondaryImage ? <div className="landing-hero-inset">{pictureElement(secondaryImage, r)}</div> : null}
+        <div className="landing-hero-image">{pictureElement(heroImage, r, string(data.h1))}</div>
+        {secondaryImage ? <div className="landing-hero-inset">{pictureElement(secondaryImage, r, string(data.h1))}</div> : null}
         <div className="landing-floating-card"><span>{string(data.demoLabel)}</span>{(Array.isArray(data.heroChips) ? data.heroChips : []).filter((v): v is string => typeof v === "string").map((chip) => <b key={chip}>{chip}</b>)}</div>
       </div>
     </header>
@@ -183,8 +183,8 @@ export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data
   </div>;
 }
 
-function pictureElement(entry: LandingImage, r: V2Resolvers) {
-  return <img alt={storefrontMeaningfulAlt(entry.alt)} decoding="async" fetchPriority="high" src={r.asset(entry.src)} />;
+function pictureElement(entry: LandingImage, r: V2Resolvers, fallbackAlt?: string) {
+  return <img alt={storefrontMeaningfulAlt(entry.alt) || fallbackAlt || ""} decoding="async" fetchPriority="high" src={r.asset(entry.src)} />;
 }
 
 const landingCss = `
