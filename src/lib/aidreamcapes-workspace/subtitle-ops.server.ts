@@ -2,6 +2,8 @@ import "server-only";
 import { sceneSchema, WORKSPACE_LANGUAGES } from "./catalogs";
 import { validateCaptionLines } from "./captions";
 import { compileVideoEdit, removeEditedRender, renderEditedVideo } from "./editor";
+import { resolveTaskRenderFile } from "./media-render";
+import { clampCuesToSpeech, measureSpeechWindows } from "./speech-windows";
 import { structuredDecision } from "./provider";
 import { getTask, saveTask, type StoredTask } from "./store";
 import { isSubtitleOpId, type SubtitleOpId, type SubtitleOpPlan, type SubtitleOpSettings } from "./subtitle-ops";
@@ -219,6 +221,14 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
   // speech timings so lines appear and disappear with the actual voice track.
   const speechCues = !suppliedLines && args.opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;
   if (speechCues?.length) plan = { style: plan.style, lines: snapPlanLinesToSpeech(plan.lines, speechCues) };
+  // No measured speech cues means the plan's timing is a guess (the text model
+  // cannot hear the video, and a caller may hand over drifted timings). Trim it
+  // against the rendered audio so a caption never hangs over a real silent gap.
+  if (!speechCues?.length && args.opId === "captions_polish") {
+    const current = resolveTaskRenderFile(task, "video", task.video!.renderId);
+    const windows = await measureSpeechWindows(current.path, editedDuration(task));
+    if (windows.length) plan = { style: plan.style, lines: clampCuesToSpeech(plan.lines, windows) };
+  }
   // Customer overrides win over the plan's style choice; unchosen dimensions stay automatic.
   const style = settings.style ?? plan.style;
 
