@@ -619,7 +619,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
       if (disposition.kind !== "render") return {};
       const page = snapshot.pages.find((candidate) => candidate.id === disposition.pageId);
       if (!page) return {};
-      return metadataForPublishedStorefrontDirectoryPage({
+      return await withAidreamcapesListingPageMetadata(await metadataForPublishedStorefrontDirectoryPage({
         site,
         page,
         kind: "tool",
@@ -628,7 +628,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         products: state.products,
         creativePacks: state.creativePacks,
         snapshot
-      });
+      }), hostSiteSlug, requestedPath, query);
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");

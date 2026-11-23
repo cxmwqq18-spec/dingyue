@@ -49,8 +49,24 @@ async function readRoutePublicMetadataState(headers: HeaderReader, publicSlug: s
   return readPathModePublicMetadataState(publicSlug, "/");
 }
 
+/** Public AIVideosUGC/Aidreamcapes hosts must not serve another storefront's
+ * homepage through the path-mode prefix. */
+async function assertAidreamcapesPathModeSite(siteSlug: string): Promise<void> {
+  const requestHeaders = await headers();
+  const host = String(requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, "");
+  const isAivideosugcHost = host === "www.aivideosugc.com" || host === "aivideosugc.com"
+    || host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
+  const slug = publicSiteSlug(siteSlug);
+  if (isAivideosugcHost && slug !== "aidreamcapes" && slug !== "aivideosugc") notFound();
+}
+
 export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const { siteSlug } = await params;
+  await assertAidreamcapesPathModeSite(siteSlug);
   const publicSlug = publicSiteSlug(siteSlug);
   const query = searchParams ? await searchParams : {};
   const headerStore = await headers();
@@ -92,6 +108,7 @@ export default async function SiteFrontPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
+  await assertAidreamcapesPathModeSite(siteSlug);
   const publicSlug = publicSiteSlug(siteSlug);
   const query = searchParams ? await searchParams : {};
   const headerStore = await headers();
