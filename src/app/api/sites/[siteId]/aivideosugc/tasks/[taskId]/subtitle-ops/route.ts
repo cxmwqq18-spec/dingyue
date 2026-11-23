@@ -13,7 +13,12 @@ type Context = { params: Promise<{ siteId: string; taskId: string }> };
 
 const JOB_KIND = "aivideosugc_subtitle_op";
 const QUOTA_WINDOW_MS = 24 * 60 * 60 * 1000;
-const QUOTA_MAX_JOBS = 10;
+// Batch captioning needs a higher ceiling; keep the safe default and let the
+// deployment raise it through the environment.
+const QUOTA_MAX_JOBS = (() => {
+  const raw = Number(process.env.AIVIDEOSUGC_SUBTITLE_OP_DAILY_LIMIT);
+  return Number.isFinite(raw) && raw > 0 ? Math.trunc(raw) : 10;
+})();
 
 type SubtitleOpJob = AsyncJobSnapshot<SubtitleOpJobResult>;
 
