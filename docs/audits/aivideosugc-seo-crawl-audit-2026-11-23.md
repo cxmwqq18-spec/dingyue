@@ -2,8 +2,8 @@
 
 日期：2026-11-23  
 审计对象：`https://www.aivideosugc.com`  
-生产 commit：`c1ce7f004`  
-审计方式：生产库清单 + sitemap 全量抓取（审计时 792 URL；P0 修复后 797 URL）+ 内链图 + 爬取陷阱探针 + 移动端性能抽查 + 隐藏文案/脏数据扫描
+生产 commit：`ac1e7de87`  
+审计方式：生产库清单 + sitemap 全量抓取（审计时 792 URL；P0 修复后 788 URL）+ 内链图 + 爬取陷阱探针 + 移动端性能抽查 + 隐藏文案/脏数据扫描
 
 ---
 
@@ -17,7 +17,7 @@
 |---|---|---|
 | ✅ 已修复 | `/ai-video-generation/<tool>?page=N` 工具页分页已 self-canonical + sitemap | 分页收录已闭环 |
 | ✅ 已修复 | `/site/mydreamshoots` 在 AIVideosUGC 域名下已 404 | 跨站脏页已隔离 |
-| P1 | 9 个**图片示例**误挂在 `/ai-video-generation/` 下，无视频、无内链 | URL/内容类型不一致，孤儿页 |
+| ✅ 已完成 | 9 个图片示例已从 sitemap 移除并 308 到 `/ai-image-generation` | 孤儿页已下线 |
 | P1 | 列表页视频预览导致 2–3MB 传输，LCP 是视频 | Core Web Vitals / 抓取预算 |
 | ✅ 已完成 | 图片 alt 已补齐到 0 缺失 | 可访问性/图片 SEO |
 | P2 | 14 组分页 H1 与第一页重复 | 轻微重复信号，非主因 |
@@ -29,7 +29,7 @@
 ## 1. 审计范围与方法
 
 - 生产库 `site_aidreamcapes` 全部 221 条 LivePage。
-- `sitemap.xml` 全量抓取（审计时 792 条；P0 修复后 797 条）。
+- `sitemap.xml` 全量抓取（审计时 792 条；下线 9 个孤儿后 788 条）。
 - 从全量页面提取内链，构建链接图：可达性、深度、孤儿页、非 sitemap 目标。
 - 探针：旧 WordPress/后台/env/git、无效 slug、参数空间、大小写、双斜杠、编码路径、旧域名路径。
 - 隐藏内容扫描：HTML 注释、`hidden`、`display:none`、`visibility:hidden`、`aria-hidden` 文本。
@@ -42,7 +42,7 @@
 
 | 检查项 | 结果 |
 |---|---|
-| sitemap URL | 792（P0 后 797） |
+| sitemap URL | 792（下线 9 个孤儿后 788） |
 | HTTP 200 | 全部 |
 | 3xx / 404 / 5xx | 0 |
 | canonical 与自身不一致 | 0 |
@@ -158,7 +158,7 @@
 
 非 sitemap 的 200 目标主要是私有 `/app/*`、`/login`、`/checkout`（均 noindex）、已修复的工具页分页、以及被 HTML 转义误判的 `kind&page` 分页。
 
-### 孤儿页（9 个）：其实是“图片示例挂在了视频前缀下”
+### 已下线：9 个“图片示例挂在视频前缀下”的孤儿页
 
 以下页面在 sitemap 中，但没有任何内链指向：
 
@@ -182,10 +182,14 @@
 - 不在视频 gallery/picker 中，所以没有任何内链；
 - `/ai-image-generation/<slug>` 对应地址也不存在（404）。
 
-**结论**：这不是单纯“缺内链”，而是**内容类型和 URL 前缀不一致**。补内链会把错误的 URL 继续放大。建议二选一：
+**处理结果（2026-11-23）**：按“旧演示/占位数据”下线。
 
-1. 如果这些图片示例还要保留：迁移到 `/ai-image-generation/<slug>`，建立正确的详情页，再从图片分类页给内链；
-2. 如果是旧演示/占位数据：从 sitemap 移除，并 301 到 `/ai-image-generation` 或 410，不再作为独立页面。
+- 9 个 URL 全部 **308 → `/ai-image-generation`**；
+- 已从 sitemap 移除（sitemap 797 → 788）；
+- `/ai-image-generation` 本身 200；
+- 工具页分页仍保留在 sitemap。
+
+这不是单纯“缺内链”，而是**内容类型和 URL 前缀不一致**；补内链只会放大错误 URL。若以后确认这些图片仍有业务价值，再走迁移到 `/ai-image-generation/<slug>` 的方案。
 
 ---
 
@@ -283,7 +287,7 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 | 尾斜杠 | 301 去斜杠 |
 | 不存在的 URL | 404 |
 | robots.txt | 200，允许公开页，禁止 `/app/`、`/api/`、`/login`、`/site/` |
-| sitemap.xml | 200，797 URL（P0 后），全部 lastmod，无重复、无 noindex、无非 www |
+| sitemap.xml | 200，788 URL（下线 9 个孤儿后），全部 lastmod，无重复、无 noindex、无非 www |
 | 私有路由 | `/app`、`/login`、`/checkout`、`/account`、`/cart`、`/album` 均 noindex |
 
 **注意**：为使 HTTP 一跳，Cloudflare `Always Use HTTPS` 已关闭，改由源站 nginx 301 处理；当前 HSTS 未开启。安全上建议后续在 Cloudflare 配好一跳重定向规则后重新开启 Always Use HTTPS，并启用 HSTS。
@@ -300,7 +304,7 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 | 旧 policy canonical | 12 条旧地址的存储 canonical 清理为 www 正确 URL |
 | 分页质量（此前） | 页码范围、每页 description、ItemList、facet 进 sitemap、超范围 308 |
 
-生产 commit：`c1ce7f004`
+生产 commit：`ac1e7de87`
 
 ---
 
@@ -310,7 +314,7 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 |---|---|---|
 | ✅ 已完成 | 工具页分页 | 已 self-canonical + 页码标题/描述 + sitemap |
 | ✅ 已完成 | 隔离 `/site/mydreamshoots` | AIVideosUGC host 已 404 |
-| P1 | 9 个“图片示例挂视频前缀”的孤儿页 | 迁移到 `/ai-image-generation/` 并补内链，或移出 sitemap + 301/410；不要直接补内链放大错误 URL |
+| ✅ 已完成 | 9 个“图片示例挂视频前缀”的孤儿页 | 已从 sitemap 移除，308 到 `/ai-image-generation` |
 | P1 | 视频预览性能 A+B | 首屏只立即播第 1 张，其余进视口再播；视频延后到 LCP 之后 |
 | ✅ 已完成 | 图片 alt | 缺失已降到 0 |
 | P2 | 分页 H1 加页码 | 可选，收益低 |
@@ -321,7 +325,7 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 
 ## 12. 附录：关键证据
 
-- sitemap：`https://www.aivideosugc.com/sitemap.xml`（797 URL，P0 后）
+- sitemap：`https://www.aivideosugc.com/sitemap.xml`（788 URL，下线后）
 - 分页 smoke：`scripts/smoke-aidreamcapes-listing-pages.mjs` 12/12
 - 跨站页：`https://www.aivideosugc.com/site/mydreamshoots`
 - 工具分页：`https://www.aivideosugc.com/ai-video-generation/product-video?page=2`
@@ -333,8 +337,8 @@ GET https://www.aivideosugc.com/site/aidreamcapes/templates -> 301 /templates
 
 ## 13. 结论
 
-- **能抓、能收录的基础已经具备**：sitemap URL（审计时 792，P0 后 797）全部 200、self-canonical、indexable、标题/描述唯一、H1 唯一、结构化数据有效。
+- **能抓、能收录的基础已经具备**：sitemap URL（审计时 792，下线后 788）全部 200、self-canonical、indexable、标题/描述唯一、H1 唯一、结构化数据有效。
 - **没有发现内部备注、密钥、调试文案或隐藏关键词**。
 - **没有发现无限爬取陷阱、断链或 soft 404**。
 - P0 已闭环：工具页分页进入 sitemap，跨站 `/site/` 页已 404。
-- 剩下的核心不是“能不能抓”，而是：9 个图片示例的 URL/内容类型迁移、视频预览性能、旧文件 403、HSTS。
+- 剩下的核心不是“能不能抓”，而是：视频预览性能、旧文件 403、HSTS。
