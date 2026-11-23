@@ -12,7 +12,7 @@ import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath,
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
 import { fetchAidreamcapesInternal } from "@/lib/aidreamcapes-internal-fetch";
-import { isPaginatedListingBase, listingPagePath, matchListingPagePath, TEMPLATE_KIND_PATHS } from "@/lib/listing-pagination";
+import { isListingPublicPath, isPaginatedListingBase, listingPagePath, matchListingPagePath, TEMPLATE_KIND_PATHS } from "@/lib/listing-pagination";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aivideosugc|(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|aivideosugc|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -468,6 +468,11 @@ function isSpanishXbyRequest(request: NextRequest): boolean {
 function isFrenchXbyRequest(request: NextRequest): boolean {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
   return storefrontLocaleForRequestIdentity(identity) === "fr";
+}
+
+function isListingHeadRewriteCandidate(request: NextRequest): boolean {
+  const path = request.nextUrl.pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/)/i, "");
+  return isListingPublicPath(path);
 }
 
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
@@ -1077,6 +1082,10 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
   // Internal second passes already carry the rewritten path; normalizing them
   // again would redirect an internal fetch.
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return undefined;
+  // A trailing slash is normalized first by aidreamcapesTrailingSlashRedirect;
+  // normalizing here would rewrite the path and leak the internal route into
+  // that redirect target.
+  if (request.nextUrl.pathname.length > 1 && request.nextUrl.pathname.endsWith("/")) return undefined;
   const parts = aidreamcapesListingPathParts(request.nextUrl.pathname);
   if (!parts) return undefined;
   const host = storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host"));
@@ -1193,6 +1202,16 @@ export async function middleware(request: NextRequest) {
 
   const redirectResponse = grownstrideLegacyHostRedirect(request) ?? aidreamcapesEuWwwRedirect(request) ?? aidreamcapesLegacyBlogRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
   if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
+  // Listing identities live in the path, so HEAD must reach the same internal
+  // route as GET; the HTML-rewrite path below is GET-only by design.
+  if (request.method === "HEAD" && isListingHeadRewriteCandidate(request)) {
+    const headHeaders = new Headers(request.headers);
+    headHeaders.set(REORDER_SKIP_HEADER, "1");
+    return finalizeStorefrontResponse(
+      NextResponse.rewrite(sameServerStorefrontUrl(request), { request: { headers: headHeaders } }),
+      request
+    );
+  }
   if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 
   const upstreamHeaders = new Headers(request.headers);
