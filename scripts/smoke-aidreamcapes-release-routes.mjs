@@ -27,7 +27,19 @@ async function get(path, { redirect = "follow", timeout = 45_000 } = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
     try {
-      return await fetch(`${BASE_URL}${path}`, { redirect, headers: forwardedHeaders, signal: controller.signal });
+      let response = await fetch(`${BASE_URL}${path}`, { redirect: "manual", headers: forwardedHeaders, signal: controller.signal });
+      if (redirect === "manual") return response;
+      // Redirects point at the public origin; follow them against the candidate
+      // origin instead so a loopback run never leaves the host under test.
+      let current = path;
+      for (let hop = 0; hop < 4 && response.status >= 300 && response.status < 400; hop += 1) {
+        const location = response.headers.get("location");
+        if (!location) break;
+        const next = new URL(location, `${BASE_URL}${path}`);
+        current = `${next.pathname}${next.search}`;
+        response = await fetch(`${BASE_URL}${current}`, { redirect: "manual", headers: forwardedHeaders, signal: controller.signal });
+      }
+      return response;
     } catch (error) {
       lastError = error;
       await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
@@ -304,8 +316,15 @@ assert.equal(typeof inspirationBody.nextOffset, "number", "inspirations API: nex
 assert.ok(inspirationBody.counts && typeof inspirationBody.counts.all === "number", "inspirations API: counts");
 checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspirationBody.total} total`);
 
-const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-video-generation?page=2");
+const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-video-generation/page2");
 assert.equal(hubMediaResponse.status, 200, "video hub page 2: status");
+const hubMediaLegacyResponse = await get("/ai-video-generation?page=2", { redirect: "manual" });
+assert.equal(hubMediaLegacyResponse.status, 308, "video hub legacy ?page=2: status");
+assert.equal(
+  new URL(hubMediaLegacyResponse.headers.get("location") || "", BASE_URL).pathname,
+  "/ai-video-generation/page2",
+  "video hub legacy ?page=2: redirect target"
+);
 const hubMediaCards = (hubMediaHtml.match(/class="v-pick-card"/g) || []).length;
 assert.equal(hubMediaCards, 20, `video hub page 2: ${hubMediaCards} SSR picker cards (full catalog, 20 per page)`);
 assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: picker pager present");
@@ -313,14 +332,14 @@ assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media
 // The picker grid is the hub's single video catalog display: its pager must
 // reach the whole catalog (200+ detail pages), the last page answers, and an
 // out-of-range page clamps to the last page instead of erroring.
-const totalPagesMatch = hubMediaHtml.match(/aria-label="Go to page, 1 to (\d+)"/);
+const totalPagesMatch = hubMediaHtml.replaceAll("<!-- -->", "").match(/Page 2 of (\d+)/);
 assert.ok(totalPagesMatch, "video hub: pager exposes the total page count");
 const hubTotalPages = Number(totalPagesMatch[1]);
 assert.ok(hubTotalPages >= 10, `video hub: full catalog paginates into ${hubTotalPages} pages`);
-const { html: hubLastHtml } = await getText(`/ai-video-generation?page=${hubTotalPages}`);
+const { html: hubLastHtml } = await getText(`/ai-video-generation/page${hubTotalPages}`);
 assert.equal((hubLastHtml.match(/class="v-pick-card"/g) || []).length > 0, true, `video hub last page (${hubTotalPages}): renders cards`);
-assert.ok(!hubLastHtml.includes(`page=${hubTotalPages + 1}`), "video hub last page: no pager link past the last page");
-const { html: hubClampHtml } = await getText(`/ai-video-generation?page=${hubTotalPages + 5}`);
+assert.ok(!hubLastHtml.includes(`/page${hubTotalPages + 1}"`), "video hub last page: no pager link past the last page");
+const { html: hubClampHtml } = await getText(`/ai-video-generation/page${hubTotalPages + 5}`);
 assert.equal((hubClampHtml.match(/class="v-pick-card"/g) || []).length, (hubLastHtml.match(/class="v-pick-card"/g) || []).length, "video hub: out-of-range page clamps to the last page");
 checks.push(`video hub: picker grid browses the full video catalog (${hubTotalPages} SSR pages, plain-anchor pager)`);
 
@@ -337,7 +356,14 @@ for (const slug of ["image-to-video", "url-to-video", "video-ads", "product-vide
 }
 checks.push("video hub: related module links the 8 make-a-video tool pages (no directory or /templates links)");
 
-const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation?galleryPage=2");
+const hubGalleryLegacy = await get("/ai-video-generation?galleryPage=2", { redirect: "manual" });
+assert.equal(hubGalleryLegacy.status, 308, "video hub legacy gallery query: status");
+assert.equal(
+  new URL(hubGalleryLegacy.headers.get("location") || "", BASE_URL).pathname,
+  "/ai-video-generation/gallery/page2",
+  "video hub legacy gallery query: redirect target"
+);
+const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation/gallery/page2");
 assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status");
 // The full-catalog module is retired on the video-hub page (content-level
 // decision) and the industry-grouped case-studies block is retired from the
@@ -346,7 +372,7 @@ assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status")
 // the relational data — their detail pages keep their single owner row.
 assert.ok(!hubGalleryHtml.includes("Browse every video example"), "video hub: retired full catalog stays absent");
 assert.ok(!hubGalleryHtml.includes("data-media-slug="), "video hub: no retired catalog cards");
-assert.ok(!hubGalleryHtml.includes("galleryPage=3"), "video hub: no retired catalog pager");
+assert.ok(!hubGalleryHtml.includes("/gallery/page3"), "video hub: no retired catalog pager");
 assert.ok(!hubGalleryHtml.includes("TikTok Shop case studies"), "video hub: case-studies block stays absent from the rendered layout");
 checks.push("video hub: retired catalog and case-studies block stay absent; example detail pages keep their owner rows");
 
