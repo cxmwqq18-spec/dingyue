@@ -5,6 +5,7 @@ import { permanentRedirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import {
   aidreamcapesListingPageCanonical,
+  aidreamcapesListingPageDescription,
   aidreamcapesListingPageNumber,
   aidreamcapesListingPageTitle,
   normalizeAidreamcapesTemplateFilter,
@@ -29,19 +30,20 @@ export function withAidreamcapesListingPageMetadata(metadata: Metadata, hostSite
   const canonical = aidreamcapesListingPageCanonical(baseCanonical, page);
   const baseTitle = typeof metadata.title === "string" ? metadata.title : (metadata.title as { absolute?: string } | undefined)?.absolute;
   const title = aidreamcapesListingPageTitle(typeof baseTitle === "string" ? baseTitle : undefined, page);
-  if (!canonical || !title || title === metadata.title) return metadata;
-  // A deeper page repeats the same card grid shell, so its description needs
-  // its own page identity instead of duplicating page 1 word for word.
-  const baseDescription = typeof metadata.description === "string" ? metadata.description.trim() : "";
-  const description = baseDescription && !new RegExp(`\\bPage ${page}\\b`).test(baseDescription)
-    ? `${baseDescription} Page ${page}.`
-    : baseDescription;
+  // Every deeper listing page gets its own snippet: the page marker keeps the
+  // otherwise identical listing descriptions from reading as duplicates.
+  const description = aidreamcapesListingPageDescription(
+    typeof metadata.description === "string" ? metadata.description : undefined,
+    page
+  );
+  const descriptionChanged = Boolean(description) && description !== metadata.description;
+  if (!canonical || !title || (title === metadata.title && !descriptionChanged)) return metadata;
   return {
     ...metadata,
     ...(description ? { description } : {}),
     alternates: { ...(metadata.alternates ?? {}), canonical },
     title,
-    ...(metadata.openGraph ? { openGraph: { ...metadata.openGraph, title, url: canonical, ...(description ? { description } : {}) } } : {}),
+    ...(metadata.openGraph ? { openGraph: { ...metadata.openGraph, title, ...(description ? { description } : {}), url: canonical } } : {}),
     ...(metadata.twitter ? { twitter: { ...metadata.twitter, title, ...(description ? { description } : {}) } } : {})
   };
 }
@@ -142,15 +144,16 @@ export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | unde
       const canonical = aidreamcapesListingPageCanonical(new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href, page)
         ?? new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href;
       const title = aidreamcapesListingPageTitle(copy.title, page) ?? copy.title;
+      const description = aidreamcapesListingPageDescription(copy.description, page) ?? copy.description;
       const row = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } }, select: { contentJson: true } });
       const seo = (row?.contentJson as { seo?: { ogImage?: string; ogImageAlt?: string } } | undefined)?.seo;
       const images = seo?.ogImage ? [{ url: new URL(seo.ogImage, canonical).href, alt: seo.ogImageAlt }] : [];
       return {
         title: { absolute: title },
-        description: copy.description,
+        description,
         alternates: { canonical },
-        openGraph: { title, description: copy.description, url: canonical, images },
-        twitter: { card: "summary_large_image", title, description: copy.description, images }
+        openGraph: { title, description, url: canonical, images },
+        twitter: { card: "summary_large_image", title, description, images }
       };
     }
   }
