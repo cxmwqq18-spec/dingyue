@@ -245,7 +245,7 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
   transform:rotate(.5deg);transition:transform .45s cubic-bezier(.2,.7,.2,1);
 }
 .adc2 .bdoc-cover:hover{transform:rotate(0) translateY(-4px)}
-.adc2 .bdoc-cover img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.adc2 .bdoc-cover img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top}
 
 /* theme toggle */
 .adc2 .bdoc-theme{
