@@ -40,6 +40,7 @@ import { HomeBrandTools } from "./home-brand-tools";
 import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
 import { AIDREAMCAPES_V2_ACTOR_CARD_SIZES } from "./image-sizes";
 import { AidreamcapesDirectoryLanding } from "./directory-landings";
+import { AboutCompanyPage, type AboutCompanyData } from "./about-company";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -402,7 +403,7 @@ function ToolPage({ data, r }: Props) {
   if (visual) {
     const heroBlock = <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={photoHub ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={photoHub ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : hero.single ? <Single fallbackAlt={String(data.h1 ?? "")} image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
       </PageHero>
@@ -449,7 +450,7 @@ function ToolPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : hero.single ? <Single fallbackAlt={String(data.h1 ?? "")} image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
       </PageHero>
@@ -497,7 +498,7 @@ function TemplatePage({ data, r }: Props) {
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : undefined} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
@@ -527,7 +528,7 @@ function TemplatePage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : <Single fallbackAlt={String(data.h1 ?? "")} image={data.image as V2Image} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
@@ -566,7 +567,7 @@ function CollectionPage({ data, r }: Props) {
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : undefined} title={data.h1}>
         <Maker note={text(data.startNote)} maker={visualMaker ?? { options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
     </>],
@@ -597,7 +598,7 @@ function CollectionPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label="Get started" r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label="Get started" r={r} />} right={heroMedia ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} r={r} /></Section>
@@ -755,7 +756,7 @@ function IndexPage({ data, r }: Props) {
             {data.id === "guides" ? <h2>All Guides</h2> : data.id === "blog" ? <h2>All Articles</h2> : null}
             {articles.map((article) => (
               <WorkspaceEntryLink className="art" href={r.href(article.href)} key={article.href}>
-                <Img image={article.image} r={r} />
+                <Img fallbackAlt={article.title} image={article.image} r={r} />
                 <div><small>{article.minutes} min read</small><h3>{article.title}</h3><p>{article.summary}</p></div>
               </WorkspaceEntryLink>
             ))}
@@ -927,7 +928,7 @@ function ActorHubPage({ data, r }: Props) {
       <div className="wrap cardlist">
         {items.map((item) => (
           <article className="cardlist-card" key={item.href}>
-            <Img className="actor-hub-image" image={item.image} r={r} />
+            <Img className="actor-hub-image" fallbackAlt={item.label} image={item.image} r={r} />
             <div><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></div>
           </article>
         ))}
@@ -993,7 +994,7 @@ function ActorDetailPage({ data, r }: Props) {
       <div className="wrap">
         <style>{actorDetailCss}</style>
         <div className="actor-detail">
-          <Img className="actor-detail-media" eager image={actor.image} r={r} />
+          <Img className="actor-detail-media" eager fallbackAlt={actorImageAlt(actor)} image={actor.image} r={r} />
           <div className="actor-detail-info">
             <Intro paras={list<string>(data.intro)} r={r} />
             <dl className="actor-detail-facts">
@@ -1108,7 +1109,7 @@ function ArticlePage({ data, r }: Props) {
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
-              {section.prompt ? <ArticlePromptFigure prompt={section.prompt} /> : section.video ? <ArticleVideoFigure video={section.video} r={r} /> : section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
+              {section.prompt ? <ArticlePromptFigure prompt={section.prompt} /> : section.video ? <ArticleVideoFigure video={section.video} r={r} /> : section.img ? <figure className="article-section-media"><Img fallbackAlt={section.h2} image={section.img} r={r} /></figure> : null}
               {tryBox && sectionIndex === tryAfter ? (
                 <aside className="trybox">
                   <b>{tryBox.title}</b>
@@ -1166,7 +1167,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
 
 function SimplePage({ data, r, layout, company }: Props & { layout: string; company?: V2Company }) {
   const heroImage = data.image as V2Image | undefined;
-  const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
+  const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia fallbackAlt={String(data.h1 ?? "")} media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
   // Offer banner for the pricing layout; the component renders null without page data.
   const promoBanner = <AidreamcapesV2PromoBanner banner={data.promoBanner} r={r} />;
   if (layout === "pricing") {
@@ -1361,6 +1362,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {
     return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;
   }
+  if (layout === "about-company") return <AboutCompanyPage company={company} data={data as unknown as AboutCompanyData} r={r} />;
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }
 

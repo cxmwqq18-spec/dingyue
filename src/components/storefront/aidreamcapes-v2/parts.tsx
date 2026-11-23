@@ -870,10 +870,10 @@ export function Collage({ cards, r }: { cards: V2Card[]; r: V2Resolvers }) {
   );
 }
 
-export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
+export function Single({ image, r, fallbackAlt }: { image: V2Image; r: V2Resolvers; fallbackAlt?: string }) {
   return (
     <div className="single">
-      <Img eager image={image} r={r} />
+      <Img eager fallbackAlt={fallbackAlt} image={image} r={r} />
     </div>
   );
 }
@@ -902,26 +902,26 @@ const orientation = (image: V2Image) => ((image.width ?? 1) >= (image.height ?? 
 
 // The main picture at the top of a page: a before/after pair, one image, an example clip,
 // or a short silent loop (home page).
-export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) {
+export function HeroMedia({ media, r, fallbackAlt }: { media: V2HeroMedia; r: V2Resolvers; fallbackAlt?: string }) {
   if (media.kind === "video") return <div className="hm-video"><VideoPlayer r={r} video={media.video} /></div>;
   if (media.kind === "loop") {
     return (
       <div className="hm hm-loop">
         <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(media.video.poster?.src ?? ""))} preload="metadata" src={r.asset(media.video.src)} width={media.video.width} />
-        {media.inset ? <div className="inset"><span className="lbl">Your product</span><Img eager image={media.inset} r={r} /></div> : null}
+        {media.inset ? <div className="inset"><span className="lbl">Your product</span><Img eager fallbackAlt={fallbackAlt ? `${fallbackAlt} — your product` : "Your product"} image={media.inset} r={r} /></div> : null}
       </div>
     );
   }
   if (media.kind === "pair") {
     return (
       <figure className="hm hm-pair" data-orient={orientation(media.after)}>
-        <Img eager image={media.after} r={r} />
+        <Img eager fallbackAlt={fallbackAlt} image={media.after} r={r} />
         <span className="lbl">Result</span>
-        <div className="inset"><span className="lbl">Your product</span><Img eager image={media.before} r={r} /></div>
+        <div className="inset"><span className="lbl">Your product</span><Img eager fallbackAlt={fallbackAlt ? `${fallbackAlt} — your product` : "Your product"} image={media.before} r={r} /></div>
       </figure>
     );
   }
-  return <figure className="hm" data-orient={orientation(media.image)}><Img eager image={media.image} r={r} /></figure>;
+  return <figure className="hm" data-orient={orientation(media.image)}><Img eager fallbackAlt={fallbackAlt} image={media.image} r={r} /></figure>;
 }
 
 export function PairGrid({ pairs, r }: { pairs: { before: V2Image; after: V2Image }[]; r: V2Resolvers }) {

@@ -317,7 +317,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>
               {card.video ? (
                 <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} forceAspectRatio="9 / 16" posterEager={index < 4} showDuration={!hideDuration} />
-              ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
+              ) : <VisualImage fallbackAlt={card.label} image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>
           ))}
