@@ -151,6 +151,7 @@ export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | unde
       return {
         title: { absolute: title },
         description,
+        robots: { index: true, follow: true, maxImagePreview: "large" as const },
         alternates: { canonical },
         openGraph: { title, description, url: canonical, images },
         twitter: { card: "summary_large_image", title, description, images }
