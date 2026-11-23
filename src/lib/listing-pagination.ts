@@ -50,6 +50,9 @@ export function matchListingPagePath(path: string): ListingPageMatch | undefined
   const cut = isGallery ? 2 : 1;
   const basePath = `/${segments.slice(0, segments.length - cut).join("/")}`;
   if (!basePath || !isPaginatedListingBase(basePath)) return undefined;
+  // The secondary `galleryPage` pager only exists on the video hub; no other
+  // listing owns a `/gallery/pageN` address.
+  if (isGallery && !/^\/ai-video-generation(?:\/|$)/.test(basePath)) return { kind: "invalid", basePath };
   if (!segment) return { kind: "invalid", basePath };
   const page = Number(segment[1]);
   if (page < 2) return { kind: "invalid", basePath };
@@ -85,21 +88,6 @@ export function listingPageCanonicalUrl(canonical: string | undefined, page: num
     url.searchParams.delete("page");
     const base = url.pathname.replace(/\/+$/, "") || "/";
     url.pathname = listingPagePath(base, page);
-    return url.toString();
-  } catch {
-    return canonical;
-  }
-}
-
-/** Replace a canonical URL's kind query with the path form. */
-export function templateKindCanonicalUrl(canonical: string | undefined, kind: "photo" | "video"): string | undefined {
-  if (!canonical) return canonical;
-  try {
-    const url = new URL(canonical);
-    url.searchParams.delete("kind");
-    url.searchParams.delete("type");
-    url.search = "";
-    url.pathname = templateKindPath(kind);
     return url.toString();
   } catch {
     return canonical;

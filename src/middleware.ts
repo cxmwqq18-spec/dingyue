@@ -1092,28 +1092,37 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
     return Number.isFinite(value) && value >= 2 && value <= 999 ? value : 0;
   };
 
+  // A path may already carry its own page segment ("/templates/page2?page=3").
+  // The path base is the listing row either way; the query is normalized onto it.
+  const pathMatch = matchListingPagePath(path);
+  const pathBase = pathMatch?.basePath ?? path;
+  const pathPage = pathMatch?.kind === "page" ? pathMatch.page : undefined;
+
   if (kindRaw !== null || pageRaw !== null || galleryRaw !== null) {
     // An unknown kind keeps the noindexed utility-view treatment instead of
     // inventing a path for it.
     if (kindRaw && kindRaw !== "photo" && kindRaw !== "video") return undefined;
-    const kindApplies = (kindRaw === "photo" || kindRaw === "video") && (path === "/templates" || path in TEMPLATE_KIND_PATHS);
+    const kindApplies = (kindRaw === "photo" || kindRaw === "video") && (pathBase === "/templates" || pathBase in TEMPLATE_KIND_PATHS);
     // A kind parameter on a non-template listing is not an identity we own.
     if (kindRaw && !kindApplies) return undefined;
-    const basePath = kindApplies ? `/templates/${kindRaw}` : path;
+    const basePath = kindApplies ? `/templates/${kindRaw}` : pathBase;
     if (!isPaginatedListingBase(basePath)) return undefined;
-    const page = numericPage(pageRaw);
+    const page = numericPage(pageRaw) ?? pathPage ?? 0;
     const gallery = numericPage(galleryRaw);
+    // The secondary gallery pager only exists on the video hub; elsewhere the
+    // parameter has no address and folds straight into the listing base.
+    const galleryApplies = Boolean(gallery) && /^\/ai-video-generation(?:\/|$)/.test(basePath);
     const rest = new URLSearchParams();
     for (const [key, value] of params) {
       if (!(LISTING_IDENTITY_PARAMS as readonly string[]).includes(key)) rest.append(key, value);
     }
-    const targetPath = gallery ? `${basePath}/gallery/page${gallery}` : listingPagePath(basePath, page ?? 0);
+    const targetPath = galleryApplies ? `${basePath}/gallery/page${gallery}` : listingPagePath(basePath, page);
     const location = `${prefix}${targetPath}${rest.size ? `?${rest}` : ""}`;
     return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 308);
   }
 
-  const kindPath = TEMPLATE_KIND_PATHS[path as keyof typeof TEMPLATE_KIND_PATHS];
-  const match = matchListingPagePath(path);
+  const kindPath = TEMPLATE_KIND_PATHS[pathBase as keyof typeof TEMPLATE_KIND_PATHS];
+  const match = pathMatch;
   if (!match && !kindPath) return undefined;
   if (match?.kind === "invalid") {
     return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}${match.basePath}`), 308);
