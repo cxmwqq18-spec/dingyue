@@ -1,0 +1,893 @@
+{
+  "siteId": "site_aidreamcapes",
+  "slug": "/about-us",
+  "title": "Company, Team & Partner Program",
+  "layout": "about-company",
+  "data": {
+    "eyebrow": "About AIVideosUGC",
+    "h1": "Company, Team & Partner Program",
+    "lede": "An online workspace by BLYDEY INC for preparing product photos and short videos — from a product link or photo to a reviewed, downloadable result.",
+    "heroImage": {
+      "src": "/assets/sites/site_aidreamcapes/about/blydey-atrium-lobby.webp",
+      "alt": "Concept view of the double-height BLYDEY INC reception lobby.",
+      "width": 1774,
+      "height": 887
+    },
+    "overview": "**Quick overview:** AIVideosUGC helps shops, dropshippers, small businesses, agencies, creators, and app teams create product visuals without a traditional shoot. The Partner Program gives approved creators and agencies a dedicated channel, a Pro demo workspace, and a dashboard.",
+    "nav": [
+      {
+        "label": "Company",
+        "href": "#company"
+      },
+      {
+        "label": "Solutions",
+        "href": "#what-we-do"
+      },
+      {
+        "label": "How We Work",
+        "href": "#how-we-work"
+      },
+      {
+        "label": "Audience",
+        "href": "#who-we-serve"
+      },
+      {
+        "label": "Comparison",
+        "href": "#why-us"
+      },
+      {
+        "label": "Team",
+        "href": "#team"
+      },
+      {
+        "label": "Partner Program",
+        "href": "#partners"
+      },
+      {
+        "label": "FAQ",
+        "href": "#faq"
+      }
+    ],
+    "company": {
+      "id": "company",
+      "kicker": "01 — Company",
+      "title": "Company Overview",
+      "paragraphs": [
+        "**AIVideosUGC is an online service operated by BLYDEY INC**, focused on preparing product photos and short videos for online stores and marketing channels. Shops can start from product information they already have, choose a suitable creative direction, and review the generated result before downloading.",
+        "The platform brings image and video workflows, AI presenters, templates, and review options together in one place. It serves DTC brands, online shops, SaaS teams, and agencies, helping them prepare product visuals for listings, seasonal promotions, and product updates."
+      ],
+      "subBlocks": [
+        {
+          "title": "Where we started",
+          "paragraphs": [
+            "AIVideosUGC was founded in 2026 to help small shops produce product visuals without the cost and scheduling of a traditional shoot. The first workflows focused on turning a single product photo into a usable product clip; the platform has since grown into a workspace that covers URL to Video, Image to Video, Text to Video, AI presenters, and reviewable drafts."
+          ]
+        }
+      ],
+      "stats": [
+        {
+          "num": "1,200+",
+          "label": "product videos generated in the last 30 days"
+        },
+        {
+          "num": "2026",
+          "label": "founded, with a focus on small shops and creators"
+        },
+        {
+          "num": "6",
+          "label": "audience groups served, from D2C brands to agencies"
+        }
+      ],
+      "infoTable": [
+        {
+          "label": "Operating company",
+          "value": "BLYDEY INC"
+        },
+        {
+          "label": "Legal representative",
+          "value": "Naruebet Nakphong"
+        },
+        {
+          "label": "Company address",
+          "value": "30 N GOULD ST STE R, SHERIDAN, WY 82801, United States"
+        },
+        {
+          "label": "Phone",
+          "value": "(+1)307-310-3014",
+          "href": "tel:+13073103014"
+        },
+        {
+          "label": "Email",
+          "value": "support@aivideosugc.com",
+          "href": "mailto:support@aivideosugc.com"
+        }
+      ]
+    },
+    "solutions": {
+      "id": "what-we-do",
+      "kicker": "02 — Solutions",
+      "title": "What We Do",
+      "paragraphs": [
+        "AIVideosUGC is built around familiar shop tasks: **showing what an item looks like, explaining one useful detail, and preparing a version for a chosen channel.** The platform offers two main starting points — **a product link** or **a product photo** — and from there shops choose a scene or an AI presenter, shape the message, and generate images or short videos."
+      ],
+      "groups": [
+        {
+          "title": "Solutions",
+          "items": [
+            {
+              "tag": "Product URL",
+              "title": "URL to Video",
+              "text": "Turn a product URL into an AI video for ads, social media, and product demonstrations — no shoot required."
+            },
+            {
+              "tag": "One photo",
+              "title": "Image to Video",
+              "text": "Create AI videos from a single product photo. Add a description to guide the scene and movement."
+            },
+            {
+              "tag": "Written idea",
+              "title": "Text to Video",
+              "text": "Turn a written idea into an AI video with an editable storyboard before generating the shots you choose."
+            },
+            {
+              "tag": "Link or photo",
+              "title": "Product Video Generator",
+              "text": "Produce a product video in minutes, skipping the studio and crew."
+            },
+            {
+              "tag": "Ad-ready",
+              "title": "Video Ads Generator",
+              "text": "Build the script, presenter, voice, and final cut from a product link or a short prompt — a finished, runnable ad."
+            },
+            {
+              "tag": "Multi-version",
+              "title": "AI Video Generator",
+              "text": "Create product videos with AI presenters, compare shot versions, and assemble a video for product pages or social channels."
+            }
+          ]
+        },
+        {
+          "title": "Business Offerings",
+          "items": [
+            {
+              "tag": "On-camera",
+              "title": "AI Actor",
+              "text": "Add a script, choose an avatar, and generate UGC-style ads without creators, cameras, or a studio."
+            },
+            {
+              "tag": "Your likeness",
+              "title": "AI Twin",
+              "text": "Create a lifelike AI twin that looks, speaks, and moves like you, then generate unlimited professional talking videos."
+            },
+            {
+              "tag": "Explainers",
+              "title": "AI Presenter",
+              "text": "Produce professional avatar videos for ads, product explainers, and social media in minutes."
+            }
+          ]
+        }
+      ]
+    },
+    "process": {
+      "id": "how-we-work",
+      "kicker": "03 — How We Work",
+      "title": "From a product photo to a reviewed result",
+      "paragraphs": [
+        "Every job follows the same path: add your product, choose a scene or presenter, review the storyboard, generate the shots you select, and download the result. The credit cost is shown before each step, and failed jobs return credits automatically.",
+        "The platform offers creative options; product knowledge and the final publishing decision stay with the shop. Shops should ensure claims are accurate, use images and voice material they own or have permission to use, and review the product, wording, and presentation against each channel's rules before publishing."
+      ],
+      "listTitle": "Credits, refunds, and uploaded material",
+      "items": [
+        "Credit cost is shown before each photo or video job starts.",
+        "If a job fails, reserved credits are automatically returned to your balance.",
+        "Unused credits remain on your account for the period stated in the plan terms; credits are not transferable between accounts.",
+        "Uploaded photos and voice material are used to produce the visuals you request. Retention and deletion terms are described in the [Privacy Policy](/privacy).",
+        "Some channels require disclosure or labeling for AI-generated content. Shops are responsible for checking each platform's rules and adding any required labels before publishing."
+      ]
+    },
+    "audience": {
+      "id": "who-we-serve",
+      "kicker": "04 — Audience",
+      "title": "Who We Serve",
+      "items": [
+        {
+          "title": "Ecommerce and D2C brands",
+          "text": "Prepare product-focused ads, review generated details, and test content in their own campaigns.",
+          "note": "Use case: launch a seasonal variant without booking a shoot."
+        },
+        {
+          "title": "Dropshippers",
+          "text": "Compare creative directions, generate the versions they choose, and review results before launch.",
+          "note": "Use case: test a new product page before committing to inventory."
+        },
+        {
+          "title": "Small businesses",
+          "text": "Explain what they sell with an AI actor video, without an expensive shoot or an agency.",
+          "note": "Use case: explain one product to first-time buyers."
+        },
+        {
+          "title": "Marketers and agencies",
+          "text": "Produce fresh ads daily, test faster, and spend less on production without stalling the media plan.",
+          "note": "Use case: keep weekly creative output on schedule."
+        },
+        {
+          "title": "Content creators",
+          "text": "Create presenter-led product videos from their own photos and scripts, save drafts, and review before posting.",
+          "note": "Use case: turn a single photo into a presenter-led clip."
+        },
+        {
+          "title": "App and SaaS teams",
+          "text": "Explain the product, show one real use, and ask for the signup with a creator-style video.",
+          "note": "Use case: ship an update video without a studio."
+        }
+      ]
+    },
+    "comparison": {
+      "id": "why-us",
+      "kicker": "05 — Comparison",
+      "title": "Why Shops Choose AIVideosUGC",
+      "paragraphs": [
+        "A traditional shoot or a creator arrangement has clear strengths. AIVideosUGC is built for shops that need to produce, review, and repeat product visuals without arranging a shoot each time."
+      ],
+      "table": {
+        "headers": [
+          "Topic",
+          "Traditional shoot / creator",
+          "AIVideosUGC"
+        ],
+        "rows": [
+          [
+            "Starting point",
+            "A creator brief, shoot plan, and product samples.",
+            "Your product photos and a short creative brief."
+          ],
+          [
+            "Preparation",
+            "Arrange a creator, location, and filming schedule.",
+            "Choose a scene, presenter, and supported format in the workspace."
+          ],
+          [
+            "Script and message",
+            "Agree the script and details with the creator.",
+            "Write your brief and refine the dialogue in an editable draft."
+          ],
+          [
+            "Production cost",
+            "Depends on creator, shoot, and edit.",
+            "Credit cost shown before each job."
+          ],
+          [
+            "Creative versions",
+            "Arrange another take or request an edit.",
+            "Save drafts and generate the versions you choose."
+          ],
+          [
+            "Product details",
+            "Capture the physical product on camera.",
+            "Use your own reference photos and check generated details."
+          ],
+          [
+            "Presenter and voice",
+            "Work with a creator and a voice recorded on set.",
+            "Choose from available AI presenters and voice options."
+          ],
+          [
+            "Review process",
+            "Review a rough cut and request changes.",
+            "Review the storyboard and selected shots before assembly."
+          ],
+          [
+            "Channel formats",
+            "Plan framing and edits per placement.",
+            "Choose a supported aspect ratio in the workspace."
+          ],
+          [
+            "Next campaign",
+            "Prepare a new brief and schedule more production.",
+            "Start another brief from your saved product assets."
+          ]
+        ]
+      }
+    },
+    "team": {
+      "id": "team",
+      "kicker": "06 — Team",
+      "title": "The People Behind AIVideosUGC",
+      "image": {
+        "src": "/assets/sites/site_aidreamcapes/about/blydey-conference-wing.webp",
+        "alt": "Concept view of the BLYDEY INC glass meeting and collaboration wing.",
+        "width": 1774,
+        "height": 887
+      },
+      "groups": [
+        {
+          "title": "Leadership",
+          "kind": "leadership",
+          "members": [
+            {
+              "name": "Naruebet Nakphong",
+              "role": "Chief Executive Officer (CEO)",
+              "bio": "CEO of AIVideosUGC and legal representative of BLYDEY INC. Leads overall strategy and business operations, from product strategy to service delivery.",
+              "photoAlt": "Portrait of Naruebet Nakphong, Chief Executive Officer (CEO).",
+              "width": 1024,
+              "height": 1280,
+              "photo": "/assets/sites/site_aidreamcapes/about/team/naruebet-nakphong.webp"
+            },
+            {
+              "name": "Jim Doepker",
+              "role": "Chief Technology Officer (CTO)",
+              "bio": "Responsible for technical architecture and product development, leading Image to Video, URL to Video, AI Presenter, templates, and review workflows.",
+              "photoAlt": "Portrait of Jim Doepker, Chief Technology Officer (CTO).",
+              "width": 1024,
+              "height": 1024,
+              "photo": "/assets/sites/site_aidreamcapes/about/team/jim-doepker.webp"
+            }
+          ]
+        },
+        {
+          "title": "Platform Marketing & Creative Specialists",
+          "kind": "specialists",
+          "members": [
+            {
+              "name": "LaMarcus Chatman",
+              "role": "Instagram & Facebook Marketing",
+              "bio": "Specializes in Instagram and Facebook marketing. Deep understanding of how video content is recommended on these platforms, helping assets fit real Meta ad environments.",
+              "photoAlt": "Portrait of LaMarcus Chatman, Instagram & Facebook Marketing.",
+              "width": 1024,
+              "height": 1280,
+              "initials": "LC",
+              "linkedin": "https://www.linkedin.com/",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/lamarcus-chatman.webp"
+            },
+            {
+              "name": "Michael Maynard",
+              "role": "TikTok Advertising & Short-Form Video",
+              "bio": "Specializes in TikTok advertising and short-form video. Provides TikTok-specific content guidance on rhythm, format, and trend direction.",
+              "photoAlt": "Portrait of Michael Maynard, TikTok Advertising & Short-Form Video.",
+              "width": 1024,
+              "height": 1280,
+              "initials": "MM",
+              "linkedin": "https://www.linkedin.com/",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/michael-maynard.webp"
+            },
+            {
+              "name": "Lewis Jones",
+              "role": "YouTube Short-Form & Creative Trends",
+              "bio": "Specializes in YouTube short-form creation and creative industry trends, helping assets fit both long-form and Shorts formats.",
+              "photoAlt": "Portrait of Lewis Jones, YouTube Short-Form & Creative Trends.",
+              "width": 1024,
+              "height": 1280,
+              "initials": "LJ",
+              "linkedin": "https://www.linkedin.com/",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/lewis-jones.webp"
+            },
+            {
+              "name": "Sophia",
+              "role": "Competitor Trends & Viral Traffic",
+              "bio": "Focuses on competitor trends across industries and viral traffic in video creation, providing competitor perspectives and traffic-driving insights.",
+              "photoAlt": "Portrait of Sophia, Competitor Trends & Viral Traffic.",
+              "width": 1024,
+              "height": 1024,
+              "initials": "S",
+              "linkedin": "https://www.linkedin.com/",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/sophia.webp"
+            }
+          ]
+        },
+        {
+          "title": "After-Sales & Operations Support",
+          "kind": "support",
+          "members": [
+            {
+              "name": "Liam",
+              "role": "After-Sales Support",
+              "bio": "Owns the end-to-end support path from a product link or photo to a downloadable result, covering platform feature rollout and user experience.",
+              "photoAlt": "Portrait of Liam, After-Sales Support.",
+              "width": 1024,
+              "height": 1024,
+              "initials": "L",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/liam.webp"
+            },
+            {
+              "name": "Emma",
+              "role": "After-Sales & Operations Support",
+              "bio": "Resolves account, billing, and export issues, and feeds recurring questions back to the product team to improve service details.",
+              "photoAlt": "Portrait of Emma, After-Sales & Operations Support.",
+              "width": 1024,
+              "height": 1280,
+              "initials": "E",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/emma.webp"
+            },
+            {
+              "name": "Jim Michael",
+              "role": "Product & Operations Support",
+              "bio": "Maintains day-to-day platform operations and internal support workflows, helping keep service delivery stable.",
+              "photoAlt": "Portrait of Jim Michael, Product & Operations Support.",
+              "width": 1024,
+              "height": 1280,
+              "initials": "JM",
+              "photo": "/assets/sites/site_aidreamcapes/about/team/jim-michael.webp"
+            }
+          ]
+        }
+      ]
+    },
+    "partners": {
+      "id": "partners",
+      "kicker": "07 — Partner Program",
+      "title": "Grow with AI video ads your audience can actually try",
+      "lead": "**The AIVideosUGC Partner Program** is designed for partners who already talk to creators, sellers, and agencies, letting them share AIVideosUGC with their audiences. Approved partners receive **a dedicated promotion channel, a Pro demo workspace, and a dashboard**; the platform handles onboarding, support, and the render pipeline.",
+      "groups": [
+        {
+          "title": "Who It's For",
+          "items": [
+            {
+              "tag": "Creators",
+              "title": "Short-form creators",
+              "text": "TikTok, Reels, and Shorts educators whose feed is product ads — their viewers already ask which tool made them."
+            },
+            {
+              "tag": "Communities",
+              "title": "Newsletter & community owners",
+              "text": "Ecommerce and dropshipping lists that recommend tools weekly and want a link their readers can actually use."
+            },
+            {
+              "tag": "Agencies",
+              "title": "Agencies & freelancers",
+              "text": "Teams delivering video ads for clients can resell the workflow they already run."
+            },
+            {
+              "tag": "Media buyers",
+              "title": "Performance partners",
+              "text": "Media buyers running paid traffic can point to a product-first tool with a free entry workflow."
+            }
+          ]
+        }
+      ],
+      "criteriaNote": "Review criteria do not include a minimum follower count. We evaluate audience fit, honest creative framing, and a willingness to disclose the partnership and respect audience data.",
+      "stepsTitle": "From Application to Live Campaign",
+      "steps": [
+        {
+          "title": "Apply",
+          "text": "Tell us who you reach and where you publish. Every application is manually reviewed within 48 hours."
+        },
+        {
+          "title": "Get your channel",
+          "text": "Approved partners receive a tracking link, a dashboard, and a Pro demo workspace for producing demos."
+        },
+        {
+          "title": "Publish",
+          "text": "Tutorials, comparisons, behind-the-scenes — any format that shows what the tool does. Ready-to-use copy is included."
+        },
+        {
+          "title": "Grow with us",
+          "text": "Tell us what resonates with your audience, and we'll keep providing campaign briefs, creative assets, and partner support as you publish."
+        }
+      ],
+      "benefitCols": [
+        {
+          "title": "What Partners Receive",
+          "items": [
+            "**A dedicated tracking link** — referrals are tracked via a 90-day cookie on your channel link.",
+            "**A dashboard** showing every referral and its status.",
+            "**A Pro demo workspace** for producing demos.",
+            "**A creative kit** delivered with the approval email.",
+            "**Ongoing support** — campaign briefs, creative assets, and partner support as you publish.",
+            "**Recurring commission on referred subscriptions** — rates and payment terms are shared with your approval email and in the partner terms."
+          ],
+          "note": "Paid, email, and organic traffic are all welcome. Brand-keyword bidding and misleading creatives are not permitted."
+        },
+        {
+          "title": "Free Credits for Creators",
+          "items": [
+            "Post a video with **#AIVideosUGC** and submit it; once approved, your account receives **20 free credits** — enough for a full 15-second video.",
+            "Creators with larger audiences can earn **up to 60 credits**.",
+            "Every application is manually reviewed, and you will receive an email either way.",
+            "You must be logged in to your creator account to apply; credits go directly to that account."
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "id": "faq",
+      "kicker": "08 — FAQ",
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "Who gets approved for the partner program?",
+          "a": "Creators, agencies, and community owners whose audience makes or markets video content: ecommerce sellers, TikTok and Reels educators, dropshipping communities, marketing newsletters, and agencies. There is no minimum follower count; we evaluate fit and activity."
+        },
+        {
+          "q": "What do approved partners receive?",
+          "a": "The approval email includes your tracking link, dashboard invite, and creative kit. Partner terms, shared before anything goes live, explain how referrals are recognized and what commission rates apply. The dashboard shows every referral and its status."
+        },
+        {
+          "q": "How is my referral attributed?",
+          "a": "Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you."
+        },
+        {
+          "q": "Can I run paid ads as a partner?",
+          "a": "Yes. Paid, email, and organic traffic are all welcome. We only ask that you do not bid on our brand keywords or run misleading creatives; full details are in the partner terms."
+        },
+        {
+          "q": "What happens after I submit the partner application form?",
+          "a": "Your application enters our partner review queue. You will receive an email within 48 hours; approved partners receive their dashboard invite, channel link, and creative kit in the same email."
+        },
+        {
+          "q": "How does AIVideosUGC handle uploaded photos and voice material?",
+          "a": "Uploaded photos and voice material are used to produce the visuals you request. Shops should only upload content they own or have permission to use. Retention and deletion terms are described in the Privacy Policy."
+        },
+        {
+          "q": "What happens to credits if a job fails or is not used?",
+          "a": "If a job fails, reserved credits are automatically returned to your balance. Unused credits remain on your account for the period stated in the plan terms; credits are not transferable between accounts."
+        },
+        {
+          "q": "Does AI-generated content need platform-specific labeling?",
+          "a": "Some channels require disclosure or labeling for AI-generated content. Shops are responsible for checking each platform's rules and adding any required labels before publishing."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Start with a product photo",
+      "text": "Review the credit cost, shape a result for your next listing or campaign, and download it when it looks right.",
+      "label": "Open the workspace →",
+      "href": "/app/create"
+    }
+  },
+  "seo": {
+    "index": true,
+    "title": "AIVideosUGC: Company, Team & Partner Program",
+    "description": "AIVideosUGC is an online service by BLYDEY INC for preparing product photos and short videos. Learn about our team, solutions, and partner program.",
+    "keywords": "AIVideosUGC company, BLYDEY INC, AI UGC video team, partner program, AI product videos",
+    "canonical": "https://www.aivideosugc.com/about-us",
+    "canonicalPath": "/about-us",
+    "primaryKeyword": "AIVideosUGC company and team",
+    "ogImage": "/assets/sites/site_aidreamcapes/about/blydey-atrium-lobby.webp",
+    "ogImageAlt": "Concept view of the double-height BLYDEY INC reception lobby.",
+    "twitterDescription": "AIVideosUGC is an online service by BLYDEY INC for preparing product photos and short videos. Learn about our team, solutions, and partner program.",
+    "robots": {
+      "index": true,
+      "follow": true,
+      "maxImagePreview": "large"
+    },
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.aivideosugc.com/#organization",
+          "name": "AIVideosUGC",
+          "legalName": "BLYDEY INC",
+          "url": "https://www.aivideosugc.com/",
+          "email": "support@aivideosugc.com",
+          "telephone": "+1-307-310-3014",
+          "foundingDate": "2026",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "30 N Gould St, Ste R",
+            "addressLocality": "Sheridan",
+            "addressRegion": "WY",
+            "postalCode": "82801",
+            "addressCountry": "US"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Naruebet Nakphong"
+          },
+          "employee": [
+            {
+              "@type": "Person",
+              "name": "Naruebet Nakphong",
+              "jobTitle": "Chief Executive Officer"
+            },
+            {
+              "@type": "Person",
+              "name": "Jim Doepker",
+              "jobTitle": "Chief Technology Officer"
+            },
+            {
+              "@type": "Person",
+              "name": "LaMarcus Chatman",
+              "jobTitle": "Instagram and Facebook Marketing Specialist"
+            },
+            {
+              "@type": "Person",
+              "name": "Michael Maynard",
+              "jobTitle": "TikTok Advertising and Short-Form Video Specialist"
+            },
+            {
+              "@type": "Person",
+              "name": "Lewis Jones",
+              "jobTitle": "YouTube Short-Form Creation and Creative Trends Specialist"
+            },
+            {
+              "@type": "Person",
+              "name": "Sophia",
+              "jobTitle": "Industry Competitor Trends and Viral Traffic Specialist"
+            },
+            {
+              "@type": "Person",
+              "name": "Liam",
+              "jobTitle": "After-Sales Support"
+            },
+            {
+              "@type": "Person",
+              "name": "Emma",
+              "jobTitle": "After-Sales and Operations Support"
+            },
+            {
+              "@type": "Person",
+              "name": "Jim Michael",
+              "jobTitle": "Product and Operations Support"
+            }
+          ]
+        },
+        {
+          "@type": "Service",
+          "@id": "https://www.aivideosugc.com/#service",
+          "name": "AIVideosUGC Product Visual Service",
+          "description": "Online service for preparing product photos and short videos for online stores and marketing channels.",
+          "provider": {
+            "@id": "https://www.aivideosugc.com/#organization"
+          },
+          "serviceType": "AI Video and Photo Generation",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "AIVideosUGC Solutions and Business Offerings",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "URL to Video",
+                  "description": "Turn a product URL into an AI video for ads, social media, and product demonstrations."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Image to Video",
+                  "description": "Create AI videos from a single product photo with a description that guides the scene and movement."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Text to Video",
+                  "description": "Turn a written idea into an AI video with an editable storyboard."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Product Video Generator",
+                  "description": "Start from a link or a photo to produce a product video in minutes, skipping the studio and crew."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Video Ads Generator",
+                  "description": "Build the script, presenter, voice, and final cut from a product link or short prompt."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "AI Video Generator",
+                  "description": "Create product videos with AI presenters and generated content, comparing shot versions before assembly."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "AI Actor",
+                  "description": "Add a script, choose an avatar, and generate UGC-style ads without creators, cameras, or a studio."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "AI Twin",
+                  "description": "Create a lifelike AI twin that looks, speaks, and moves like you, and generate unlimited professional talking videos."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "AI Presenter",
+                  "description": "Produce professional avatar videos for ads, product explainers, and social media in minutes."
+                }
+              }
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.aivideosugc.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About Us",
+              "item": "https://www.aivideosugc.com/about-us"
+            }
+          ]
+        },
+        {
+          "@type": "AboutPage",
+          "@id": "https://www.aivideosugc.com/about-us#webpage",
+          "url": "https://www.aivideosugc.com/about-us",
+          "name": "AIVideosUGC: Company, Team & Partner Program",
+          "description": "AIVideosUGC is an online service by BLYDEY INC for preparing product photos and short videos. Learn about our team, solutions, and partner program.",
+          "isPartOf": {
+            "@id": "https://www.aivideosugc.com/#website"
+          },
+          "inLanguage": "en",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/about/blydey-atrium-lobby.webp",
+            "width": 1774,
+            "height": 887
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.aivideosugc.com/about-us#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Who gets approved for the partner program?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Creators, agencies, and community owners whose audience makes or markets video content: ecommerce sellers, TikTok and Reels educators, dropshipping communities, marketing newsletters, and agencies. There is no minimum follower count; we evaluate fit and activity."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What do approved partners receive?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The approval email includes your tracking link, dashboard invite, and creative kit. Partner terms, shared before anything goes live, explain how referrals are recognized and what commission rates apply. The dashboard shows every referral and its status."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is my referral attributed?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I run paid ads as a partner?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Paid, email, and organic traffic are all welcome. We only ask that you do not bid on our brand keywords or run misleading creatives; full details are in the partner terms."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens after I submit the partner application form?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your application enters our partner review queue. You will receive an email within 48 hours; approved partners receive their dashboard invite, channel link, and creative kit in the same email."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does AIVideosUGC handle uploaded photos and voice material?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Uploaded photos and voice material are used to produce the visuals you request. Shops should only upload content they own or have permission to use. Retention and deletion terms are described in the Privacy Policy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens to credits if a job fails or is not used?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "If a job fails, reserved credits are automatically returned to your balance. Unused credits remain on your account for the period stated in the plan terms; credits are not transferable between accounts."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does AI-generated content need platform-specific labeling?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Some channels require disclosure or labeling for AI-generated content. Shops are responsible for checking each platform's rules and adding any required labels before publishing."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "mediaManifest": [
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/blydey-atrium-lobby.webp",
+      "alt": "Concept view of the double-height BLYDEY INC reception lobby.",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/blydey-conference-wing.webp",
+      "alt": "Concept view of the BLYDEY INC glass meeting and collaboration wing.",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/naruebet-nakphong.webp",
+      "alt": "Portrait of Naruebet Nakphong, Chief Executive Officer (CEO).",
+      "width": 1024,
+      "height": 1280
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/jim-doepker.webp",
+      "alt": "Portrait of Jim Doepker, Chief Technology Officer (CTO).",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/lamarcus-chatman.webp",
+      "alt": "Portrait of LaMarcus Chatman, Instagram & Facebook Marketing.",
+      "width": 1024,
+      "height": 1280
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/michael-maynard.webp",
+      "alt": "Portrait of Michael Maynard, TikTok Advertising & Short-Form Video.",
+      "width": 1024,
+      "height": 1280
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/lewis-jones.webp",
+      "alt": "Portrait of Lewis Jones, YouTube Short-Form & Creative Trends.",
+      "width": 1024,
+      "height": 1280
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/sophia.webp",
+      "alt": "Portrait of Sophia, Competitor Trends & Viral Traffic.",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/liam.webp",
+      "alt": "Portrait of Liam, After-Sales Support.",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/emma.webp",
+      "alt": "Portrait of Emma, After-Sales & Operations Support.",
+      "width": 1024,
+      "height": 1280
+    },
+    {
+      "src": "/assets/sites/site_aidreamcapes/about/team/jim-michael.webp",
+      "alt": "Portrait of Jim Michael, Product & Operations Support.",
+      "width": 1024,
+      "height": 1280
+    }
+  ],
+  "contentContract": {
+    "seoSource": "LivePage.contentJson",
+    "mediaSource": "LivePage.contentJson",
+    "sourceRevision": "aivideosugc-about-us-2026-11-23"
+  }
+}

@@ -65,6 +65,10 @@ const productionAssetPaths = [
   "public/assets/sites/site_aidreamcapes/guides",
   // Blog covers, press assets and inline article media.
   "public/assets/sites/site_aidreamcapes/blog",
+  // About page office scenes and team portraits. The page renders these
+  // addresses from LivePage content, so a release that publishes the page has
+  // to ship the files with it.
+  "public/assets/sites/site_aidreamcapes/about",
   // The committed full-content companion of /llms.txt. It is generated from the
   // live page copy, so a release that regenerates it has to ship the file; a
   // public directory copied from the previous release would keep serving the

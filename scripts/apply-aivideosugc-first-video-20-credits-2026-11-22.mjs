@@ -58,7 +58,8 @@ async function main() {
   });
   assert(product, `product ${manifest.productId} not found`);
   const productMetadata = (product.metadata ?? {});
-  console.log(`product summary: ${String(productMetadata.summary ?? "")}`);
+  const productDone = productMetadata.summary === manifest.productSummary;
+  console.log(`product summary: ${String(productMetadata.summary ?? "")}${productDone ? " (already updated)" : ""}`);
 
   // ---- live pages: promo copy ----
   const pageRows = [];
@@ -70,9 +71,10 @@ async function main() {
     assert(row, `page ${page.slug} not found`);
     const content = row.contentJson;
     const current = getPath(content, page.path);
-    console.log(`${page.slug} ${page.path}: ${String(current ?? "")}`);
-    assert.equal(current, page.before, `${page.slug} ${page.path} no longer holds the expected old value`);
-    pageRows.push({ page, row, content });
+    const done = current === page.after;
+    console.log(`${page.slug} ${page.path}: ${String(current ?? "")}${done ? " (already updated)" : ""}`);
+    if (!done) assert.equal(current, page.before, `${page.slug} ${page.path} no longer holds the expected old value`);
+    pageRows.push({ page, row, content, done });
   }
 
   if (!apply) {
@@ -80,22 +82,27 @@ async function main() {
     return;
   }
 
-  // Price: value CAS.
-  const priceUpdate = await prisma.price.updateMany({
-    where: { id: manifest.priceId, siteId, creditsGranted: price.creditsGranted },
-    data: { creditsGranted: manifest.creditsGranted }
-  });
-  assert.equal(priceUpdate.count, 1, "price changed concurrently; re-run the dry run");
+  // Price: value CAS (skip when a previous run already applied it).
+  if (price.creditsGranted !== manifest.creditsGranted) {
+    const priceUpdate = await prisma.price.updateMany({
+      where: { id: manifest.priceId, siteId, creditsGranted: price.creditsGranted },
+      data: { creditsGranted: manifest.creditsGranted }
+    });
+    assert.equal(priceUpdate.count, 1, "price changed concurrently; re-run the dry run");
+  }
 
-  // Product: metadata CAS on updatedAt.
-  const productUpdate = await prisma.product.updateMany({
-    where: { id: product.id, siteId, updatedAt: product.updatedAt },
-    data: { metadata: { ...productMetadata, summary: manifest.productSummary } }
-  });
-  assert.equal(productUpdate.count, 1, "product changed concurrently; re-run the dry run");
+  // Product: metadata CAS on updatedAt (skip when already applied).
+  if (!productDone) {
+    const productUpdate = await prisma.product.updateMany({
+      where: { id: product.id, siteId, updatedAt: product.updatedAt },
+      data: { metadata: { ...productMetadata, summary: manifest.productSummary } }
+    });
+    assert.equal(productUpdate.count, 1, "product changed concurrently; re-run the dry run");
+  }
 
-  // Pages: nested JSON write with CAS on updatedAt.
-  for (const { page, row, content } of pageRows) {
+  // Pages: nested JSON write with CAS on updatedAt (skip applied fields).
+  for (const { page, row, content, done } of pageRows) {
+    if (done) continue;
     setPath(content, page.path, page.after);
     const update = await prisma.livePage.updateMany({
       where: { id: row.id, siteId, updatedAt: row.updatedAt },

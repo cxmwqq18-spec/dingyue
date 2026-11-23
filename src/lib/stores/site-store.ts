@@ -304,7 +304,9 @@ function prismaErrorCode(error: unknown): string {
 async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
   const activeKey = options.activeOnly ? "active" : "all";
   const takeKey = options.take ?? "all";
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-tool-categories",
+    siteId,
     `tool-categories:${siteId}:${activeKey}:${takeKey}`,
     async () => {
       try {
@@ -329,15 +331,16 @@ async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?:
         }
         throw error;
       }
-    },
-    0
+    }
   );
 }
 
 async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
   const activeKey = options.activeOnly ? "active" : "all";
   const takeKey = options.take ?? "all";
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-tool-menu-items",
+    siteId,
     `tool-menu-items:${siteId}:${activeKey}:${takeKey}`,
     async () => {
       try {
@@ -367,8 +370,7 @@ async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: 
         }
         throw error;
       }
-    },
-    0
+    }
   );
 }
 
@@ -401,7 +403,9 @@ export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: str
   const creativePackProjection = options.creativePackProjection ?? "full";
   const creativePackTakeKey = creativePackTake ?? "all";
   const toolMenuTakeKey = toolMenuTake ?? "all";
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-navigation",
+    siteId,
     `public-navigation:${siteId}:packs-${creativePackProjection}-${creativePackTakeKey}:tools-${toolMenuTakeKey}`,
     async () => {
       const [creativePacks, creativePackCategories, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await runDbTasks([
@@ -428,8 +432,7 @@ export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: str
         videoThemeCategories: isolateAidreamcapesEnglishCollection(siteId, videoThemeCategories),
         videoThemes: isolateAidreamcapesEnglishCollection(siteId, videoThemes)
       };
-    },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
+    }
   );
 });
 
@@ -1456,6 +1459,11 @@ type PublicRuntimeCacheEntry = {
 const publicRuntimeCache = new Map<string, PublicRuntimeCacheEntry>();
 const publicRuntimeCacheInFlight = new Map<string, Promise<PlatformState | undefined>>();
 
+// One revision probe per site per request. Several public projections check
+// the same revision while rendering one page; without this memo each check
+// would add its own round trip to the primary key lookup.
+const readSiteContentRevisionForRequest = cache((siteId: string) => readSiteContentRevision(siteId));
+
 function publicRuntimeCacheMaxEntries(): number {
   const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 96);
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : 96;
@@ -1464,6 +1472,73 @@ function publicRuntimeCacheMaxEntries(): number {
 function publicRuntimeCacheTtlMs(): number {
   const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 3_600_000);
   return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 3_600_000;
+}
+
+type PublicRevisionCacheEntry = {
+  siteId: string;
+  revision: string;
+  value: unknown;
+};
+
+// The runtime snapshot cache above only holds the whole PlatformState. The
+// smaller public projections (shared navigation, tool menus, creative packs,
+// video-topic menus) were previously read on every render because their TTL
+// came from `STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0`, which disables the timer
+// cache entirely. They share the same invalidation contract instead: the
+// per-site content revision bump from the database triggers makes an entry
+// valid until the next committed write, so nothing here delays a live change.
+const publicRevisionCaches = new Map<string, Map<string, PublicRevisionCacheEntry>>();
+const publicRevisionCacheInFlight = new Map<string, Promise<unknown>>();
+
+function publicRevisionCacheMaxEntries(): number {
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 96);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 96;
+}
+
+async function getPublicRevisionCachedValue<T>(
+  scope: string,
+  siteId: string,
+  key: string,
+  loader: () => Promise<T>
+): Promise<T> {
+  // Sites that did not opt in to the revision cache keep their existing
+  // per-request reads; their content tables have no revision trigger yet.
+  if (!siteSnapshotCacheEnabled(siteId)) return loader();
+  const revision = await readSiteContentRevisionForRequest(siteId);
+  if (!revision) return loader();
+
+  const store = publicRevisionCaches.get(scope) ?? new Map<string, PublicRevisionCacheEntry>();
+  publicRevisionCaches.set(scope, store);
+  const cached = store.get(key);
+  if (cached && cached.revision === revision) return cached.value as T;
+
+  const inFlightKey = `${scope}|${siteId}|${key}|${revision}`;
+  const inFlight = publicRevisionCacheInFlight.get(inFlightKey);
+  if (inFlight) return inFlight as Promise<T>;
+
+  const pending = (async () => {
+    const value = await loader();
+    // A missing projection must not be cached as a valid empty result: the
+    // next request should retry the relational read.
+    if (value === undefined) return value;
+    // A newer revision means every entry for this site is a superseded
+    // projection; drop it instead of keeping the old payload alive.
+    for (const [storedKey, entry] of store) {
+      if (entry.siteId === siteId && entry.revision !== revision) store.delete(storedKey);
+    }
+    store.set(key, { siteId, revision, value });
+    const maxEntries = publicRevisionCacheMaxEntries();
+    while (store.size > maxEntries) {
+      const oldest = store.keys().next().value;
+      if (oldest === undefined) break;
+      store.delete(oldest);
+    }
+    return value;
+  })().finally(() => {
+    publicRevisionCacheInFlight.delete(inFlightKey);
+  });
+  publicRevisionCacheInFlight.set(inFlightKey, pending);
+  return pending;
 }
 
 /** Load the state once and store it under the revision-keyed entry. Concurrent
@@ -1535,7 +1610,7 @@ async function getCachedPublicRuntimeState(
 ): Promise<PlatformState | undefined> {
   if (!siteSnapshotCacheEnabled(siteId)) return loader();
 
-  const revision = await readSiteContentRevision(siteId);
+  const revision = await readSiteContentRevisionForRequest(siteId);
   if (!revision) return loader();
 
   const cached = publicRuntimeCache.get(cacheKey);
@@ -1567,7 +1642,9 @@ export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: strin
 
 export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: string, take?: number) => {
   const takeKey = typeof take === "number" ? String(take) : "all";
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-creative-packs",
+    siteId,
     `public-creative-packs:${siteId}:${takeKey}`,
     async () => {
       try {
@@ -1584,14 +1661,15 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
         warnRelationalFallback("storefront public creative packs", error);
         return fallbackPublicCreativePacksForSite(siteId, take);
       }
-    },
-    0
+    }
   );
 });
 
 export const getStorefrontPublicDirectoryCreativePacksForSite = cache(async (siteId: string, take?: number) => {
   const takeKey = typeof take === "number" ? String(take) : "all";
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-directory-creative-packs",
+    siteId,
     `public-directory-creative-packs:${siteId}:${takeKey}`,
     async () => {
       try {
@@ -1612,13 +1690,14 @@ export const getStorefrontPublicDirectoryCreativePacksForSite = cache(async (sit
           galleryImageAlts: pack.galleryImageAlts?.slice(0, 4)
         }));
       }
-    },
-    0
+    }
   );
 });
 
 export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (siteId: string) => {
-  return siteReadCache.get(
+  return getPublicRevisionCachedValue(
+    "public-creative-pack-categories",
+    siteId,
     `public-creative-pack-categories:${siteId}`,
     async () => {
       try {
@@ -1634,8 +1713,7 @@ export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (sit
         warnRelationalFallback("storefront public creative pack categories", error);
         return fallbackPublicCreativePackCategoriesForSite(siteId);
       }
-    },
-    0
+    }
   );
 });
 
@@ -2960,7 +3038,7 @@ export type CustomerWorkspaceBootstrapRelational = {
   publishedSaveTheDateMenuLabel: string;
 };
 
-export async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
+export const getPublishedVideoGenerationNavigationForSite = cache(async (siteId: string): Promise<PublishedVideoNavigationProjection[]> => {
   // The EU storefronts use the same dedicated video-topic page contract as
   // MyDreamShoots, but their localized site ids are not part of the primary
   // framework-site allowlist. Read their live topic pages here as well so a
@@ -2970,17 +3048,27 @@ export async function getPublishedVideoGenerationNavigationForSite(siteId: strin
     !isMydreamshootsVideoFrameworkSiteId(siteId) &&
     !["site_aidreamcapes", "site_aidreamcapes_xby", "site_mydreamshoots_xby"].includes(siteId)
   ) return [];
-  const pages = await prisma.livePage.findMany({
-    where: { siteId },
-    orderBy: { slug: "asc" },
-    select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true }
-  });
-  const isolatedPages = pages.filter((page) => isolateAidreamcapesEnglishValue(siteId, page.contentJson) !== undefined);
-  return compileMydreamshootsVideoTopicPublication(
-    isolatedPages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
-    siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" | "site_aidreamcapes_xby" | "site_mydreamshoots_xby"
-  ).navigation;
-}
+  return getPublicRevisionCachedValue(
+    "video-topic-navigation",
+    siteId,
+    `video-topic-navigation:${siteId}`,
+    async () => {
+      // Only /ai-video-generation/<topic> rows can become a header topic. The
+      // previous read loaded every LivePage for the site and deep-cloned each
+      // payload on every render, then discarded all but the topic pages.
+      const pages = await prisma.livePage.findMany({
+        where: { siteId, slug: { startsWith: "/ai-video-generation/" } },
+        orderBy: { slug: "asc" },
+        select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true }
+      });
+      const isolatedPages = pages.filter((page) => isolateAidreamcapesEnglishValue(siteId, page.contentJson) !== undefined);
+      return compileMydreamshootsVideoTopicPublication(
+        isolatedPages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
+        siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" | "site_aidreamcapes_xby" | "site_mydreamshoots_xby"
+      ).navigation;
+    }
+  );
+});
 
 function watermarkedCreativePackCategoryForWorkspace(category: CreativePackCategory | undefined): CreativePackCategory | undefined {
   if (!category) return undefined;

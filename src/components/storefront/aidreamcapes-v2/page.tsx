@@ -40,6 +40,7 @@ import { HomeBrandTools } from "./home-brand-tools";
 import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
 import { AIDREAMCAPES_V2_ACTOR_CARD_SIZES } from "./image-sizes";
 import { AidreamcapesDirectoryLanding } from "./directory-landings";
+import { AboutCompanyPage, type AboutCompanyData } from "./about-company";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -1361,6 +1362,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {
     return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;
   }
+  if (layout === "about-company") return <AboutCompanyPage company={company} data={data as unknown as AboutCompanyData} r={r} />;
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }
 

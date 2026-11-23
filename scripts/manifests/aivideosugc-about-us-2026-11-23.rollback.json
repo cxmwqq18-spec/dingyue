@@ -1,0 +1,424 @@
+{
+  "slug": "/about-us",
+  "siteId": "site_aidreamcapes",
+  "title": "Product Photos and Videos for Everyday Shop Work",
+  "baseHash": "f84fc114de8cc7bdeaebf02053efda3c0f5213f34ec44d44fc0817393c32103a",
+  "contentJson": {
+    "seo": {
+      "index": true,
+      "title": "About AIVideosUGC: AI Product Photos and Video Ads",
+      "jsonLd": {
+        "@graph": [
+          {
+            "@id": "https://www.aivideosugc.com/#organization",
+            "url": "https://www.aivideosugc.com/",
+            "name": "AIVideosUGC",
+            "@type": "Organization"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "item": "https://www.aivideosugc.com/",
+                "name": "Home",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "item": "https://www.aivideosugc.com/about-us",
+                "name": "About Us",
+                "@type": "ListItem",
+                "position": 2
+              }
+            ]
+          },
+          {
+            "@id": "https://www.aivideosugc.com/about-us#webpage",
+            "url": "https://www.aivideosugc.com/about-us",
+            "name": "About AIVideosUGC: AI Product Photos and Video Ads",
+            "@type": "AboutPage",
+            "isPartOf": {
+              "@id": "https://www.aivideosugc.com/#website"
+            },
+            "inLanguage": "en",
+            "description": "AIVideosUGC helps shop owners create product photos, short video ads, and presenter-led videos from a product image or page. Learn who operates the service and how it helps.",
+            "primaryImageOfPage": {
+              "url": "/ai-image-generation/example-07-1280.webp",
+              "@type": "ImageObject",
+              "width": 1280,
+              "height": 720
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "name": "Can I make a creator-style clip of my product?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Choose an AI actor, add your product, and make a creator-style video. You can review and adjust the message before downloading it.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can I use the same AI actor on my next ad?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Choose the same AI actor for another video to keep a familiar look. You can change the script, voice, or product each time.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can I make shop ads without booking a studio?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Start with a product photo or page, choose a scene or presenter, and review the result before you download it.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "How much does AIVideosUGC cost?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Visit the Pricing page for current plan options. You can see the credit cost for a photo or video job before it starts.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can I post the ad on my store and on social channels?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "You can download a result for your product page or social channels. Review your plan terms and each channel's rules before using it in a campaign.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "What can a shop make from one product photo?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "You can prepare listing photos, product videos, and short ads from product images or a public product page.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can my product video include a voice and captions?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Add a voice and captions, then review the result before you download it.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Who operates AIVideosUGC?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "AIVideosUGC is operated by BLYDEY INC. NARUEBET NAKPHONG is the company's legal representative. For help, contact support@aivideosugc.com.",
+                  "@type": "Answer"
+                }
+              }
+            ]
+          }
+        ],
+        "@context": "https://schema.org"
+      },
+      "robots": {
+        "index": true,
+        "follow": true,
+        "maxImagePreview": "large"
+      },
+      "ogImage": "/ai-image-generation/example-07-1280.webp",
+      "keywords": "AI product photos for online shops, AI product video ads, product content for ecommerce",
+      "canonical": "https://www.aivideosugc.com/about-us",
+      "ogImageAlt": "Open wallet interior on a neutral background",
+      "description": "Learn who operates AIVideosUGC and how shop owners create product photos, short video ads, and presenter-led videos from a product image or page.",
+      "canonicalPath": "/about-us",
+      "primaryKeyword": "what AIVideosUGC makes for shops",
+      "twitterDescription": "AIVideosUGC helps shop owners create product photos, short video ads, and presenter-led videos from a product image or page. Learn who operates the service and how it helps."
+    },
+    "version": 2,
+    "pageType": "content",
+    "sections": {
+      "v2_main": {
+        "type": "aidreamcapes_v2_page",
+        "blocks": [],
+        "settings": {
+          "data": {
+            "h1": "Product Photos and Videos for Everyday Shop Work",
+            "id": "about",
+            "faq": [
+              {
+                "a": "Yes. Choose an AI actor, add your product, and make a creator-style video. You can review and adjust the message before downloading it.",
+                "q": "Can I make a creator-style clip of my product?"
+              },
+              {
+                "a": "Yes. Choose the same AI actor for another video to keep a familiar look. You can change the script, voice, or product each time.",
+                "q": "Can I use the same AI actor on my next ad?"
+              },
+              {
+                "a": "Yes. Start with a product photo or page, choose a scene or presenter, and review the result before you download it.",
+                "q": "Can I make shop ads without booking a studio?"
+              },
+              {
+                "a": "Visit the Pricing page for current plan options. You can see the credit cost for a photo or video job before it starts.",
+                "q": "How much does AIVideosUGC cost?"
+              },
+              {
+                "a": "You can download a result for your product page or social channels. Review your plan terms and each channel's rules before using it in a campaign.",
+                "q": "Can I post the ad on my store and on social channels?"
+              },
+              {
+                "a": "You can prepare listing photos, product videos, and short ads from product images or a public product page.",
+                "q": "What can a shop make from one product photo?"
+              },
+              {
+                "a": "Yes. Add a voice and captions, then review the result before you download it.",
+                "q": "Can my product video include a voice and captions?"
+              },
+              {
+                "a": "AIVideosUGC is operated by BLYDEY INC. NARUEBET NAKPHONG is the company's legal representative. For help, contact support@aivideosugc.com.",
+                "q": "Who operates AIVideosUGC?"
+              },
+              {
+                "a": "No. AIVideosUGC is an online workspace. Start with a product photo or public product page, prepare an image or video draft, and review it from your own setup before downloading.",
+                "q": "Do I need to book a studio to prepare product content?"
+              },
+              {
+                "a": "AIVideosUGC is for DTC brands, online shops, SaaS teams, and agencies that need product photos or short video ads for product pages and marketing channels.",
+                "q": "Who is AIVideosUGC designed for?"
+              }
+            ],
+            "lead": "AIVideosUGC helps shop owners prepare product visuals for listings, campaigns, and social channels. Start with a product photo or page, shape the message, and review each result before sharing it.",
+            "next": [
+              {
+                "href": "/ai-video-generation",
+                "text": "Turn product photos into short video ads.",
+                "label": "AI Video"
+              },
+              {
+                "href": "/ai-image-generation",
+                "text": "White background, lifestyle and model photos.",
+                "label": "Product Photos"
+              },
+              {
+                "href": "/templates",
+                "text": "Ready-made ideas for every product and platform.",
+                "label": "Templates"
+              },
+              {
+                "href": "/trust-and-safety",
+                "text": "How we handle your uploads and AI content.",
+                "label": "Trust and Safety"
+              },
+              {
+                "href": "/ai-info",
+                "text": "The key facts about AIVideosUGC in one place.",
+                "label": "Company Facts"
+              }
+            ],
+            "image": {
+              "alt": "Open wallet interior on a neutral background",
+              "src": "/ai-image-generation/example-07-1280.webp",
+              "sizes": "(max-width: 900px) 100vw, 560px",
+              "width": 1280,
+              "height": 720,
+              "srcSet": "/ai-image-generation/example-07-640-2.webp 640w, /ai-image-generation/example-07-1280.webp 1280w, /ai-image-generation/example-07-1600.webp 1600w"
+            },
+            "label": "About",
+            "ctaLead": "Choose a product photo or video workflow, review the credit cost, and shape a result for your next listing or campaign.",
+            "eyebrow": "About AIVideosUGC",
+            "ctaTitle": "Start With a Product Photo",
+            "sections": [
+              {
+                "h2": "Made for the Work Between Launches",
+                "alt": "Adult seller with a blonde chin-length bob holds a speckled mug on paper beside an open laptop.",
+                "img": {
+                  "alt": "Adult seller with a blonde chin-length bob holds a speckled mug on paper beside an open laptop.",
+                  "src": "/ai-image-generation/b2f9-about-what-we-make-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/ai-image-generation/b2f9-about-what-we-make-r1-640.webp 640w, /ai-image-generation/b2f9-about-what-we-make-r1.webp 1024w"
+                },
+                "paras": [
+                  "A new listing, seasonal promotion, or product update can call for fresh photos and video. AIVideosUGC gives shops one place to prepare those visuals from product information they already have.",
+                  "Start with a product photo or public product page. Choose a scene or presenter, shape the message, and prepare an image or short video for your store and marketing channels."
+                ]
+              },
+              {
+                "h2": "A Clear Way to Prepare Product Visuals",
+                "alt": "Adult shop owner gets one product ready for a listing at a packing table.",
+                "img": {
+                  "alt": "Adult shop owner gets one product ready for a listing at a packing table.",
+                  "src": "/ai-image-generation/gen2guide-fx08-about-who-its-for-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/ai-image-generation/gen2guide-fx08-about-who-its-for-r1-640.webp 640w, /ai-image-generation/gen2guide-fx08-about-who-its-for-r1.webp 1024w"
+                },
+                "paras": [
+                  "Bring together the product photo, the details shoppers need, and the channel where you plan to share the result.",
+                  "Choose a format and creative direction, then review the wording, scenes, and visuals. You can revise the result before downloading it."
+                ]
+              },
+              {
+                "h2": "You Decide What Gets Shared",
+                "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock.",
+                "img": {
+                  "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock.",
+                  "src": "/ai-image-generation/b2f9-about-photos-stay-yours-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/ai-image-generation/b2f9-about-photos-stay-yours-r1-640.webp 640w, /ai-image-generation/b2f9-about-photos-stay-yours-r1.webp 1024w"
+                },
+                "paras": [
+                  "Preview each result before you download it. Check that the product, labels, message, and visuals match what you intend to show.",
+                  "Upload photos and voice material you own or have permission to use. Review your finished content and the rules of the channel before publishing."
+                ]
+              },
+              {
+                "h2": "Know the Cost Before You Create",
+                "alt": "Adult seller with a short silver crop moves plain wooden tokens beside an open laptop.",
+                "img": {
+                  "alt": "Adult seller with a short silver crop moves plain wooden tokens beside an open laptop.",
+                  "src": "/ai-image-generation/b2f9-about-credit-costs-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/ai-image-generation/b2f9-about-credit-costs-r1-640.webp 640w, /ai-image-generation/b2f9-about-credit-costs-r1.webp 1024w"
+                },
+                "paras": [
+                  "You can see the credit cost for a photo or video job before you start it. Check the Pricing page for current plans and included credits.",
+                  "If you have a question about an account, charge, or download, contact support@aivideosugc.com and include the page or file you need help with."
+                ]
+              },
+              {
+                "h2": "A Presenter Is Optional",
+                "paras": [
+                  "Choose an AI actor when you want a presenter on screen, or make a digital twin from a photo you have permission to use. You can also create product visuals without a presenter.",
+                  "Review the script, voice, and finished video before you decide to use it. AIVideosUGC helps prepare the creative; you remain the person who knows your product and approves its claims."
+                ]
+              },
+              {
+                "h2": "Who Is Accountable for AIVideosUGC",
+                "paras": [
+                  "AIVideosUGC is operated by BLYDEY INC. NARUEBET NAKPHONG is the company's legal representative.",
+                  "AIVideosUGC is BLYDEY INC.'s online service for preparing product photos and short videos. Shop owners can start with product information they already have, then choose and review a suitable creative direction.",
+                  "We publish the operator and contact details so customers know who is responsible for the service. For account, billing, or export questions, contact support@aivideosugc.com."
+                ]
+              },
+              {
+                "h2": "What Guides the Product",
+                "paras": [
+                  "The service is shaped around familiar shop tasks: showing what an item looks like, explaining one useful detail, and preparing a version for a chosen channel.",
+                  "Our goal is to make those steps easier to review and repeat, while leaving the product knowledge, final checks, and publishing decision with you."
+                ]
+              },
+              {
+                "h2": "A Workspace for Product Work, Wherever You Are",
+                "alt": "An adult creator guides a cable into a desk organizer in a home workspace.",
+                "img": {
+                  "alt": "An adult creator guides a cable into a desk organizer in a home workspace.",
+                  "src": "/ai-image-generation/f16-r10-home-office-daily-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/ai-image-generation/f16-r10-home-office-daily-r1-640.webp 640w, /ai-image-generation/f16-r10-home-office-daily-r1.webp 1024w"
+                },
+                "paras": [
+                  "AIVideosUGC is an online workspace for preparing product photos and short videos. Start from your own desk with a product image or public product page, choose an image or video workflow, and prepare a draft for your store or campaign.",
+                  "A familiar home workspace can be enough to review product details, explore a scene, and decide which version suits a channel. The image is an illustrative seller work setting; it does not depict BLYDEY INC.'s office."
+                ]
+              },
+              {
+                "h2": "From Product Details to a Reviewed Result",
+                "paras": [
+                  "Begin with the facts shoppers need: what the product is, how it is used, and which detail matters for this campaign. Choose a photo or video format that fits the place you plan to share it.",
+                  "Explore a scene or presenter when it helps explain the product, then shape the message and review the draft. You can check the product, wording, and presentation before downloading a result.",
+                  "AIVideosUGC provides creative options; you bring the product knowledge. Keep claims accurate, use images and voice material you have permission to use, and make the final decision about what to publish."
+                ]
+              },
+              {
+                "h2": "The Team Behind AIVideosUGC",
+                "paras": [
+                  "AIVideosUGC is operated by BLYDEY INC and serves DTC brands, online shops, SaaS teams, and agencies preparing product photos and short video ads. The people behind the service focus on the practical steps in that work: choosing what to show, finding a suitable creative direction, and reviewing a draft before it is shared.",
+                  "The tools bring image and video workflows, AI presenters, templates, and review options together. If you need help with an account, billing, or a download, contact our support team at support@aivideosugc.com."
+                ]
+              },
+              {
+                "h2": "Company Background and Contact Details",
+                "paras": [
+                  "AIVideosUGC is BLYDEY INC's online service for preparing product visuals for stores and marketing channels. NARUEBET NAKPHONG is the company's legal representative. We publish these details so customers can identify the company responsible for the service.",
+                  "BLYDEY INC's listed address is 30 N Gould St, Ste R, Sheridan, Wyoming 82801, United States. For account, billing, or export questions, email support@aivideosugc.com or call +1 307-310-3014. AIVideosUGC is an online service; this address is company contact information and is not presented as a visitor office."
+                ]
+              }
+            ],
+            "heroMedia": {
+              "kind": "image",
+              "image": {
+                "alt": "Open wallet interior on a neutral background",
+                "src": "/ai-image-generation/example-07-1280.webp",
+                "sizes": "(max-width: 900px) 100vw, 560px",
+                "width": 1280,
+                "height": 720,
+                "srcSet": "/ai-image-generation/example-07-640-2.webp 640w, /ai-image-generation/example-07-1280.webp 1280w, /ai-image-generation/example-07-1600.webp 1600w"
+              }
+            },
+            "startNote": "See current plans and review the credit cost before creating.",
+            "breadcrumbs": [
+              {
+                "href": "/",
+                "label": "Home"
+              },
+              {
+                "href": "/about-us",
+                "label": "About Us"
+              }
+            ]
+          },
+          "layout": "about"
+        }
+      }
+    },
+    "mediaManifest": [
+      {
+        "alt": "Open wallet interior on a neutral background",
+        "src": "/ai-image-generation/example-07-1280.webp",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "alt": "Adult seller with a blonde chin-length bob holds a speckled mug on paper beside an open laptop.",
+        "src": "/ai-image-generation/b2f9-about-what-we-make-r1-640.webp",
+        "width": 640,
+        "height": 640
+      },
+      {
+        "alt": "Adult shop owner gets one product ready for a listing at a packing table.",
+        "src": "/ai-image-generation/gen2guide-fx08-about-who-its-for-r1-640.webp",
+        "width": 640,
+        "height": 640
+      },
+      {
+        "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock.",
+        "src": "/ai-image-generation/b2f9-about-photos-stay-yours-r1-640.webp",
+        "width": 640,
+        "height": 640
+      },
+      {
+        "alt": "Adult seller with a short silver crop moves plain wooden tokens beside an open laptop.",
+        "src": "/ai-image-generation/b2f9-about-credit-costs-r1-640.webp",
+        "width": 640,
+        "height": 640
+      }
+    ],
+    "sectionsOrder": [
+      "v2_main"
+    ],
+    "contentContract": {
+      "seoSource": "LivePage.contentJson",
+      "mediaSource": "LivePage.contentJson",
+      "sourceRevision": "aidreamcapes-site-v2"
+    }
+  }
+}

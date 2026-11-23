@@ -82,6 +82,14 @@ public/assets/sites/site_aidreamcapes/guides/*
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-original.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-captioned-en.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-poster.jpg
+# About page office scenes and team portraits ship with the code so a release
+# cannot publish a page whose images 404.
+!public/assets/sites/site_aidreamcapes/about/
+public/assets/sites/site_aidreamcapes/about/*
+!public/assets/sites/site_aidreamcapes/about/*.webp
+!public/assets/sites/site_aidreamcapes/about/team/
+public/assets/sites/site_aidreamcapes/about/team/*
+!public/assets/sites/site_aidreamcapes/about/team/*.webp
 # Blog covers ship with the code so a release cannot publish a page whose
 # cover is missing from the deployed static root.
 !public/assets/sites/site_aidreamcapes/blog/
