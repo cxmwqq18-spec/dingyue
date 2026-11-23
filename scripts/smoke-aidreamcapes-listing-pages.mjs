@@ -28,7 +28,7 @@ async function get(path) {
         headers["x-forwarded-proto"] = "https";
       }
       const response = await fetch(`${origin}${path}`, { headers, redirect: "manual", signal: AbortSignal.timeout(requestTimeout) });
-      return { status: response.status, location: response.headers.get("location") ?? "", body: await response.text() };
+      return { status: response.status, location: response.headers.get("location") ?? "", headers: response.headers, body: await response.text() };
     } catch (error) {
       lastError = error;
       if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -147,7 +147,10 @@ await check("every paginated sitemap URL is indexable with a unique snippet", as
     const page = await get(path);
     assert.equal(page.status, 200, `${path} answered ${page.status}`);
     assert.equal(canonical(page.body), `${origin}${path}`, `${path} is not self canonical`);
-    assert.match(robots(page.body), /index/i, `${path} is not indexable`);
+    // Next omits the robots meta when the page keeps the default index,follow;
+    // only an explicit noindex (meta or header) makes the URL non-indexable.
+    const robotsHeader = page.headers?.get("x-robots-tag") ?? "";
+    assert(!/noindex/i.test(robots(page.body)) && !/noindex/i.test(robotsHeader), `${path} is not indexable`);
     const description = (page.body.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i)?.[1] ?? "").replaceAll("&amp;", "&");
     assert(description, `${path} has no meta description`);
     assert(description.length <= 160, `${path} description is ${description.length} characters`);
