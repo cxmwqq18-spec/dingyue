@@ -108,7 +108,7 @@ export const ARTICLES = [
     slug: "/guides/white-background-amazon",
     h1: "Amazon Main Image Rules: A Step-by-Step Guide",
     subtitle: "Best Practices for a Clean White Background at Catalog Scale",
-    toolCta: { label: "Try our White Background Photo Generator", href: "/ai-image-generation/white-background-photos" },
+    toolCta: { label: "Try our White Background Generator", href: "/ai-image-generation/white-background-photos" },
     appHref: "/app/create/tool/white-background",
     seoTitle: "Amazon Main Image Rules: Step-by-Step Guide | AIVideosUGC"
   },
