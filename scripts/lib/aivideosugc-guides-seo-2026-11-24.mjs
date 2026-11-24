@@ -144,14 +144,14 @@ export const LINK_REPLACEMENTS = [
 ];
 
 export const HUB_CARDS = [
-  { href: "/guides/how-do-text-to-video", title: "How to Use Text to Video: Prompts & Examples", kind: "Tutorial" },
-  { href: "/guides/how-do-ai-video", title: "How to Create AI Video: Step-by-Step Guide", kind: "Tutorial" },
-  { href: "/guides/how-do-ai-image", title: "How to Create AI Product Images: Best Practices", kind: "Tutorial" },
-  { href: "/guides/how-do-product-links", title: "How to Use Product Links: Step-by-Step Guide", kind: "How-to" },
-  { href: "/guides/how-do-ai-avatar", title: "How to Use AI Avatar: Step-by-Step Guide", kind: "Tutorial" },
-  { href: "/guides/how-do-subtitle-studio", title: "How to Add Subtitles: Step-by-Step Guide", kind: "How-to" },
-  { href: "/guides/how-do-url-to-video", title: "How to Convert a URL to Video: Step-by-Step Guide", kind: "How-to" },
-  { href: "/guides/how-do-image-to-video", title: "How to Use Image to Video: Step-by-Step Guide", kind: "How-to" }
+  { href: "/guides/how-do-text-to-video", title: "Write a prompt that produces the clip you want" },
+  { href: "/guides/how-do-ai-video", title: "Build a video from product references" },
+  { href: "/guides/how-do-ai-image", title: "Create a lifestyle product photo" },
+  { href: "/guides/how-do-product-links", title: "Save product pages to reuse" },
+  { href: "/guides/how-do-ai-avatar", title: "Choose a presenter for your product" },
+  { href: "/guides/how-do-subtitle-studio", title: "Add captions to a finished video" },
+  { href: "/guides/how-do-url-to-video", title: "Import a page into an editable video draft" },
+  { href: "/guides/how-do-image-to-video", title: "Animate one product photo" }
 ];
 
 export const HUB_FIELD_GUIDES = [

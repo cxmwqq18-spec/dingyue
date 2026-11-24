@@ -109,7 +109,7 @@ export function GuidesHubPage({ data, r }: { data: GuidesHubData; r: V2Resolvers
                 </span>
                 <span className={styles.cardPad}>
                   <span className={styles.read}>{item.minutes} read</span>
-                  <h3><span className={styles.cardTag}>{item.kind ?? item.tool}:</span> {item.title}</h3>
+                  <h3><span className={styles.cardTag}>{item.tool}:</span> {item.title}</h3>
                   <span className={styles.cardBody}><RichText text={item.body} r={r} /></span>
                   <span className={styles.go}>Read the tutorial →</span>
                 </span>
