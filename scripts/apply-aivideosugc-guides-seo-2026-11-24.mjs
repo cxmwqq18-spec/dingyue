@@ -24,7 +24,7 @@ import crypto from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
-import { ARTICLES, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, LINK_REPLACEMENTS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
+import { ARTICLES, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, LINK_REPLACEMENTS, OWN_LINKS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
 
 const CONFIRM_NAME = "aivideosugc-guides-seo-2026-11-24";
 const HUB_SLUG = "/guides";
@@ -75,6 +75,26 @@ function replaceInStrings(value, from, to) {
 }
 
 /** Keep Article/HowTo structured-data names aligned with the visible H1. */
+/** Keep only links to the guide's own module/tool; other anchors lose their href. */
+function stripForeignMarkdownLinks(value, slug) {
+  const allowed = new Set(OWN_LINKS[slug] ?? []);
+  function keep(href) {
+    return allowed.has(href) || href === "/" || href === "/guides" || href.startsWith("/app/create");
+  }
+  function walk(node) {
+    if (typeof node === "string") {
+      return node.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (full, label, href) => keep(href) ? full : label);
+    }
+    if (Array.isArray(node)) return node.map(walk);
+    if (node && typeof node === "object") {
+      for (const key of Object.keys(node)) node[key] = walk(node[key]);
+      return node;
+    }
+    return node;
+  }
+  return walk(value);
+}
+
 function alignJsonLdHeadline(seo, h1) {
   const graph = seo?.jsonLd?.["@graph"];
   if (!Array.isArray(graph)) return;
@@ -101,7 +121,9 @@ function guidePlan(row, spec) {
   alignJsonLdHeadline(content.seo, spec.h1);
   let replacements = 0;
   for (const rule of LINK_REPLACEMENTS) replacements += replaceInStrings(content, rule.from, rule.to);
-  assert(!JSON.stringify(data).includes("](/guides/"), `${spec.slug}: a guide-to-guide markdown link remains after replacement.`);
+  delete data.howto.related;
+  stripForeignMarkdownLinks(data.howto, spec.slug);
+  assert(!JSON.stringify(data).includes("](/guides/"), `${spec.slug}: a guide-to-guide markdown link remains after cleanup.`);
   return { content, replacements };
 }
 
@@ -120,6 +142,8 @@ function articlePlan(row, spec) {
     title: spec.toolCta.label,
     more: { href: spec.appHref, label: "Open the workspace" }
   };
+  delete data.related;
+  stripForeignMarkdownLinks(data, spec.slug);
   content.seo = content.seo ?? {};
   content.seo.title = spec.seoTitle;
   alignJsonLdHeadline(content.seo, spec.h1);

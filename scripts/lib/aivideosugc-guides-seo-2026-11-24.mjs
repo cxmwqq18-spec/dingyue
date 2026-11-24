@@ -183,3 +183,22 @@ export const REMOVED_TOOL_LINKS = [
   "/ai-video-generation/before-after-video",
   "/ai-video-generation/ai-twin"
 ];
+
+// Answer pages keep only their own module/tool destinations. This prevents a
+// tutorial from passing authority to a different tool page or to another guide.
+// `/app/create...` is the same product workspace action and is allowed.
+export const OWN_LINKS = {
+  "/guides/how-do-url-to-video": ["/ai-video-generation", "/ai-video-generation/url-to-video"],
+  "/guides/how-do-image-to-video": ["/ai-video-generation", "/ai-video-generation/image-to-video"],
+  "/guides/how-do-text-to-video": ["/ai-video-generation", "/ai-video-generation/text-to-video"],
+  "/guides/how-do-ai-video": ["/ai-video-generation"],
+  "/guides/how-do-ai-image": ["/ai-image-generation", "/ai-image-generation/lifestyle-photos"],
+  "/guides/how-do-ai-avatar": ["/ai-video-generation", "/ai-video-generation/spokesperson-video"],
+  "/guides/how-do-product-links": ["/ai-video-generation", "/ai-video-generation/product-video"],
+  "/guides/how-do-subtitle-studio": ["/ai-video-generation", "/ai-video-generation/video-ads"],
+  "/guides/first-tiktok-video-ad": ["/ai-video-generation", "/ai-video-generation/video-ads"],
+  "/guides/product-photo-tips": ["/ai-image-generation"],
+  "/guides/testing-ad-versions": ["/ai-video-generation", "/ai-video-generation/video-ads"],
+  "/guides/white-background-amazon": ["/ai-image-generation", "/ai-image-generation/white-background-photos"],
+  "/guides/ad-sizes-by-platform": ["/ai-video-generation", "/ai-video-generation/video-ads"]
+};

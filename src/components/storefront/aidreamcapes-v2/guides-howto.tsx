@@ -429,6 +429,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
         lead={howto.cta?.lead ?? "Upload a product photo, see the price before you start, and keep every version in your library."}
         note={howto.cta?.note}
         r={r}
+        secondary={false}
         title={howto.cta?.title ?? `Try ${guideLabel} with your own product`}
       />
     </>

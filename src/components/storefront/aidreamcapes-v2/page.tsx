@@ -1141,7 +1141,7 @@ function ArticlePage({ data, r }: Props) {
         </div>
       </article>
       <Faq items={data.faq} title="Questions" r={r} />
-      <CtaBand note={text(data.startNote)} href={tryBox?.href ?? "/app/create"} lead={ctaLead(data, "Upload a product photo and try it.")} r={r} title={ctaTitle(data, "Put it into practice")} />
+      <CtaBand note={text(data.startNote)} href={tryBox?.href ?? "/app/create"} lead={ctaLead(data, "Upload a product photo and try it.")} r={r} secondary={false} title={ctaTitle(data, "Put it into practice")} />
     </>
   );
 }

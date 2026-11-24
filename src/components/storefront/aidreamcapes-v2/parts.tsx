@@ -972,7 +972,7 @@ export function PageHero({ eyebrow, title, lead, right, children, quick }: { eye
   );
 }
 
-export function CtaBand({ title, lead, href, r, note }: { title: string; lead: string; href: string; r: V2Resolvers; note?: string }) {
+export function CtaBand({ title, lead, href, r, note, secondary = true }: { title: string; lead: string; href: string; r: V2Resolvers; note?: string; secondary?: boolean }) {
   return (
     <div className="wrap">
       <section className="cta">
@@ -980,7 +980,7 @@ export function CtaBand({ title, lead, href, r, note }: { title: string; lead: s
         <p>{lead}</p>
         <div className="row">
           <WorkspaceEntryLink className="btn btn-primary" href={r.href(href)}>{copyLabel(r, "Get started")}</WorkspaceEntryLink>
-          <WorkspaceEntryLink className="btn btn-ghost" href={r.href("/templates")}>{copyLabel(r, "Browse templates")}</WorkspaceEntryLink>
+          {secondary ? <WorkspaceEntryLink className="btn btn-ghost" href={r.href("/templates")}>{copyLabel(r, "Browse templates")}</WorkspaceEntryLink> : null}
         </div>
         <StartNote note={note} r={r} />
       </section>
