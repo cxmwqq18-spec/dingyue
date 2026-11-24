@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-24",
+  "siteId": "site_aidreamcapes",
+  "slug": "/about-us",
+  "confirm": "aivideosugc-about-team-portraits-2026-11-24",
+  "description": "Point the nine /about-us team cards at the reviewed final portraits. The new file names carry the 2026-11-24 version suffix because the team images are served with a one-year immutable cache; replacing bytes under the old names would leave every browser on the previous photo.",
+  "members": [
+    {
+      "name": "Naruebet Nakphong",
+      "before": "/assets/sites/site_aidreamcapes/about/team/naruebet-nakphong.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/naruebet-nakphong-20261124.webp"
+    },
+    {
+      "name": "Jim Doepker",
+      "before": "/assets/sites/site_aidreamcapes/about/team/jim-doepker.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/jim-doepker-20261124.webp"
+    },
+    {
+      "name": "LaMarcus Chatman",
+      "before": "/assets/sites/site_aidreamcapes/about/team/lamarcus-chatman.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/lamarcus-chatman-20261124.webp"
+    },
+    {
+      "name": "Michael Maynard",
+      "before": "/assets/sites/site_aidreamcapes/about/team/michael-maynard.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/michael-maynard-20261124.webp"
+    },
+    {
+      "name": "Lewis Jones",
+      "before": "/assets/sites/site_aidreamcapes/about/team/lewis-jones.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/lewis-jones-20261124.webp"
+    },
+    {
+      "name": "Sophia",
+      "before": "/assets/sites/site_aidreamcapes/about/team/sophia.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/sophia-20261124.webp"
+    },
+    {
+      "name": "Liam",
+      "before": "/assets/sites/site_aidreamcapes/about/team/liam.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/liam-20261124.webp"
+    },
+    {
+      "name": "Emma",
+      "before": "/assets/sites/site_aidreamcapes/about/team/emma.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/emma-20261124.webp"
+    },
+    {
+      "name": "Jim Michael",
+      "before": "/assets/sites/site_aidreamcapes/about/team/jim-michael.webp",
+      "after": "/assets/sites/site_aidreamcapes/about/team/jim-michael-20261124.webp"
+    }
+  ]
+}
