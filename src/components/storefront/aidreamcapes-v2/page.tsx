@@ -1344,7 +1344,10 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (!data) return null;
   const r = templateDetailResolvers(data, withStartLinks(baseResolvers));
   if (layout === "platform-directory") return <PlatformDirectory data={data} r={r} />;
-  if (data.templatesIndex) return <TemplatesIndexPage data={data.templatesIndex as never} r={r} />;
+  // The base /templates landing carries templatesIndex; the /templates/video
+  // and /templates/photo catalogs carry exampleGallery instead. Rendering the
+  // landing config on a catalog page leaves its sample arrays undefined.
+  if (data.templatesIndex && !data.exampleGallery) return <TemplatesIndexPage data={data.templatesIndex as never} r={r} />;
   if (data.exampleDirectory) return <ExampleDirectory data={data} r={r} />;
   if (data.templateDirectory) return <TemplateDirectory data={data} r={r} query={query} />;
   if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;

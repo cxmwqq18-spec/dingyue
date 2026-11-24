@@ -193,7 +193,7 @@ try {
     // 后续 rsync 更新只替换暂存侧文件，历史发布的硬链接不受影响。
     run("rsync", ["-azc", "--delete", "--exclude=cache/", "-e", sshCommand, `${path.resolve(prebuiltBuild)}/`, `${host}:${buildStaging}/`]);
   }
-  run("scp", ["-P", port, ...connection, archive, `${host}:${remoteArchive}`]);
+  run("scp", ["-C", "-P", port, ...connection, archive, `${host}:${remoteArchive}`]);
   const command = `set -eu
 ROOT=${quote(root)}
 RELEASE=${quote(release)}
@@ -209,7 +209,7 @@ OTHER_SERVICES=$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirec
 # disabled them to free memory. Only the units that are actually running take
 # part in the build window and the post-deploy integrity checks.
 EU_SERVICES="aidreamcapes-eu.service aidreamshoots.service"
-EU_ACTIVE_SERVICES=$(for S in $EU_SERVICES; do systemctl is-active --quiet "$S" && printf '%s ' "$S"; done)
+EU_ACTIVE_SERVICES=$(for S in $EU_SERVICES; do systemctl is-active --quiet "$S" && printf '%s ' "$S"; done || true)
 EU_SERVICE_PIDS=$([ -n "$EU_ACTIVE_SERVICES" ] && systemctl show $EU_ACTIVE_SERVICES -p MainPID || echo '')
 EU_SERVICE_DIRS=$([ -n "$EU_ACTIVE_SERVICES" ] && systemctl show $EU_ACTIVE_SERVICES -p WorkingDirectory || echo '')
 ${buildWindow ? `restore_build_window() { [ -n "$EU_ACTIVE_SERVICES" ] && systemctl start $EU_ACTIVE_SERVICES 2>/dev/null || true; }` : `restore_build_window() { :; }`}
