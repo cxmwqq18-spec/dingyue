@@ -338,7 +338,6 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
       <section className="sec"><div className={`wrap ${styles.directory}`}>
         <Crumbs items={data.breadcrumbs} r={r} />
         <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
-        <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
         {media.length ? <section aria-labelledby="category-media-heading" className={styles.mediaSection} data-directory-media="true">
           <div className="sec-head">
             <div className="eyebrow">Examples</div>
