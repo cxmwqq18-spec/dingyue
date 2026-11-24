@@ -48,19 +48,6 @@ const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
   "product-ad-video": "/ai-video-generation/candle-cozy-gift",
   "bottle-ad-with-a-person": "/ai-video-generation/water-bottle-demo-cap-twists-open",
   "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools",
-  // 2026-11-23: legacy photo example cards that rendered under the video
-  // prefix without a playable file. They have no valid photo detail page, so
-  // the public video address permanently redirects to the image directory
-  // instead of staying an orphan page.
-  "evening-demo-of-a-kitchen-appliance": "/ai-image-generation",
-  "desk-review-of-a-thin-keyboard": "/ai-image-generation",
-  "bathroom-routine-with-moisturizer": "/ai-image-generation",
-  "asmr-unboxing-makeup-tools": "/ai-image-generation",
-  "grwm-unboxing-knitwear": "/ai-image-generation",
-  "pov-discovery-court-gear": "/ai-image-generation",
-  "app-reaction-clip": "/ai-image-generation",
-  "close-up-unboxing-makeup-tools-templates": "/ai-image-generation",
-  "opening-line-phone-demo": "/ai-image-generation"
 };
 
 /** Living page a retired address still redirects to, if any. */
