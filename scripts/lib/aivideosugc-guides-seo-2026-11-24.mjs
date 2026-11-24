@@ -143,15 +143,18 @@ export const LINK_REPLACEMENTS = [
   { from: "](/guides/how-do-product-links)", to: "](/ai-video-generation/product-video)" }
 ];
 
+// Guide-hub cards keep their descriptive titles; the card tag already says
+// "How to" in the renderer. Repeating "How do" here would read
+// "How to How do ..." and would duplicate the H1 on every card.
 export const HUB_CARDS = [
-  { href: "/guides/how-do-text-to-video", title: "How do Text to Video", kind: "Tutorial" },
-  { href: "/guides/how-do-ai-video", title: "How do AI Video", kind: "Tutorial" },
-  { href: "/guides/how-do-ai-image", title: "How do AI Image", kind: "Tutorial" },
-  { href: "/guides/how-do-product-links", title: "How do Product Links", kind: "How-to" },
-  { href: "/guides/how-do-ai-avatar", title: "How do AI Avatar", kind: "Tutorial" },
-  { href: "/guides/how-do-subtitle-studio", title: "How do Subtitle Studio", kind: "How-to" },
-  { href: "/guides/how-do-url-to-video", title: "How do URL to Video", kind: "How-to" },
-  { href: "/guides/how-do-image-to-video", title: "How do Image to Video", kind: "How-to" }
+  { href: "/guides/how-do-text-to-video", title: "Turn a short brief into an editable storyboard", kind: "Tutorial" },
+  { href: "/guides/how-do-ai-video", title: "Build a video from product references", kind: "Tutorial" },
+  { href: "/guides/how-do-ai-image", title: "Create a lifestyle product photo", kind: "Tutorial" },
+  { href: "/guides/how-do-product-links", title: "Save product pages to reuse", kind: "How-to" },
+  { href: "/guides/how-do-ai-avatar", title: "Choose a presenter for your product", kind: "Tutorial" },
+  { href: "/guides/how-do-subtitle-studio", title: "Add captions to a finished video", kind: "How-to" },
+  { href: "/guides/how-do-url-to-video", title: "Import a page into an editable video draft", kind: "How-to" },
+  { href: "/guides/how-do-image-to-video", title: "Animate one product photo", kind: "How-to" }
 ];
 
 export const HUB_FIELD_GUIDES = [
