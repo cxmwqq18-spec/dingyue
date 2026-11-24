@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-24",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "codeCommit": "742a838b426b587d579adb2a269846dcd0d891db",
+  "baseHash": "78c72e392e979fe5fceb8af91ac436076ddc340b236e87dad1750f444c84e899",
+  "nextHash": "c345730997c5db7f714a6e1537ee2ae93958a768d5cf41fa0f68015fbec1504b",
+  "changedRows": ["/guides"],
+  "note": "The hub card tags were duplicating the titles as 'Tutorial: How to...' and 'How-to: How to...'. The card tag is now the tool name and the title is the concrete outcome; the keyword-rich H1s remain on the guide pages."
+}
