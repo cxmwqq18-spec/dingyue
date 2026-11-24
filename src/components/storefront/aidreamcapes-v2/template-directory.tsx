@@ -38,7 +38,11 @@ export function ListingItemListJsonLd({ items, startPosition }: { items: { name:
       url: listingAbsoluteUrl(item.url)
     }))
   }).replace(/</g, "\\u003c");
-  return <script dangerouslySetInnerHTML={{ __html: json }} type="application/ld+json" />;
+  // The storefront middleware hoists SEO tags into <head> after SSR. A body
+  // `application/ld+json` script would move and break hydration, so this uses
+  // the reviewed body-marker contract: inert JSON in the body, a normalized
+  // ld+json copy in <head>.
+  return <script dangerouslySetInnerHTML={{ __html: json }} data-storefront-json-ld="body-marker" type="application/json" />;
 }
 
 function exampleRange(page: number, pageSize: number, count: number, total: number): { start: number; end: number } {

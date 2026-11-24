@@ -1171,7 +1171,7 @@ export async function middleware(request: NextRequest) {
       return [key, values.length === 1 ? values[0] : values];
     }));
     const filter = normalizeAidreamcapesTemplateFilter(filterPathMatch[2], filterQuery);
-    if (filter.badRequest) return finalizeStorefrontResponse(new NextResponse("Invalid filters. Please select a category from the template directory.", { status: 400, headers: { "content-type": "text/plain; charset=utf-8", "X-Robots-Tag": "noindex, nofollow" } }), request);
+    if (filter.badRequest) return finalizeStorefrontResponse(new NextResponse("Invalid filters. Please select a category from the template directory.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8", "X-Robots-Tag": "noindex, nofollow" } }), request);
     if (filter.redirectPath) return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, `${filterPathMatch[1] ?? ""}${filter.redirectPath}`), 308), request);
   }
   const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
