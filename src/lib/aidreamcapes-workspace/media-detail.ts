@@ -140,6 +140,23 @@ export function mediaDetailPrompt(card: Pick<MediaDetailCard, "prompt">): string
   return text.length > 4000 ? `${text.slice(0, 3999).trimEnd()}…` : text;
 }
 
+/**
+ * Search snippets are truncated around 155 characters. Cut at a sentence or
+ * word boundary so the visible snippet ends on a whole phrase instead of the
+ * middle of a word; never fall below a readable minimum.
+ */
+const META_DESCRIPTION_LIMIT = 155;
+
+function clampMetaDescription(text: string): string {
+  const value = text.replace(/\s+/gu, " ").trim();
+  if (value.length <= META_DESCRIPTION_LIMIT) return value;
+  const cut = value.slice(0, META_DESCRIPTION_LIMIT);
+  const sentence = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "), cut.lastIndexOf("; "), cut.lastIndexOf(", "));
+  const at = sentence >= 100 ? sentence + 1 : cut.lastIndexOf(" ");
+  const clipped = value.slice(0, at > 60 ? at : META_DESCRIPTION_LIMIT).replace(/[\s,;:–—-]+$/u, "");
+  return clipped.length >= 80 ? clipped : value.slice(0, META_DESCRIPTION_LIMIT).trim();
+}
+
 export function mediaDetailDescription(
   card: Pick<MediaDetailCard, "label" | "line" | "prompt" | "video" | "duration">,
   kind?: MediaDetailKind,
@@ -151,9 +168,9 @@ export function mediaDetailDescription(
     const seconds = Math.round(Number(card.duration) || 0);
     const length = seconds > 0 ? `${seconds}-second ` : "";
     const lead = intro ? ` ${intro}` : "";
-    return `Watch ${label} — the finished ${length}AI product video made with AIVideosUGC.${lead} See the prompt and template page to recreate it with your own product.`.slice(0, 300);
+    return clampMetaDescription(`Watch ${label} — the finished ${length}AI product video made with AIVideosUGC.${lead} See the prompt and template page to recreate it with your own product.`);
   }
-  if (intro) return `${label}: ${intro}`.slice(0, 300);
+  if (intro) return clampMetaDescription(`${label}: ${intro}`);
   // A card without a one-line intro would otherwise repeat its label as the
   // whole search description. Describe what the page actually shows instead:
   // the finished example plus the prompt behind it. The video claim follows
@@ -161,7 +178,7 @@ export function mediaDetailDescription(
   const example = kind === "photo" || !card.video?.src
     ? "an AI product photo example made with AIVideosUGC"
     : "an AI product video example made with AIVideosUGC";
-  return `${label} — ${example}. See the finished result and copy the prompt to generate your own version with your product photos.`.slice(0, 300);
+  return clampMetaDescription(`${label} — ${example}. See the finished result and copy the prompt to generate your own version with your product photos.`);
 }
 
 /**
