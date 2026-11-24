@@ -205,9 +205,14 @@ exec 9>/tmp/aidreamcapes-deploy.lock
 flock -n 9 || { echo 'Refusing to deploy: another Aidreamcapes deploy is running (lock held).' >&2; exit 1; }
 BASE=$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')
 OTHER_SERVICES=$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirectory)
-EU_SERVICE_PIDS=$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)
-EU_SERVICE_DIRS=$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p WorkingDirectory)
-${buildWindow ? `restore_build_window() { systemctl start aidreamcapes-eu.service aidreamshoots.service 2>/dev/null || true; }` : `restore_build_window() { :; }`}
+# The two EU storefronts are optional: an operator may have stopped and
+# disabled them to free memory. Only the units that are actually running take
+# part in the build window and the post-deploy integrity checks.
+EU_SERVICES="aidreamcapes-eu.service aidreamshoots.service"
+EU_ACTIVE_SERVICES=$(for S in $EU_SERVICES; do systemctl is-active --quiet "$S" && printf '%s ' "$S"; done)
+EU_SERVICE_PIDS=$([ -n "$EU_ACTIVE_SERVICES" ] && systemctl show $EU_ACTIVE_SERVICES -p MainPID || echo '')
+EU_SERVICE_DIRS=$([ -n "$EU_ACTIVE_SERVICES" ] && systemctl show $EU_ACTIVE_SERVICES -p WorkingDirectory || echo '')
+${buildWindow ? `restore_build_window() { [ -n "$EU_ACTIVE_SERVICES" ] && systemctl start $EU_ACTIVE_SERVICES 2>/dev/null || true; }` : `restore_build_window() { :; }`}
 test -d "$BASE/public"
 test -f "$BASE/.env.local"
 # A release restart must never expose the default nginx 502 page. Refuse to
@@ -249,8 +254,8 @@ cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : `${buildWind
 # Stop them first so the free-memory check below sees the freed memory, verify
 # their domains answer the 503 maintenance page directly at the origin, and arm
 # a restore that runs on every exit path.
-BUILD_WINDOW_SERVICES="aidreamcapes-eu.service aidreamshoots.service"
-systemctl stop $BUILD_WINDOW_SERVICES
+BUILD_WINDOW_SERVICES="$EU_ACTIVE_SERVICES"
+[ -n "$BUILD_WINDOW_SERVICES" ] && systemctl stop $BUILD_WINDOW_SERVICES || true
 sleep 1
 BUILD_WINDOW_OK=1
 for BUILD_WINDOW_DOMAIN in aidreamcapes.eu aidreamshoots.eu; do
@@ -389,11 +394,14 @@ ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 A
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"
 test "$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirectory)" = "$OTHER_SERVICES"
-test "$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p WorkingDirectory)" = "$EU_SERVICE_DIRS"
+if [ -n "$EU_ACTIVE_SERVICES" ]; then
+  test "$(systemctl show $EU_ACTIVE_SERVICES -p WorkingDirectory)" = "$EU_SERVICE_DIRS"
+else
+  echo 'EU storefronts are stopped: skipping EU WorkingDirectory integrity check'
+fi
 ${buildWindow ? `restore_build_window
-test "$(systemctl is-active aidreamcapes-eu.service)" = active
-test "$(systemctl is-active aidreamshoots.service)" = active
-echo 'build window closed: aidreamcapes-eu.service and aidreamshoots.service active again'` : `test "$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)" = "$EU_SERVICE_PIDS"`}
+[ -n "$EU_ACTIVE_SERVICES" ] && test "$(systemctl is-active $EU_ACTIVE_SERVICES)" = "active active"
+echo 'build window closed: previously active EU storefronts are running again'` : `if [ -n "$EU_ACTIVE_SERVICES" ]; then test "$(systemctl show $EU_ACTIVE_SERVICES -p MainPID)" = "$EU_SERVICE_PIDS"; else echo 'EU storefronts are stopped: skipping EU MainPID check'; fi`}
 trap - EXIT
 printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes.service'
 # The Cloudflare edge caches public HTML for two hours. A new release changes
