@@ -159,9 +159,9 @@ export const HUB_CARDS = [
 export const HUB_FIELD_GUIDES = [
   { href: "/guides/first-tiktok-video-ad", label: "How to Build a TikTok UGC Ad From a Product Link" },
   { href: "/guides/product-photo-tips", label: "How to Take Product Photos With a Phone" },
-  { href: "/guides/ad-sizes-by-platform", label: "Social Video Sizes: Best Practices" },
-  { href: "/guides/testing-ad-versions", label: "How to Test Video Ad Versions" },
-  { href: "/guides/white-background-amazon", label: "Amazon Main Image Rules: Step-by-Step Guide" }
+  { href: "/guides/ad-sizes-by-platform", label: "Social Video Sizes: Best Practices for TikTok and Reels" },
+  { href: "/guides/testing-ad-versions", label: "How to Test Video Ad Versions Without Wasting Credits" },
+  { href: "/guides/white-background-amazon", label: "Amazon Main Image Rules: A Step-by-Step Guide" }
 ];
 
 // Reverse links live after the tool-page FAQ. Before & After Video and AI Twin
@@ -202,3 +202,6 @@ export const OWN_LINKS = {
   "/guides/white-background-amazon": ["/ai-image-generation", "/ai-image-generation/white-background-photos"],
   "/guides/ad-sizes-by-platform": ["/ai-video-generation", "/ai-video-generation/video-ads"]
 };
+
+// The workspace guide's hub card uses the detail-page H1 as well.
+export const HUB_WORKSPACE_TITLE = "AI Video Workspace Tutorial: Step-by-Step Guide";

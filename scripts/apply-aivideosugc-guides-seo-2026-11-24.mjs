@@ -24,7 +24,7 @@ import crypto from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
-import { ARTICLES, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, LINK_REPLACEMENTS, OWN_LINKS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
+import { ARTICLES, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, HUB_WORKSPACE_TITLE, LINK_REPLACEMENTS, OWN_LINKS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
 
 const CONFIRM_NAME = "aivideosugc-guides-seo-2026-11-24";
 const HUB_SLUG = "/guides";
@@ -189,6 +189,7 @@ function hubPlan(row) {
     updatedFields += 1;
   }
   assert.equal(updatedFields, HUB_FIELD_GUIDES.length, `${HUB_SLUG}: expected ${HUB_FIELD_GUIDES.length} field-guide labels.`);
+  if (hub.workspaceGuide) hub.workspaceGuide.title = HUB_WORKSPACE_TITLE;
   return { content, replacements: 0 };
 }
 
