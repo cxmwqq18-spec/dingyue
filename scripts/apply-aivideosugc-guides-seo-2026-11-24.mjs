@@ -24,7 +24,7 @@ import crypto from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
-import { ARTICLES, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, HUB_WORKSPACE_TITLE, LINK_REPLACEMENTS, OWN_LINKS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
+import { ARTICLES, COPY_REPLACEMENTS, GUIDES, HUB_CARDS, HUB_FIELD_GUIDES, HUB_WORKSPACE_TITLE, LINK_REPLACEMENTS, OWN_LINKS, REMOVED_TOOL_LINKS, TOOL_LINKS, WORKSPACE } from "./lib/aivideosugc-guides-seo-2026-11-24.mjs";
 
 const CONFIRM_NAME = "aivideosugc-guides-seo-2026-11-24";
 const HUB_SLUG = "/guides";
@@ -118,11 +118,15 @@ function guidePlan(row, spec) {
   data.howto.cta = { ...(data.howto.cta ?? {}), href: spec.toolCta.href, title: spec.ctaTitle };
   content.seo = content.seo ?? {};
   content.seo.title = spec.seoTitle;
+  if (spec.seoDescription) content.seo.description = spec.seoDescription;
   alignJsonLdHeadline(content.seo, spec.h1);
   let replacements = 0;
   for (const rule of LINK_REPLACEMENTS) replacements += replaceInStrings(content, rule.from, rule.to);
   data.howto.related = [];
   stripForeignMarkdownLinks(data.howto, spec.slug);
+  for (const rule of COPY_REPLACEMENTS.filter((item) => item.slug === spec.slug)) {
+    replacements += replaceInStrings(data, rule.from, rule.to);
+  }
   assert(!JSON.stringify(data).includes("](/guides/"), `${spec.slug}: a guide-to-guide markdown link remains after cleanup.`);
   return { content, replacements };
 }
