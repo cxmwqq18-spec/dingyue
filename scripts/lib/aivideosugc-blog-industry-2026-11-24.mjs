@@ -18,7 +18,7 @@ export const ARTICLES = [
     "keywords": "AI video tools for UGC ads, pet industry marketing, pet supplements, AIVideosUGC, Text to Video, AI Actor",
     "minutes": 3,
     "cover": {
-      "alt": "A creator cuddles a golden retriever puppy while talking to camera.",
+      "alt": "A creator cuddles a golden retriever puppy on a living room sofa.",
       "src": "/ai-image-generation/actors/rhea-640.webp",
       "width": 640,
       "height": 1138
@@ -27,7 +27,7 @@ export const ARTICLES = [
       "href": "/blog/ai-video-tools-for-ugc-ads-in-the-pet-industry",
       "kind": "article",
       "image": {
-        "alt": "A creator cuddles a golden retriever puppy while talking to camera.",
+        "alt": "A creator cuddles a golden retriever puppy on a living room sofa.",
         "src": "/ai-image-generation/actors/rhea-640.webp",
         "width": 640,
         "height": 1138
@@ -54,7 +54,7 @@ export const ARTICLES = [
               "kind": "video",
               "src": "/ai-video-generation/pet-dog-cuddle-chat.mp4",
               "poster": {
-                "alt": "A creator cuddles a golden retriever puppy while talking to camera.",
+                "alt": "A creator cuddles a golden retriever puppy on a living room sofa.",
                 "src": "/ai-image-generation/actors/rhea-640.webp",
                 "width": 640,
                 "height": 1138

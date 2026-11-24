@@ -139,7 +139,7 @@ function contentJsonFor(article, organization) {
       v2_main: {
         type: "aidreamcapes_v2_page",
         blocks: [],
-        settings: { layout: "blog-document", data: article.data }
+        settings: { layout: "blog-document", data: { ...article.data, cover: article.cover } }
       }
     }
   };
