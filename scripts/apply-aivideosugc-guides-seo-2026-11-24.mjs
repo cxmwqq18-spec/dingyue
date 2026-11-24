@@ -121,7 +121,7 @@ function guidePlan(row, spec) {
   alignJsonLdHeadline(content.seo, spec.h1);
   let replacements = 0;
   for (const rule of LINK_REPLACEMENTS) replacements += replaceInStrings(content, rule.from, rule.to);
-  delete data.howto.related;
+  data.howto.related = [];
   stripForeignMarkdownLinks(data.howto, spec.slug);
   assert(!JSON.stringify(data).includes("](/guides/"), `${spec.slug}: a guide-to-guide markdown link remains after cleanup.`);
   return { content, replacements };
@@ -142,7 +142,7 @@ function articlePlan(row, spec) {
     title: spec.toolCta.label,
     more: { href: spec.appHref, label: "Open the workspace" }
   };
-  delete data.related;
+  data.related = [];
   stripForeignMarkdownLinks(data, spec.slug);
   content.seo = content.seo ?? {};
   content.seo.title = spec.seoTitle;

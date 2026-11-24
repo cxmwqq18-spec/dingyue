@@ -78,7 +78,7 @@ type HowtoData = {
     tip?: { title: string; body: string };
     checklist?: string[];
     faq: { q: string; a: string }[];
-    related: { kind?: string; label: string; text: string; href: string }[];
+    related?: { kind?: string; label: string; text: string; href: string }[];
     toolCta?: { label: string; href: string };
     cta?: { title?: string; lead?: string; note?: string; href?: string };
   };
@@ -406,11 +406,11 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
             </>
           ) : null}
 
-          {howto.related.length ? (
+          {howto.related?.length ? (
             <>
               <h2>Related</h2>
               <div className="related">
-                {howto.related.map((item) => (
+                {(howto.related ?? []).map((item) => (
                   <article className="related-card" key={item.href}>
                     <b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b>
                     <span>{item.text}</span>

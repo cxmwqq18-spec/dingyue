@@ -171,7 +171,7 @@ export const TOOL_LINKS = [
   { slug: "/ai-video-generation/image-to-video", label: "Read our step-by-step Image to Video guide", href: "/guides/how-do-image-to-video" },
   { slug: "/ai-video-generation/text-to-video", label: "Read our step-by-step guide", href: "/guides/how-do-text-to-video" },
   { slug: "/ai-video-generation/video-ads", label: "Read our Video Ads tutorial", href: "/guides/testing-ad-versions" },
-  { slug: "/ai-video-generation/product-video", label: "Read our Product Video guide", href: "/guides/how-do-ai-video" },
+  { slug: "/ai-video-generation/product-video", label: "Read our Product Links guide", href: "/guides/how-do-product-links" },
   { slug: "/ai-video-generation/spokesperson-video", label: "Read our AI Avatar tutorial", href: "/guides/how-do-ai-avatar" },
   { slug: "/ai-video-generation", label: "Read the Workspace Guide", href: "/guides/workspace-guide" }
 ];
