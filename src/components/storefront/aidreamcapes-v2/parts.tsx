@@ -568,7 +568,7 @@ export function Reading({ items, r }: { items: V2Article[]; r: V2Resolvers }) {
   );
 }
 
-export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?: string; r: V2Resolvers }) {
+export function Faq({ items, title = "Questions", r, guideLink }: { items: V2Faq[]; title?: string; r: V2Resolvers; guideLink?: { label: string; href: string } }) {
   if (!items.length) return null;
   return (
     <section className="sec" id="faq">
@@ -585,6 +585,11 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
                 <p><RichText r={r} text={item.a} /></p>
               </details>
             ))}
+            {guideLink?.label && guideLink.href ? (
+              <p className="mt-5 text-sm">
+                <a className="font-semibold text-[#c4b5fd] underline underline-offset-4" href={r.href(guideLink.href)}>{guideLink.label} →</a>
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

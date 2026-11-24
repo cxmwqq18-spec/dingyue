@@ -27,7 +27,9 @@ type GuideData = {
   guide: {
     eyebrow?: string;
     h1: string;
+    subtitle?: string;
     lead?: string;
+    toolCta?: { label: string; href: string };
     meta?: string[];
     paths?: { label: string; title: string; body: string; chapters?: string[] }[];
     concepts?: { title: string; body: string }[];
@@ -48,7 +50,11 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
       <header className={styles.hero}>
         {guide.eyebrow ? <p className={styles.eyebrow}>{guide.eyebrow}</p> : null}
         <h1>{guide.h1}</h1>
+        {guide.subtitle ? <h2 className={styles.subtitle}>{guide.subtitle}</h2> : null}
         {guide.lead ? <p className={styles.lead}>{guide.lead}</p> : null}
+        {guide.toolCta?.label && guide.toolCta.href ? (
+          <p className={styles.toolCta}><a href={r.href(guide.toolCta.href)}>{guide.toolCta.label} →</a></p>
+        ) : null}
         {guide.meta?.length ? (
           <p className={styles.meta}>
             {guide.meta.map((item, index) => (

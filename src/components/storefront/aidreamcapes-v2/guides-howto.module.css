@@ -28,6 +28,41 @@
   justify-content: center;
 }
 
+/* Subtitle under the H1: the guide's unique outcome, while the H1 keeps the
+   tool question (for example "How do URL to Video"). */
+.subtitle {
+  margin: 14px auto 0;
+  max-width: 760px;
+  color: #d7d0e2;
+  font-size: clamp(1.05rem, 2.2vw, 1.42rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+}
+
+/* The commercial link back to the public tool page. One per guide here, with
+   the second copy in the bottom CTA. */
+.toolCta {
+  margin: 22px 0 0;
+}
+.toolCta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 52%, #3b82f6 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.toolCta a:hover {
+  filter: brightness(1.1);
+  color: #fff;
+}
+
 /* ---------- hero meta chips ---------- */
 .meta {
   display: flex;

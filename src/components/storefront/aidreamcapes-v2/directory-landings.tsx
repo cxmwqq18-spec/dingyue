@@ -69,7 +69,7 @@ function section(value: unknown): LandingSectionData | undefined {
   };
 }
 
-function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers }) {
+function LandingSection({ item, r, guideLink }: { item: LandingSectionData; r: V2Resolvers; guideLink?: { label: string; href: string } }) {
   const sectionClass = `landing-section landing-section-${item.kind}${item.kind === "split" ? " landing-split" : ""}`;
   const picture = (entry: LandingImage, className = "") => <img alt={storefrontMeaningfulAlt(entry.alt) || item.title || ""} className={className} decoding="async" loading="lazy" src={r.asset(entry.src)} />;
   const link = (href: string, label: string, className = "landing-link") => <WorkspaceEntryLink className={className} href={r.href(href)}>{label}<ArrowUpRight aria-hidden="true" size={16} /></WorkspaceEntryLink>;
@@ -132,6 +132,11 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
 
         {item.kind === "faq" ? <div className="landing-faq">
           {item.cards?.map((card) => <details key={card.title}><summary>{card.title}<ArrowDown aria-hidden="true" size={17} /></summary><p><RichText r={r} text={card.body} /></p></details>)}
+          {guideLink?.label && guideLink.href ? (
+            <p className="landing-guide-link" style={{ padding: "22px 4px 0" }}>
+              <a href={r.href(guideLink.href)} style={{ color: "#d6c3ff", fontWeight: 650, textDecoration: "underline", textUnderlineOffset: "0.2em" }}>{guideLink.label} →</a>
+            </p>
+          ) : null}
         </div> : null}
 
         {item.kind === "related" ? <div className="landing-related">
@@ -150,6 +155,14 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
       </div>
     </section>
   );
+}
+
+function landingGuideLink(value: unknown): { label: string; href: string } | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const link = value as Record<string, unknown>;
+  return typeof link.label === "string" && link.label.trim() && typeof link.href === "string" && link.href.trim()
+    ? { label: link.label, href: link.href }
+    : undefined;
 }
 
 export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data; layout: LandingLayout; r: V2Resolvers }) {
@@ -178,7 +191,7 @@ export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data
       </div>
     </header>
     <div className="landing-content">
-      {sections.map((item) => <LandingSection item={item} key={item.id} r={r} />)}
+      {sections.map((item) => <LandingSection guideLink={landingGuideLink(data.guideLink)} item={item} key={item.id} r={r} />)}
     </div>
   </div>;
 }

@@ -76,6 +76,12 @@ function record(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) return {};
   return value as Record<string, unknown>;
 }
+function faqGuideLink(value: unknown): { label: string; href: string } | undefined {
+  const link = record(value);
+  return typeof link.label === "string" && link.label.trim() && typeof link.href === "string" && link.href.trim()
+    ? { label: link.label, href: link.href }
+    : undefined;
+}
 
 function numberField(value: unknown, fallback: number): number {
   return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : fallback;
@@ -347,7 +353,7 @@ function VideoHubPage({ data, r }: Props) {
     ["examples", <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>],
     ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
     ...pageOwnBlocks(data, r),
-    ["faq", <Faq items={data.faq} title="Questions About AI Video" r={r} />],
+    ["faq", <Faq guideLink={faqGuideLink(data.guideLink)} items={data.faq} title="Questions About AI Video" r={r} />],
     ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
   ], {
     // The picker grid above is the hub's only video catalog display (the
@@ -380,7 +386,7 @@ function VideoHubPage({ data, r }: Props) {
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-      <Faq items={data.faq} title="Questions About AI Video" r={r} />
+      <Faq guideLink={faqGuideLink(data.guideLink)} items={data.faq} title="Questions About AI Video" r={r} />
       <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
     </>
   );
@@ -412,7 +418,7 @@ function ToolPage({ data, r }: Props) {
     const actorScript: PageBlock = ["always", actorScenePicker ? <AidreamcapesV2ActorScenePicker /> : null];
     const siblings: PageBlock = ["related", list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null];
     const scenarios: PageBlock = ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null];
-    const faq: PageBlock = ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />];
+    const faq: PageBlock = ["faq", <Faq guideLink={faqGuideLink(data.guideLink)} items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />];
     const tail: PageBlock[] = [
       ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />],
       ["cta", <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />]
@@ -481,7 +487,7 @@ function ToolPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-      <Faq items={data.faq} title={`Questions about ${data.label}`} r={r} />
+      <Faq guideLink={faqGuideLink(data.guideLink)} items={data.faq} title={`Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       <RelatedLinksSection links={relatedLinks} r={r} />
       <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
@@ -1099,6 +1105,7 @@ function ArticlePage({ data, r }: Props) {
           <div className="wrap">
             <div className="eyebrow">{data.eyebrow}</div>
             <h1>{data.h1}</h1>
+            {text(data.subtitle) ? <h2 style={{ margin: "14px auto 0", maxWidth: 760, color: "#d7d0e2", fontSize: "clamp(1.05rem, 2.2vw, 1.42rem)", fontWeight: 600, lineHeight: 1.4, letterSpacing: "-0.012em" }}>{text(data.subtitle)}</h2> : null}
             <p className="lead">{data.lead}</p>
             <p className="meta-line">{String(data.minutes)} min read · {BRAND_NAME}</p>
             <Img eager fallbackAlt={String(data.h1 ?? "")} image={data.image as V2Image} r={r} />

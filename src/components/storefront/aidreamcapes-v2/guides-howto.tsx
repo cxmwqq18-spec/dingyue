@@ -64,6 +64,7 @@ type HowtoData = {
   howto: {
     eyebrow?: string;
     h1: string;
+    subtitle?: string;
     lead?: string;
     tool?: string;
     minutes?: number;
@@ -78,6 +79,7 @@ type HowtoData = {
     checklist?: string[];
     faq: { q: string; a: string }[];
     related: { kind?: string; label: string; text: string; href: string }[];
+    toolCta?: { label: string; href: string };
     cta?: { title?: string; lead?: string; note?: string; href?: string };
   };
 };
@@ -327,6 +329,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
           <div className={`wrap ${styles.headerCenter}`}>
             {howto.eyebrow ? <div className="eyebrow">{howto.eyebrow}</div> : null}
             <h1>{howto.h1}</h1>
+            {howto.subtitle ? <h2 className={styles.subtitle}>{howto.subtitle}</h2> : null}
             {howto.lead ? <p className="lead">{howto.lead}</p> : null}
             <p className="meta-line">{howto.minutes ? `${howto.minutes} min read · ${BRAND_NAME}` : BRAND_NAME}</p>
             {howto.meta?.length ? (
@@ -335,6 +338,9 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
                   <span key={item}>{item}</span>
                 ))}
               </p>
+            ) : null}
+            {howto.toolCta?.label && howto.toolCta.href ? (
+              <p className={styles.toolCta}><a href={r.href(howto.toolCta.href)}>{howto.toolCta.label} →</a></p>
             ) : null}
           </div>
         </section>
