@@ -198,6 +198,11 @@ try {
 ROOT=${quote(root)}
 RELEASE=${quote(release)}
 COMMIT=${quote(commit)}
+# Serialize deploys: two sessions switching the service at the same time can
+# leave current/release.conf pointing at a half-staged release. The lock is held
+# for the whole remote phase and released when this shell exits.
+exec 9>/tmp/aidreamcapes-deploy.lock
+flock -n 9 || { echo 'Refusing to deploy: another Aidreamcapes deploy is running (lock held).' >&2; exit 1; }
 BASE=$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')
 OTHER_SERVICES=$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirectory)
 EU_SERVICE_PIDS=$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)
@@ -312,8 +317,18 @@ find "$ROOT/shared/next-static/_next/static" -type f -mtime +30 -delete 2>/dev/n
 # Apply the exact release's forward-only schema migrations after the built
 # candidate passes its SSR contract and before it receives production traffic.
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js migrate deploy
+# Never switch the service to a directory that is not fully staged: a missing
+# release directory or env file leaves systemd restarting into a 503 window.
+test -d "$RELEASE" || { echo "Refusing to switch: release directory is missing: $RELEASE" >&2; exit 1; }
+test -f "$RELEASE/.env.local" || { echo "Refusing to switch: $RELEASE/.env.local is missing" >&2; exit 1; }
+test -f "$RELEASE/server.mjs" || { echo "Refusing to switch: $RELEASE/server.mjs is missing" >&2; exit 1; }
+test -f "$RELEASE/.next-build/BUILD_ID" || { echo "Refusing to switch: $RELEASE/.next-build/BUILD_ID is missing" >&2; exit 1; }
+test "$(cat "$RELEASE/.deployed-commit" 2>/dev/null)" = "$COMMIT" || { echo "Refusing to switch: $RELEASE/.deployed-commit does not match $COMMIT" >&2; exit 1; }
 DROPIN=/etc/systemd/system/aidreamcapes.service.d/release.conf
-cp "$DROPIN" .previous-release.conf
+# Keep the rollback copy outside the release: if the release directory is
+# removed by a concurrent prune, rollback must still be able to restore the
+# previous unit configuration.
+cp "$DROPIN" "$ROOT/.previous-release.conf"
 OLD_CURRENT=$(readlink -f "$ROOT/current")
 printf '%s\n' '[Service]' "WorkingDirectory=$RELEASE" 'EnvironmentFile=' "EnvironmentFile=$RELEASE/.env.local" 'Environment=NODE_ENV=production' 'Environment=DINGYUE_ENV=production' 'Environment=DATABASE_TARGET=production' 'Environment=PLATFORM_STATE_POSTGRES_STRICT=1' 'Environment=NEXT_DIST_DIR=.next-build' 'Environment=HOSTNAME=127.0.0.1' 'Environment=PORT=3013' 'Environment=WORKSPACE_WORKER_RECOVERY=1' "Environment=GIT_COMMIT_SHA=$COMMIT" "Environment=NEXT_PUBLIC_RELEASE_COMMIT=$COMMIT" 'ExecStart=' "ExecStart=/usr/local/bin/node $RELEASE/server.mjs" > .next-release.conf
 MIGRATION_APPLIED=0
@@ -323,7 +338,7 @@ rollback() {
     echo 'Aidreamcapes LivePage migration committed; keeping the new release active for forward repair.' >&2
     exit "$STATUS"
   fi
-  cp "$RELEASE/.previous-release.conf" "$DROPIN"
+  cp "$ROOT/.previous-release.conf" "$DROPIN"
   ln -sfn "$OLD_CURRENT" "$ROOT/current"
   systemctl daemon-reload
   restore_build_window
@@ -343,6 +358,8 @@ for ATTEMPT in $(seq 1 30); do
   sleep 2
 done
 test "$READY" = 1
+# A concurrent prune or cleanup must not remove the release we just switched to.
+test -d "$RELEASE" || { echo "Release directory vanished after the switch: $RELEASE" >&2; exit 1; }
 ${codeOnly ? "# Code-only release: current relational content is read without content migrations." : `DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
 cat .navigation-path-migration.json
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-static-create-links.mjs --target=production --apply --confirm=site_aidreamcapes-static-create-links > .static-create-links-migration.json
