@@ -34,7 +34,7 @@ export const GUIDES = [
     toolCta: { label: "Try our Text to Video Generator", href: "/ai-video-generation/text-to-video" },
     ctaTitle: "Try our Text to Video Generator",
     seoTitle: "How do Text to Video: Prompt Guide & Examples | AIVideosUGC",
-    seoDescription: "Learn how to write a Text to Video prompt: name the product, setting, action, camera, look, and length, then generate and review the clip before you download it."
+    seoDescription: "Learn how to write a Text to Video prompt: name the product, setting, action, camera, look, and length, then review the clip before you download it."
   },
   {
     slug: "/guides/how-do-ai-video",
