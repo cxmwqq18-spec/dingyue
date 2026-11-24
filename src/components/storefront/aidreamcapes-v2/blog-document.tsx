@@ -28,6 +28,7 @@ export type DocumentData = {
   byline?: string;
   cover?: V2Image;
   lead?: string;
+  keyTakeaway?: string;
   sections: { h2: string; blocks: DocumentBlock[] }[];
   faq?: { question: string; answer: string }[];
   facts?: string[];
@@ -39,6 +40,7 @@ function readingMinutes(data: DocumentData): number {
   const text = [
     data.h1,
     data.lead ?? "",
+    data.keyTakeaway ?? "",
     ...data.sections.flatMap((section) => [section.h2, ...section.blocks.flatMap((block) => {
       if ("text" in block) return [block.text];
       if ("items" in block) return block.items;
@@ -146,6 +148,11 @@ export function BlogDocumentPage({ data, r }: { data: DocumentData; r: V2Resolve
         </header>
 
         <article className="bdoc-body">
+          {data.keyTakeaway ? (
+            <aside className="bdoc-takeaway" aria-label="Quick answer">
+              <p><RichText r={r} text={data.keyTakeaway} /></p>
+            </aside>
+          ) : null}
           {data.sections.map((section, index) => (
             <section key={section.h2} id={`section-${index + 1}`}>
               <h2><span className="bdoc-num" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{section.h2}</h2>
@@ -268,6 +275,13 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
 
 /* body */
 .adc2 .bdoc .bdoc-body{max-width:760px;margin:52px auto 0;padding:0 2px}
+.adc2 .bdoc .bdoc-takeaway{
+  margin:0 0 40px;padding:16px 20px;border-left:3px solid var(--bdoc-accent);
+  border-radius:0 14px 14px 0;background:var(--bdoc-surface);color:var(--bdoc-ink);
+  font-size:1.02rem;line-height:1.72;
+}
+.adc2 .bdoc .bdoc-takeaway p{margin:0;color:var(--bdoc-ink2)}
+.adc2 .bdoc .bdoc-takeaway strong{color:var(--bdoc-accent);font-weight:800}
 .adc2 .bdoc .bdoc-body section{margin:0 0 44px;scroll-margin-top:100px}
 .adc2 .bdoc h2{
   display:flex;gap:13px;align-items:baseline;margin:0 0 16px;
@@ -354,6 +368,7 @@ html[data-blog-theme="paper"] .adc2 .bdoc{
   .adc2 .bdoc .bdoc-meta .bdoc-theme{margin-left:0}
   .adc2 .bdoc h1{font-size:1.95rem}
   .adc2 .bdoc .bdoc-body{margin-top:34px}
+  .adc2 .bdoc .bdoc-takeaway{margin-bottom:30px;padding:14px 16px}
   .adc2 .bdoc h2{font-size:1.4rem}
   .adc2 .bdoc .bdoc-video video{max-height:none}
   .adc2 .bdoc .bdoc-answer{padding-left:18px}
