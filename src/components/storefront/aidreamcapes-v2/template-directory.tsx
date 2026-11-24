@@ -14,7 +14,7 @@ import { MEDIA_PAGE_SIZE } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
 export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
-export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
+export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; previewSrc?: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
 export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; totalPages: number; kind?: "photo" | "video"; basePath?: string };
 export type MediaPaginationState = { page: number; totalPages: number; total: number; basePath: string };
 
@@ -148,10 +148,28 @@ export function TemplatesIndexPage({ data, r }: { data: TemplatesIndexData; r: V
         <div className={styles.indexSampleGrid}>
           {samples.map((item) => (
             <a className={styles.indexCard} href={r.href(item.href)} key={`${item.kind}:${item.slug}`}>
-              <span className={styles.indexCardMedia}>
-                <img alt={item.image.alt ?? item.label} loading="lazy" src={r.asset(cover(item))} />
+              <div className={styles.indexCardMedia}>
+                {item.kind === "video" && item.video?.src ? (
+                  <Adc2VideoPreview
+                    ariaLabel={item.label}
+                    forceAspectRatio="4 / 5"
+                    media={{
+                      src: item.video.src,
+                      ...(item.video.previewSrc ? { previewSrc: item.video.previewSrc } : {}),
+                      poster: item.video.poster || item.image.src,
+                      ...(item.video.width ? { width: item.video.width } : {}),
+                      ...(item.video.height ? { height: item.video.height } : {}),
+                      ...(item.video.duration ? { duration: item.video.duration } : {}),
+                      name: item.label
+                    }}
+                    posterEager={false}
+                    posterEagerMobile={false}
+                  />
+                ) : (
+                  <img alt={item.image.alt ?? item.label} loading="lazy" src={r.asset(cover(item))} />
+                )}
                 <span className={styles.indexCardKind}>{item.kind === "video" ? "Video" : "Photo"}</span>
-              </span>
+              </div>
               <span className={styles.indexCardBody}>
                 <b>{item.label}</b>
                 <span>{item.kind === "video" ? "Video example" : "Photo example"}</span>
