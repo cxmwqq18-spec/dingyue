@@ -488,8 +488,8 @@ Plans from $24.50 a month . You see the credit cost before every job, and if a j
 
 ---
 
-## /blog/ai-product-photography-guide
-URL: https://www.aivideosugc.com/blog/ai-product-photography-guide
+## /blog/ai-image-generator-tutorial-product-photos-from-one-shot
+URL: https://www.aivideosugc.com/blog/ai-image-generator-tutorial-product-photos-from-one-shot
 
 AI Product Photo Generator Guide | AIVideosUGC Post the Handbag Photo
 # AI Product Photo Generator: Listings and Scenes
@@ -560,8 +560,8 @@ Plans from $24.50 a month . You see the credit cost before every job, and if a j
 
 ---
 
-## /blog/ai-ugc-video-ads-guide
-URL: https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide
+## /blog/ai-video-tutorial-write-product-ad-prompts-that-work
+URL: https://www.aivideosugc.com/blog/ai-video-tutorial-write-product-ad-prompts-that-work
 
 AI Video Ads Generator | AIVideosUGC Jar Ads Without a Shoot
 # AI Video Ads Generator: Creator-Style Clips for Your Shop
@@ -644,8 +644,8 @@ Plans from $24.50 a month . You see the credit cost before every job, and if a j
 
 ---
 
-## /blog/ai-video-review-checklist
-URL: https://www.aivideosugc.com/blog/ai-video-review-checklist
+## /blog/text-to-video-tutorial-brief-the-ai-video-agent
+URL: https://www.aivideosugc.com/blog/text-to-video-tutorial-brief-the-ai-video-agent
 
 AI Video Ads Generator: Publish Checklist | AIVideosUGC Check Every File Before You Post
 # AI Video Ads Generator: A Pre-Publish Checklist
@@ -735,8 +735,8 @@ Plans from $24.50 a month . You see the credit cost before every job, and if a j
 
 ---
 
-## /blog/model-photos-without-a-photoshoot
-URL: https://www.aivideosugc.com/blog/model-photos-without-a-photoshoot
+## /blog/ai-avatar-tutorial-presenters-voices-and-languages
+URL: https://www.aivideosugc.com/blog/ai-avatar-tutorial-presenters-voices-and-languages
 
 AI Virtual Model Photos, No Photoshoot | AIVideosUGC On-Model Photos Without a Shoot
 # AI Fashion Model Photos Without a Photoshoot
@@ -803,8 +803,8 @@ Plans from $24.50 a month . You see the credit cost before every job, and if a j
 
 ---
 
-## /blog/unboxing-videos-for-launches
-URL: https://www.aivideosugc.com/blog/unboxing-videos-for-launches
+## /blog/product-links-tutorial-from-a-url-to-a-finished-video
+URL: https://www.aivideosugc.com/blog/product-links-tutorial-from-a-url-to-a-finished-video
 
 Unboxing AI Product Video Generator | AIVideosUGC Unbox the Mug Before Launch
 # AI Product Videos for a Launch Unboxing
@@ -2372,7 +2372,7 @@ We refuse a celebrity, a private person&#x27;s face, or a logo you do not own. W
 ## Your Uploads Stay Yours
 Keep your uploads and finished ads in your account, out of other customers&#x27; view; we do not sell them.
 ## Rules for Ads You Publish
-Show what the product really does. Add the price and the claim yourself. Say the ad was made with AI when the platform asks. Do not fake a health result or a money promise. Paid plans cover ads for your own brand. Use the [AI content checklist](/blog/ai-video-review-checklist) before you post.
+Show what the product really does. Add the price and the claim yourself. Say the ad was made with AI when the platform asks. Do not fake a health result or a money promise. Paid plans cover ads for your own brand. Use the [AI content checklist](/blog/text-to-video-tutorial-brief-the-ai-video-agent) before you post.
 ## Something Wrong? Tell Us
 If you see a clip made here that breaks these rules, email support@aivideosugc.com and describe what you saw. You do not need an account to write. If a face, a voice, or a product is yours and you did not agree, use the same address.
 ## Voices, Scripts, and Where You Post
@@ -2571,7 +2571,7 @@ Next:
 - URL to Video: https://www.aivideosugc.com/ai-video-generation/url-to-video
 - Instagram: https://www.aivideosugc.com/platforms/instagram-ads
 - Facebook: https://www.aivideosugc.com/platforms/facebook-ads
-- What Makes a UGC-Style Video Ad Work: https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide
+- What Makes a UGC-Style Video Ad Work: https://www.aivideosugc.com/blog/ai-video-tutorial-write-product-ad-prompts-that-work
 - Ad Sizes for Every Platform: https://www.aivideosugc.com/guides/ad-sizes-by-platform
 
 Next step: Make the TikTok Ad From a Link — Paste your product link or write a short script, then download a TikTok-ready vertical ad without a shoot.
@@ -2639,7 +2639,7 @@ Questions:
 
 Next:
 - Subtitle a finished video in minutes: https://www.aivideosugc.com/guides/how-do-subtitle-studio
-- How UGC-style product ads get made: https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide
+- How UGC-style product ads get made: https://www.aivideosugc.com/blog/ai-video-tutorial-write-product-ad-prompts-that-work
 - The guide, chapter by chapter: https://www.aivideosugc.com/guides/workspace-guide
 
 Next step: Cast a presenter for your next video — Attach your product photos, preview a voice and paste a script. The cost shows before you confirm, and a draft costs nothing.
@@ -2818,7 +2818,7 @@ When a result is close but wrong, a variation beats a rewrite. Change one thing,
 
 ### Where the clip goes next
 Finished videos wait in the Library, where All videos, In progress, Failed and Completed separate running jobs from ready ones. The badge updates while you are away. Download what you keep within 15 days.
-The details modal lists the duration, aspect ratio and resolution you submitted, plus every reference you attached. If the clip needs words, [Subtitle Studio](/guides/how-do-subtitle-studio) works on completed videos and saves each pass as a version. Run the [review checklist](/blog/ai-video-review-checklist) first.
+The details modal lists the duration, aspect ratio and resolution you submitted, plus every reference you attached. If the clip needs words, [Subtitle Studio](/guides/how-do-subtitle-studio) works on completed videos and saves each pass as a version. Run the [review checklist](/blog/text-to-video-tutorial-brief-the-ai-video-agent) first.
 
 ### How one product photo becomes a clip for any platform
 Image to Video starts from a still you already have. Upload one product photo, describe the motion you want in a short prompt, and the tool returns a moving clip that keeps the product readable. You don't book a shoot or hire anyone to hold the item, so a photo taken on a kitchen table can open an ad. When you want to try it, [open the workspace](/app/create).
@@ -2940,7 +2940,7 @@ Reach for this tool when the footage is settled and the words need work. If the 
 
 ### What each operation asks of you
 Generate subtitles reads the speech in the video and turns it into captions, so you bring nothing but the finished clip. Promo lines and Product copy take text you write, each line becoming one screen. A pasted paragraph arrives as one crowded line.
-Good input is short. Write one idea per line, each short enough to read in a breath. Three tight lines beat a full script, and [the AI UGC video ads guide](/blog/ai-ugc-video-ads-guide) shows how an opening works.
+Good input is short. Write one idea per line, each short enough to read in a breath. Three tight lines beat a full script, and [the AI UGC video ads guide](/blog/ai-video-tutorial-write-product-ad-prompts-that-work) shows how an opening works.
 
 ### Preview, then save a version
 Pick the video from the list on the left, narrowing it with a word from the prompt or the title. Choose the operation, then set Style, Size, Position, Colour and Backdrop. The sample caption preview updates as you change each control.
@@ -2952,7 +2952,7 @@ Three clean repairs: cut the line to its subject and verb, split it across two s
 
 ### Comparing versions before you post
 Versions stack as tabs above the player. Switch between them at the same timestamp, sound off, and ask which answers a buyer's first question. A line that reads well on a desktop can vanish into a busy phone frame, so check the crop you will post.
-Keep the tab you trust, download it, and publish. Finished videos stay in the Library for 15 days, so download what you want to keep. Crops for each placement sit in [ad sizes by platform](/guides/ad-sizes-by-platform), with [the review checklist](/blog/ai-video-review-checklist) for the rest.
+Keep the tab you trust, download it, and publish. Finished videos stay in the Library for 15 days, so download what you want to keep. Crops for each placement sit in [ad sizes by platform](/guides/ad-sizes-by-platform), with [the review checklist](/blog/text-to-video-tutorial-brief-the-ai-video-agent) for the rest.
 
 ### Style, size and position for every caption
 Caption work comes last in Subtitle Studio, after the video itself is generated. You don't write the text: it's read from your voiceover automatically, line by line. Your job is the look and the wording. Pick a style, a size, a position and a color that stay readable over the product, then read each line against what's on screen. Open the tool from the menu in the workspace and the settings below are what you see.
@@ -2975,7 +2975,7 @@ Questions:
 
 Next:
 - Give the captions a presenter: https://www.aivideosugc.com/guides/how-do-ai-avatar
-- Review a cut before it goes live: https://www.aivideosugc.com/blog/ai-video-review-checklist
+- Review a cut before it goes live: https://www.aivideosugc.com/blog/text-to-video-tutorial-brief-the-ai-video-agent
 - The guide, chapter by chapter: https://www.aivideosugc.com/guides/workspace-guide
 
 Next step: Caption the cut you already approved — Open Subtitle Studio, pick a finished video, and keep both versions until one reads better on a phone.
@@ -3041,7 +3041,7 @@ Questions:
 
 Next:
 - Make a video from product photos: https://www.aivideosugc.com/guides/how-do-ai-video
-- Check a clip before you publish it: https://www.aivideosugc.com/blog/ai-video-review-checklist
+- Check a clip before you publish it: https://www.aivideosugc.com/blog/text-to-video-tutorial-brief-the-ai-video-agent
 - The guide, chapter by chapter: https://www.aivideosugc.com/guides/workspace-guide
 
 Next step: Write the sentence, then read the quote — Type one line about your product, press Optimize, and edit the brief until the claim reads right. Credits are held only when you confirm.
@@ -3107,7 +3107,7 @@ Questions:
 
 Next:
 - One photo instead of a whole page: https://www.aivideosugc.com/guides/how-do-image-to-video
-- Checking a video before you publish: https://www.aivideosugc.com/blog/ai-video-review-checklist
+- Checking a video before you publish: https://www.aivideosugc.com/blog/text-to-video-tutorial-brief-the-ai-video-agent
 - The guide, chapter by chapter: https://www.aivideosugc.com/guides/workspace-guide
 
 Next step: Start from the page you already have — Paste a public product link, review what the importer read, and open a prefilled draft before you spend a credit.
@@ -3202,7 +3202,7 @@ Next:
 - URL to Video: https://www.aivideosugc.com/ai-video-generation/url-to-video
 - Lifestyle Photos: https://www.aivideosugc.com/ai-image-generation/lifestyle-photos
 - White Background Photos for Amazon: https://www.aivideosugc.com/guides/white-background-amazon
-- AI Product Photography: A Practical Guide: https://www.aivideosugc.com/blog/ai-product-photography-guide
+- AI Product Photography: A Practical Guide: https://www.aivideosugc.com/blog/ai-image-generator-tutorial-product-photos-from-one-shot
 
 Next step: See the Product in a New Place — Start with a clear photo, name the setting, and download a listing image of the same product.
 
@@ -3300,7 +3300,7 @@ Next:
 - AI Actors: https://www.aivideosugc.com/ai-actors
 - URL to Video: https://www.aivideosugc.com/ai-video-generation/url-to-video
 - Ad Sizes for Every Platform: https://www.aivideosugc.com/guides/ad-sizes-by-platform
-- What Makes a UGC-Style Video Ad Work: https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide
+- What Makes a UGC-Style Video Ad Work: https://www.aivideosugc.com/blog/ai-video-tutorial-write-product-ad-prompts-that-work
 
 Next step: Make Your Next Test Ad Today — See which opening people watch. Keep the product, the length, and the line the same, and read the result in your ad account.
 
@@ -3390,7 +3390,7 @@ Next:
 - How to Take a Product Photo That Works: https://www.aivideosugc.com/guides/product-photo-tips
 - White Background Photos: https://www.aivideosugc.com/ai-image-generation/white-background-photos
 - Amazon: https://www.aivideosugc.com/platforms/amazon-product-photos
-- AI Product Photography: A Practical Guide: https://www.aivideosugc.com/blog/ai-product-photography-guide
+- AI Product Photography: A Practical Guide: https://www.aivideosugc.com/blog/ai-image-generator-tutorial-product-photos-from-one-shot
 - Ad Sizes for Every Platform: https://www.aivideosugc.com/guides/ad-sizes-by-platform
 
 Next step: Make a Clean Main Image — Make a listing-ready white main image in minutes from your complete product photo, then upload it after checking the corners.

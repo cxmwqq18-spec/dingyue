@@ -337,7 +337,7 @@ export function AidreamcapesVideoDirectory({
               ["Cinematic product film", "/ai-video-generation/cinematic-video"],
               ["App / SaaS demo workflow", "/ai-video-generation/app-saas-demo"],
               ["Talking photo recommendations", "/ai-video-generation/talking-photo-recs"],
-              ["AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+              ["AI UGC video ads guide", "/blog/ai-video-tutorial-write-product-ad-prompts-that-work"]
             ].map(([label, href]) => <AnchorLink className="inline-flex min-h-10 items-center rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm font-medium text-white/80 transition hover:border-white/30 hover:bg-white/[0.08] hover:text-white" href={href} localBasePath={localBasePath} key={href} site={site}>{label}</AnchorLink>)}
           </nav>
         </section>

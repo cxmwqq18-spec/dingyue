@@ -1034,6 +1034,17 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 // Aidreamcapes.com v2: retired v1 URLs move permanently to their closest v2 page.
 // Only requests for the aidreamcapes.com host (or its /site/aidreamcapes path mode) match.
 const AIDREAMCAPES_V2_REDIRECTS = new Map<string, string>(aidreamcapesSiteV2Redirects as [string, string][]);
+// These seven older blog addresses are renamed to their exact title slugs. They
+// keep a single permanent hop so an indexed address never lands on a 404.
+const AIDREAMCAPES_V2_BLOG_RENAMES = new Set<string>([
+  "/blog/ai-product-photography-guide",
+  "/blog/ai-ugc-video-ads-guide",
+  "/blog/ai-video-review-checklist",
+  "/blog/unboxing-videos-for-launches",
+  "/blog/model-photos-without-a-photoshoot",
+  "/blog/from-product-link-to-finished-ad",
+  "/blog/how-aivideosugc-works"
+]);
 // Addresses that are one step away from a public page: a different case, a
 // plural instead of a singular, a missing suffix. They answer 404 today, so
 // the table turns them into a permanent redirect to the page the visitor
@@ -1052,7 +1063,7 @@ function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
     ?? (["GET", "HEAD"].includes(request.method) ? AIDREAMCAPES_V2_NEAR_SLUGS.get(publicPath) : undefined);
   if (!target) return undefined;
   const location = `${pathMatch && hostSlug !== "aidreamcapes" ? "/site/aidreamcapes" : ""}${target}${request.nextUrl.search}`;
-  return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 301);
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, location), AIDREAMCAPES_V2_BLOG_RENAMES.has(publicPath) ? 308 : 301);
 }
 
 const LISTING_IDENTITY_PARAMS = ["kind", "type", "page", "galleryPage"] as const;

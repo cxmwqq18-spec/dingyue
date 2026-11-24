@@ -240,7 +240,7 @@ export function AidreamcapesImageDirectory({ cards, sectionId }: AidreamcapesIma
           <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white" id="image-directory-guides">Guides for better AI image decisions</h2>
           <nav aria-label="Aidreamcapes image guides" className="mt-5 flex flex-wrap gap-3">
             {[
-              ["AI product photography guide", "/blog/ai-product-photography-guide"],
+              ["AI product photography guide", "/blog/ai-image-generator-tutorial-product-photos-from-one-shot"],
               ["Ecommerce image workflow", "/blog/ecommerce-product-image-workflow"],
               ["Safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
             ].map(([label, href]) => <a className="inline-flex min-h-10 items-center rounded-full border border-white/[0.16] bg-white/[0.04] px-4 text-sm font-medium text-white/[0.78] transition hover:border-white/[0.32] hover:bg-white/[0.08] hover:text-white" href={href} key={href}>{label}</a>)}

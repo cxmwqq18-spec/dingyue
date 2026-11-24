@@ -1,0 +1,184 @@
+{
+  "ok": true,
+  "phase": "prepare",
+  "mode": "applied",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "confirm": "aivideosugc-blog-url-alignment-2026-11-24",
+  "mapping": [
+    [
+      "/blog/ai-product-photography-guide",
+      "/blog/ai-image-generator-tutorial-product-photos-from-one-shot"
+    ],
+    [
+      "/blog/ai-ugc-video-ads-guide",
+      "/blog/ai-video-tutorial-write-product-ad-prompts-that-work"
+    ],
+    [
+      "/blog/ai-video-review-checklist",
+      "/blog/text-to-video-tutorial-brief-the-ai-video-agent"
+    ],
+    [
+      "/blog/unboxing-videos-for-launches",
+      "/blog/product-links-tutorial-from-a-url-to-a-finished-video"
+    ],
+    [
+      "/blog/model-photos-without-a-photoshoot",
+      "/blog/ai-avatar-tutorial-presenters-voices-and-languages"
+    ],
+    [
+      "/blog/from-product-link-to-finished-ad",
+      "/blog/from-product-link-to-finished-ad-in-minutes"
+    ],
+    [
+      "/blog/how-aivideosugc-works",
+      "/blog/how-aivideosugc-works-ai-ugc-video-ads-explained-by-blydeys-cto"
+    ]
+  ],
+  "creates": [
+    {
+      "oldPath": "/blog/ai-product-photography-guide",
+      "newPath": "/blog/ai-image-generator-tutorial-product-photos-from-one-shot",
+      "rowId": "aidreamcapes_seo_cluster_16c14c5d039ab2378b22aa5e_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "621dec27680fc497f3385450ecc9dd1455c2be18c1646eff3123b99cdcf3139b",
+      "title": "AI Image Generator Tutorial: Product Photos | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": "blog-detail"
+    },
+    {
+      "oldPath": "/blog/ai-ugc-video-ads-guide",
+      "newPath": "/blog/ai-video-tutorial-write-product-ad-prompts-that-work",
+      "rowId": "aidreamcapes_seo_cluster_e34b58e6fbfcce51b117243c_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "5baab0300083eaa733cb2b3a2c5666c5534adbed7ad378a8884af16eb87dab45",
+      "title": "AI Video Tutorial: Product Ad Prompts | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": "blog-detail"
+    },
+    {
+      "oldPath": "/blog/ai-video-review-checklist",
+      "newPath": "/blog/text-to-video-tutorial-brief-the-ai-video-agent",
+      "rowId": "aidreamcapes_seo_cluster_3da30b1f28d0f4203f0d2f5b_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "e9454045008383c6d6aa9d316a3f38dd2e2bde00380777b8b091bc98a49ae03d",
+      "title": "Text to Video Tutorial: Brief the Agent | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": "blog-detail"
+    },
+    {
+      "oldPath": "/blog/unboxing-videos-for-launches",
+      "newPath": "/blog/product-links-tutorial-from-a-url-to-a-finished-video",
+      "rowId": "aidreamcapes_v2_blog_unboxing_videos_for_launches_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "9145441c7e6e8b3ef3fd3786dd542178fbb9d8f6238f92f555013b7c066f0be5",
+      "title": "Product Links Tutorial: URL to Video | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": "blog-detail"
+    },
+    {
+      "oldPath": "/blog/model-photos-without-a-photoshoot",
+      "newPath": "/blog/ai-avatar-tutorial-presenters-voices-and-languages",
+      "rowId": "aidreamcapes_v2_blog_model_photos_without_a_photoshoot_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "271b3f75bd37a1506cfa7d3043c1d6f710714b5e1965b0e3048af921f6b05790",
+      "title": "AI Avatar Tutorial: Presenters & Voices | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": "blog-detail"
+    },
+    {
+      "oldPath": "/blog/from-product-link-to-finished-ad",
+      "newPath": "/blog/from-product-link-to-finished-ad-in-minutes",
+      "rowId": "aidreamcapes_v2_blog_from_product_link_to_finished_ad_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "877a5ad093a1417f49717a394931f112cb46f33858e2da80e6a9fa3ccf298b40",
+      "title": "From Product Link to Finished Ad in Minutes | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": null
+    },
+    {
+      "oldPath": "/blog/how-aivideosugc-works",
+      "newPath": "/blog/how-aivideosugc-works-ai-ugc-video-ads-explained-by-blydeys-cto",
+      "rowId": "aidreamcapes_v2_blog_how_aivideosugc_works_url_aligned_20261124",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "69ad28f40f0c4f0376cd80e97048749250f02cf043219fac9ecdd22123451922",
+      "title": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO | AIVideosUGC",
+      "pageType": "article",
+      "templateKey": null
+    }
+  ],
+  "updates": [
+    {
+      "slug": "/glossary",
+      "rowId": "aidreamcapes_v2_glossary",
+      "updatedAt": "2026-11-21T12:57:56.748Z",
+      "baseHash": "a255b44f659f491a43c038c66afee8b1a1770a9b5b7974f39f0631e48dfea5bf",
+      "nextHash": "3623e35a71c2054ba06ecb674fe22ce5ec1e3bd3eb8bd68b6802b0823e61d5be"
+    },
+    {
+      "slug": "/guides/how-do-subtitle-studio",
+      "rowId": "aidreamcapes_v2_guide_how_do_subtitle_studio",
+      "updatedAt": "2026-11-24T12:40:05.661Z",
+      "baseHash": "f76ed5c6baee5b7005e23bc51c6331d3171f90e536b2b742c105b633d9be2a36",
+      "nextHash": "66c1800c77d5d05a9be32338896fab2da8afbf6627b53249f2c301fe6d109124"
+    },
+    {
+      "slug": "/guides/first-tiktok-video-ad",
+      "rowId": "aidreamcapes_v2_guide_first_tiktok_video_ad",
+      "updatedAt": "2026-11-12T11:35:26.740Z",
+      "baseHash": "1cca025eb7e974a74c5fcc26190ffb28f44131a39cc4acb1ad1d1aa759a7f360",
+      "nextHash": "98aa21c419385ff3cc5ed4b2f32168d54c2112469a34b72da4cf7c30b1272373"
+    },
+    {
+      "slug": "/guides/testing-ad-versions",
+      "rowId": "aidreamcapes_v2_guide_testing_ad_versions",
+      "updatedAt": "2026-11-12T11:35:29.679Z",
+      "baseHash": "42d8d36796d62eec270c3bd94766714f86e1b513285520ba0e55440181612561",
+      "nextHash": "83558d1fc9b7ea2dc0c11ee8fe24436d71738a01c3d4db932ee2e3431a643865"
+    },
+    {
+      "slug": "/trust-and-safety",
+      "rowId": "aidreamcapes_v2_trust",
+      "updatedAt": "2026-11-21T12:57:56.730Z",
+      "baseHash": "84430b4489c3f6f3481759946b34e400c53c3843d85b9e27aff378b60f38e416",
+      "nextHash": "3fefe0a1569f9c4247f5d8acbc94826cbfad6192d646521cfe4c2d5858800dc2"
+    },
+    {
+      "slug": "/blog",
+      "rowId": "site_aidreamcapes_blog",
+      "updatedAt": "2026-11-24T06:55:54.544Z",
+      "baseHash": "8b4c71d28183a5aaba93b008fa8422cee909d9c32ad39e35358a98acc3bab764",
+      "nextHash": "362c50ea069ab069a4d64522828dd01f7677740b405fcfac9ac2869f47c44f0f"
+    },
+    {
+      "slug": "/guides/product-photo-tips",
+      "rowId": "aidreamcapes_v2_guide_product_photo_tips",
+      "updatedAt": "2026-11-12T11:40:16.730Z",
+      "baseHash": "909348164b61b1d895a6692e2128d4d78966d3072404d5d681d020c8afcc815a",
+      "nextHash": "d488e0823babe9978adef94dabfef44ca537d11d436860cbaf1a18621e02b2be"
+    },
+    {
+      "slug": "/guides/white-background-amazon",
+      "rowId": "aidreamcapes_v2_guide_white_background_amazon",
+      "updatedAt": "2026-11-12T11:40:22.152Z",
+      "baseHash": "2f9499df9af51ee6d4e76fa6636d6f918c508cbfbfa74b6ba8b1b2bd0bd92be9",
+      "nextHash": "cd430571d47b03acb684504efdb672f927cb36e359a5788903a70b371426a11c"
+    }
+  ],
+  "hubChanged": true,
+  "applied": true
+}

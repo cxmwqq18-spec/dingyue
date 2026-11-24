@@ -483,7 +483,7 @@ async function checkImageDirectory() {
     assert(jsonLd.includes(`/ai-image-generation/${slug}`), `${path}: current image theme missing from JSON-LD: ${slug}`);
   }
   const guideLinks = [
-    "/blog/ai-product-photography-guide",
+    "/blog/ai-image-generator-tutorial-product-photos-from-one-shot",
     "/blog/ecommerce-product-image-workflow",
     "/blog/ai-content-disclosure-safe-usage"
   ];
@@ -501,7 +501,7 @@ async function checkVideoDirectory() {
     "/ai-video-generation/founder-update",
     "/ai-video-generation/product-video",
     "/ai-video-generation/talking-photo-recs",
-    "/blog/ai-ugc-video-ads-guide"
+    "/blog/ai-video-tutorial-write-product-ad-prompts-that-work"
   ];
   for (const href of guideLinks) assert(html.includes(`href="${href}"`), `${path}: missing guide link ${href}`);
   const checkedGuideLinks = await assertInternalLinks200(guideLinks, path);
