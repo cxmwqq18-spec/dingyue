@@ -182,7 +182,6 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
       <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
-      <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
       <p className="meta-line">Examples {range.start}–{range.end} of {gallery.total}</p>
       <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
       {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
