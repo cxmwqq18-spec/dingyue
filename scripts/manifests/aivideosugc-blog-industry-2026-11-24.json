@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-24",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "slugs": [
+    "/blog/ai-video-tools-for-ugc-ads-in-the-pet-industry",
+    "/blog/ai-ugc-video-generator-free-for-apps-and-saas-developers",
+    "/blog/ai-ugc-video-ads-generator-for-tech-and-electronics",
+    "/blog/ai-ugc-image-ads-generator-for-sports-and-gym-equipment"
+  ],
+  "hub": {
+    "slug": "/blog",
+    "action": "unchanged",
+    "baseHash": "daa587dd7ba50a0e3c7639bd0c646c22141e58e8dfbca83cdbc1f8e66d373136",
+    "nextHash": "daa587dd7ba50a0e3c7639bd0c646c22141e58e8dfbca83cdbc1f8e66d373136",
+    "resolvedCounts": {
+      "articles": 17,
+      "tutorials": 6
+    }
+  },
+  "articles": [
+    {
+      "slug": "/blog/ai-video-tools-for-ugc-ads-in-the-pet-industry",
+      "rowId": "aidreamcapes_v2_blog_ai_video_tools_for_ugc_ads_in_the_pet_industry",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "93651112f4aee1de32fb3380f8dcdd796355acd1d2fbcace86a58986c32deb99",
+      "nextHash": "93651112f4aee1de32fb3380f8dcdd796355acd1d2fbcace86a58986c32deb99"
+    },
+    {
+      "slug": "/blog/ai-ugc-video-generator-free-for-apps-and-saas-developers",
+      "rowId": "aidreamcapes_v2_blog_ai_ugc_video_generator_free_for_apps_and_saas_developers",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "b1ae4120601bedd0ba23e007eb2c4b6c49d6a04719cb22c86029291b02490e5d",
+      "nextHash": "b1ae4120601bedd0ba23e007eb2c4b6c49d6a04719cb22c86029291b02490e5d"
+    },
+    {
+      "slug": "/blog/ai-ugc-video-ads-generator-for-tech-and-electronics",
+      "rowId": "aidreamcapes_v2_blog_ai_ugc_video_ads_generator_for_tech_and_electronics",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "e71c9464a2d8c02208f73d2b5ae16179ee6c26f0b6d07d2681f0793e1fdd5ade",
+      "nextHash": "e71c9464a2d8c02208f73d2b5ae16179ee6c26f0b6d07d2681f0793e1fdd5ade"
+    },
+    {
+      "slug": "/blog/ai-ugc-image-ads-generator-for-sports-and-gym-equipment",
+      "rowId": "aidreamcapes_v2_blog_ai_ugc_image_ads_generator_for_sports_and_gym_equipment",
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "c70500ae72267aa480f1ce8e386bf88b483bf2f9650d5724c4e39a83de47a011",
+      "nextHash": "c70500ae72267aa480f1ce8e386bf88b483bf2f9650d5724c4e39a83de47a011"
+    }
+  ],
+  "note": "Content-only addition. Covers reuse the embedded video posters; the FAQPage graph carries the full schema.org fields. Rollback is a field-level inverse: delete the four LivePage rows and remove their hub cards."
+}
