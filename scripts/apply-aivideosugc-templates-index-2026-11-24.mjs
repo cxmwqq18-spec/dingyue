@@ -65,6 +65,7 @@ try {
   const next = structuredClone(row.contentJson);
   const nextData = next.sections.v2_main.settings.data;
   nextData.lead = LEAD;
+  nextData.eyebrow = "Template library";
   nextData.templatesIndex = TEMPLATES_INDEX;
   const changed = hash(next) !== hash(row.contentJson);
   const report = {
