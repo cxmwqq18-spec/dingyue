@@ -1166,8 +1166,10 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
         if (!data) continue;
         if (data.exampleDirectory) {
           const pageSize = Math.max(1, Math.min(50, Math.floor(Number(data.exampleDirectory.pageSize)) || 12));
-          for (const kind of [undefined, "photo", "video"] as const) {
-            const pool = kind ? galleryEntries.filter((entry) => entry.kind === kind) : galleryEntries;
+          // The base /templates gallery is a landing page now; only the two
+          // kind catalogs keep paginated sitemap rows.
+          for (const kind of ["photo", "video"] as const) {
+            const pool = galleryEntries.filter((entry) => entry.kind === kind);
             addListingPages("/templates", sitemapPageCount(pool.length, pageSize), kind, (pageNumber) => {
               const start = (pageNumber - 1) * pageSize;
               return latestCardLastmod(pool.slice(start, start + pageSize));

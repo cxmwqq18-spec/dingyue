@@ -1115,6 +1115,11 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
     // A kind parameter on a non-template listing is not an identity we own.
     if (kindRaw && !kindApplies) return undefined;
     const basePath = kindApplies ? `/templates/${kindRaw}` : pathBase;
+    // /templates no longer paginates: every base gallery page folds back to
+    // the entry page. Kind catalogs keep their own path pagination.
+    if (basePath === "/templates") {
+      return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}/templates`), 308);
+    }
     if (!isPaginatedListingBase(basePath)) return undefined;
     const page = numericPage(pageRaw) ?? pathPage ?? 0;
     const gallery = numericPage(galleryRaw);
@@ -1137,6 +1142,10 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
     return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}${match.basePath}`), 308);
   }
   if (match) {
+    // Old base-gallery pagination has no address anymore.
+    if (match.basePath === "/templates") {
+      return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}/templates`), 308);
+    }
     const matchKind = TEMPLATE_KIND_PATHS[match.basePath as keyof typeof TEMPLATE_KIND_PATHS];
     request.nextUrl.pathname = `${prefix}${matchKind ? "/templates" : match.basePath}`;
     if (matchKind) request.nextUrl.searchParams.set("kind", matchKind);

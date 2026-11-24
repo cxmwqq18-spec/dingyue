@@ -14,7 +14,7 @@ import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-worksp
 import { MEDIA_PAGE_SIZE } from "./types";
 import { listingPagePath } from "@/lib/listing-pagination";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import type { ExampleDirectoryConfig, GalleryItem } from "./template-directory";
+import type { ExampleDirectoryConfig, GalleryItem, TemplatesIndexData } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
   const pages = await prisma.$queryRaw<Array<{ slug: string; definition: Template | null }>>`
@@ -172,17 +172,45 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       const requestedPage = requestedListingPage(props.query);
       const listingPath = props.pagePath ?? "/templates";
-      redirectNonCanonicalPage(listingPath, props.query, routePrefix);
-      redirectPastLastPage(listingPath, requestedPage, totalPages, props.query, routePrefix);
-      const page = Math.min(requestedPage, totalPages);
-      const start = (page - 1) * pageSize;
-      const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
-      resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
-      // The kind catalogs are standalone pages: their heading and lead must
-      // describe the filtered result set, not the all-examples catalog.
-      if (kind) {
-        const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
-        resolved = { ...resolved, h1: copy.h1, lead: copy.lead };
+      // /templates itself is a landing page: live counts, two entrances and a
+      // short sample row. The full catalogs live on /templates/video|photo.
+      if (listingPath === "/templates" && !kind) {
+        const allEntries = await listAidreamcapesExampleGalleryEntries();
+        const videoEntries = allEntries.filter((entry) => entry.kind === "video");
+        const photoEntries = allEntries.filter((entry) => entry.kind === "photo");
+        const config = (data.templatesIndex ?? {}) as Partial<TemplatesIndexData>;
+        resolved = {
+          ...data,
+          templatesIndex: {
+            ...config,
+            h1: typeof data.h1 === "string" ? data.h1 : "Browse Every Example",
+            lead: typeof data.lead === "string" ? data.lead : "",
+            eyebrow: typeof data.eyebrow === "string" ? data.eyebrow : "All examples",
+            videoCount: videoEntries.length,
+            photoCount: photoEntries.length,
+            totalCount: allEntries.length,
+            videoSamples: videoEntries.slice(0, 3).map(toGalleryItem),
+            photoSamples: photoEntries.slice(0, 3).map(toGalleryItem),
+            entries: config.entries ?? {
+              video: { label: "Video templates", title: "Video templates", description: "", cta: "Browse video templates" },
+              photo: { label: "Photo templates", title: "Photo templates", description: "", cta: "Browse photo templates" }
+            },
+            samples: config.samples ?? { title: "Start with a few", lead: "" }
+          }
+        };
+      } else {
+        redirectNonCanonicalPage(listingPath, props.query, routePrefix);
+        redirectPastLastPage(listingPath, requestedPage, totalPages, props.query, routePrefix);
+        const page = Math.min(requestedPage, totalPages);
+        const start = (page - 1) * pageSize;
+        const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
+        resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
+        // The kind catalogs are standalone pages: their heading and lead must
+        // describe the filtered result set, not the all-examples catalog.
+        if (kind) {
+          const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
+          resolved = { ...resolved, h1: copy.h1, lead: copy.lead };
+        }
       }
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;

@@ -72,6 +72,108 @@ function paginationWindow(current: number, total: number): Array<number | "gap">
   return entries;
 }
 
+export type TemplatesIndexEntry = { label: string; title: string; description: string; cta: string };
+export type TemplatesIndexData = {
+  h1: string;
+  lead: string;
+  eyebrow?: string;
+  videoCount: number;
+  photoCount: number;
+  totalCount: number;
+  videoSamples: GalleryItem[];
+  photoSamples: GalleryItem[];
+  entries: { video: TemplatesIndexEntry; photo: TemplatesIndexEntry };
+  samples: { title: string; lead: string };
+  cta?: { title: string; lead: string; label: string; href: string };
+};
+
+/** The /templates landing: two entrances, live counts and a short sample row.
+ * It never renders the full catalog or a pager; those live on /templates/video
+ * and /templates/photo. */
+export function TemplatesIndexPage({ data, r }: { data: TemplatesIndexData; r: V2Resolvers }) {
+  const samples = [...data.videoSamples.slice(0, 3), ...data.photoSamples.slice(0, 3)];
+  const cover = (item: GalleryItem) => item.video?.poster ?? item.image.src;
+  return (
+    <div className={styles.tindex}>
+      <section className={styles.indexHero}>
+        <nav className="crumbs" aria-label="Breadcrumb">
+          <a href={r.href("/")}>Home</a><span aria-hidden="true">/</span><span>Examples</span>
+        </nav>
+        <p className={styles.indexKicker}>{data.eyebrow ?? "All examples"}</p>
+        <h1>{data.h1}</h1>
+        <p className={styles.indexLead}>{data.lead}</p>
+        <div className={styles.indexStats} aria-label="Library size">
+          <div><b>{data.videoCount}</b><span>Video examples</span></div>
+          <div><b>{data.photoCount}</b><span>Photo examples</span></div>
+          <div><b>{data.totalCount}</b><span>Total examples</span></div>
+        </div>
+      </section>
+
+      <section className={styles.indexEntries} aria-label="Choose a template type">
+        <a className={styles.indexEntry} href={r.href("/templates/video")}>
+          <span className={styles.indexMosaic}>
+            {data.videoSamples.slice(0, 3).map((item) => (
+              <img alt={item.image.alt ?? item.label} key={`v:${item.slug}`} loading="lazy" src={r.asset(cover(item))} />
+            ))}
+            <span className={styles.indexCount}>{data.videoCount} examples</span>
+          </span>
+          <span className={styles.indexEntryBody}>
+            <span className={styles.indexLabel}>{data.entries.video.label}</span>
+            <span className={styles.indexEntryTitle}>{data.entries.video.title}</span>
+            <span className={styles.indexEntryText}>{data.entries.video.description}</span>
+            <span className={styles.indexCta}>{data.entries.video.cta} <i aria-hidden="true">→</i></span>
+          </span>
+        </a>
+        <a className={styles.indexEntry} href={r.href("/templates/photo")}>
+          <span className={styles.indexMosaic}>
+            {data.photoSamples.slice(0, 3).map((item) => (
+              <img alt={item.image.alt ?? item.label} key={`p:${item.slug}`} loading="lazy" src={r.asset(cover(item))} />
+            ))}
+            <span className={styles.indexCount}>{data.photoCount} examples</span>
+          </span>
+          <span className={styles.indexEntryBody}>
+            <span className={styles.indexLabel}>{data.entries.photo.label}</span>
+            <span className={styles.indexEntryTitle}>{data.entries.photo.title}</span>
+            <span className={styles.indexEntryText}>{data.entries.photo.description}</span>
+            <span className={styles.indexCta}>{data.entries.photo.cta} <i aria-hidden="true">→</i></span>
+          </span>
+        </a>
+      </section>
+
+      <section className={styles.indexSamples}>
+        <div className={styles.indexSectionHead}>
+          <h2>{data.samples.title}</h2>
+          <p>{data.samples.lead}</p>
+        </div>
+        <div className={styles.indexSampleGrid}>
+          {samples.map((item) => (
+            <a className={styles.indexCard} href={r.href(item.href)} key={`${item.kind}:${item.slug}`}>
+              <span className={styles.indexCardMedia}>
+                <img alt={item.image.alt ?? item.label} loading="lazy" src={r.asset(cover(item))} />
+                <span className={styles.indexCardKind}>{item.kind === "video" ? "Video" : "Photo"}</span>
+              </span>
+              <span className={styles.indexCardBody}>
+                <b>{item.label}</b>
+                <span>{item.kind === "video" ? "Video example" : "Photo example"}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {data.cta ? (
+        <section className={styles.indexBand}>
+          <div>
+            <h2>{data.cta.title}</h2>
+            <p>{data.cta.lead}</p>
+          </div>
+          <a className="btn btn-grad" href={r.href(data.cta.href)}>{data.cta.label} <span aria-hidden="true">→</span></a>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
 /** Shared discrete pager for SSR media grids (example gallery, directory
  * media, hub pickers). Every page is a plain anchor, so deep pagination stays
  * addressable and crawlable without JavaScript; page 1 keeps the bare

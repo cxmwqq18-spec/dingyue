@@ -1,4 +1,4 @@
-import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
+import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, TemplatesIndexPage, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
 import { BlogLandingPage } from "./blog-landing";
 import { BlogDocumentPage } from "./blog-document";
 import { BlogEngineeringPage } from "./blog-engineering";
@@ -1344,6 +1344,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (!data) return null;
   const r = templateDetailResolvers(data, withStartLinks(baseResolvers));
   if (layout === "platform-directory") return <PlatformDirectory data={data} r={r} />;
+  if (data.templatesIndex) return <TemplatesIndexPage data={data.templatesIndex as never} r={r} />;
   if (data.exampleDirectory) return <ExampleDirectory data={data} r={r} />;
   if (data.templateDirectory) return <TemplateDirectory data={data} r={r} query={query} />;
   if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;
