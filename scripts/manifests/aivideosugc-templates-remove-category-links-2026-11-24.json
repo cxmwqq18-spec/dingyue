@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-24",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "slug": "/templates",
+  "removedCategoryLinks": 6,
+  "remainingLinks": [
+    {
+      "href": "/ai-video-generation/video-ads",
+      "label": "Vertical Video Ads for the Phone"
+    },
+    {
+      "href": "/ai-image-generation/lifestyle-photos",
+      "label": "AI Lifestyle Product Photos"
+    },
+    {
+      "href": "/ai-image-generation/white-background-photos",
+      "label": "White Background Product Photos"
+    },
+    {
+      "href": "/ai-image-generation/model-photos",
+      "label": "AI Model Photos for Clothing"
+    },
+    {
+      "href": "/ai-image-generation/packshot-multi-angle",
+      "label": "Product Photos From Every Angle"
+    }
+  ],
+  "baseHash": "0a613c478dab66ec7fe6cf3e18025ba02b7fbe269c050d25c5d7275fc4c0e123",
+  "nextHash": "b4039bc0e51afcd3b3e3b502c278b14d4a2b111e56247aab9e0309a6160dcdce",
+  "note": "Removes the category entry links from the shared /templates list page. The /industries, /platforms and /occasions pages and URLs stay; site-wide header/footer navigation is unchanged."
+}
