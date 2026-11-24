@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "phase": "retire",
+  "mode": "applied",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "confirm": "aivideosugc-blog-url-alignment-2026-11-24",
+  "mapping": [
+    [
+      "/blog/ai-product-photography-guide",
+      "/blog/ai-image-generator-tutorial-product-photos-from-one-shot"
+    ],
+    [
+      "/blog/ai-ugc-video-ads-guide",
+      "/blog/ai-video-tutorial-write-product-ad-prompts-that-work"
+    ],
+    [
+      "/blog/ai-video-review-checklist",
+      "/blog/text-to-video-tutorial-brief-the-ai-video-agent"
+    ],
+    [
+      "/blog/unboxing-videos-for-launches",
+      "/blog/product-links-tutorial-from-a-url-to-a-finished-video"
+    ],
+    [
+      "/blog/model-photos-without-a-photoshoot",
+      "/blog/ai-avatar-tutorial-presenters-voices-and-languages"
+    ],
+    [
+      "/blog/from-product-link-to-finished-ad",
+      "/blog/from-product-link-to-finished-ad-in-minutes"
+    ],
+    [
+      "/blog/how-aivideosugc-works",
+      "/blog/how-aivideosugc-works-ai-ugc-video-ads-explained-by-blydeys-cto"
+    ]
+  ],
+  "retired": [
+    {
+      "id": "aidreamcapes_v2_blog_how_aivideosugc_works",
+      "slug": "/blog/how-aivideosugc-works",
+      "title": "How AIVideosUGC Works: AI UGC Video Ads Explained by BLYDEY's CTO | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_v2_blog_from_product_link_to_finished_ad",
+      "slug": "/blog/from-product-link-to-finished-ad",
+      "title": "From Product Link to Finished Ad in Minutes | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_v2_blog_unboxing_videos_for_launches",
+      "slug": "/blog/unboxing-videos-for-launches",
+      "title": "Product Links Tutorial: URL to Video | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_v2_blog_model_photos_without_a_photoshoot",
+      "slug": "/blog/model-photos-without-a-photoshoot",
+      "title": "AI Avatar Tutorial: Presenters & Voices | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_seo_cluster_16c14c5d039ab2378b22aa5e",
+      "slug": "/blog/ai-product-photography-guide",
+      "title": "AI Image Generator Tutorial: Product Photos | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_seo_cluster_e34b58e6fbfcce51b117243c",
+      "slug": "/blog/ai-ugc-video-ads-guide",
+      "title": "AI Video Tutorial: Product Ad Prompts | AIVideosUGC"
+    },
+    {
+      "id": "aidreamcapes_seo_cluster_3da30b1f28d0f4203f0d2f5b",
+      "slug": "/blog/ai-video-review-checklist",
+      "title": "Text to Video Tutorial: Brief the Agent | AIVideosUGC"
+    }
+  ],
+  "backup": "/Users/a1/orca/workspaces/dingyue/prawn-blog4/scripts/manifests/aivideosugc-blog-url-alignment-2026-11-24.removed.json",
+  "applied": true
+}
