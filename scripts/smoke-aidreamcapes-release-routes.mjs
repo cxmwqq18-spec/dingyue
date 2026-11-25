@@ -243,7 +243,9 @@ await expectRedirect("/site/aidreamcapes/app/create?view=images", "/site/aidream
 // The card inventory is read from the live pages, so the gate follows the
 // current relational content instead of a frozen slug list.
 const detailSamples = [];
-for (const listing of ["/ai-video-generation", "/ai-image-generation"]) {
+// The video hub became a tool overview (2026-11-25), so the video cards that
+// open their own detail page are the ones in the video example catalog.
+for (const listing of ["/templates/video", "/ai-image-generation"]) {
   const { response: listingResponse, html: listingHtml } = await getText(listing);
   assert.equal(listingResponse.status, 200, `${listing}: status ${listingResponse.status}`);
   const anchors = mediaCardAnchors(listingHtml);
