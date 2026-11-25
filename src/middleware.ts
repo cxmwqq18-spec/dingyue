@@ -1126,17 +1126,20 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
     // A kind parameter on a non-template listing is not an identity we own.
     if (kindRaw && !kindApplies) return undefined;
     const basePath = kindApplies ? `/templates/${kindRaw}` : pathBase;
-    // /templates no longer paginates: every base gallery page folds back to
-    // the entry page. Kind catalogs keep their own path pagination.
-    if (basePath === "/templates") {
-      return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}/templates`), 308);
-    }
-    if (!isPaginatedListingBase(basePath)) return undefined;
-    const page = numericPage(pageRaw) ?? pathPage ?? 0;
     const gallery = numericPage(galleryRaw);
     // The secondary gallery pager only exists on the video hub; elsewhere the
     // parameter has no address and folds straight into the listing base.
     const galleryApplies = Boolean(gallery) && /^\/ai-video-generation(?:\/|$)/.test(basePath);
+    // /templates no longer paginates: every base gallery page folds back to
+    // the entry page. The video hub became a tool overview as well, so its
+    // page parameter folds straight to the hub instead of chaining through
+    // /ai-video-generation/pageN (which itself redirects to the hub). The
+    // secondary gallery pager still owns its own address.
+    if (basePath === "/templates" || (basePath === "/ai-video-generation" && !galleryApplies)) {
+      return NextResponse.redirect(publicRedirectUrlForRequest(request, `${prefix}${basePath}`), 308);
+    }
+    if (!isPaginatedListingBase(basePath)) return undefined;
+    const page = numericPage(pageRaw) ?? pathPage ?? 0;
     const rest = new URLSearchParams();
     for (const [key, value] of params) {
       if (!(LISTING_IDENTITY_PARAMS as readonly string[]).includes(key)) rest.append(key, value);

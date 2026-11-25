@@ -318,45 +318,59 @@ assert.equal(typeof inspirationBody.nextOffset, "number", "inspirations API: nex
 assert.ok(inspirationBody.counts && typeof inspirationBody.counts.all === "number", "inspirations API: counts");
 checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspirationBody.total} total`);
 
-const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-video-generation/page2");
-assert.equal(hubMediaResponse.status, 200, "video hub page 2: status");
+// The video hub is a tool overview since 694c3f2f6: deeper pages and page
+// parameters fold back to the hub in one hop instead of paginating a card grid.
+const { response: hubResponse, html: hubHtml } = await getText("/ai-video-generation");
+assert.equal(hubResponse.status, 200, "video hub: status");
+const hubPage2Response = await get("/ai-video-generation/page2", { redirect: "manual" });
+assert.ok([301, 308].includes(hubPage2Response.status), `video hub page 2: expected a permanent redirect, got ${hubPage2Response.status}`);
+assert.equal(
+  new URL(hubPage2Response.headers.get("location") || "", BASE_URL).pathname,
+  "/ai-video-generation",
+  "video hub page 2: redirect target"
+);
 const hubMediaLegacyResponse = await get("/ai-video-generation?page=2", { redirect: "manual" });
-assert.equal(hubMediaLegacyResponse.status, 308, "video hub legacy ?page=2: status");
+assert.ok([301, 308].includes(hubMediaLegacyResponse.status), "video hub legacy ?page=2: status");
 assert.equal(
   new URL(hubMediaLegacyResponse.headers.get("location") || "", BASE_URL).pathname,
-  "/ai-video-generation/page2",
-  "video hub legacy ?page=2: redirect target"
+  "/ai-video-generation",
+  "video hub legacy ?page=2: single-hop redirect target"
 );
-const hubMediaCards = (hubMediaHtml.match(/class="v-pick-card"/g) || []).length;
-assert.equal(hubMediaCards, 20, `video hub page 2: ${hubMediaCards} SSR picker cards (full catalog, 20 per page)`);
-assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: picker pager present");
-assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
-// The picker grid is the hub's single video catalog display: its pager must
-// reach the whole catalog (200+ detail pages), the last page answers, and an
-// out-of-range page clamps to the last page instead of erroring.
-const totalPagesMatch = hubMediaHtml.replaceAll("<!-- -->", "").match(/Page 2 of (\d+)/);
-assert.ok(totalPagesMatch, "video hub: pager exposes the total page count");
-const hubTotalPages = Number(totalPagesMatch[1]);
-assert.ok(hubTotalPages >= 10, `video hub: full catalog paginates into ${hubTotalPages} pages`);
-const { html: hubLastHtml } = await getText(`/ai-video-generation/page${hubTotalPages}`);
-assert.equal((hubLastHtml.match(/class="v-pick-card"/g) || []).length > 0, true, `video hub last page (${hubTotalPages}): renders cards`);
-assert.ok(!hubLastHtml.includes(`/page${hubTotalPages + 1}"`), "video hub last page: no pager link past the last page");
-const { html: hubClampHtml } = await getText(`/ai-video-generation/page${hubTotalPages + 5}`);
-assert.equal((hubClampHtml.match(/class="v-pick-card"/g) || []).length, (hubLastHtml.match(/class="v-pick-card"/g) || []).length, "video hub: out-of-range page clamps to the last page");
-checks.push(`video hub: picker grid browses the full video catalog (${hubTotalPages} SSR pages, plain-anchor pager)`);
+assert.ok(!hubHtml.includes("MediaGridLoader"), "video hub: no client media loader");
+checks.push("video hub: tool overview, deeper pages and ?page= fold back in one hop");
 
-// The hub's related module links the eight make-a-video tool pages — the same
-// items as the nav's "Make a video" panel. No /templates links, and the
-// industry/platform/occasion directory groups are gone. (Nav, hero and footer
-// /templates links are global components, out of scope.)
-const relatedModule = hubMediaHtml.slice(hubMediaHtml.indexOf("v-related-groups"), hubMediaHtml.indexOf("v-picker-action"));
-assert.ok(relatedModule.includes("Make a video"), "video hub: make-a-video module rendered");
-assert.ok(!relatedModule.includes("/templates"), "video hub: no /templates link in the related module");
-assert.ok(!relatedModule.includes("Browse by industry"), "video hub: directory groups removed from the related module");
-for (const slug of ["image-to-video", "url-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "text-to-video", "ai-twin"]) {
-  assert.ok(relatedModule.includes(`href="/ai-video-generation/${slug}"`), `video hub: related module links to ${slug}`);
+// Paginated card pages now live on the kind catalogs. The pager must reach the
+// whole catalog, the last page answers, and an out-of-range page points at the
+// last page instead of erroring.
+const { response: catalogResponse, html: catalogHtml } = await getText("/templates/video/page2");
+assert.equal(catalogResponse.status, 200, "video catalog page 2: status");
+const catalogCards = (catalogHtml.match(/class="tc"/g) || []).length;
+assert.equal(catalogCards, 20, `video catalog page 2: ${catalogCards} SSR cards`);
+assert.ok(catalogHtml.includes('aria-label="Browse more examples by page"'), "video catalog page 2: pager present");
+const totalPagesMatch = catalogHtml.replaceAll("<!-- -->", "").match(/Page 2 of (\d+)/);
+assert.ok(totalPagesMatch, "video catalog: pager exposes the total page count");
+const catalogTotalPages = Number(totalPagesMatch[1]);
+assert.ok(catalogTotalPages >= 10, `video catalog: full catalog paginates into ${catalogTotalPages} pages`);
+const { html: catalogLastHtml } = await getText(`/templates/video/page${catalogTotalPages}`);
+assert.equal((catalogLastHtml.match(/class="tc"/g) || []).length > 0, true, `video catalog last page (${catalogTotalPages}): renders cards`);
+assert.ok(!catalogLastHtml.includes(`/page${catalogTotalPages + 1}"`), "video catalog last page: no pager link past the last page");
+const catalogOverflowResponse = await get(`/templates/video/page${catalogTotalPages + 5}`, { redirect: "manual" });
+assert.ok([301, 308].includes(catalogOverflowResponse.status), `video catalog out-of-range page: expected a permanent redirect, got ${catalogOverflowResponse.status}`);
+assert.equal(
+  new URL(catalogOverflowResponse.headers.get("location") || "", BASE_URL).pathname,
+  `/templates/video/page${catalogTotalPages}`,
+  "video catalog out-of-range page: redirects to the last page"
+);
+checks.push(`video catalog: paginated grid (${catalogTotalPages} SSR pages, plain-anchor pager)`);
+
+// The tool-overview hub links the eight make-a-video tool pages. The retired
+// industry/platform/occasion groups are content, checked by the content
+// pipeline, not by this route contract.
+const HUB_TOOL_SLUGS = ["image-to-video", "url-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "text-to-video", "ai-twin"];
+for (const slug of HUB_TOOL_SLUGS) {
+  assert.ok(hubHtml.includes(`href="/ai-video-generation/${slug}"`), `video hub: links to ${slug}`);
 }
-checks.push("video hub: related module links the 8 make-a-video tool pages (no directory or /templates links)");
+checks.push(`video hub: links the ${HUB_TOOL_SLUGS.length} make-a-video tool pages`);
 
 const hubGalleryLegacy = await get("/ai-video-generation?galleryPage=2", { redirect: "manual" });
 assert.equal(hubGalleryLegacy.status, 308, "video hub legacy gallery query: status");
