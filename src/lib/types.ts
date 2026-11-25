@@ -83,6 +83,8 @@ export interface ThemeNavLink {
 export interface AidreamcapesV2NavigationMenu {
   label: string;
   groups: AidreamcapesZipNavigationGroup[];
+  /** Plain destination for a menu that has no dropdown groups. */
+  href?: string;
   popular?: ThemeNavLink[];
   /** The menu's hub page, linked once at the bottom of the panel instead of among the tools. */
   hubLink?: ThemeNavLink;

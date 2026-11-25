@@ -58,6 +58,11 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
         </WorkspaceEntryLink>
         <nav aria-label={copyLabel(r, "Main")} className="main" id="adc2-main-nav">
           {navigation.menus.map((menu) => {
+            if (!menu.groups.length && menu.href) {
+              // A menu without groups is a plain destination; it keeps its
+              // place in the bar instead of opening an empty panel.
+              return <WorkspaceEntryLink className="nav-btn" href={r.href(menu.href)} key={menu.label}>{menu.label}</WorkspaceEntryLink>;
+            }
             const rich = menu.groups.length === 1 && menu.groups[0].items.some((item) => item.description);
             const wideDirectory = !rich && menu.groups.some((group) => group.columns);
             const sceneGroupIndex = wideDirectory
