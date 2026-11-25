@@ -157,8 +157,35 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
   for (const [id, section] of Object.entries(sections)) {
     if (section.type !== "aidreamcapes_v2_page") continue;
     const settings = section.settings as Record<string, unknown>;
-    const data = settings.data as V2Data;
+    let data = settings.data as V2Data;
     if (!data) continue;
+    // A curated example list renders exactly those cards (max 8) and nothing
+    // else: no appended catalog entries, no filter chips and no pagination.
+    const featuredSlugs = (data.visual as { picker?: { featuredSlugs?: unknown } } | undefined)?.picker?.featuredSlugs;
+    if (Array.isArray(featuredSlugs)) {
+      const wanted = featuredSlugs.filter((slug): slug is string => typeof slug === "string").slice(0, 8);
+      const entries = await listAidreamcapesExampleGalleryEntries();
+      const bySlug = new Map(entries.map((entry) => [entry.slug, entry]));
+      const cards = wanted.flatMap((slug) => {
+        const entry = bySlug.get(slug);
+        if (!entry) return [];
+        const image: V2VisualImage = { src: entry.image.src, alt: entry.image.alt ?? entry.label, w: entry.image.w ?? 0, h: entry.image.h ?? 0, kind: entry.kind };
+        return [{
+          image,
+          label: entry.label,
+          chips: [] as string[],
+          href: entry.href,
+          prompt: "",
+          kind: entry.kind,
+          publicSlug: entry.slug,
+          ...(entry.video && entry.video.width && entry.video.height
+            ? { video: { ...entry.video, poster: entry.video.poster ? { src: entry.video.poster.src, alt: entry.video.poster.alt ?? image.alt } : { src: image.src, alt: image.alt }, width: entry.video.width, height: entry.video.height } }
+            : {})
+        }];
+      });
+      const visual = data.visual as { picker?: Record<string, unknown> } | undefined;
+      data = { ...data, visual: { ...visual, picker: { ...visual?.picker, cards, chips: [] } } } as V2Data;
+    }
     let resolved: V2Data;
     if (data.exampleDirectory) {
       // The /templates example gallery: every public detail card, newest
@@ -266,7 +293,13 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       // same single-owner enumeration of relational owner rows that the
       // sitemap reads, so future videos appear without a data write. The
       // merged list paginates below like any other hub picker grid.
-      if (props.pagePath && resolved.id === "video-hub") {
+      // The tools-only hub has no paginated catalog: any ?page=N (or /pageN)
+      // address retires with a 308 to the hub itself.
+      if (props.pagePath && resolved.id === "video-hub" && (resolved as { toolsOnly?: boolean }).toolsOnly) {
+        redirectNonCanonicalPage(props.pagePath, props.query, routePrefix);
+        redirectPastLastPage(props.pagePath, requestedListingPage(props.query), 1, props.query, routePrefix);
+      }
+      if (props.pagePath && resolved.id === "video-hub" && !(resolved as { toolsOnly?: boolean }).toolsOnly && !Array.isArray(featuredSlugs)) {
         const hubPicker = (resolved.visual as { picker?: { cards: V2VisualPickerCard[] } } | undefined)?.picker;
         if (hubPicker) {
           const curated = new Set(hubPicker.cards.map((card) => card.publicSlug ?? card.label));

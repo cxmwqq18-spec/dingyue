@@ -964,7 +964,8 @@ type AidreamcapesListingSitemapData = {
   templateDefinition?: unknown;
   kind?: string;
   id?: string;
-  visual?: { picker?: { cards?: Array<{ publicSlug?: string; label?: string }> } };
+  toolsOnly?: boolean;
+  visual?: { picker?: { cards?: Array<{ publicSlug?: string; label?: string }>; featuredSlugs?: string[] } };
 };
 
 function aidreamcapesListingSitemapData(page: ThemePage): AidreamcapesListingSitemapData | undefined {
@@ -1183,6 +1184,7 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           continue;
         }
         if (data.id === "video-hub") {
+          if ((data as { toolsOnly?: boolean }).toolsOnly) continue;
           const curated = data.visual?.picker?.cards ?? [];
           const curatedKeys = new Set(curated.map((card) => card.publicSlug ?? card.label));
           const appended = galleryEntries.filter((entry) => entry.kind === "video" && !curatedKeys.has(entry.slug));
@@ -1198,11 +1200,13 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
           continue;
         }
         if (listing.path.startsWith("/ai-video-generation/") && !data.templateDefinition && Array.isArray(data.visual?.picker?.cards)) {
-          addListingPages(listing.path, sitemapPageCount(data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          const featured = Array.isArray(data.visual.picker.featuredSlugs) ? data.visual.picker.featuredSlugs.length : undefined;
+          addListingPages(listing.path, sitemapPageCount(featured ?? data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
           continue;
         }
         if (listing.path.startsWith("/tools/") && Array.isArray(data.visual?.picker?.cards)) {
-          addListingPages(listing.path, sitemapPageCount(data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
+          const featured = Array.isArray(data.visual.picker.featuredSlugs) ? data.visual.picker.featuredSlugs.length : undefined;
+          addListingPages(listing.path, sitemapPageCount(featured ?? data.visual.picker.cards.length, AIDREAMCAPES_MEDIA_PAGE_SIZE));
         }
       }
     }

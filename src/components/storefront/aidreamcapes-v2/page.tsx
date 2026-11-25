@@ -332,6 +332,9 @@ function oneRowWhenSingles(examples: V2Examples | undefined): V2Examples | undef
 
 function VideoHubPage({ data, r }: Props) {
   const visual = data.visual as V2Visual | undefined;
+  // The owner retired the hub's video catalog: the overview now presents the
+  // eight video tools and nothing else.
+  const toolsOnly = data.toolsOnly === true;
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
@@ -345,12 +348,14 @@ function VideoHubPage({ data, r }: Props) {
     </>],
     ["strip", <VisualStrip visual={visual} r={r} />],
     ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>],
-    ["picker", <VisualPicker eyebrow="Choose a tool" paginateWith={pickerSourcePage(data) ?? "/ai-video-generation"} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} relatedGroups={relatedGroups} visual={visual} r={r} />],
+    ["picker", toolsOnly
+      ? (list<V2Tool>(data.tools).length ? <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null)
+      : <VisualPicker eyebrow="Choose a tool" paginateWith={pickerSourcePage(data) ?? "/ai-video-generation"} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} relatedGroups={relatedGroups} visual={visual} r={r} />],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />],
     ["steps", <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
     ["features", data.blockOrder ? <MoreSections r={r} sections={data.more_sections as never} /> : null],
     ["compare", data.blockOrder && data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null],
-    ["examples", <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>],
+    ["examples", toolsOnly ? null : <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>],
     ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
     ...pageOwnBlocks(data, r),
     ["faq", <Faq guideLink={faqGuideLink(data.guideLink)} items={data.faq} title="Questions About AI Video" r={r} />],

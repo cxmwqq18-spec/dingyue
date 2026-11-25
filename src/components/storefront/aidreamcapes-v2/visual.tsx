@@ -247,7 +247,7 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
         <div className="v-picker" id={pickerId}>
           <input aria-label="All" className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
           {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
-          {linkStrip ?? (
+          {picker.chips.length === 0 && !quickLinks?.length ? null : linkStrip ?? (
             <div className="v-picker-chips" role="group" aria-label="Filter directory cards">
               <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
               {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
@@ -306,12 +306,14 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
     <Section id={sectionId} eyebrow={sectionEyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
       {photoGridStyle || pickerFocusCss || relatedCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}\n${relatedCss}` }} /> : null}
       <div className="v-picker" id={pickerId}>
-        <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
-        {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
-        <div className="v-picker-chips" role="group" aria-label={isHub ? "Filter tools" : "Filter scenes"}>
-          <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
-          {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
-        </div>
+        {picker.chips.length ? <>
+          <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
+          {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
+          <div className="v-picker-chips" role="group" aria-label={isHub ? "Filter tools" : "Filter scenes"}>
+            <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
+            {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
+          </div>
+        </> : null}
         <div className="v-picker-grid">
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>

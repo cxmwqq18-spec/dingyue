@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-25",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "note": "Retires the video catalogs on the eight video-tool pages: clears the filter chips, pins each tool page to a curated example list, and turns the /ai-video-generation hub into the eight-tool overview. Paginated listing URLs retire with a 308 to their base page.",
+  "pages": [
+    { "slug": "/ai-video-generation", "toolsOnly": true },
+    {
+      "slug": "/ai-video-generation/image-to-video",
+      "clearChips": true,
+      "featuredSlugs": [
+        "mint-shower-speaker-bathroom-concert",
+        "mint-speaker-tile-steam-session",
+        "green-notebook-desk-ritual",
+        "black-speaker-balcony-soundtest",
+        "washed-graphic-tee-fit-check",
+        "wrinkled-shirt-steamer-rescue",
+        "canvas-tote-everyday-carry",
+        "wide-leg-work-pants-fit-check"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/video-ads",
+      "clearChips": true,
+      "featuredSlugs": [
+        "quiet-unboxing-makeup-tools",
+        "cinematic-watch-detail",
+        "bedroom-try-on-knitwear",
+        "street-style-linen-set",
+        "lifestyle-app-recommendation",
+        "streamer-reaction-app",
+        "routine-demo-cream",
+        "bathroom-review-moisturizer"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/product-video",
+      "clearChips": true,
+      "featuredSlugs": [
+        "umbrella-opens-for-coverage",
+        "folding-bike-hinge-opens",
+        "desk-lamp-switches-on",
+        "drawer-trays-slide-into-place",
+        "travel-charger-packs-away",
+        "laptop-sleeve-opens-for-fit",
+        "lunchbox-latch-clicks-shut",
+        "water-bottle-demo-cap-twists-open"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/spokesperson-video",
+      "clearChips": true,
+      "featuredSlugs": [
+        "indoor-entryway-greeting",
+        "indoor-home-corner-chat",
+        "home-sofa-welcome",
+        "home-table-explanation",
+        "outdoor-park-greeting",
+        "outdoor-walkway-update",
+        "living-room-sofa-check-in",
+        "living-room-lounge-introduction"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/before-after-video",
+      "clearChips": true,
+      "featuredSlugs": [
+        "sunset-lamp-room-glow-before-after",
+        "cable-organizer-desk-before-after",
+        "notes-app-chaos-to-calm",
+        "cable-organizer-white-setup"
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/url-to-video",
+      "clearChips": true,
+      "featuredSlugs": []
+    },
+    { "slug": "/ai-video-generation/text-to-video", "clearChips": true },
+    { "slug": "/ai-video-generation/ai-twin", "clearChips": true }
+  ]
+}
