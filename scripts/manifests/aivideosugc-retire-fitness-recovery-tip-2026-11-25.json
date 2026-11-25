@@ -1,0 +1,146 @@
+{
+  "date": "2026-11-25",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "slug": "fitness-recovery-tip",
+  "detailPath": "/ai-video-generation/fitness-recovery-tip",
+  "redirectTarget": "/ai-video-generation/exercise-mat-recovery-chat",
+  "removedCards": [
+    {
+      "rowSlug": "/ai-video-generation/spokesperson-video",
+      "where": "visual.picker.cards",
+      "card": {
+        "href": "/app/create/tool/spokesperson-video#step-video",
+        "kind": "video",
+        "chips": [
+          "fitness"
+        ],
+        "image": {
+          "h": 1138,
+          "w": 640,
+          "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+          "src": "/ai-image-generation/actors/caleb-640.webp",
+          "kind": "video"
+        },
+        "label": "Fitness: Recovery Tip",
+        "video": {
+          "src": "/ai-video-generation/fitness-recovery-tip.mp4",
+          "width": 720,
+          "height": 1280,
+          "poster": {
+            "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+            "src": "/ai-image-generation/actors/caleb-640.webp",
+            "kind": "video"
+          },
+          "previewSrc": "https://www.aivideosugc.com/ai-video-generation/fitness-recovery-tip-p10.mp4"
+        },
+        "aspect": "9:16",
+        "prompt": "Overall: 30-second vertical UGC shopping video, handheld phone-shot style, natural light, real a gym rest bench with a towel and a water bottle beside it, soft top light, whole frame crisp. It follows a post-workout reset - the jar opened, one scoop, the shoulders covered - and ends with the jar closed on his lap.\nProduct: Image 2 is this video's product: a recovery balm in a plain matte jar. It stays exactly as shown in Image 2 in shape, color and proportion, with no text or logo anywhere on it. The balm keeps its plain matte jar and dense texture. Every action below keeps believable weight and continuous contact with his hands.\nCreator: the presenter is the person shown in Image 1 - same face, hairstyle and outfit in every shot, clothing stays plain with no logo; only one person in the whole video, never shown twice; speaks natural American English like sharing with a friend, not like an announcer.\nShots\nShot [0-3s]  medium shot, static camera: he sits on the bench with the jar in hand and faces the camera; end state: the lid off in his other hand. He says: \"Post-workout ritual, step one: this little balm.\"\nShot [3-9s]  medium shot: he scoops a fingertip of balm and dots it on both shoulders; end state: dots placed on both shoulders. He says: \"It goes on cool and smooth, and one small dab covers both shoulders at once.\"\nShot [9-18s]  close shot on the shoulder, same side: the balm sinks in as he spreads it, the camera easing a touch closer; end state: the skin matte with no shine. He says: \"It sinks in fast with zero greasy shine, and my shoulders stop complaining by the morning.\"\nShot [18-25s]  medium shot: he caps the jar and sets it on his lap; end state: the jar closed on his lap. He says: \"No sticky hands, no strong smell, and one jar quietly lasts for months.\"\nShot [25-30s]  medium close shot: he faces the camera with the jar on his lap; end state: still. He says: \"Recovery is strategy, not laziness - trust me.\"\nSound: His voice carries only the quoted lines in a friendly natural tone; natural sound: the lid twisting, balm spreading. No background music. He speaks only the quoted English sentences and stops when done.\nConstraints: Physical rules: the balm sinks in fast with no sticky shine, the jar closes with one twist, and the towel and bottle stay consistent across shots; his clothing stays plain and logo-free.\nNegative: background music, subtitles, on-screen text, text on packaging, garbled letters, watermark, logo, extra fingers, deformed hands, extra people or hands, duplicate selves, mirror or mirror selfie, product melting or deforming, stains or burn marks, background bokeh, depth-of-field blur, blurry background, two identical people, duplicate person, the same person twice, duplicated objects, object morphing, warping or bending rigid objects, floating objects, spilled water",
+        "duration": 30,
+        "placement": [
+          "/industries/health-wellness"
+        ],
+        "sceneSlug": "fitness-recovery-tip-9d831a357491",
+        "publicSlug": "fitness-recovery-tip",
+        "referenceImages": [
+          {
+            "alt": "修护润膏（素罐装）",
+            "src": "/ai-image-generation/fitness-recovery-tip-product.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "rowSlug": "/",
+      "where": "visual.picker.cards",
+      "card": {
+        "href": "/ai-video-generation/fitness-recovery-tip",
+        "kind": "video",
+        "chips": [],
+        "image": {
+          "h": 1138,
+          "w": 640,
+          "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+          "src": "/ai-image-generation/actors/caleb-640.webp"
+        },
+        "label": "Fitness: Recovery Tip",
+        "video": {
+          "src": "/ai-video-generation/fitness-recovery-tip.mp4",
+          "width": 720,
+          "height": 1280,
+          "poster": {
+            "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+            "src": "/ai-image-generation/actors/caleb-640.webp",
+            "kind": "video"
+          },
+          "duration": 30,
+          "previewSrc": "https://www.aivideosugc.com/ai-video-generation/fitness-recovery-tip-p10.mp4"
+        },
+        "aspect": "9:16",
+        "duration": 30,
+        "publicAliases": []
+      }
+    },
+    {
+      "rowSlug": "/",
+      "where": "brandToolsDemo.actorWall.rows[1]",
+      "card": {
+        "name": "Caleb",
+        "role": "Fitness",
+        "image": {
+          "alt": "AI actor Caleb sharing a fitness tip",
+          "src": "/ai-image-generation/actors/caleb-640.webp",
+          "width": 640,
+          "height": 1138
+        },
+        "video": "/ai-video-generation/fitness-recovery-tip-p10.mp4"
+      }
+    }
+  ],
+  "repointedEmbeds": [
+    {
+      "before": {
+        "src": "/ai-video-generation/fitness-recovery-tip.mp4",
+        "href": "/ai-video-generation/fitness-recovery-tip",
+        "label": "Watch the Fitness Recovery Tip example",
+        "poster": {
+          "alt": "A fitness creator shares a recovery tip straight to camera in a gym.",
+          "src": "/ai-image-generation/actors/caleb-640.webp",
+          "width": 640,
+          "height": 1138
+        }
+      },
+      "after": {
+        "src": "/ai-video-generation/exercise-mat-recovery-chat.mp4",
+        "href": "/ai-video-generation/exercise-mat-recovery-chat",
+        "label": "Watch the Exercise Mat Recovery Chat example",
+        "poster": {
+          "alt": "an adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+          "src": "/ai-image-generation/actors/akio-640.webp",
+          "width": 640,
+          "height": 1138
+        }
+      }
+    }
+  ],
+  "rows": [
+    {
+      "slug": "/ai-video-generation/spokesperson-video",
+      "baseHash": "0f1541a59c54e72589b40a30835afd4160e30a8b1479a7667ea6a3c85b7f2160",
+      "nextHash": "6fcafd522fa9ec7b65658f2a4ec6ca793ab264bfac2f66cf58be7c7039f6e0a7"
+    },
+    {
+      "slug": "/",
+      "baseHash": "5b760032946df724f6121aa7469f81a30fe778cf90647dfb8f23e920026a9818",
+      "nextHash": "3f0766eb4c1ae2fc6daac030d55e77026ac24fe1ea47804882a90cccf2828cd8"
+    },
+    {
+      "slug": "/blog/ai-generated-ugc-ads-platform-for-health-and-fitness",
+      "baseHash": "55c9e66e09de5e696363f3ffde2aadd47ced98a795a039a7b6d1f09634b137ad",
+      "nextHash": "e1b89e44d5b5a27c8563be79fcf0422fd8455e1e8493d4a5434f64a410848b84"
+    }
+  ],
+  "changed": true,
+  "note": "Removes both relational cards for the retired fitness example. The detail and watch URLs 308 to a living fitness example; media files stay in place so already-indexed asset URLs keep answering 200."
+}

@@ -8,6 +8,8 @@
 //   /                              -> visual.picker.cards[*].href = /ai-video-generation/fitness-recovery-tip
 //   /                              -> brandToolsDemo.actorWall.rows[*][*].video = .../fitness-recovery-tip-p10.mp4
 // The actor-wall tile leaves too: it plays the same clip as a preview.
+// One blog article embeds the clip as a media block; that block is repointed
+// at the surviving example instead of leaving a hole in the article.
 //
 // The address itself is NOT deleted: media-detail.server.ts now maps the slug
 // to /ai-video-generation/exercise-mat-recovery-chat, so the detail URL and
@@ -29,6 +31,9 @@ const CONFIRM_NAME = "aivideosugc-retire-fitness-recovery-tip-2026-11-25";
 const MANIFEST_PATH = new URL("./manifests/aivideosugc-retire-fitness-recovery-tip-2026-11-25.json", import.meta.url);
 const SLUG = "fitness-recovery-tip";
 const DETAIL_HREF = `/ai-video-generation/${SLUG}`;
+const TARGET_SLUG = "exercise-mat-recovery-chat";
+const TARGET_HREF = `/ai-video-generation/${TARGET_SLUG}`;
+const EMBED_BLOG_SLUG = "/blog/ai-generated-ugc-ads-platform-for-health-and-fitness";
 const siteId = assertAllowedSite("site_aidreamcapes");
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
 const apply = hasArgument("--apply");
@@ -101,11 +106,72 @@ try {
   }
   assert(removals.length > 0, "Nothing matched the retired slug; refusing a no-op.");
 
-  // No row may keep a reference to the retired slug (detail link, alias, card).
-  const allRows = await db.livePage.findMany({ where: { siteId }, select: { slug: true, contentJson: true } });
-  for (const candidate of allRows) {
-    const content = updates.find((entry) => entry.row.slug === candidate.slug)?.next ?? candidate.contentJson;
-    assert.equal(referencesSlug(content), 0, `Retired slug still referenced on ${candidate.slug}.`);
+  // The health-and-fitness article embeds the clip as a media block. Repoint
+  // it at the surviving example (video, poster and caption together) so the
+  // article keeps its example and the retired asset stops being served.
+  const embedRow = await db.livePage.findFirst({
+    where: { siteId, slug: EMBED_BLOG_SLUG },
+    select: { id: true, slug: true, contentJson: true, updatedAt: true }
+  });
+  assert(embedRow, `Article ${EMBED_BLOG_SLUG} is missing on ${target}.`);
+  const embedNext = structuredClone(embedRow.contentJson);
+  const embedSections = embedNext?.sections?.v2_main?.settings?.data?.sections;
+  assert(Array.isArray(embedSections), "Article sections missing.");
+  const repointed = [];
+  for (const section of embedSections) {
+    if (!Array.isArray(section?.blocks)) continue;
+    for (const block of section.blocks) {
+      const embedsClip = typeof block?.src === "string" && block.src.includes(SLUG);
+      const linksDetail = block?.href === DETAIL_HREF;
+      if (!embedsClip && !linksDetail) continue;
+      assert.equal(block.src, `/ai-video-generation/${SLUG}.mp4`, "Unexpected embedded clip source.");
+      assert.equal(block.href, DETAIL_HREF, "Unexpected embedded clip link.");
+      assert.equal(block.label, "Watch the Fitness Recovery Tip example", "Unexpected embedded clip caption.");
+      assert.equal(block.poster?.src, "/ai-image-generation/actors/caleb-640.webp", "Unexpected embedded clip poster.");
+      repointed.push({ before: { src: block.src, href: block.href, label: block.label, poster: block.poster }, after: {
+        src: `/ai-video-generation/${TARGET_SLUG}.mp4`,
+        href: TARGET_HREF,
+        label: "Watch the Exercise Mat Recovery Chat example",
+        poster: {
+          alt: "an adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+          src: "/ai-image-generation/actors/akio-640.webp",
+          width: 640,
+          height: 1138
+        }
+      } });
+      block.src = `/ai-video-generation/${TARGET_SLUG}.mp4`;
+      block.href = TARGET_HREF;
+      block.label = "Watch the Exercise Mat Recovery Chat example";
+      block.poster = {
+        alt: "an adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+        src: "/ai-image-generation/actors/akio-640.webp",
+        width: 640,
+        height: 1138
+      };
+    }
+  }
+  assert.equal(repointed.length, 1, `Expected one embedded clip in ${EMBED_BLOG_SLUG}, found ${repointed.length}.`);
+  updates.push({ row: embedRow, next: embedNext });
+
+  // No other row may keep a reference to the retired slug (detail link, alias,
+  // card, or preview clip). A targeted jsonpath lookup keeps this cheap over a
+  // production tunnel; the two rows we own are checked on the new document.
+  const otherOwners = await db.$queryRaw`
+    SELECT "slug" FROM "LivePage"
+    WHERE "siteId" = ${siteId}
+      AND (
+        jsonb_path_exists("contentJson", '$.**.publicSlug ? (@ == $slug)', jsonb_build_object('slug', ${SLUG}))
+        OR jsonb_path_exists("contentJson", '$.**.href ? (@ == $href)', jsonb_build_object('href', ${DETAIL_HREF}))
+        OR jsonb_path_exists("contentJson", '$.**.publicAliases[*] ? (@ == $slug)', jsonb_build_object('slug', ${SLUG}))
+        OR "contentJson"::text LIKE ${`%${SLUG}%`}
+      )
+  `;
+  const ownedSlugs = new Set(updates.map(({ row }) => row.slug));
+  for (const candidate of otherOwners) {
+    assert.ok(ownedSlugs.has(candidate.slug), `Retired slug is still referenced on ${candidate.slug}.`);
+  }
+  for (const { row, next } of updates) {
+    assert.equal(referencesSlug(next), 0, `Retired slug still referenced on ${row.slug}.`);
   }
 
   const changed = updates.some(({ row, next }) => hash(next) !== hash(row.contentJson));
@@ -134,6 +200,7 @@ try {
     detailPath: DETAIL_HREF,
     redirectTarget: "/ai-video-generation/exercise-mat-recovery-chat",
     removedCards: removals,
+    repointedEmbeds: repointed,
     rows: updates.map(({ row, next }) => ({ slug: row.slug, baseHash: hash(row.contentJson), nextHash: hash(next) })),
     changed,
     note: "Removes both relational cards for the retired fitness example. The detail and watch URLs 308 to a living fitness example; media files stay in place so already-indexed asset URLs keep answering 200."
