@@ -51,9 +51,17 @@ export async function withAidreamcapesListingPageMetadata(metadata: Metadata, ho
     page
   );
   const descriptionChanged = Boolean(description) && description !== metadata.description;
-  if (!canonical || !title || (title === metadata.title && !descriptionChanged)) return metadata;
+  // Deeper listing pages are the same result set sliced again: page-distinct
+  // titles keep the snippet honest, but the pages themselves stay out of the
+  // index (`noindex,follow`) so the paginated duplicates do not compete with
+  // page 1. Links on them stay followed, so every card is still crawlable.
+  const robots = { index: false, follow: true } as const;
+  if (!canonical || !title || (title === metadata.title && !descriptionChanged)) {
+    return { ...metadata, robots };
+  }
   return {
     ...metadata,
+    robots,
     ...(description ? { description } : {}),
     alternates: { ...(metadata.alternates ?? {}), canonical },
     title,
@@ -165,7 +173,10 @@ export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | unde
       return {
         title: { absolute: title },
         description,
-        robots: { index: true, follow: true, "max-image-preview": "large" as const },
+        // Page 2+ of a kind catalog is the same catalog sliced again: keep the
+        // page-distinct title and self canonical, but leave it out of the index
+        // while still following its cards.
+        robots: page >= 2 ? { index: false, follow: true } : { index: true, follow: true, "max-image-preview": "large" as const },
         alternates: { canonical },
         openGraph: { title, description, url: canonical, images },
         twitter: { card: "summary_large_image", title, description, images }

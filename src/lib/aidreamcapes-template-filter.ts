@@ -129,14 +129,17 @@ export function aidreamcapesFilterJsonLd<T>(nodes: T, path: string, query: Templ
   if (/^\/(templates|industries|platforms|occasions)(?:\/|$)/.test(path) && state.noindex) {
     return rewriteAidreamcapesJsonLdIdentity(nodes, `https://www.aivideosugc.com${path}`, `https://www.aivideosugc.com${state.canonicalPath}`);
   }
-  // Paginated indexable listing views carry a page-inclusive canonical, so the
-  // page nodes in the graph must address the same identity instead of
-  // disagreeing with the link tag about which document this is.
-  const page = aidreamcapesListingPageNumber(query);
-  if (page && PAGINATED_LISTING_PATH_RE.test(path)) {
+  // A listing identity is the public address of the catalog, not the row slug:
+  // the photo/video kind catalogs live at `/templates/photo|video`, and deeper
+  // pages append `/pageN`. The page nodes must address that identity so the
+  // graph never disagrees with the canonical link (or, worse, names
+  // `/templates/page3`, which is a redirect).
+  if (PAGINATED_LISTING_PATH_RE.test(path)) {
+    const page = aidreamcapesListingPageNumber(query);
+    const publicBase = `https://www.aivideosugc.com${state.canonicalPath.split("?")[0] || path}`;
     const before = `https://www.aivideosugc.com${path}`;
-    const after = aidreamcapesListingPageCanonical(before, page);
-    if (after && after !== before) return rewriteAidreamcapesJsonLdIdentity(nodes, before, after);
+    const after = aidreamcapesListingPageCanonical(publicBase, page) ?? publicBase;
+    if (after !== before) return rewriteAidreamcapesListingJsonLdIdentity(nodes, before, after);
   }
   return nodes;
 }
@@ -147,6 +150,23 @@ function rewriteAidreamcapesJsonLdIdentity<T>(nodes: T, before: string, after: s
     if (Array.isArray(value)) return value.map(walk);
     if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, walk(entry)]));
     return value;
+  };
+  return walk(nodes) as T;
+}
+
+/** Rewrite the document's own identity (`@id` / `url` / `mainEntityOfPage`)
+ * without touching breadcrumb items: a crumb names the section it points at,
+ * so the blanket rewrite above turned the "Examples" crumb into the paginated
+ * URL itself. */
+function rewriteAidreamcapesListingJsonLdIdentity<T>(nodes: T, before: string, after: string): T {
+  const swap = (value: string) => value === before ? after : value.startsWith(`${before}#`) ? after + value.slice(before.length) : value;
+  const walk = (value: unknown): unknown => {
+    if (Array.isArray(value)) return value.map(walk);
+    if (!value || typeof value !== "object") return value;
+    return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, entry]) => {
+      if ((key === "@id" || key === "url" || key === "mainEntityOfPage") && typeof entry === "string") return [key, swap(entry)];
+      return [key, walk(entry)];
+    }));
   };
   return walk(nodes) as T;
 }

@@ -73,6 +73,15 @@ export function listingGalleryPagePath(basePath: string, page: number): string {
   return page > 1 ? `${basePath}/${GALLERY_PAGE_SEGMENT_PREFIX}/page${page}` : basePath;
 }
 
+/** Heading for a deeper listing page. Page 2+ carries the page marker so the
+ * document's only H1 stops repeating page 1 word for word. */
+export function listingPageHeading(title: unknown, page: unknown): string {
+  const text = typeof title === "string" ? title.trim() : title == null ? "" : String(title);
+  const number = Math.floor(Number(page));
+  if (!text || !Number.isFinite(number) || number < 2 || text.includes(`Page ${number}`)) return text;
+  return `${text} — Page ${number}`;
+}
+
 /** Kind catalog address (`/templates?kind=photo` → `/templates/photo`). */
 export function templateKindPath(kind: "photo" | "video"): string {
   return `/templates/${kind}`;

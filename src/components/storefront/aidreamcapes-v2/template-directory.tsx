@@ -5,7 +5,7 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
 import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
-import { listingGalleryPagePath, listingPagePath } from "@/lib/listing-pagination";
+import { listingGalleryPagePath, listingPageHeading, listingPagePath } from "@/lib/listing-pagination";
 import { Adc2VideoPreview } from "./video-preview-card";
 import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-responsive-images";
 import { AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
@@ -305,7 +305,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
+      <h1>{listingPageHeading(data.h1, gallery.page)}</h1><p>{String(data.lead ?? "")}</p>
       <p className="meta-line">Examples {range.start}–{range.end} of {gallery.total}</p>
       <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
       {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
@@ -337,7 +337,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
     return <>
       <section className="sec"><div className={`wrap ${styles.directory}`}>
         <Crumbs items={data.breadcrumbs} r={r} />
-        <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
+        <h1>{listingPageHeading(data.h1, mediaPager?.page)}</h1><p>{String(data.lead ?? "")}</p>
         {media.length ? <section aria-labelledby="category-media-heading" className={styles.mediaSection} data-directory-media="true">
           <div className="sec-head">
             <div className="eyebrow">Examples</div>
