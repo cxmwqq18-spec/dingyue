@@ -81,3 +81,15 @@
 .historyDelete:disabled { opacity: .55; cursor: not-allowed; }
 .historyEmpty { margin: 0; padding: 12px; border: 1px dashed #dce0e7; border-radius: 10px; color: #73777d; font-size: 12px; }
 .historyRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
+
+.imagePicker { display: grid; gap: 8px; padding: 12px; border: 1px solid #e3e6ec; border-radius: 10px; background: #fff; }
+.imagePickerHead { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: #4e5360; font-size: 12px; font-weight: 600; }
+.imagePickerActions { display: flex; justify-content: flex-end; gap: 8px; }
+.imageGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.imageOption { position: relative; display: block; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: #f0eef8; cursor: pointer; }
+.imageOption img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #f0eef8; }
+.imageOption input { position: absolute; top: 6px; left: 6px; width: 16px; height: 16px; accent-color: #5938e8; }
+.imageOptionSelected { border-color: #5938e8; box-shadow: 0 0 0 2px rgba(89, 56, 232, .18); }
+@media (max-width: 640px) {
+  .imageGrid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+}

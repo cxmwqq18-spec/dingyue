@@ -89,6 +89,8 @@ type PreviewResponse = {
 type ProductUrlImportResponse = {
   ok?: boolean;
   asset?: ImportedProductAsset;
+  assets?: ImportedProductAsset[];
+  failed?: Array<{ url: string; error: string }>;
   product?: { title?: string | null };
   error?: string;
 };
@@ -100,6 +102,8 @@ export type ProductUrlImportProps = {
   loginHref: string;
   initialUrl?: string;
   onImported: (asset: ImportedProductAsset, title?: string, brief?: ConfirmedProductBrief) => void;
+  /** Optional multi-asset callback: every selected product photo is imported. */
+  onImportedMany?: (assets: ImportedProductAsset[], title?: string, brief?: ConfirmedProductBrief) => void;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -180,12 +184,13 @@ function loginHrefForProduct(loginHref: string, sourceUrl: string): string {
   return `${login.pathname}${login.search}${login.hash}`;
 }
 
-export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, initialUrl, onImported }: ProductUrlImportProps) {
+export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, initialUrl, onImported, onImportedMany }: ProductUrlImportProps) {
   const [url, setUrl] = useState(initialUrl ?? "");
   const [busy, setBusy] = useState<"preview" | "import" | "">("");
   const [preview, setPreview] = useState<ProductBriefPreview | null>(null);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (initialUrl) setUrl(initialUrl);
@@ -230,6 +235,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         return;
       }
       setPreview(parsedPreview);
+      setSelectedImages(parsedPreview.draft.detectedImages.map((image) => image.value).slice(0, 8));
       setStatus("");
     } catch {
       setStatus("");
@@ -241,12 +247,13 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
 
   async function confirmImport() {
     if (!preview || !customerId || busy) return;
+    if (!selectedImages.length) { setError("Select at least one product photo to import."); return; }
     setBusy("import");
     setError("");
-    setStatus("Adding the confirmed product photo…");
+    setStatus(`Adding ${selectedImages.length} product photo${selectedImages.length === 1 ? "" : "s"}…`);
     try {
       const response = await fetch(
-        `/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/assets/import-url`,
+        `/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/assets/import-images`,
         {
           method: "POST",
           credentials: "same-origin",
@@ -255,11 +262,12 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
             ...customerJsonHeaders(siteId),
             ...(csrfToken ? { "x-csrf-token": csrfToken } : {}),
           },
-          body: JSON.stringify({ url: preview.sourceUrl }),
+          body: JSON.stringify({ urls: selectedImages, label: preview.draft.title?.value?.trim() || undefined }),
         },
       );
       const result = (await response.json().catch(() => ({}))) as ProductUrlImportResponse;
-      if (!response.ok || !result.asset?.id || !result.asset.previewUrl) {
+      const assets = (result.assets ?? []).filter((asset) => asset?.id && asset.previewUrl);
+      if (!response.ok || !assets.length) {
         setError(errorMessage(result.error, response.status));
         setStatus("");
         return;
@@ -279,11 +287,17 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         customerConfirmedAt: new Date().toISOString(),
       };
       const title = preview.draft.title?.value.trim() || result.product?.title?.trim() || undefined;
-      await recordImport(result.asset.id, brief, title);
-      onImported({ ...result.asset, ...(title ? { label: title } : {}) }, title, brief);
-      setStatus(title ? `Product photo and “${title}” added.` : "Product photo added.");
+      await recordImport(assets[0].id, brief, title);
+      const labeled = assets.map((asset) => ({ ...asset, ...(title ? { label: title } : {}) }));
+      if (onImportedMany) onImportedMany(labeled, title, brief);
+      else onImported(labeled[0], title, brief);
+      const skipped = result.failed?.length ?? 0;
+      setStatus(
+        `Added ${assets.length} product photo${assets.length === 1 ? "" : "s"}${title ? ` for “${title}”` : ""}${skipped ? ` (${skipped} could not be imported)` : ""}.`
+      );
       setUrl("");
       setPreview(null);
+      setSelectedImages([]);
     } catch {
       setStatus("");
       setError("We couldn’t reach the product page. Check your connection and try again.");
@@ -294,6 +308,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
 
   function cancelPreview() {
     setPreview(null);
+    setSelectedImages([]);
     setError("");
     setStatus("");
   }
@@ -365,9 +380,37 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
                 <span className={styles.summaryImageCount}>{preview.draft.detectedImages.length ? `Main product photo · ${preview.draft.detectedImages.length} photo${preview.draft.detectedImages.length === 1 ? "" : "s"} found` : "No photo found"}</span>
               </div>
             </div>
+            <div className={styles.imagePicker}>
+              <div className={styles.imagePickerHead}>
+                <span>Photos to import</span>
+                <span>{selectedImages.length} of {preview.draft.detectedImages.length} selected</span>
+              </div>
+              <div className={styles.imageGrid}>
+                {preview.draft.detectedImages.map((image) => {
+                  const checked = selectedImages.includes(image.value);
+                  return (
+                    <label key={image.value} className={`${styles.imageOption} ${checked ? styles.imageOptionSelected : ""}`}>
+                      {/* Product image hosts vary, so render this validated HTTPS URL directly. */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={image.value} alt={preview.draft.title?.value || "Product photo"} loading="lazy" />
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => setSelectedImages((current) => checked ? current.filter((url) => url !== image.value) : [...current, image.value].slice(0, 8))}
+                        aria-label={`Import ${preview.draft.title?.value || "product"} photo`}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+              <div className={styles.imagePickerActions}>
+                <button type="button" className={styles.clear} onClick={() => setSelectedImages(preview.draft.detectedImages.map((image) => image.value).slice(0, 8))} disabled={busy !== ""}>Select all</button>
+                <button type="button" className={styles.clear} onClick={() => setSelectedImages([])} disabled={busy !== ""}>Clear</button>
+              </div>
+            </div>
             <div className={styles.previewActions}>
               <button className={styles.clear} type="button" onClick={cancelPreview} disabled={busy !== ""}>Cancel</button>
-              <button className={styles.submit} type="button" onClick={confirmImport} disabled={busy !== ""}>{busy === "import" ? "Adding photo…" : "Confirm product photo"}</button>
+              <button className={styles.submit} type="button" onClick={confirmImport} disabled={busy !== "" || !selectedImages.length}>{busy === "import" ? "Adding photos…" : `Import ${selectedImages.length || ""} photo${selectedImages.length === 1 ? "" : "s"}`}</button>
             </div>
             <p className={styles.note}>Confirming imports the product photo and keeps these page details with it. When you add it to a video draft, the product name and page facts are included for review; you still write and save the video description yourself.</p>
           </div>

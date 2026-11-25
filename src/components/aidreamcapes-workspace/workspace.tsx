@@ -1846,29 +1846,39 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
-  function importProduct(asset: ImportedProductAsset, title?: string, brief?: ConfirmedProductBrief) {
+  function importProducts(assets: ImportedProductAsset[], title?: string, brief?: ConfirmedProductBrief) {
+    if (!assets.length) return;
     if (brief) setConfirmedProductBriefs((items) => [...items, brief].slice(-10));
     if (task && scene) {
       const field = scene.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.refKind === "product");
       if (brief) pendingProductBrief.current = { taskId: task.taskId, payload: brief };
-      editTask((current) => ({
-        ...current,
-        ...(title ? { title: title.slice(0, 120) } : {}),
-        ...(brief ? { productBrief: taskProductBriefSnapshot(brief) } : {}),
-        ...(field ? { input: { ...current.input, images: { ...current.input.images, [field.id]: [...(current.input.images[field.id] ?? []), asset.previewUrl].slice(0, field.max ?? 4) } } } : {}),
-      }));
+      editTask((current) => {
+        const existing = field ? (current.input.images[field.id] ?? []) : [];
+        const selected = [...existing, ...assets.map((asset) => asset.previewUrl)].slice(0, field?.max ?? 4);
+        return {
+          ...current,
+          ...(title ? { title: title.slice(0, 120) } : {}),
+          ...(brief ? { productBrief: taskProductBriefSnapshot(brief) } : {}),
+          ...(field ? { input: { ...current.input, images: { ...current.input.images, [field.id]: selected } } } : {}),
+        };
+      });
     } else if (view === "images" || (view === "home" && composerTab === "AI Image")) {
-      setImageInput((current) => ({ ...current, assetUrls: [...current.assetUrls, asset.previewUrl].slice(0, 4) }));
+      setImageInput((current) => ({ ...current, assetUrls: [...current.assetUrls, ...assets.map((asset) => asset.previewUrl)].slice(0, 4) }));
     } else {
       // Confirming a preview REPLACES the previous product selection: the
       // composer works on one product at a time and the library keeps the
       // history, so a fresh confirm overwrites instead of accumulating.
-      setComposerProducts([brief ? { ...asset, confirmedBrief: brief } : asset]);
-      if (selectedSceneId || view === "product" || view === "videoLink") setDraftReferenceUrls([asset.previewUrl]);
+      // Every selected photo is kept; the first one carries the product brief.
+      setComposerProducts(assets.map((asset, index) => (index === 0 && brief ? { ...asset, confirmedBrief: brief } : asset)));
+      if (selectedSceneId || view === "product" || view === "videoLink") setDraftReferenceUrls(assets.map((asset) => asset.previewUrl));
       if (title) setComposerTitle(title.slice(0, 120));
     }
     setModal(null);
     if (customerId) void fetchProductImports();
+  }
+
+  function importProduct(asset: ImportedProductAsset, title?: string, brief?: ConfirmedProductBrief) {
+    importProducts([asset], title, brief);
   }
 
   /** 产品链接历史：点击一条记录，把它回填成当前创建表单的产品。 */
@@ -2341,7 +2351,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
         {view === "inspirations" && <EmbeddedInspirations initialPage={initialInspirations} endpoint={`${api}/inspirations`} basePath={basePath} />}
-        {view === "videoLink" && <UrlToVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
+        {view === "videoLink" && <UrlToVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} onImportedMany={importProducts} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
         {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} disabled={working} imports={productImports} importsLoading={productImportsLoading} onBackfill={backfillProductImport} onDeleteImport={(importId) => void deleteProductImport(importId)} createSlot={productCreateScene ? sceneCreateForm(productCreateScene, "product") : null} />}
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>{initialVideoTool === "image-to-video" ? "Image to Video" : "AI Video"}</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
@@ -2742,7 +2752,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </div>
       </section></div>;
     })()}
-    {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><FileDropZone activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadProduct(image); }}><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></FileDropZone></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
+    {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><FileDropZone activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadProduct(image); }}><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></FileDropZone></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} onImportedMany={importProducts} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
     {modal === "promptOptimizer" && (() => {
       const skillTitle = promptSkills.find((skill) => skill.slug === composerSkillSlug)?.title;

@@ -367,6 +367,26 @@ async function prepareProductImage(bytes: Buffer): Promise<{ bytes: Buffer; mime
 }
 
 /** Fetches a public product page and returns its main product photo (as JPEG) and product name. */
+/**
+ * Download one already-discovered product image URL as customer-asset bytes.
+ * The URL comes from the product page preview, so it is a public HTTPS image;
+ * the same SSRF-safe fetch and byte ceiling as the page importer apply here.
+ */
+export async function importImageFromUrl(value: unknown): Promise<{ bytes: Buffer; mimeType: "image/jpeg" | "image/png"; sourceUrl: string }> {
+  let url: URL;
+  try {
+    url = new URL(String(value ?? "").trim());
+  } catch {
+    throw new ProductUrlImportError("product_url_invalid", 400);
+  }
+  if (url.protocol !== "https:" || !url.hostname) throw new ProductUrlImportError("product_url_invalid", 400);
+  const response = await fetchPublic(url, "image/jpeg,image/png,image/*;q=0.8", MAX_IMAGE_BYTES);
+  const mimeType = (response.contentType.split(";")[0] ?? "").trim().toLowerCase();
+  if (mimeType !== "image/jpeg" && mimeType !== "image/png") throw new ProductUrlImportError("product_image_unsupported");
+  if (!response.body.length) throw new ProductUrlImportError("product_image_not_found");
+  return { bytes: response.body, mimeType, sourceUrl: response.url.toString() };
+}
+
 export async function importProductFromUrl(value: unknown): Promise<ImportedProduct> {
   const pageUrl = normalizeProductPageUrl(value);
   const page = await fetchPublic(pageUrl, "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5", MAX_HTML_BYTES);
