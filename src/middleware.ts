@@ -1143,7 +1143,10 @@ function aidreamcapesListingPathNormalize(request: NextRequest): NextResponse | 
     }
     const targetPath = galleryApplies ? `${basePath}/gallery/page${gallery}` : listingPagePath(basePath, page);
     const location = `${prefix}${targetPath}${rest.size ? `?${rest}` : ""}`;
-    return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 308);
+    // A kind query is a permanent move of the catalog's address
+    // (`?kind=video` → `/templates/video`), so it answers 301. Deeper page
+    // parameters keep 308 to preserve the request method contract.
+    return NextResponse.redirect(publicRedirectUrlForRequest(request, location), kindApplies ? 301 : 308);
   }
 
   const kindPath = TEMPLATE_KIND_PATHS[pathBase as keyof typeof TEMPLATE_KIND_PATHS];

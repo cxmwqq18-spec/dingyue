@@ -48,6 +48,10 @@ const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
   "product-ad-video": "/ai-video-generation/candle-cozy-gift",
   "bottle-ad-with-a-person": "/ai-video-generation/water-bottle-demo-cap-twists-open",
   "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools",
+  // 2026-11-25: the rendered clip shows a floating product blob on the
+  // presenter's shoulders, so the example is retired. The address keeps
+  // answering 308 to the nearest living fitness example (same owner page).
+  "fitness-recovery-tip": "/ai-video-generation/exercise-mat-recovery-chat"
 };
 
 /** Living page a retired address still redirects to, if any. */

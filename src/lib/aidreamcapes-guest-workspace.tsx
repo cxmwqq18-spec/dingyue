@@ -8,7 +8,7 @@ import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset, resolveWorkspaceLegacyTemplatePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, mediaWatchPath, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
-import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { loadAidreamcapesChrome, resolveMediaDetail, retiredMediaPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
@@ -157,6 +157,10 @@ export async function renderAidreamcapesMediaWatchPage({ slug, basePath = "" }: 
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
   ]);
   if (!detail) {
+    // A retired example address keeps redirecting even after its owning card
+    // left the content, on the detail path and on the watch path alike.
+    const retired = retiredMediaPageRedirect("video", slug);
+    if (retired) permanentRedirect(`${basePath === "/" ? "" : basePath}${retired}`);
     // Not a video card at all. Tool and hub pages live under the same
     // /ai-video-generation/<slug> prefix, so a pattern guess like
     // /watch/home-organization lands here. If the slug belongs to a real
