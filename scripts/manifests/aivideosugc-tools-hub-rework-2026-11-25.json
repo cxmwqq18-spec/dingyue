@@ -5,7 +5,38 @@
   "mode": "applied",
   "note": "Retires the video catalogs on the eight video-tool pages: clears the filter chips, pins each tool page to a curated example list, and turns the /ai-video-generation hub into the eight-tool overview. Paginated listing URLs retire with a 308 to their base page.",
   "pages": [
-    { "slug": "/ai-video-generation", "toolsOnly": true },
+    {
+      "slug": "/ai-video-generation",
+      "toolsOnly": true,
+      "ensureTools": [
+        {
+          "id": "text-to-video",
+          "href": "/ai-video-generation/text-to-video",
+          "group": "video",
+          "label": "Text to Video",
+          "description": "Turn a written product brief into an editable video plan.",
+          "image": {
+            "src": "/ai-image-generation/im01-video-hub-og-r1.webp",
+            "alt": "",
+            "width": 640,
+            "height": 640
+          }
+        },
+        {
+          "id": "ai-twin",
+          "href": "/ai-video-generation/ai-twin",
+          "group": "video",
+          "label": "AI Twin",
+          "description": "Explore a consistent presenter style for your product stories.",
+          "image": {
+            "src": "/ai-image-generation/img1-video-hub-hero-beauty-r1-640.webp",
+            "alt": "",
+            "width": 640,
+            "height": 640
+          }
+        }
+      ]
+    },
     {
       "slug": "/ai-video-generation/image-to-video",
       "clearChips": true,
@@ -77,7 +108,13 @@
       "clearChips": true,
       "featuredSlugs": []
     },
-    { "slug": "/ai-video-generation/text-to-video", "clearChips": true },
-    { "slug": "/ai-video-generation/ai-twin", "clearChips": true }
+    {
+      "slug": "/ai-video-generation/text-to-video",
+      "clearChips": true
+    },
+    {
+      "slug": "/ai-video-generation/ai-twin",
+      "clearChips": true
+    }
   ]
 }

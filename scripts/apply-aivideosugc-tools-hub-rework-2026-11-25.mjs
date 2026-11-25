@@ -72,13 +72,19 @@ function planPage(page, contentJson) {
   const data = target.data;
   const pickerPath = ["visual", "picker"];
   const hasPicker = Boolean(getPath(data, pickerPath));
+  const toolsBefore = Array.isArray(data.tools) ? JSON.parse(JSON.stringify(data.tools)) : undefined;
   const before = {
+    tools: toolsBefore,
     toolsOnly: data.toolsOnly,
     hasPicker,
     chips: hasPicker ? getPath(data, [...pickerPath, "chips"]) : undefined,
     featuredSlugs: hasPicker ? getPath(data, [...pickerPath, "featuredSlugs"]) : undefined
   };
   if (page.toolsOnly) data.toolsOnly = true;
+  if (Array.isArray(page.ensureTools) && Array.isArray(data.tools)) {
+    const present = new Set(data.tools.map((tool) => tool?.id));
+    for (const tool of page.ensureTools) if (tool?.id && !present.has(tool.id)) data.tools.push(tool);
+  }
   if (page.clearChips && hasPicker) setPath(data, [...pickerPath, "chips"], []);
   if (Array.isArray(page.featuredSlugs) && hasPicker) setPath(data, [...pickerPath, "featuredSlugs"], page.featuredSlugs);
   return { next, before, skip: undefined };
@@ -119,6 +125,7 @@ if (rollback) {
     const located = sectionData(next);
     if (!located) continue;
     const data = located.data;
+    if (entry.before.tools !== undefined) data.tools = entry.before.tools;
     if (entry.before.toolsOnly === undefined) delete data.toolsOnly;
     else data.toolsOnly = entry.before.toolsOnly;
     if (entry.before.hasPicker) {
