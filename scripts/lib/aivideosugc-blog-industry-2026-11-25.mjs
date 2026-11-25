@@ -244,8 +244,8 @@ export const ARTICLES = [
     "keywords": "UGC ads AI tool for agencies, home and living marketing, client separation, AIVideosUGC, URL to Video, agency retainers",
     "minutes": 3,
     "cover": {
-      "alt": "A presenter in a beige cardigan stands in a warm living room.",
-      "src": "/ai-image-generation/actors/dev-640.webp",
+      "alt": "A presenter in a white shirt talks from a bright living room.",
+      "src": "/ai-image-generation/actors/celine-640.webp",
       "width": 640,
       "height": 1138
     },
@@ -253,8 +253,8 @@ export const ARTICLES = [
       "href": "/blog/ugc-ads-ai-tool-for-agencies-home-and-living-campaigns",
       "kind": "article",
       "image": {
-        "alt": "A presenter in a beige cardigan stands in a warm living room.",
-        "src": "/ai-image-generation/actors/dev-640.webp",
+        "alt": "A presenter in a white shirt talks from a bright living room.",
+        "src": "/ai-image-generation/actors/celine-640.webp",
         "width": 640,
         "height": 1138
       },
@@ -278,15 +278,15 @@ export const ARTICLES = [
             },
             {
               "kind": "video",
-              "src": "/ai-video-generation/home-sofa-welcome.mp4",
+              "src": "/ai-video-generation/living-room-sofa-check-in.mp4",
               "poster": {
-                "alt": "A presenter in a beige cardigan stands in a warm living room.",
-                "src": "/ai-image-generation/actors/dev-640.webp",
+                "alt": "A presenter in a white shirt talks from a bright living room.",
+                "src": "/ai-image-generation/actors/celine-640.webp",
                 "width": 640,
                 "height": 1138
               },
-              "href": "/ai-video-generation/home-sofa-welcome",
-              "label": "Watch the Home: Sofa Welcome example"
+              "href": "/ai-video-generation/living-room-sofa-check-in",
+              "label": "Watch the Living Room: Sofa Check-In example"
             }
           ]
         },

@@ -12,8 +12,8 @@
   "hub": {
     "slug": "/blog",
     "action": "update",
-    "baseHash": "362c50ea069ab069a4d64522828dd01f7677740b405fcfac9ac2869f47c44f0f",
-    "nextHash": "6e1933980fb07b9cad17cf09c9c2706261096e80369678ef93e2bacb2c4b45bd",
+    "baseHash": "6e1933980fb07b9cad17cf09c9c2706261096e80369678ef93e2bacb2c4b45bd",
+    "nextHash": "6910448afc68cbcc52e9031dee546f1a6677d54bed8bcafb725cbec4a0fdeaae",
     "resolvedCounts": {
       "articles": 21,
       "tutorials": 6
@@ -23,33 +23,33 @@
     {
       "slug": "/blog/best-ai-ugc-generator-for-ads-for-clothing-and-apparel",
       "rowId": "aidreamcapes_v2_blog_best_ai_ugc_generator_for_ads_for_clothing_and_apparel",
-      "action": "create",
-      "changed": true,
-      "baseHash": null,
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "ae41468cbbe016c3961deecda4acc5ed58442e2405f424126a0643e4bf8fa21a",
       "nextHash": "ae41468cbbe016c3961deecda4acc5ed58442e2405f424126a0643e4bf8fa21a"
     },
     {
       "slug": "/blog/best-ai-ugc-tools-2026-for-beauty-and-personal-care",
       "rowId": "aidreamcapes_v2_blog_best_ai_ugc_tools_2026_for_beauty_and_personal_care",
-      "action": "create",
-      "changed": true,
-      "baseHash": null,
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "33ea259bdfcf5cf65d34d0361a334164336cf446a0693339a2fc2042d61ecf52",
       "nextHash": "33ea259bdfcf5cf65d34d0361a334164336cf446a0693339a2fc2042d61ecf52"
     },
     {
       "slug": "/blog/ugc-ads-ai-tool-for-agencies-home-and-living-campaigns",
       "rowId": "aidreamcapes_v2_blog_ugc_ads_ai_tool_for_agencies_home_and_living_campaigns",
-      "action": "create",
+      "action": "update",
       "changed": true,
-      "baseHash": null,
-      "nextHash": "4d4df9aaadc88b13d6020508f46e44a3007421aa954a10c3a5d623b51bff0d6e"
+      "baseHash": "4d4df9aaadc88b13d6020508f46e44a3007421aa954a10c3a5d623b51bff0d6e",
+      "nextHash": "433af2ae1ef5510c32a7c8d5be0fbd3c20d76851c9dc629f602135d966799b78"
     },
     {
       "slug": "/blog/ugc-tools-for-ad-creative-food-and-beverage",
       "rowId": "aidreamcapes_v2_blog_ugc_tools_for_ad_creative_food_and_beverage",
-      "action": "create",
-      "changed": true,
-      "baseHash": null,
+      "action": "unchanged",
+      "changed": false,
+      "baseHash": "23dd49365f974d22fe2443d4d499476812d08d9f6766cce5b2f1812dfd4fbe41",
       "nextHash": "23dd49365f974d22fe2443d4d499476812d08d9f6766cce5b2f1812dfd4fbe41"
     }
   ],
