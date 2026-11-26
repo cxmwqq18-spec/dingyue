@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { normalizeAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter";
 import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
 import aidreamcapesSiteV2NearSlugs from "@/lib/aidreamcapes-site-v2-near-slugs.json";
+import { AIDREAMCAPES_RETIRED_MP4_308, AIDREAMCAPES_RETIRED_MP4_410 } from "@/lib/aivideosugc-retired-mp4";
 import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
@@ -1069,6 +1070,18 @@ function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
   return NextResponse.redirect(publicRedirectUrlForRequest(request, location), AIDREAMCAPES_V2_BLOG_RENAMES.has(publicPath) ? 308 : 301);
 }
 
+function aidreamcapesRetiredMp4Response(request: NextRequest): Response | undefined {
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  if (hostSlug !== "aidreamcapes") return undefined;
+  const pathname = request.nextUrl.pathname;
+  const target = AIDREAMCAPES_RETIRED_MP4_308[pathname];
+  if (target) return NextResponse.redirect(publicRedirectUrlForRequest(request, target), 308);
+  if (AIDREAMCAPES_RETIRED_MP4_410.has(pathname)) {
+    return new NextResponse(null, { status: 410, headers: { "cache-control": "public, max-age=3600" } });
+  }
+  return undefined;
+}
+
 const LISTING_IDENTITY_PARAMS = ["kind", "type", "page", "galleryPage"] as const;
 
 /** Split `(/site/aivideosugc)?/rest` into the route prefix and public path. */
@@ -1186,6 +1199,8 @@ export async function middleware(request: NextRequest) {
   if (duplicateSlashResponse) return finalizeStorefrontResponse(duplicateSlashResponse, request);
   const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
   if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
+  const retiredMp4Response = aidreamcapesRetiredMp4Response(request);
+  if (retiredMp4Response) return finalizeStorefrontResponse(retiredMp4Response, request);
   // Listing identity lives in the path: `?page=`/`?kind=` 308 to `/pageN`
   // and `/templates/photo`, then the public path is rewritten into the
   // internal query contract the renderer already understands.
