@@ -132,6 +132,10 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
   const videoHeight = num(video?.height);
   const videoPublishedAt = str(video?.publishedAt);
   const videoCanonicalMode = video?.canonicalMode === "watch-only" ? "watch-only" as const : undefined;
+  const rawWatchContent = record(video?.watchContent);
+  const watchSummary = str(rawWatchContent?.summary);
+  const watchBestFor = Array.isArray(rawWatchContent?.bestFor) ? rawWatchContent.bestFor.map((x) => str(x)).filter((x): x is string => Boolean(x)).slice(0, 5) : [];
+  const watchSteps = Array.isArray(rawWatchContent?.steps) ? rawWatchContent.steps.map((x) => str(x)).filter((x): x is string => Boolean(x)).slice(0, 6) : [];
   const refImages = referenceImages(value.referenceImages ?? value.referenceImageUrls ?? value.referenceAssets);
   const refVideos = referenceVideos(value.referenceVideos ?? value.referenceVideoUrls);
   return {
@@ -161,7 +165,12 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
             ...(videoWidth ? { width: videoWidth } : {}),
             ...(videoHeight ? { height: videoHeight } : {}),
             ...(videoPublishedAt ? { publishedAt: videoPublishedAt } : {}),
-            ...(videoCanonicalMode ? { canonicalMode: videoCanonicalMode } : {})
+            ...(videoCanonicalMode ? { canonicalMode: videoCanonicalMode } : {}),
+            ...(watchSummary || watchBestFor.length || watchSteps.length ? { watchContent: {
+              ...(watchSummary ? { summary: watchSummary } : {}),
+              ...(watchBestFor.length ? { bestFor: watchBestFor } : {}),
+              ...(watchSteps.length ? { steps: watchSteps } : {})
+            } } : {})
           }
         }
       : {}),

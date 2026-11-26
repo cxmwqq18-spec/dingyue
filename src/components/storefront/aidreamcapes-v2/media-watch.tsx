@@ -140,6 +140,11 @@ export function AidreamcapesMediaWatchPage({
 #media-watch .v-watch-meta dt{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
 #media-watch .v-watch-meta dd{margin:2px 0 0;font-weight:600}
 #media-watch .v-watch-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+#media-watch .v-watch-deep{margin:20px 0 0;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+#media-watch .v-watch-deep h2{font-size:1.05rem;margin:0 0 8px}
+#media-watch .v-watch-deep p{margin:0 0 10px;font-size:.96rem;line-height:1.65;color:var(--ink-2)}
+#media-watch .v-watch-deep ul,#media-watch .v-watch-deep ol{margin:0 0 10px;padding-left:20px;color:var(--ink-2);font-size:.94rem;line-height:1.65}
+#media-watch .v-watch-deep h3{font-size:.9rem;margin:14px 0 6px}
 #media-watch .v-watch-prompt{margin:18px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 16px}
 #media-watch .v-watch-prompt summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:.92rem}
 #media-watch .v-watch-prompt pre{margin:0 0 16px;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Menlo,monospace;color:var(--ink-2)}
@@ -172,6 +177,14 @@ export function AidreamcapesMediaWatchPage({
             width={card.video.width}
           />
         </figure>
+        {detail.watchContent?.summary || detail.watchContent?.bestFor?.length || detail.watchContent?.steps?.length ? (
+          <section className="v-watch-deep">
+            <h2>What this example shows</h2>
+            {detail.watchContent?.summary ? <p>{detail.watchContent.summary}</p> : null}
+            {detail.watchContent?.bestFor?.length ? <><h3>Best for</h3><ul>{detail.watchContent.bestFor.map((item) => <li key={item}>{item}</li>)}</ul></> : null}
+            {detail.watchContent?.steps?.length ? <><h3>How to recreate it</h3><ol>{detail.watchContent.steps.map((item) => <li key={item}>{item}</li>)}</ol></> : null}
+          </section>
+        ) : null}
         {card.prompt ? (
           <details className="v-watch-prompt">
             <summary>Prompt behind this example</summary>
