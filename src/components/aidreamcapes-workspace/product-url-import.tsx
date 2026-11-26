@@ -420,7 +420,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
                 })}
               </div>
               <div className={styles.imagePickerActions}>
-                <button type="button" className={styles.recommended} onClick={() => setSelectedImages(preview.draft.detectedImages.slice(0, 4).map((image) => image.value))} disabled={busy !== "" || preview.draft.detectedImages.length === 0}>Recommended 4</button>
+                {preview.draft.detectedImages.length > 4 && <button type="button" className={styles.recommended} onClick={() => setSelectedImages(preview.draft.detectedImages.slice(0, 4).map((image) => image.value))} disabled={busy !== ""}>First 4 photos</button>}
                 <button type="button" className={styles.clear} onClick={() => setSelectedImages(preview.draft.detectedImages.map((image) => image.value).slice(0, 8))} disabled={busy !== ""}>Select all</button>
                 <button type="button" className={styles.clear} onClick={() => setSelectedImages([])} disabled={busy !== ""}>Clear</button>
               </div>

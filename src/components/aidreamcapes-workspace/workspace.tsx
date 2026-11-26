@@ -1132,9 +1132,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           <div className={styles.field}>
             <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos<span className={styles.photoCountChip} aria-label={`Product photos: ${draftReferenceUrls.length} of ${imageLimit}`}>{draftReferenceUrls.length} / {imageLimit}</span></span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
             <FileDropZone className={`${styles.imageStrip} ${styles.draftImageStrip}`} activeClassName={styles.dropActive} disabled={working || !customer} onFiles={importDraftReferenceFiles}>
-              <div className={styles.draftReferenceColumn}>
-                {draftReferenceUrls.length < imageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
-              </div>
+              {draftReferenceUrls.length < imageLimit && <div className={styles.draftReferenceColumn}>
+                <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label>
+              </div>}
               {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} title="Drag to reorder" {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><span className={styles.photoIndex} aria-hidden="true">{index + 1}</span><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
             </FileDropZone>
             <span className={styles.help}>Drag photos to reorder. Image 1 is the main product photo the rest of the shots must match.</span>
@@ -1161,7 +1161,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {composerQuote?.available && composerQuote.credits != null && <span className={styles.help} role="status">Estimated cost: {creditLabel(composerQuote.credits)}</span>}
           <button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveSceneDraft(scene, surface)}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button>
         </div>
-        <p className={styles.help}>We'll generate your video from this prompt and your photos, then save it to your Library.</p>
       </section>
       {surface === "agent" && canBrowseTemplates && templatePickerCallout()}
     </>;

@@ -110,7 +110,11 @@ export function ProductVideoPage({
               // The stored brief carries the sourced product facts; they live
               // on the library row so nothing dangles outside the list.
               const brief = record.brief as { description?: { value?: unknown }; possiblePrice?: { value?: { amount?: number | string; currency?: string } }; importedAssetUrls?: unknown } | null;
-              const description = typeof brief?.description?.value === "string" ? brief.description.value : "";
+              const rawDescription = typeof brief?.description?.value === "string" ? brief.description.value : "";
+              // Commerce descriptions often repeat the title; keep the row scannable.
+              const description = rawDescription.toLowerCase().startsWith(title.toLowerCase())
+                ? rawDescription.slice(title.length).replace(/^[\s:–—.-]+/, "")
+                : rawDescription;
               const price = brief?.possiblePrice?.value;
               const importedPhotos = Array.isArray(brief?.importedAssetUrls) ? brief.importedAssetUrls.length : 0;
               return <div key={record.id} className={productStyles.historyRow}>
