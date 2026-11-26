@@ -1,6 +1,7 @@
 import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, TemplatesIndexPage, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
 import { BlogLandingPage } from "./blog-landing";
 import { BlogDocumentPage } from "./blog-document";
+import { ContactPage } from "./contact-page";
 import { BlogEngineeringPage } from "./blog-engineering";
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
@@ -1251,21 +1252,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
   }
   if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All Questions" r={r} /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload one product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Ready to try it?")} /></>;
   if (layout === "contact") {
-    return (
-      <>
-        {hero}
-        <section style={{ paddingBottom: 40 }}>
-          <div className="wrap">
-            <Intro paras={list<string>(data.intro)} />
-            <p className="meta-line" style={{ fontSize: 17 }}>Email: <WorkspaceEntryLink href={`mailto:${text(data.email)}`}>{text(data.email)}</WorkspaceEntryLink></p>
-          </div>
-        </section>
-        {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to Contact Us About"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
-        {company ? <Section eyebrow="Company" lead={`${company.name} operates ${BRAND_NAME}.`} title="Company details"><CompanyDetails className="company-card" company={company} /></Section> : null}
-        <Faq items={data.faq} title="Questions" r={r} />
-        <NextLinks data={data} r={r} />
-      </>
-    );
+    return <ContactPage data={data as never} r={r} company={company} />;
   }
   if (layout === "about" || layout === "trust") {
     return (
