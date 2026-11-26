@@ -93,7 +93,7 @@ export function AidreamcapesMediaWatchPage({
         thumbnailUrl: thumbnailUrl ? [thumbnailUrl] : undefined,
         uploadDate: published,
         ...(duration ? { duration } : {}),
-        contentUrl,
+        ...(detail.canonicalMode === "watch-only" ? {} : { contentUrl }),
         embedUrl: watchUrl,
         url: watchUrl,
         mainEntityOfPage: { "@type": "WebPage", "@id": watchUrl },

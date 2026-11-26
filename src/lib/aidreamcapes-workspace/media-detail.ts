@@ -45,7 +45,7 @@ export type MediaDetailCard = {
   /** Canonical facet directory slugs this card is directly placed in. */
   placement?: string[];
   image: { src: string; alt?: string; w?: number; h?: number };
-  video?: { src: string; previewSrc?: string; poster?: { src: string; alt?: string }; width?: number; height?: number; publishedAt?: string };
+  video?: { src: string; previewSrc?: string; poster?: { src: string; alt?: string }; width?: number; height?: number; publishedAt?: string; canonicalMode?: "watch-only" };
   /** Assets the example was built from, when the card lists them explicitly. */
   referenceImages?: { src: string; alt?: string }[];
   referenceVideos?: { src: string; poster?: { src: string; alt?: string } }[];

@@ -131,6 +131,7 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
   const videoWidth = num(video?.width);
   const videoHeight = num(video?.height);
   const videoPublishedAt = str(video?.publishedAt);
+  const videoCanonicalMode = video?.canonicalMode === "watch-only" ? "watch-only" as const : undefined;
   const refImages = referenceImages(value.referenceImages ?? value.referenceImageUrls ?? value.referenceAssets);
   const refVideos = referenceVideos(value.referenceVideos ?? value.referenceVideoUrls);
   return {
@@ -159,7 +160,8 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
             ...(posterSrc ? { poster: { src: posterSrc, ...(posterAlt ? { alt: posterAlt } : {}) } } : {}),
             ...(videoWidth ? { width: videoWidth } : {}),
             ...(videoHeight ? { height: videoHeight } : {}),
-            ...(videoPublishedAt ? { publishedAt: videoPublishedAt } : {})
+            ...(videoPublishedAt ? { publishedAt: videoPublishedAt } : {}),
+            ...(videoCanonicalMode ? { canonicalMode: videoCanonicalMode } : {})
           }
         }
       : {}),
@@ -214,6 +216,8 @@ export type MediaDetailSitemapEntry = {
   durationSeconds?: number;
   /** Stable publication date for sitemap/video indexing when declared. */
   publishedAt?: string;
+  /** Experimental: omit the raw content file from video signals. */
+  canonicalMode?: "watch-only";
   createdAt: Date;
   updatedAt: Date;
 };
@@ -394,6 +398,7 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     ...(card.video?.src ? { videoPosterPath: card.video.poster?.src ?? card.image.src } : {}),
     ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
     ...(card.video?.publishedAt ? { publishedAt: card.video.publishedAt } : {}),
+    ...(card.video?.canonicalMode ? { canonicalMode: card.video.canonicalMode } : {}),
     createdAt,
     updatedAt
   }));

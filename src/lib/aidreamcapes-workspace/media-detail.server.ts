@@ -132,6 +132,8 @@ export type MediaDetail = {
   ownerUpdatedAt: string;
   /** Stable video publication date when the card declares one. */
   publishedAt: string;
+  /** Experimental watch-only canonical mode for the ten-video test. */
+  canonicalMode?: "watch-only";
   /** Canonical in-site path of the card itself. */
   canonicalPath: string;
   /** Workspace CTA target plus the inert entry transfer. */
@@ -234,6 +236,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
     ownerPath: owner.slug,
     ownerUpdatedAt: owner.updatedAt.toISOString(),
     publishedAt: ownerCard.video?.publishedAt ?? (owner.createdAt ?? owner.updatedAt).toISOString(),
+    ...(ownerCard.video?.canonicalMode ? { canonicalMode: ownerCard.video.canonicalMode } : {}),
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
     ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,
