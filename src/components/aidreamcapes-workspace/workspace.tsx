@@ -1130,14 +1130,14 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         <p>Start with at least one clear product photo and a short description. You can adjust the prompt and photos before generating.</p>
         <div className={styles.fields}>
           <div className={styles.field}>
-            <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
+            <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos<span className={styles.photoCountChip} aria-label={`Product photos: ${draftReferenceUrls.length} of ${imageLimit}`}>{draftReferenceUrls.length} / {imageLimit}</span></span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
             <FileDropZone className={`${styles.imageStrip} ${styles.draftImageStrip}`} activeClassName={styles.dropActive} disabled={working || !customer} onFiles={importDraftReferenceFiles}>
               <div className={styles.draftReferenceColumn}>
                 {draftReferenceUrls.length < imageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
-                <span className={styles.draftReferenceCount} aria-label={`Product photos: ${draftReferenceUrls.length} of ${imageLimit}`}>{`${draftReferenceUrls.length} / ${imageLimit} photos`}</span>
               </div>
-              {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
+              {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} title="Drag to reorder" {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><span className={styles.photoIndex} aria-hidden="true">{index + 1}</span><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
             </FileDropZone>
+            <span className={styles.help}>Drag photos to reorder. Image 1 is the main product photo the rest of the shots must match.</span>
             {!customer && <span className={styles.help}>Log in to upload photos and save this draft.</span>}
           </div>
           <label className={styles.field}><span className={styles.fieldLabel}>Describe your video in one sentence</span><textarea className={styles.input} value={prompt} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} onPaste={(event) => {
@@ -1778,6 +1778,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         current = await pollTaskUntil(taskId, (task) => Boolean(task.storyboard?.shots.length));
       }
       for (const shot of current.storyboard!.shots) {
+        // A retry only regenerates the shots that are not finished yet, so it
+        // never charges again for clips that already exist.
+        if (shot.genStatus === "done") continue;
         // The quote endpoint returns { quote }; treating the envelope as the
         // quote silently skipped dispatch for every direct task.
         const { quote } = await request<{ quote: ActionQuote }>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
@@ -1811,15 +1814,45 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || !t.video.finalUrl && t.video.status !== "fail"));
       } catch { /* fall back to the original error when even the re-read fails */ }
       if (taskStillGenerating) {
-        const soft = "We lost track of progress on this screen, but your video is still generating — follow it in your Library.";
+        const soft = "Still generating in the background — this can take a few more minutes.";
         setMessage(soft);
         setMessageKind("info");
-        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "running", status: soft } : current);
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "running", soft: true, status: soft } : current);
+        // Re-read once more after the page stops tracking, so a finished or
+        // failed job replaces the soft "still generating" note on its own.
+        window.setTimeout(() => { void recheckInlineRun(taskId); }, 45_000);
       } else {
         setMessage((error as Error).message);
         setMessageKind("error");
-        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "failed", status: (error as Error).message } : current);
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "failed", soft: false, status: (error as Error).message } : current);
       }
+    }
+  }
+
+  /** Re-read an inline run without dispatching new work (used by "Check progress"). */
+  async function recheckInlineRun(taskId: string) {
+    try {
+      const { task } = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
+      if (task.video?.finalUrl) {
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "ready", soft: false, status: `Your video “${task.title}” is ready.`, videoUrl: task.video?.finalUrl } : current);
+        void refreshBalanceSoon();
+        return;
+      }
+      const failedShot = task.storyboard?.shots.find((shot) => shot.genStatus === "fail");
+      if (task.video?.status === "fail" || failedShot || task.operation?.state === "fail") {
+        const reason = task.video?.error || failedShot?.error || task.operation?.error || "The generation stopped before the video was finished.";
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "failed", soft: false, status: humanError(reason) || reason } : current);
+        return;
+      }
+      const running = task.operation?.state === "run" || task.operation?.state === "pending" ||
+        Boolean(task.storyboard?.shots.some((shot) => shot.genStatus === "run")) ||
+        task.video?.status === "run";
+      setInlineRun((current) => current && current.taskId === taskId
+        ? { ...current, state: running ? "running" : "failed", soft: running, status: running ? "Still generating — this can take a few more minutes." : "This task is not generating right now. Open it in your Library to retry." }
+        : current);
+    } catch (error) {
+      setMessage((error as Error).message);
+      setMessageKind("error");
     }
   }
 
@@ -1886,10 +1919,18 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!record.previewUrl) { setMessage("This product's photo is no longer available. Import the link again."); return; }
     let brief: ConfirmedProductBrief | undefined;
     try { brief = confirmedBriefFromSnapshot(record.brief as ProductBriefSnapshotLike); } catch { brief = undefined; }
-    const restored: ComposerProduct = { id: record.assetId, previewUrl: record.previewUrl, ...(record.title ? { label: record.title } : {}), ...(brief ? { confirmedBrief: brief } : {}) };
+    // Restore every photo that was imported with this link. History rows written
+    // before the photo list existed fall back to the stored cover image.
+    const restoredUrls = brief?.importedAssetUrls?.length ? brief.importedAssetUrls : [record.previewUrl];
+    const restored: ComposerProduct[] = restoredUrls.map((url, index) => ({
+      id: index === 0 ? record.assetId : `${record.id}-${index}`,
+      previewUrl: url,
+      ...(record.title ? { label: record.title } : {}),
+      ...(index === 0 && brief ? { confirmedBrief: brief } : {}),
+    }));
     // Backfilling from the library also replaces the current selection.
-    setComposerProducts([restored]);
-    setDraftReferenceUrls([record.previewUrl]);
+    setComposerProducts(restored);
+    setDraftReferenceUrls(restoredUrls);
     if (record.title) setComposerTitle(record.title.slice(0, 120));
     setMessage("");
     window.requestAnimationFrame(() => document.querySelector("section[aria-label='Create your video']")?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -2124,11 +2165,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       </header>
       <main className={`${styles.main} ${view === "home" || view === "agent" || view === "video" || view === "images" ? styles.composerMain : ""} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""} ${view === "subtitles" ? styles.studioMain : ""}`}>
         {message && <div className={`${styles.notice} ${messageKind === "error" ? styles.error : ""}`} role="alert"><span>{message}</span>{messageAction && <button className={styles.linkButton} onClick={() => { setMessageAction(false); void navigate("library"); }}><span>View in Library </span><ArrowRight size={14} /></button>}{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => { setMessage(""); setMessageAction(false); }} aria-label="Dismiss message"><X size={15} /></button></div>}
-        {inlineRun && <section className={styles.panel} aria-live="polite">
+        {inlineRun && <section className={`${styles.panel} ${styles.inlineRun} ${inlineRun.state === "failed" ? styles.inlineRunFailed : ""}`} aria-live="polite">
           <h2>{inlineRun.state === "ready" ? "Your video is ready" : inlineRun.state === "failed" ? "Generation stopped" : "Generating your video"}</h2>
           <p className={styles.help} style={{ margin: "4px 0 0" }}>{inlineRun.title} · {inlineRun.status}</p>
           <div className={styles.footerActions}>
             {inlineRun.state === "ready" && inlineRun.videoUrl && <a className={`${styles.button} ${styles.primary}`} href={inlineRun.videoUrl} download><Download size={16} /><span>Download video</span></a>}
+            {inlineRun.state === "failed" && <button className={`${styles.button} ${styles.primary}`} onClick={() => { setInlineRun((current) => current && current.taskId === inlineRun.taskId ? { ...current, state: "running", soft: false, status: "Retrying generation…" } : current); void autoRunVideoTask(inlineRun.taskId); }}><RotateCcw size={16} /><span>Try again</span></button>}
+            {inlineRun.state === "running" && inlineRun.soft && <button className={styles.button} onClick={() => void recheckInlineRun(inlineRun.taskId)}><RotateCcw size={16} /><span>Check progress</span></button>}
             <button className={styles.linkButton} onClick={() => { setInlineRun(null); void navigate("library"); }}><span>Open Library </span><ArrowRight size={15} /></button>
           </div>
         </section>}

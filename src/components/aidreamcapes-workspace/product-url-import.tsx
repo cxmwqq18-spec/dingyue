@@ -37,6 +37,8 @@ export type ConfirmedProductBrief = {
   possiblePrice: SourcedProductBriefValue<{ amount: string; currency?: string }> | null;
   /** Variant facts from the page's JSON-LD; older snapshots predate this field. */
   variants?: SourcedProductBriefValue<{ label?: string; price?: string; currency?: string }[]> | null;
+  /** Every photo imported with this confirmation, in workflow order. */
+  importedAssetUrls?: string[];
   selectionConfirmed: true;
   priceConfirmed: false;
   reviewRequired: true;
@@ -56,6 +58,7 @@ export type ProductBriefSnapshotLike = {
   title: { value: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
   description: { value: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
   possiblePrice: { amount: string; currency?: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
+  importedAssetUrls?: string[];
   confirmedAt: string;
 };
 
@@ -74,6 +77,7 @@ export function confirmedBriefFromSnapshot(snapshot: ProductBriefSnapshotLike): 
       confidence: snapshot.possiblePrice.confidence,
       confirmed: false,
     } : null,
+    ...(snapshot.importedAssetUrls?.length ? { importedAssetUrls: snapshot.importedAssetUrls } : {}),
     selectionConfirmed: true,
     priceConfirmed: false,
     reviewRequired: true,
@@ -281,6 +285,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         candidateImages: preview.draft.detectedImages,
         possiblePrice: preview.draft.possiblePrice,
         variants: preview.draft.variants,
+        importedAssetUrls: assets.map((asset) => asset.previewUrl),
         selectionConfirmed: true,
         priceConfirmed: false,
         reviewRequired: true,
@@ -340,6 +345,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
               candidateImages: brief.candidateImages,
               possiblePrice: brief.possiblePrice,
               variants: brief.variants,
+              importedAssetUrls: brief.importedAssetUrls,
               selectionConfirmed: brief.selectionConfirmed,
               priceConfirmed: brief.priceConfirmed,
               reviewRequired: brief.reviewRequired,
@@ -383,11 +389,13 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
             <div className={styles.imagePicker}>
               <div className={styles.imagePickerHead}>
                 <span>Photos to import</span>
-                <span>{selectedImages.length} of {preview.draft.detectedImages.length} selected</span>
+                <span className={styles.imagePickerCount}>{selectedImages.length} of {preview.draft.detectedImages.length} selected</span>
               </div>
+              <p className={styles.imagePickerHint}>Main sets the product look; Detail and Alt photos add angles the model can reference.</p>
               <div className={styles.imageGrid}>
                 {preview.draft.detectedImages.map((image) => {
                   const checked = selectedImages.includes(image.value);
+                  const order = selectedImages.indexOf(image.value);
                   return (
                     <label key={image.value} className={`${styles.imageOption} ${checked ? styles.imageOptionSelected : ""}`}>
                       {/* Product image hosts vary, so render this validated HTTPS URL directly. */}
@@ -399,11 +407,13 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
                         onChange={() => setSelectedImages((current) => checked ? current.filter((url) => url !== image.value) : [...current, image.value].slice(0, 8))}
                         aria-label={`Import ${preview.draft.title?.value || "product"} photo`}
                       />
+                      {checked && <span className={styles.imageRole}>{order === 0 ? "Main" : order === 1 ? "Detail" : `Alt ${order + 1}`}</span>}
                     </label>
                   );
                 })}
               </div>
               <div className={styles.imagePickerActions}>
+                <button type="button" className={styles.recommended} onClick={() => setSelectedImages(preview.draft.detectedImages.slice(0, 4).map((image) => image.value))} disabled={busy !== "" || preview.draft.detectedImages.length === 0}>Recommended 4</button>
                 <button type="button" className={styles.clear} onClick={() => setSelectedImages(preview.draft.detectedImages.map((image) => image.value).slice(0, 8))} disabled={busy !== ""}>Select all</button>
                 <button type="button" className={styles.clear} onClick={() => setSelectedImages([])} disabled={busy !== ""}>Clear</button>
               </div>

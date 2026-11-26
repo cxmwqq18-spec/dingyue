@@ -113,6 +113,8 @@
 .step.selected { background: var(--surface); color: #6139e6; box-shadow: 0 1px 4px #17212b0c; }
 .stepNumber { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; font-size: 11px; border-radius: 100%; background: #e9e3fc; color: #7051cf; }
 .formSection, .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 23px; margin-bottom: 18px; }
+.inlineRun { border-left: 4px solid #946dff; }
+.inlineRunFailed { border-left-color: #d4576a; }
 .videoDraftForm { border: 2px solid color-mix(in srgb, var(--purple, #6035ff) 86%, #1b53d6); border-radius: 18px; }
 .videoDraftForm h2 { font-size: 18px; }
 .formSection h2 { font-size: 20px; margin-bottom: 5px; }
@@ -137,15 +139,18 @@ textarea.input { resize: vertical; min-height: 100px; }
 .imageStrip > .upload { order: -1; }
 .dropActive { outline: 2px dashed var(--purple, #6035ff); outline-offset: 3px; border-radius: 10px; }
 .imageSlot[draggable="true"], .creatorProductImage[draggable="true"] { cursor: grab; }
-.draftImageStrip { align-items: flex-start; gap: 9px; }
-.draftReferenceColumn { display: flex; width: 76px; flex: 0 0 76px; flex-direction: column; align-items: center; gap: 5px; }
+.draftImageStrip { align-items: flex-start; gap: 10px; }
+.draftReferenceColumn { display: flex; width: 84px; flex: 0 0 84px; flex-direction: column; align-items: center; gap: 5px; }
 .draftReferenceCount { width: 100%; color: var(--muted); font-size: 10px; line-height: 1.25; text-align: center; white-space: nowrap; }
+.photoCountChip { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; margin-left: 7px; padding: 2px 8px; border-radius: 999px; background: #f0ebff; color: #5938e8; font-size: 11px; font-weight: 700; letter-spacing: .01em; }
 /* Doubled class specificity: the bare `.upload` rule below (min 106x106)
-   would otherwise override these 76px draft-tile dimensions. */
-.upload.draftPhotoUpload { width: 76px; min-width: 76px; min-height: 76px; padding: 8px; font-size: 10px; gap: 5px; }
+   would otherwise override these 84px draft-tile dimensions. */
+.upload.draftPhotoUpload { width: 84px; min-width: 84px; min-height: 84px; padding: 8px; font-size: 10px; gap: 5px; }
 .draftPhotoLimit { border-style: solid; background: var(--canvas, #f4f4f6); cursor: default; }
-.draftPhotoSlot { width: 76px; }
-.draftPhotoSlot img { width: 76px; height: 76px; object-fit: cover; }
+.draftPhotoSlot { width: 84px; }
+.draftPhotoSlot img { width: 84px; height: 84px; object-fit: cover; transition: border-color .15s ease; }
+.draftPhotoSlot:hover img { border-color: #b9bffa; }
+.photoIndex { position: absolute; z-index: 2; left: 5px; top: 5px; display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 6px; background: rgba(16, 22, 35, .78); color: #fff; font-size: 11px; font-weight: 700; }
 .imageSlot { width: 106px; position: relative; }
 .imageSlot img { height: 106px; width: 106px; object-fit: contain; border-radius: 9px; background: #f4f5f8; border: 1px solid var(--line); }
 .imageSlot .badge { position: absolute; top: 5px; left: 5px; background: white; color: #423752; }
@@ -155,7 +160,10 @@ textarea.input { resize: vertical; min-height: 100px; }
 .loadMoreSentinel { height: 2px; }
 .upload { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #bbc0cf; border-radius: 9px; padding: 12px; min-height: 106px; min-width: 106px; background: var(--surface, #fff); color: var(--muted, #73777d); cursor: pointer; font-size: 12px; }
 .upload input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.footerActions { display: flex; justify-content: flex-end; gap: 10px; margin: 22px 0; }
+.footerActions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 22px 0; }
+/* Keep the create action and its price visible while the form scrolls. */
+.videoDraftForm .footerActions { position: sticky; bottom: 12px; z-index: 4; margin: 20px 0 6px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 10px 24px rgba(20, 16, 50, .08); backdrop-filter: blur(8px); }
+.videoDraftForm .footerActions .button { min-height: 44px; }
 .taskGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .taskCard { border: 1px solid var(--line); border-radius: 13px; overflow: hidden; background: var(--surface); }
 .taskCover { display: flex; align-items: center; justify-content: center; height: 125px; background: #eeeaf7; color: #9375d2; }
@@ -336,10 +344,10 @@ textarea.input { resize: vertical; min-height: 100px; }
   .modelTop { min-height: 210px; }
   .parameterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .formSection, .panel { padding: 18px; }
-  .draftReferenceColumn { width: 66px; flex-basis: 66px; }
-  .upload.draftPhotoUpload { width: 66px; min-width: 66px; min-height: 66px; }
-  .draftPhotoSlot { width: 66px; }
-  .draftPhotoSlot img { width: 66px; height: 66px; }
+  .draftReferenceColumn { width: 70px; flex-basis: 70px; }
+  .upload.draftPhotoUpload { width: 70px; min-width: 70px; min-height: 70px; }
+  .draftPhotoSlot { width: 70px; }
+  .draftPhotoSlot img { width: 70px; height: 70px; }
   .steps { gap: 2px; }
   .step { font-size: 11px; padding: 9px 4px; flex-direction: column; gap: 4px; }
   .editorHeader { gap: 9px; }

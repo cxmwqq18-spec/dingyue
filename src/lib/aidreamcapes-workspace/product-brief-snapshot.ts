@@ -6,6 +6,7 @@ const MAX_TITLE_LENGTH = 180;
 const MAX_DESCRIPTION_LENGTH = 2_000;
 const MAX_PRICE_LENGTH = 32;
 const MAX_CURRENCY_LENGTH = 12;
+const MAX_IMPORTED_ASSET_URLS = 8;
 const CONFIDENCES = new Set<ProductBriefConfidence>(["high", "medium", "low"]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -22,6 +23,16 @@ function httpsUrl(value: unknown, field: string): string {
   try { parsed = new URL(value); } catch { return invalid(field); }
   if (parsed.protocol !== "https:" || !parsed.hostname || parsed.username || parsed.password || parsed.hash) return invalid(field);
   return parsed.toString();
+}
+
+/** Imported photos are local asset paths; older snapshots may carry absolute https URLs. */
+function importedAssetUrl(value: unknown, field: string): string {
+  if (typeof value !== "string" || !value || value.length > MAX_URL_LENGTH) return invalid(field);
+  if (value.startsWith("/api/local-assets/")) {
+    if (/[\u0000-\u001f\u007f\s]/.test(value) || value.includes("..")) return invalid(field);
+    return value;
+  }
+  return httpsUrl(value, field);
 }
 
 function boundedText(value: unknown, field: string, maxLength: number): string {
@@ -82,12 +93,20 @@ export function normalizeConfirmedProductBrief(value: unknown): ProductBriefSnap
   }
   const title = confirmedField<string>(value.title, "title", MAX_TITLE_LENGTH);
   const description = confirmedField<string>(value.description, "description", MAX_DESCRIPTION_LENGTH);
+  let importedAssetUrls: string[] | undefined;
+  if (value.importedAssetUrls !== undefined) {
+    if (!Array.isArray(value.importedAssetUrls) || value.importedAssetUrls.length > MAX_IMPORTED_ASSET_URLS) {
+      return invalid("importedAssetUrls");
+    }
+    importedAssetUrls = value.importedAssetUrls.map((url, index) => importedAssetUrl(url, `importedAssetUrls.${index}`));
+  }
   return {
     sourceUrl: httpsUrl(value.sourceUrl, "sourceUrl"),
     fetchedPageUrl: httpsUrl(value.fetchedPageUrl, "fetchedPageUrl"),
     title,
     description,
     possiblePrice: unconfirmedPrice(value.possiblePrice),
+    ...(importedAssetUrls ? { importedAssetUrls } : {}),
     userConfirmed: true,
     confirmedAt: new Date(value.customerConfirmedAt).toISOString(),
   };

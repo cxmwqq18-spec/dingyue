@@ -28,6 +28,8 @@ export type ProductInlineRun = {
   status: string;
   state: "running" | "ready" | "failed";
   videoUrl?: string;
+  /** The page stopped tracking, but the task is still generating in the background. */
+  soft?: boolean;
 };
 
 export function WorkspaceTools({ all = false, disabled, onNavigate }: { all?: boolean; disabled: boolean; onNavigate: (view: WorkspaceView) => void }) {
@@ -97,8 +99,8 @@ export function ProductVideoPage({
     <div className={styles.pageTitle}><h1>Product Links</h1><p>Paste a product page link to save its photo and details into your product library, then create a video right here — without leaving this page.</p></div>
     <ProductUrlImport {...importProps} />
     <section className={styles.panel} aria-label="Your product library">
-      <h2>Your product library</h2>
-      <p className={styles.help} style={{ marginTop: 4 }}>Every product page you confirm is saved here. Click one to use its photo and details in the video form below.</p>
+      <h2 className={productStyles.historyHeading}>Your product library{imports.length > 0 && <span className={productStyles.historyCount}>{imports.length}</span>}</h2>
+      <p className={styles.help} style={{ marginTop: 4 }}>Every product page you confirm is saved here. Click one to use its photos and details in the video form below.</p>
       {importsLoading
         ? <p className={styles.help} role="status" style={{ marginTop: 12 }}>Loading your products…</p>
         : imports.length
@@ -107,9 +109,10 @@ export function ProductVideoPage({
               const title = record.title || "Imported product";
               // The stored brief carries the sourced product facts; they live
               // on the library row so nothing dangles outside the list.
-              const brief = record.brief as { description?: { value?: unknown }; possiblePrice?: { value?: { amount?: number | string; currency?: string } } } | null;
+              const brief = record.brief as { description?: { value?: unknown }; possiblePrice?: { value?: { amount?: number | string; currency?: string } }; importedAssetUrls?: unknown } | null;
               const description = typeof brief?.description?.value === "string" ? brief.description.value : "";
               const price = brief?.possiblePrice?.value;
+              const importedPhotos = Array.isArray(brief?.importedAssetUrls) ? brief.importedAssetUrls.length : 0;
               return <div key={record.id} className={productStyles.historyRow}>
                 <button type="button" className={productStyles.historyItem} disabled={disabled} onClick={() => onBackfill(record)}>
                   {/* Imported customer assets use authenticated URLs. */}
@@ -118,9 +121,14 @@ export function ProductVideoPage({
                   <span className={productStyles.historyCopy}>
                     <span className={productStyles.historyTitle}>{title}</span>
                     {description && <span className={productStyles.historyDescription}>{description}</span>}
-                    <span className={productStyles.historyMeta}>{new Date(record.updatedAt).toLocaleString()} · {historySourceLabel(record)}</span>
-                    {price?.amount != null && price.amount !== "" && <span className={productStyles.historyMeta}>Possible price · unconfirmed: {price.currency ? `${price.currency} ` : ""}{price.amount}</span>}
+                    <span className={productStyles.historyChips}>
+                      <span className={productStyles.historyChip}>{new Date(record.updatedAt).toLocaleDateString()}</span>
+                      <span className={productStyles.historyChip}>{historySourceLabel(record)}</span>
+                      {importedPhotos > 1 && <span className={productStyles.historyChip}>{importedPhotos} photos</span>}
+                      {price?.amount != null && price.amount !== "" && <span className={`${productStyles.historyChip} ${productStyles.historyChipPrice}`}>Possible price · unconfirmed: {price.currency ? `${price.currency} ` : ""}{price.amount}</span>}
+                    </span>
                   </span>
+                  <span className={productStyles.historyUse} aria-hidden="true"><span>Use</span><ArrowRight size={14} /></span>
                 </button>
                 <button type="button" className={productStyles.historyDelete} aria-label={`Remove ${title} from your product library`} disabled={disabled} onClick={() => onDeleteImport(record.id)}><X size={14} /></button>
               </div>;

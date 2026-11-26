@@ -69,6 +69,8 @@ export interface ProductBriefSnapshot {
   title: ConfirmedProductBriefField<string> | null;
   description: ConfirmedProductBriefField<string> | null;
   possiblePrice: UnconfirmedProductBriefPrice | null;
+  /** Every photo imported together with this confirmation, in the order used by the composer. */
+  importedAssetUrls?: string[];
   userConfirmed: true; confirmedAt: string;
 }
 export interface ActorVoice {

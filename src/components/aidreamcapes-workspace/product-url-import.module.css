@@ -60,6 +60,10 @@
   .productSummary, .importedProduct { grid-template-columns: 84px minmax(0, 1fr); gap: 11px; padding: 10px; }
   .productSummaryCopy h3 { font-size: 16px; }
   .importedProduct > img, .noProductImage { width: 84px; height: 84px; }
+  .historyItem { grid-template-columns: 52px minmax(0, 1fr); gap: 11px; padding: 11px 12px; }
+  .historyThumb { width: 52px; height: 52px; }
+  .historyUse { display: none; }
+  .historyDelete { width: 28px; height: 28px; }
 }
 
 .labelRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
@@ -67,29 +71,43 @@
 .shopifyIcon { width: 14px; height: 14px; color: #95bf47; flex: none; }
 .shopifyName { font-weight: 700; }
 .shopifyNote { color: #5f7d46; }
-.historyList { display: grid; gap: 10px; }
-.historyItem { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; padding: 10px 12px; border: 1px solid #e3e6ec; border-radius: 10px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.historyItem:hover { border-color: #b9bffa; background: #fafaff; }
+.historyHeading { display: flex; align-items: center; gap: 9px; }
+.historyCount { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: #f0ebff; color: #5938e8; font-size: 12px; font-weight: 700; }
+.historyList { display: grid; gap: 12px; }
+.historyItem { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; width: 100%; padding: 12px 14px; border: 1px solid #e6e8ee; border-radius: 12px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+.historyItem:hover { border-color: #b9bffa; background: #fbfaff; box-shadow: 0 8px 20px rgba(31, 24, 80, .07); transform: translateY(-1px); }
 .historyItem:focus-visible { outline: 3px solid #946dff; outline-offset: 2px; }
-.historyThumb { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; background: #f0eef8; }
-.historyCopy { min-width: 0; display: grid; gap: 3px; }
-.historyTitle { font-size: 13px; font-weight: 600; color: #101623; overflow-wrap: anywhere; }
+.historyThumb { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; background: #f0eef8; border: 1px solid #eef0f4; }
+.historyCopy { min-width: 0; display: grid; gap: 4px; }
+.historyTitle { font-size: 14px; font-weight: 600; color: #101623; overflow-wrap: anywhere; }
 .historyDescription { font-size: 12px; color: #4a4f57; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.historyMeta { font-size: 11px; color: #73777d; overflow-wrap: anywhere; }
-.historyDelete { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #e3e6ec; border-radius: 7px; background: #fff; color: #73777d; cursor: pointer; }
-.historyDelete:hover { color: #a52c38; border-color: #eec4c9; }
+.historyChips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.historyChip { max-width: 100%; padding: 2px 8px; border-radius: 999px; background: #f4f5f8; color: #5f6470; font-size: 11px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.historyChipPrice { background: #fff9e8; color: #7a6212; }
+.historyUse { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 999px; background: #f6f2ff; color: #5938e8; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.historyDelete { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3e6ec; border-radius: 8px; background: #fff; color: #73777d; cursor: pointer; }
+.historyDelete:hover { color: #a52c38; border-color: #eec4c9; background: #fff7f8; }
 .historyDelete:disabled { opacity: .55; cursor: not-allowed; }
-.historyEmpty { margin: 0; padding: 12px; border: 1px dashed #dce0e7; border-radius: 10px; color: #73777d; font-size: 12px; }
+.historyEmpty { margin: 0; padding: 14px; border: 1px dashed #dce0e7; border-radius: 12px; color: #73777d; font-size: 12px; }
 .historyRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
 
-.imagePicker { display: grid; gap: 8px; padding: 12px; border: 1px solid #e3e6ec; border-radius: 10px; background: #fff; }
+.imagePicker { display: grid; gap: 8px; padding: 12px; border: 1px solid #e3e6ec; border-radius: 12px; background: #fff; }
 .imagePickerHead { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: #4e5360; font-size: 12px; font-weight: 600; }
-.imagePickerActions { display: flex; justify-content: flex-end; gap: 8px; }
-.imageGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
-.imageOption { position: relative; display: block; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: #f0eef8; cursor: pointer; }
-.imageOption img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #f0eef8; }
+.imagePickerCount { padding: 3px 9px; border-radius: 999px; background: #f0ebff; color: #5938e8; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.imagePickerHint { margin: 0; color: #73777d; font-size: 11px; line-height: 1.4; }
+.imagePickerActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 2px; }
+.imageGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 9px; }
+.imageOption { position: relative; display: block; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: #f4f4f8; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+.imageOption:hover { border-color: #c9c2f7; transform: translateY(-1px); }
+.imageOption img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #f4f4f8; }
 .imageOption input { position: absolute; top: 6px; left: 6px; width: 16px; height: 16px; accent-color: #5938e8; }
 .imageOptionSelected { border-color: #5938e8; box-shadow: 0 0 0 2px rgba(89, 56, 232, .18); }
+.imageRole { position: absolute; left: 6px; bottom: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(16, 22, 35, .82); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .01em; }
+.recommended { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; padding: 6px 12px; border: 1px solid #d8ccff; border-radius: 999px; background: #f6f2ff; color: #5938e8; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.recommended:hover { background: #efe7ff; border-color: #bfaaff; }
+.recommended:disabled { opacity: .55; cursor: not-allowed; }
 @media (max-width: 640px) {
-  .imageGrid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+  .imageGrid { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+  .imagePickerActions { justify-content: stretch; }
+  .imagePickerActions > button { flex: 1 1 auto; }
 }
