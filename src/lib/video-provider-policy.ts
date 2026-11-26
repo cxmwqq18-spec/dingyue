@@ -11,6 +11,7 @@ export type VideoProviderFailureCode =
   | "text_logo_watermark_unsupported"
   | "frame_url_unreadable"
   | "unsupported_frame_format"
+  | "duration_limit_exceeded"
   | "provider_rejected_reference";
 
 export type VideoProviderFailure = {
@@ -32,6 +33,7 @@ const videoProviderFailureCodes = new Set<VideoProviderFailureCode>([
   "text_logo_watermark_unsupported",
   "frame_url_unreadable",
   "unsupported_frame_format",
+  "duration_limit_exceeded",
   "provider_rejected_reference"
 ]);
 
@@ -77,6 +79,12 @@ function providerFailureCodeFromMessage(message: string): VideoProviderFailureCo
   if (/暴力|血腥|violence|violent|gore|bloody|weapon|self[-\s]?harm|suicide/.test(lower)) return "violent_content_unsupported";
   if (/名人|公众人物|版权|角色|celebrity|public figure|copyright|trademark|character|ip right/.test(lower)) return "rights_or_public_figure_unsupported";
   if (/水印|标志|logo|watermark|text-heavy|large text|caption|subtitle/.test(lower)) return "text_logo_watermark_unsupported";
+  // Duration/spec caps often arrive wrapped in a generic "fail_to_fetch_task"
+  // envelope. Classify them before the frame-URL wording below, or the user is
+  // told to re-upload photos when the real fix is a shorter clip.
+  if (/最高支持\s*\d+\s*秒|最长(?:支持)?\s*\d+\s*秒|请调短时长|调短时长|max(?:imum)?\s*(?:is\s*)?\d+\s*(?:seconds?|secs?|s)\b|supports? up to\s*\d+\s*(?:seconds?|secs?|s)\b|duration (?:limit|too long)|clip is too long/.test(lower)) {
+    return "duration_limit_exceeded";
+  }
   if (/无法读取|读取失败|不可访问|私有|image_url|image url|fetch|read|reachable|public url|private url|could not reach|could not access/.test(lower)) return "frame_url_unreadable";
   if (/格式|解码|文件类型|mime|format|decode|unsupported image|invalid image|svg|gif|webp|heic|heif|bmp|tiff/.test(lower)) return "unsupported_frame_format";
   if (/真实人物|真人|真实人像|real\s*(person|people|human)|recognizable\s*(person|people|human)|actual\s*(person|people|human)|selfie/.test(lower)) return "real_person_reference_unsupported";
@@ -180,6 +188,11 @@ export function videoProviderFailureCustomerMessage(failure: VideoProviderFailur
     return spanish
       ? "Esta imagen de referencia tiene texto, logotipos o marcas de agua visibles. Sube una imagen mas limpia e intentalo de nuevo."
       : "This reference image has visible text, logos, or watermarks. Upload a cleaner image and try again.";
+  }
+  if (code === "duration_limit_exceeded") {
+    return spanish
+      ? "Este modelo solo admite un clip mas corto con esta duracion, resolucion y numero de fotos. Elige una duracion mas corta o menos fotos."
+      : "This model supports a shorter clip with this duration, resolution, and photo count. Choose a shorter duration or fewer photos.";
   }
   if (code === "frame_url_unreadable") {
     return spanish

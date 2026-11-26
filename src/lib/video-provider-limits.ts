@@ -20,6 +20,7 @@ export function isVideoProviderModel(modelType: unknown): boolean {
     /^veo[-.]?\d/.test(normalized) ||
     normalized.startsWith("sora-") ||
     normalized.startsWith("seedance-") ||
+    normalized.startsWith("jimeng-seedance-") ||
     normalized.startsWith("doubao-seedance-") ||
     normalized.startsWith("kling-") ||
     normalized.startsWith("vidu") ||

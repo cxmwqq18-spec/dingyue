@@ -24,6 +24,7 @@ const videoModelPatterns: Array<[RegExp, string]> = [
   [/^veo[-.]?\d/, "Veo 视频族"],
   [/^sora-/, "Sora 视频族"],
   [/^seedance-/, "Seedance 视频族"],
+  [/^jimeng-seedance-/, "Seedance 视频族（即梦）"],
   [/^doubao-seedance-/, "Seedance 视频族"],
   [/^kling-/, "Kling 视频族"],
   [/^vidu/, "Vidu 视频族"],
