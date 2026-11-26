@@ -2049,7 +2049,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }}><Icon size={21} strokeWidth={1.8} /><span>{item.title}</span>{item.status && <small className={`${styles.planned} ${item.status === "simulation" ? styles.simulation : ""}`}>{item.status === "simulation" ? "Simulation" : "Planned"}</small>}</a>;
   });
   const sceneOptions = (catalog?.scenes ?? []).map((item) => ({ value: item.id, label: item.name }));
-  const editorModelOptions = (catalog?.models ?? []).map((model) => ({ value: model.id, label: displayModel(model.model), disabled: !model.available || Boolean(scene?.needsActor && !model.nativeSpeech) }));
+  const editorModelOptions = (() => {
+    const models = catalog?.models ?? [];
+    const displayLabels = models.map((model) => displayModel(model.model));
+    const labelCounts = displayLabels.reduce((counts, label) => counts.set(label, (counts.get(label) ?? 0) + 1), new Map<string, number>());
+    // Several providers share a family label ("Seedance"). Show the exact
+    // provider label when the friendly name would be ambiguous, otherwise the
+    // customer cannot tell jimeng-seedance-2.0-fast from seedance-2.0-fast.
+    return models.map((model, index) => ({
+      value: model.id,
+      label: (labelCounts.get(displayLabels[index]) ?? 0) > 1 ? model.label : displayLabels[index],
+      disabled: !model.available || Boolean(scene?.needsActor && !model.nativeSpeech)
+    }));
+  })();
   const editorDurationOptions = (catalog?.durations ?? []).map((item) => ({ value: String(item.value), label: item.credits != null ? `${item.label} · ${creditLabel(item.credits)}` : item.label }));
   const editorAspectOptions = (catalog?.aspects ?? []).map((item) => ({ value: item, label: item }));
   const editorStyleOptions = (scene?.styleOptions ?? []).map((item) => ({ value: item.value, label: item.label }));
