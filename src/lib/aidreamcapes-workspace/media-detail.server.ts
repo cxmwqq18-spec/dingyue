@@ -233,7 +233,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
     path,
     ownerPath: owner.slug,
     ownerUpdatedAt: owner.updatedAt.toISOString(),
-    publishedAt: ownerCard.video?.publishedAt ?? owner.createdAt.toISOString(),
+    publishedAt: ownerCard.video?.publishedAt ?? (owner.createdAt ?? owner.updatedAt).toISOString(),
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
     ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,
