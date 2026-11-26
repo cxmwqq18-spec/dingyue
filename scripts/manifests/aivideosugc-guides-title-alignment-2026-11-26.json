@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-26",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "note": "Align the five field guides with their URLs: the short URL-derived title becomes the H1, card label and breadcrumb, and the previous long title moves to the subtitle. SEO titles keep the previous long-tail strings.",
+  "pages": [
+    {
+      "slug": "/guides/first-tiktok-video-ad",
+      "h1": "First TikTok Video Ad",
+      "subtitle": "How to Build a TikTok UGC Ad From a Product Link",
+      "seoTitle": "TikTok UGC Ad From a Product Link | AIVideosUGC"
+    },
+    {
+      "slug": "/guides/product-photo-tips",
+      "h1": "Product Photo Tips",
+      "subtitle": "How to Take Product Photos With a Phone",
+      "seoTitle": "How to Take Product Photos With a Phone | AIVideosUGC"
+    },
+    {
+      "slug": "/guides/ad-sizes-by-platform",
+      "h1": "Ad Sizes by Platform",
+      "subtitle": "Social Video Sizes: Best Practices for TikTok and Reels",
+      "seoTitle": "Social Video Sizes: Best Practices | AIVideosUGC"
+    },
+    {
+      "slug": "/guides/testing-ad-versions",
+      "h1": "Testing Ad Versions",
+      "subtitle": "How to Test Video Ad Versions Without Wasting Credits",
+      "seoTitle": "How to Test Video Ad Versions | AIVideosUGC"
+    },
+    {
+      "slug": "/guides/white-background-amazon",
+      "h1": "Amazon White Background",
+      "subtitle": "Amazon Main Image Rules: A Step-by-Step Guide",
+      "seoTitle": "Amazon Main Image Rules: Step-by-Step Guide | AIVideosUGC"
+    }
+  ],
+  "guideCards": [
+    { "href": "/guides/first-tiktok-video-ad", "label": "First TikTok Video Ad" },
+    { "href": "/guides/product-photo-tips", "label": "Product Photo Tips" },
+    { "href": "/guides/ad-sizes-by-platform", "label": "Ad Sizes by Platform" },
+    { "href": "/guides/testing-ad-versions", "label": "Testing Ad Versions" },
+    { "href": "/guides/white-background-amazon", "label": "Amazon White Background" }
+  ]
+}
