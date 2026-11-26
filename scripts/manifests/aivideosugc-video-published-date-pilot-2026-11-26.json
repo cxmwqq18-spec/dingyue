@@ -1,0 +1,147 @@
+{
+  "ok": true,
+  "mode": "applied",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "confirm": "aivideosugc-video-published-date-pilot-2026-11-26",
+  "pilot": [
+    {
+      "slug": "app-screen-walkthrough-ugc",
+      "owner": "/",
+      "publishedAt": "2026-11-25T16:05:01.999Z"
+    },
+    {
+      "slug": "white-laceup-sneaker-styling",
+      "owner": "/",
+      "publishedAt": "2026-11-25T16:05:01.999Z"
+    },
+    {
+      "slug": "headphone-creator-review",
+      "owner": "/",
+      "publishedAt": "2026-11-25T16:05:01.999Z"
+    },
+    {
+      "slug": "chili-crisp-oil-rice-upgrade",
+      "owner": "/ai-video-generation/food-video",
+      "publishedAt": "2026-11-23T16:41:18.070Z"
+    },
+    {
+      "slug": "pink-serum-dropper-routine",
+      "owner": "/",
+      "publishedAt": "2026-11-25T16:05:01.999Z"
+    },
+    {
+      "slug": "gym-protein-scoop-demo",
+      "owner": "/ai-video-generation",
+      "publishedAt": "2026-11-25T12:28:57.653Z"
+    },
+    {
+      "slug": "living-room-sofa-check-in",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "publishedAt": "2026-11-25T16:05:01.896Z"
+    },
+    {
+      "slug": "kettlebell-powder-reveal-reel",
+      "owner": "/ai-video-generation/video-ads",
+      "publishedAt": "2026-11-25T12:28:57.757Z"
+    },
+    {
+      "slug": "pet-dog-cuddle-chat",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "publishedAt": "2026-11-25T16:05:01.896Z"
+    },
+    {
+      "slug": "finance-hook-phone-demo",
+      "owner": "/ai-video-generation/video-ads",
+      "publishedAt": "2026-11-25T12:28:57.757Z"
+    }
+  ],
+  "updates": [
+    {
+      "owner": "/",
+      "baseHash": "3f0766eb4c1ae2fc6daac030d55e77026ac24fe1ea47804882a90cccf2828cd8",
+      "nextHash": "7dec45f900c251d14736c6193384ac654a9493b4701178d4b0a31afb67d15032",
+      "items": [
+        {
+          "slug": "app-screen-walkthrough-ugc",
+          "publishedAt": "2026-11-25T16:05:01.999Z",
+          "owner": "/"
+        },
+        {
+          "slug": "white-laceup-sneaker-styling",
+          "publishedAt": "2026-11-25T16:05:01.999Z",
+          "owner": "/"
+        },
+        {
+          "slug": "headphone-creator-review",
+          "publishedAt": "2026-11-25T16:05:01.999Z",
+          "owner": "/"
+        },
+        {
+          "slug": "pink-serum-dropper-routine",
+          "publishedAt": "2026-11-25T16:05:01.999Z",
+          "owner": "/"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation/food-video",
+      "baseHash": "b13d56595544a3d373bc97efad14dfda79fae4c427727ee9428ad56024454d45",
+      "nextHash": "4a151e904e2c500881d22150b75d1a10609ac106c3894dc92c57d540a344ca89",
+      "items": [
+        {
+          "slug": "chili-crisp-oil-rice-upgrade",
+          "publishedAt": "2026-11-23T16:41:18.070Z",
+          "owner": "/ai-video-generation/food-video"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation",
+      "baseHash": "97d6d4017f8e26f92bec316cdf47525c7c4c6877bcc99c00bd9f71830a895cd9",
+      "nextHash": "8346080bfeef026e03ebec8ccfe3d4a495ff4859d14ba0b8c0976ed07f31f188",
+      "items": [
+        {
+          "slug": "gym-protein-scoop-demo",
+          "publishedAt": "2026-11-25T12:28:57.653Z",
+          "owner": "/ai-video-generation"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation/spokesperson-video",
+      "baseHash": "6fcafd522fa9ec7b65658f2a4ec6ca793ab264bfac2f66cf58be7c7039f6e0a7",
+      "nextHash": "9a15ff9a0bef27ebe0e28a20bf9da5893dce9f600b09487bb62b81c446f805ea",
+      "items": [
+        {
+          "slug": "living-room-sofa-check-in",
+          "publishedAt": "2026-11-25T16:05:01.896Z",
+          "owner": "/ai-video-generation/spokesperson-video"
+        },
+        {
+          "slug": "pet-dog-cuddle-chat",
+          "publishedAt": "2026-11-25T16:05:01.896Z",
+          "owner": "/ai-video-generation/spokesperson-video"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation/video-ads",
+      "baseHash": "aff1e871ced2c77bb6d609b2197f5f506f66261b49d4a9a5027c44265f710c08",
+      "nextHash": "8a499a0f6ddfee8c8a846b7918a0f7d3d8d433a3fb4403252828b56ed8c53771",
+      "items": [
+        {
+          "slug": "kettlebell-powder-reveal-reel",
+          "publishedAt": "2026-11-25T12:28:57.757Z",
+          "owner": "/ai-video-generation/video-ads"
+        },
+        {
+          "slug": "finance-hook-phone-demo",
+          "publishedAt": "2026-11-25T12:28:57.757Z",
+          "owner": "/ai-video-generation/video-ads"
+        }
+      ]
+    }
+  ],
+  "applied": true
+}
