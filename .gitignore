@@ -82,6 +82,12 @@ public/assets/sites/site_aidreamcapes/guides/*
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-original.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-captioned-en.mp4
 !public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-poster.jpg
+# Public tool-page video examples ship with the code so the card video, poster
+# and 10s preview cannot 404 after a release.
+!public/assets/sites/site_aidreamcapes/examples/
+public/assets/sites/site_aidreamcapes/examples/*
+!public/assets/sites/site_aidreamcapes/examples/*.mp4
+!public/assets/sites/site_aidreamcapes/examples/*.webp
 # About page office scenes and team portraits ship with the code so a release
 # cannot publish a page whose images 404.
 !public/assets/sites/site_aidreamcapes/about/

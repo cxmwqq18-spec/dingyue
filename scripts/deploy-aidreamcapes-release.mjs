@@ -63,6 +63,8 @@ const productionAssetPaths = [
   "public/assets/sites/site_aidreamcapes/v2-responsive",
   // Workspace guide screenshots and interaction loops for /guides.
   "public/assets/sites/site_aidreamcapes/guides",
+  // Public tool-page video examples (the card video, poster and 10s preview).
+  "public/assets/sites/site_aidreamcapes/examples",
   // Blog covers, press assets and inline article media.
   "public/assets/sites/site_aidreamcapes/blog",
   // About page office scenes and team portraits. The page renders these
