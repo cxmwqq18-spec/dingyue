@@ -360,6 +360,13 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
     }
   }
 
+  // Shop photos often block hotlinking; preview them through our own origin so
+  // the grid shows the same image the importer will fetch.
+  function previewSrc(url: string) {
+    if (!customerId) return url;
+    return `/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/product-images/preview?url=${encodeURIComponent(url)}`;
+  }
+
   return (
     <section className={styles.panel} aria-labelledby="product-url-import-title">
       <div className={styles.heading}>
@@ -375,7 +382,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
               {preview.draft.detectedImages[0] ? (
                 // Product image hosts vary, so render this already validated HTTPS URL directly.
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={preview.draft.detectedImages[0].value} alt={preview.draft.title?.value || "Product from this page"} />
+                <img src={previewSrc(preview.draft.detectedImages[0].value)} alt={preview.draft.title?.value || "Product from this page"} />
               ) : <div className={styles.noProductImage}>No product photo found</div>}
               <div className={styles.productSummaryCopy}>
                 <span className={styles.summaryEyebrow}>Product found</span>
@@ -400,7 +407,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
                     <label key={image.value} className={`${styles.imageOption} ${checked ? styles.imageOptionSelected : ""}`}>
                       {/* Product image hosts vary, so render this validated HTTPS URL directly. */}
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={image.value} alt={preview.draft.title?.value || "Product photo"} loading="lazy" />
+                      <img src={previewSrc(image.value)} alt={preview.draft.title?.value || "Product photo"} loading="lazy" />
                       <input
                         type="checkbox"
                         checked={checked}
