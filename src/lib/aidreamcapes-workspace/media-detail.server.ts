@@ -130,6 +130,8 @@ export type MediaDetail = {
   card: MediaDetailCard;
   /** Last relational update of the owning LivePage row; drives video uploadDate. */
   ownerUpdatedAt: string;
+  /** Stable video publication date when the card declares one. */
+  publishedAt: string;
   /** Canonical in-site path of the card itself. */
   canonicalPath: string;
   /** Workspace CTA target plus the inert entry transfer. */
@@ -231,6 +233,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
     path,
     ownerPath: owner.slug,
     ownerUpdatedAt: owner.updatedAt.toISOString(),
+    publishedAt: ownerCard.video?.publishedAt ?? owner.updatedAt.toISOString(),
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
     ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,

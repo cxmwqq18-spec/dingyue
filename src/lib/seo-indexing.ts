@@ -2255,7 +2255,7 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
           title: media.label,
           description: media.description,
           contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
-          publicationDate: lastmod,
+          publicationDate: media.publishedAt ?? lastmod,
           ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
         },
         lastmod

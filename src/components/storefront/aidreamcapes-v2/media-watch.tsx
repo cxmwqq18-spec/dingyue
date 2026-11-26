@@ -66,7 +66,7 @@ export function AidreamcapesMediaWatchPage({
   const contentUrl = absoluteAsset(card.video.src) ?? card.video.src;
   const thumbnailUrl = absoluteAsset(card.video.poster?.src ?? card.image.src);
   const duration = isoDuration(Number(card.duration) || undefined);
-  const published = detail.ownerUpdatedAt;
+  const published = detail.publishedAt ?? detail.ownerUpdatedAt;
   const description = mediaDetailDescription(card, detail.kind, "watch");
   const crumbs = [
     { label: "Home", href: r.href("/") },
