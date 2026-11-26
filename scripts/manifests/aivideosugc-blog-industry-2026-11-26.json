@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-26",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "slugs": [
+    "/blog/appetite-appeal-on-autopilot-ai-ugc-video-ads-for-food-and-beverage-brands",
+    "/blog/explaining-tech-without-a-film-crew-ai-ugc-video-ads-for-electronics-and-gadget-brands",
+    "/blog/from-product-page-to-viral-beauty-ad-the-ai-ugc-playbook-for-skincare-and-cosmetics-brands",
+    "/blog/from-supplement-tub-to-scroll-stopping-ad-ai-ugc-video-for-health-and-fitness-brands"
+  ],
+  "hub": {
+    "slug": "/blog",
+    "action": "update",
+    "baseHash": "6910448afc68cbcc52e9031dee546f1a6677d54bed8bcafb725cbec4a0fdeaae",
+    "nextHash": "646e92d3961f9c6c43c12ce235b6909e4874bc5d8f03f83d71c14b6f1f7c7a08",
+    "resolvedCounts": {
+      "articles": 25,
+      "tutorials": 6
+    }
+  },
+  "articles": [
+    {
+      "slug": "/blog/appetite-appeal-on-autopilot-ai-ugc-video-ads-for-food-and-beverage-brands",
+      "rowId": "aidreamcapes_v2_blog_appetite_appeal_on_autopilot_ai_ugc_video_ads_for_food_and_beverage_brands",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "d5c1889954b82aeba424f535d4464bf7ff53ce89af00f9d9d9a54306fb43ff61"
+    },
+    {
+      "slug": "/blog/explaining-tech-without-a-film-crew-ai-ugc-video-ads-for-electronics-and-gadget-brands",
+      "rowId": "aidreamcapes_v2_blog_explaining_tech_without_a_film_crew_ai_ugc_video_ads_for_electronics_and_gadget_brands",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "d1bbfac5311fe244f3f316135ed3967d664a59983a0a75305710bc537d4573f5"
+    },
+    {
+      "slug": "/blog/from-product-page-to-viral-beauty-ad-the-ai-ugc-playbook-for-skincare-and-cosmetics-brands",
+      "rowId": "aidreamcapes_v2_blog_from_product_page_to_viral_beauty_ad_the_ai_ugc_playbook_for_skincare_and_cosmetics_brands",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "19971f4f44af16efe7dd53398e148c5f8dc3432304b4322318643e82f9b11510"
+    },
+    {
+      "slug": "/blog/from-supplement-tub-to-scroll-stopping-ad-ai-ugc-video-for-health-and-fitness-brands",
+      "rowId": "aidreamcapes_v2_blog_from_supplement_tub_to_scroll_stopping_ad_ai_ugc_video_for_health_and_fitness_brands",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "dcd5c6499d8c98154ead83012e8c0a0cafeecfc5214acabc9cf9b242c097c2bd"
+    }
+  ],
+  "note": "Content-only addition. Covers reuse the embedded video posters; the FAQPage graph carries the full schema.org fields. Rollback is a field-level inverse: delete the four LivePage rows and remove their hub cards."
+}
