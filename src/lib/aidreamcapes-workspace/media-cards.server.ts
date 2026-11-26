@@ -214,6 +214,7 @@ export type MediaDetailSitemapEntry = {
   durationSeconds?: number;
   /** Stable publication date for sitemap/video indexing when declared. */
   publishedAt?: string;
+  createdAt: Date;
   updatedAt: Date;
 };
 
@@ -234,6 +235,7 @@ type EnumeratedDetailCard = {
   kind: MediaDetailKind;
   slug: string;
   card: MediaDetailCard;
+  createdAt: Date;
   updatedAt: Date;
   /** The one LivePage row that owns this detail slug after the single-owner filter. */
   ownerSlug: string;
@@ -252,7 +254,7 @@ type EnumeratedDetailCard = {
 async function enumerateSingleOwnerDetailCards(includePublishedAliases = false): Promise<EnumeratedDetailCard[]> {
   const rows = await prisma.livePage.findMany({
     where: { siteId: AIVIDEOSUGC_SITE_ID },
-    select: { slug: true, contentJson: true, updatedAt: true }
+    select: { slug: true, contentJson: true, createdAt: true, updatedAt: true }
   });
   const rowCards = rows.map((row) => ({ row, cards: cardsFromContent(row.contentJson) }));
   // A slug is owned when a card publishes it as publicSlug, but a card on any
@@ -312,7 +314,7 @@ async function enumerateSingleOwnerDetailCards(includePublishedAliases = false):
       if (existing) {
         existing.owners.add(row.slug);
       } else {
-        byKey.set(key, { kind: card.kind, slug: card.publicSlug, card, updatedAt: row.updatedAt, owners: new Set([row.slug]) });
+        byKey.set(key, { kind: card.kind, slug: card.publicSlug, card, createdAt: row.createdAt, updatedAt: row.updatedAt, owners: new Set([row.slug]) });
       }
     }
   }
@@ -381,7 +383,7 @@ async function enumerateSingleOwnerDetailCardsCached(includePublishedAliases = f
  */
 export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
   const cards = await enumerateSingleOwnerDetailCardsCached(true);
-  return cards.map(({ card, slug, kind, updatedAt }) => ({
+  return cards.map(({ card, slug, kind, createdAt, updatedAt }) => ({
     kind,
     slug,
     label: card.label,
@@ -392,6 +394,7 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     ...(card.video?.src ? { videoPosterPath: card.video.poster?.src ?? card.image.src } : {}),
     ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
     ...(card.video?.publishedAt ? { publishedAt: card.video.publishedAt } : {}),
+    createdAt,
     updatedAt
   }));
 }

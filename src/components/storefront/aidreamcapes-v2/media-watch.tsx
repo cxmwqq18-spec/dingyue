@@ -140,6 +140,9 @@ export function AidreamcapesMediaWatchPage({
 #media-watch .v-watch-meta dt{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
 #media-watch .v-watch-meta dd{margin:2px 0 0;font-weight:600}
 #media-watch .v-watch-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+#media-watch .v-watch-prompt{margin:18px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 16px}
+#media-watch .v-watch-prompt summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:.92rem}
+#media-watch .v-watch-prompt pre{margin:0 0 16px;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Menlo,monospace;color:var(--ink-2)}
 #media-watch .v-watch-note{margin:14px 0 0;font-size:.86rem;opacity:.65}
 @media (max-width:640px){#media-watch .v-watch{padding:18px 16px 4px}}
 ` }} />
@@ -169,6 +172,12 @@ export function AidreamcapesMediaWatchPage({
             width={card.video.width}
           />
         </figure>
+        {card.prompt ? (
+          <details className="v-watch-prompt">
+            <summary>Prompt behind this example</summary>
+            <pre>{card.prompt}</pre>
+          </details>
+        ) : null}
         <dl className="v-watch-meta">
           {card.duration ? (
             <div>

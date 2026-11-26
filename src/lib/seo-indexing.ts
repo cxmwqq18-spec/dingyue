@@ -286,6 +286,7 @@ type SitemapVideoEntry = {
   title: string;
   description: string;
   contentLoc: string;
+  playerLoc?: string;
   publicationDate?: string;
   duration?: string;
 };
@@ -2255,7 +2256,8 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
           title: media.label,
           description: media.description,
           contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
-          publicationDate: media.publishedAt ?? lastmod,
+          playerLoc: watchLoc,
+          publicationDate: media.publishedAt ?? media.createdAt.toISOString(),
           ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
         },
         lastmod

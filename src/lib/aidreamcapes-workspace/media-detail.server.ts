@@ -91,8 +91,8 @@ async function pagesOwningSlug(slug: string) {
   // Slugs are unique per site, so the query matches the slug across every card
   // shape and the caller filters by media kind. This keeps one slug source for
   // template cards, picker cards, workspace cases, and legacy example galleries.
-  return prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; updatedAt: Date }>>`
-    SELECT "slug", "contentJson", "updatedAt"
+  return prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; createdAt: Date; updatedAt: Date }>>`
+    SELECT "slug", "contentJson", "createdAt", "updatedAt"
     FROM "LivePage"
     WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
       AND (jsonb_path_exists(
@@ -233,7 +233,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
     path,
     ownerPath: owner.slug,
     ownerUpdatedAt: owner.updatedAt.toISOString(),
-    publishedAt: ownerCard.video?.publishedAt ?? owner.updatedAt.toISOString(),
+    publishedAt: ownerCard.video?.publishedAt ?? owner.createdAt.toISOString(),
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
     ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,
