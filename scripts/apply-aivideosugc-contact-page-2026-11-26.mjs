@@ -44,7 +44,7 @@ const CONTENT = {
       { name: "Message", label: "Message", type: "textarea", required: true, full: true }
     ],
     button: "Send Message",
-    note: "This form opens your email client and sends the message to the address selected above. You can also email us directly using the addresses listed below.",
+    note: "We reply by email after reviewing your message. Include your account email and a short description of the issue. You can also email us directly using the addresses listed below.",
     recipients: {
       support: "support@aivideosugc.com",
       business: "business@aivideosugc.com",

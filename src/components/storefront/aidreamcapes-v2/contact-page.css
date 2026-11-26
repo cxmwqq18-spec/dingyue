@@ -86,3 +86,10 @@
   .adc2 .cp-table td:first-child { font-size: 13px; }
   .adc2 .cp-table td:nth-child(2) { color: var(--ink-3); font-size: 12px; }
 }
+
+.adc2 .cp-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.adc2 .cp-status { margin: 12px 0 0; font-size: 12.5px; line-height: 1.6; }
+.adc2 .cp-ok { color: #34d399; }
+.adc2 .cp-error { color: #fca5a5; }
+.adc2 .cp-error a { color: #fecaca; text-decoration: underline; text-underline-offset: 3px; }
+.adc2 .cp-actions .btn[disabled] { opacity: .65; cursor: wait; transform: none; }

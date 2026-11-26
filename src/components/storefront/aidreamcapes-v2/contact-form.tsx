@@ -21,14 +21,50 @@ export type ContactFormConfig = {
   recipients: Record<string, string>;
 };
 
-/** The HTML reference form is a mailto: form; the inquiry select swaps the
- * recipient. Nothing is collected server-side in this mode. */
+type Status = "idle" | "sending" | "sent" | "error";
+
+/** Submits the contact form to the isolated /api/contact route. The route picks
+ * the recipient; the page keeps a direct mailto fallback for outages. */
 export function ContactForm({ form }: { form: ContactFormConfig }) {
-  const inquiry = form.fields.find((field) => field.type === "select");
-  const [selected, setSelected] = useState(inquiry?.options?.[0]?.value ?? "support");
-  const to = form.recipients[selected] ?? form.recipients.support ?? "support@aivideosugc.com";
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
+  const fallback = form.recipients.support ?? "support@aivideosugc.com";
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (status === "sending") return;
+    const element = event.currentTarget;
+    const payload = Object.fromEntries(new FormData(element).entries());
+    setStatus("sending");
+    setError("");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!response.ok || !result.ok) {
+        setStatus("error");
+        setError(result.error === "rate_limited"
+          ? "Too many messages from this connection. Try again later."
+          : "The message could not be sent. Try again, or email us directly.");
+        return;
+      }
+      element.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+      setError("The message could not be sent. Try again, or email us directly.");
+    }
+  }
+
   return (
-    <form action={`mailto:${to}`} className="cp-form" encType="text/plain" method="post">
+    <form className="cp-form" onSubmit={onSubmit}>
+      <div className="cp-hp" aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input autoComplete="off" id="contact-website" name="website" tabIndex={-1} type="text" />
+      </div>
       <div className="cp-form-grid">
         {form.fields.map((field) => {
           const id = `contact-${field.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
@@ -39,29 +75,27 @@ export function ContactForm({ form }: { form: ContactFormConfig }) {
               {field.type === "textarea" ? (
                 <textarea id={id} name={field.name} required={field.required} />
               ) : field.type === "select" ? (
-                <select
-                  id={id}
-                  name={field.name}
-                  onChange={(event) => setSelected(event.target.value)}
-                  required={field.required}
-                  value={selected}
-                >
+                <select id={id} name={field.name} required={field.required}>
                   {field.options?.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                 </select>
               ) : (
-                <input
-                  autoComplete={field.autocomplete}
-                  id={id}
-                  name={field.name}
-                  required={field.required}
-                  type={field.type}
-                />
+                <input autoComplete={field.autocomplete} id={id} name={field.name} required={field.required} type={field.type} />
               )}
             </div>
           );
         })}
       </div>
-      <div className="cp-actions"><button className="btn btn-grad" type="submit">{form.button}</button></div>
+      <div className="cp-actions">
+        <button className="btn btn-grad" disabled={status === "sending"} type="submit">
+          {status === "sending" ? "Sending…" : form.button}
+        </button>
+      </div>
+      {status === "sent" ? <p className="cp-status cp-ok" role="status">Message sent. We will reply by email.</p> : null}
+      {status === "error" ? (
+        <p className="cp-status cp-error" role="alert">
+          {error} <a href={`mailto:${fallback}`}>{fallback}</a>
+        </p>
+      ) : null}
       <p className="cp-hint">{form.note}</p>
     </form>
   );
