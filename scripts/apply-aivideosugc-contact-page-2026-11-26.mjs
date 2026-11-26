@@ -26,11 +26,11 @@ const CONTENT = {
   form: {
     title: "Contact Form",
     fields: [
-      { name: "Full name", label: "Full name", type: "text", required: true, autocomplete: "name" },
-      { name: "Email", label: "Email", type: "email", required: true, autocomplete: "email" },
-      { name: "Company", label: "Company", type: "text", autocomplete: "organization" },
+      { name: "name", label: "Full name", type: "text", required: true, autocomplete: "name" },
+      { name: "email", label: "Email", type: "email", required: true, autocomplete: "email" },
+      { name: "company", label: "Company", type: "text", autocomplete: "organization" },
       {
-        name: "Inquiry type",
+        name: "inquiry",
         label: "Inquiry type",
         type: "select",
         required: true,
@@ -40,8 +40,8 @@ const CONTENT = {
           { value: "technical", label: "Technical" }
         ]
       },
-      { name: "Subject", label: "Subject", type: "text", required: true, span2: true },
-      { name: "Message", label: "Message", type: "textarea", required: true, full: true }
+      { name: "subject", label: "Subject", type: "text", required: true, span2: true },
+      { name: "message", label: "Message", type: "textarea", required: true, full: true }
     ],
     button: "Send Message",
     note: "We reply by email after reviewing your message. Include your account email and a short description of the issue. You can also email us directly using the addresses listed below.",
