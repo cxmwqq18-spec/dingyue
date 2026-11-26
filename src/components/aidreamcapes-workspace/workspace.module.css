@@ -161,8 +161,9 @@ textarea.input { resize: vertical; min-height: 100px; }
 .upload { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #bbc0cf; border-radius: 9px; padding: 12px; min-height: 106px; min-width: 106px; background: var(--surface, #fff); color: var(--muted, #73777d); cursor: pointer; font-size: 12px; }
 .upload input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .footerActions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 22px 0; }
-/* Keep the create action and its price visible while the form scrolls. */
-.videoDraftForm .footerActions { position: sticky; bottom: 12px; z-index: 4; margin: 20px 0 6px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 10px 24px rgba(20, 16, 50, .08); backdrop-filter: blur(8px); }
+/* Keep the create action and its price attached to the bottom of the form
+   while it scrolls, as a full-width bar rather than a floating pill. */
+.videoDraftForm .footerActions { position: sticky; bottom: 0; z-index: 4; margin: 20px -23px -23px; padding: 14px 23px; border-top: 1px solid var(--line); border-radius: 0 0 16px 16px; background: var(--surface); box-shadow: 0 -8px 20px rgba(20, 16, 50, .06); }
 .videoDraftForm .footerActions .button { min-height: 44px; }
 .taskGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .taskCard { border: 1px solid var(--line); border-radius: 13px; overflow: hidden; background: var(--surface); }
@@ -363,6 +364,7 @@ textarea.input { resize: vertical; min-height: 100px; }
   .modal { padding: 18px; }
   .footerActions { flex-wrap: wrap; }
   .footerActions .button { flex: 1; }
+  .videoDraftForm .footerActions { margin: 18px -18px -18px; padding: 12px 18px; border-radius: 0 0 16px 16px; }
   .sourceRow { flex-wrap: wrap; gap: 7px; }
 }
 .templateSummary { display: flex; align-items: flex-start; gap: 20px; padding: 20px; margin-bottom: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
