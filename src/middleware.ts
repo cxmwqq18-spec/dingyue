@@ -958,7 +958,10 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   // host root. Keeping their top-level path lets the public asset handler answer
   // them; rewriting them under /site/ would fall through to the storefront
   // catch-all and replace them with the branded not-found page.
-  if (hostSlug === "aidreamcapes" && /^\/google[a-z0-9]+\.html$/i.test(upstreamUrl.pathname)) {
+  if (
+    hostSlug === "aidreamcapes"
+    && (/^\/google[a-z0-9]+\.html$/i.test(upstreamUrl.pathname) || upstreamUrl.pathname === "/BingSiteAuth.xml")
+  ) {
     return upstreamUrl;
   }
   // Video watch pages are standalone routes for every storefront host.
