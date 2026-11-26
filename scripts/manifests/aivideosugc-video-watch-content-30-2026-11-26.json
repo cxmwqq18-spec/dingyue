@@ -1,0 +1,264 @@
+{
+  "ok": true,
+  "mode": "applied",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "confirm": "aivideosugc-video-watch-content-30-2026-11-26",
+  "items": [
+    {
+      "slug": "mint-shower-speaker-bathroom-concert",
+      "owner": "/ai-video-generation/image-to-video",
+      "summary": "A creator presses a mint-green speaker onto bathroom tile and turns her shower into a concert, steam, water and all."
+    },
+    {
+      "slug": "sunset-lamp-room-glow-before-after",
+      "owner": "/ai-video-generation/before-after-video",
+      "summary": "A dim bedroom desk transforms with one sunset lamp: the before shot, the switch, and the warm glow that changes the whole room."
+    },
+    {
+      "slug": "indoor-entryway-greeting",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Indoor: Entryway Greeting is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "close-shot-of-a-silver-ring",
+      "owner": "/ai-image-generation/colorway-variations",
+      "summary": "Close Shot of a Silver Ring is a 15-second 9:16 example from the /ai image generation/colorway variations workflow."
+    },
+    {
+      "slug": "folding-bike-commute",
+      "owner": "/ai-video-generation",
+      "summary": "Folding Bike Commute is a 30-second 9:16 example from the /ai video generation workflow."
+    },
+    {
+      "slug": "drink-pour",
+      "owner": "/ai-video-generation/food-video",
+      "summary": "Drink Pour is a 15-second 9:16 example from the food video workflow."
+    },
+    {
+      "slug": "launch-promo",
+      "owner": "/ai-video-generation/promo-video",
+      "summary": "Launch Promo is a 15-second 9:16 example from the promo video workflow."
+    },
+    {
+      "slug": "quiet-unboxing-makeup-tools",
+      "owner": "/ai-video-generation/video-ads",
+      "summary": "Quiet Unboxing: Makeup Tools is a 30-second 9:16 example from the video ads workflow."
+    },
+    {
+      "slug": "umbrella-opens-for-coverage",
+      "owner": "/ai-video-generation/product-video",
+      "summary": "Umbrella opens for coverage is a 15-second 9:16 example from the product video workflow."
+    },
+    {
+      "slug": "brand-film",
+      "owner": "/ai-video-generation/cinematic-video",
+      "summary": "Brand Film is a 15-second 16:9 example from the cinematic video workflow."
+    },
+    {
+      "slug": "how-to-product-video",
+      "owner": "/ai-video-generation/how-to-video",
+      "summary": "How-To Product Video is a 15-second 9:16 example from the how to video workflow."
+    },
+    {
+      "slug": "beauty-routine-video",
+      "owner": "/ai-video-generation/beauty-routine",
+      "summary": "Beauty Routine Video is a 15-second 9:16 example from the beauty routine workflow."
+    },
+    {
+      "slug": "black-friday-video",
+      "owner": "/ai-video-generation/black-friday-countdown",
+      "summary": "Black Friday Video is a 15-second 9:16 example from the black friday countdown workflow."
+    },
+    {
+      "slug": "outfit-reel",
+      "owner": "/ai-video-generation/fashion-try-on-reel",
+      "summary": "Outfit Reel is a 15-second 9:16 example from the fashion try on reel workflow."
+    },
+    {
+      "slug": "home-organizing",
+      "owner": "/ai-video-generation/home-organization",
+      "summary": "Home Organizing is a 15-second 9:16 example from the home organization workflow."
+    },
+    {
+      "slug": "tiktok-spark-ad-video",
+      "owner": "/ai-video-generation/spark-ads-style-video",
+      "summary": "TikTok Spark Ad Video is a 15-second 9:16 example from the spark ads style video workflow."
+    },
+    {
+      "slug": "canvas-tote-product-detail",
+      "owner": "/",
+      "summary": "Canvas Tote Product Detail is a 15-second 9:16 example from the / workflow."
+    },
+    {
+      "slug": "mint-speaker-tile-steam-session",
+      "owner": "/ai-video-generation/image-to-video",
+      "summary": "The mint-green speaker back on the bathroom tile in a second take, steam in the air and the playlist doing its thing."
+    },
+    {
+      "slug": "green-notebook-desk-ritual",
+      "owner": "/ai-video-generation/image-to-video",
+      "summary": "At a wooden desk she pairs a green notebook with its pen and shows the layout she uses to plan her week."
+    },
+    {
+      "slug": "black-speaker-balcony-soundtest",
+      "owner": "/ai-video-generation/image-to-video",
+      "summary": "On the balcony table he sets a small black speaker, taps play and lets the city evening carry the sound."
+    },
+    {
+      "slug": "cable-organizer-desk-before-after",
+      "owner": "/ai-video-generation/before-after-video",
+      "summary": "A tangle of charging cables behind the desk becomes one clipped, labeled setup with a cable organizer kit."
+    },
+    {
+      "slug": "notes-app-chaos-to-calm",
+      "owner": "/ai-video-generation/before-after-video",
+      "summary": "He turns the phone to the camera: sticky notes and three apps collapse into one tidy screen as he scrolls his new setup."
+    },
+    {
+      "slug": "cable-organizer-white-setup",
+      "owner": "/ai-video-generation/before-after-video",
+      "summary": "A second desk rescue: black and white cables give way to a clipped white cable setup, step by step."
+    },
+    {
+      "slug": "indoor-home-corner-chat",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Indoor: Home Corner Chat is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "home-sofa-welcome",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Home: Sofa Welcome is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "home-table-explanation",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Home: Table Explanation is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "outdoor-park-greeting",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Outdoor: Park Greeting is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "outdoor-walkway-update",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Outdoor: Walkway Update is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "living-room-sofa-check-in",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Living Room: Sofa Check-In is a 30-second 9:16 example from the spokesperson video workflow."
+    },
+    {
+      "slug": "living-room-lounge-introduction",
+      "owner": "/ai-video-generation/spokesperson-video",
+      "summary": "Living Room: Lounge Introduction is a 30-second 9:16 example from the spokesperson video workflow."
+    }
+  ],
+  "updates": [
+    {
+      "owner": "/ai-video-generation/image-to-video",
+      "baseHash": "0a9542dc6a0786a0777d8cff352a02b58ad1c60fccc73353a2173dd1e359f094",
+      "nextHash": "ed28eb7ab3e6a78a5c14a8ad684cbf3b8e9695c50bb8f71457f16599c3c360ef",
+      "count": 4
+    },
+    {
+      "owner": "/ai-video-generation/before-after-video",
+      "baseHash": "6c6b7c0415a682c63611d93145de2920f6451459258a2a09c4ead1211b626745",
+      "nextHash": "f5f4fb998beb6cbc9d8ffd1193e775e2a3fe133b0332d2ee69af94005652f67e",
+      "count": 4
+    },
+    {
+      "owner": "/ai-video-generation/spokesperson-video",
+      "baseHash": "d21c31a09b795f1089fa020f26cd28e9640cd7ac795ed2a8bd383861890c7b64",
+      "nextHash": "e7c2ef4388cec99926cb3652b7e4576996fdf9ba85406e601c8e859daaaab9bc",
+      "count": 8
+    },
+    {
+      "owner": "/ai-image-generation/colorway-variations",
+      "baseHash": "f7956b19a32ccb0becf715ff76dac98c14183d3f4950ae9faa7a87f441ef3467",
+      "nextHash": "0fcee3ac4efa9fc822aefcac94cdd50e89aa4161fa4b0f7d7e75b3c2ffcb959a",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation",
+      "baseHash": "8346080bfeef026e03ebec8ccfe3d4a495ff4859d14ba0b8c0976ed07f31f188",
+      "nextHash": "7c8f689d95509109a094d69384d48de65ab1e7a8e1dbcb46b95d3cc2fba68fa6",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/food-video",
+      "baseHash": "4a151e904e2c500881d22150b75d1a10609ac106c3894dc92c57d540a344ca89",
+      "nextHash": "847185b26164c40f1caf80be8ec7ffd2c6a736dc62193c76a590789ca7abc251",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/promo-video",
+      "baseHash": "6a35d1ca3ebba0c57dbc7a62bc49211dc46a03772b9208d957c826cbea568c9c",
+      "nextHash": "d7bedc0bc9225637b7dcb7666e145d125df00324ae6f1da3cabc928c9720bfa0",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/video-ads",
+      "baseHash": "8a499a0f6ddfee8c8a846b7918a0f7d3d8d433a3fb4403252828b56ed8c53771",
+      "nextHash": "a7dfc1359dd5feea454987429e0021b8d47bbf667b5b581d9f64ddac315f022b",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/product-video",
+      "baseHash": "5f0cbd6549ff5e5b9feea0f48cf0a9151ff73eecd0cf0fa9e5c81f5974bb8ab8",
+      "nextHash": "4c81dcb9a91e1bef0f2fc35391e7d89bca8ff889aaec188b917695a36465a0b4",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/cinematic-video",
+      "baseHash": "8cccb7a7b8e0a7dc8cf8da3137445454e9d16d1b12f5a9ece2c4e124e6358fbe",
+      "nextHash": "414f783a6a59965f05e855e7141c99c6db546b591465f0bbf70f3a399c07febb",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/how-to-video",
+      "baseHash": "2f5f5b926e7f1c1781c2c3ddec7fd5e804fb9d97435644fea55d1041e07a1a89",
+      "nextHash": "0db321d6587bec60125dbfe4b28ae4086bf5030eaf743e0a94bc6960fbaf8f9d",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/beauty-routine",
+      "baseHash": "756dccb6961aa7ed1ab9fe7ad0a42dc91b9b832799f9541afce40a478f42a39a",
+      "nextHash": "137044949558a99601959c41edaaaea55077ccdcfdf49fd3289f8c0b83d6cba2",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/black-friday-countdown",
+      "baseHash": "a573baa4d5685d3a2c53e14527a9cef03497d1f06fb3ccfadefda5ebd5cfc2d2",
+      "nextHash": "44b27749d59fb2a7c39425a1bedc66c9d3bb08816b0a98e42360f046bcf66cda",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/fashion-try-on-reel",
+      "baseHash": "39116bc7dd7d3cda6facccc90abb7c7293a094812e273b7b82b2b05c4bdced74",
+      "nextHash": "758db9b25f8ac355cc3d62b829131eb1ff59e2bf1b9aa8c1656b1f581735650f",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/home-organization",
+      "baseHash": "5aa77ad71fb343d07cfa3f03671baf41beb9b07e3f1031ce677f3a2ca331cf10",
+      "nextHash": "d0c29d6db77b37cb88fd54f3c7b37c3116f5515b1a81684f6cae8b220f2c9e81",
+      "count": 1
+    },
+    {
+      "owner": "/ai-video-generation/spark-ads-style-video",
+      "baseHash": "f85596ca2c544ab3bdf62674082215b8314123ea1f24ed7951cbf4524d743e24",
+      "nextHash": "168a263c72283b64fb1891dde0ad952defc527980cf387384298e9f957772aa9",
+      "count": 1
+    },
+    {
+      "owner": "/",
+      "baseHash": "02a47c2640b3cc025d33739d711452b54e11700aee901fd6fa2a4db597c5e92c",
+      "nextHash": "ffa05104650284f226d0f2f453c0d112b6e305fb741616f48a2a34e2301e8286",
+      "count": 1
+    }
+  ],
+  "applied": true
+}
