@@ -1,0 +1,120 @@
+{
+  "ok": true,
+  "mode": "applied",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "confirm": "aivideosugc-video-watch-only-pilot-2026-11-26",
+  "pilot": [
+    {
+      "slug": "indoor-entryway-greeting",
+      "owner": "/ai-video-generation/spokesperson-video"
+    },
+    {
+      "slug": "notes-app-chaos-to-calm",
+      "owner": "/ai-video-generation/before-after-video"
+    },
+    {
+      "slug": "mint-shower-speaker-bathroom-concert",
+      "owner": "/ai-video-generation/image-to-video"
+    },
+    {
+      "slug": "green-notebook-desk-ritual",
+      "owner": "/ai-video-generation/image-to-video"
+    },
+    {
+      "slug": "sunset-lamp-room-glow-before-after",
+      "owner": "/ai-video-generation/before-after-video"
+    },
+    {
+      "slug": "black-speaker-balcony-soundtest",
+      "owner": "/ai-video-generation/image-to-video"
+    },
+    {
+      "slug": "cable-organizer-desk-before-after",
+      "owner": "/ai-video-generation/before-after-video"
+    },
+    {
+      "slug": "home-table-explanation",
+      "owner": "/ai-video-generation/spokesperson-video"
+    },
+    {
+      "slug": "headphone-creator-review",
+      "owner": "/"
+    },
+    {
+      "slug": "pink-serum-dropper-routine",
+      "owner": "/"
+    }
+  ],
+  "updates": [
+    {
+      "owner": "/ai-video-generation/spokesperson-video",
+      "baseHash": "9a15ff9a0bef27ebe0e28a20bf9da5893dce9f600b09487bb62b81c446f805ea",
+      "nextHash": "d21c31a09b795f1089fa020f26cd28e9640cd7ac795ed2a8bd383861890c7b64",
+      "items": [
+        {
+          "slug": "indoor-entryway-greeting",
+          "owner": "/ai-video-generation/spokesperson-video"
+        },
+        {
+          "slug": "home-table-explanation",
+          "owner": "/ai-video-generation/spokesperson-video"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation/before-after-video",
+      "baseHash": "8771cb7f0643191a5a072a9f035d048902e08a16234987bf3361e797b90d7bdf",
+      "nextHash": "6c6b7c0415a682c63611d93145de2920f6451459258a2a09c4ead1211b626745",
+      "items": [
+        {
+          "slug": "notes-app-chaos-to-calm",
+          "owner": "/ai-video-generation/before-after-video"
+        },
+        {
+          "slug": "sunset-lamp-room-glow-before-after",
+          "owner": "/ai-video-generation/before-after-video"
+        },
+        {
+          "slug": "cable-organizer-desk-before-after",
+          "owner": "/ai-video-generation/before-after-video"
+        }
+      ]
+    },
+    {
+      "owner": "/ai-video-generation/image-to-video",
+      "baseHash": "4710e4c04f0306d4f87c19744acbb41b2e99d52a3180d5b29bd3d1a6b13fadb5",
+      "nextHash": "0a9542dc6a0786a0777d8cff352a02b58ad1c60fccc73353a2173dd1e359f094",
+      "items": [
+        {
+          "slug": "mint-shower-speaker-bathroom-concert",
+          "owner": "/ai-video-generation/image-to-video"
+        },
+        {
+          "slug": "green-notebook-desk-ritual",
+          "owner": "/ai-video-generation/image-to-video"
+        },
+        {
+          "slug": "black-speaker-balcony-soundtest",
+          "owner": "/ai-video-generation/image-to-video"
+        }
+      ]
+    },
+    {
+      "owner": "/",
+      "baseHash": "7dec45f900c251d14736c6193384ac654a9493b4701178d4b0a31afb67d15032",
+      "nextHash": "02a47c2640b3cc025d33739d711452b54e11700aee901fd6fa2a4db597c5e92c",
+      "items": [
+        {
+          "slug": "headphone-creator-review",
+          "owner": "/"
+        },
+        {
+          "slug": "pink-serum-dropper-routine",
+          "owner": "/"
+        }
+      ]
+    }
+  ],
+  "applied": true
+}
