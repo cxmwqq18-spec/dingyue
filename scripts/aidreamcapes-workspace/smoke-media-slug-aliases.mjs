@@ -107,8 +107,11 @@ for (const mode of ['path', 'host']) {
       const canonicalUrl = new URL(`https://www.aivideosugc.com${alias.newPath}`);
       const slug = canonicalUrl.pathname.split('/').pop() ?? '';
       const watchPath = `/watch/${slug}`;
+      // /watch is a public-host route, not a /site/<slug> path-mode route.
+      // Probe it on the public host so a path-mode 308 is not mistaken for a
+      // missing watch page.
       const watch = canonicalUrl.pathname.startsWith('/ai-video-generation/') && slug
-        ? await get(watchPath, mode)
+        ? await get(watchPath, 'host')
         : undefined;
       const expectedCanonical = watch?.status === 200
         ? `https://www.aivideosugc.com${watchPath}`
