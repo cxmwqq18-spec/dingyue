@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-27",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "mode": "applied",
+  "slugs": [
+    "/blog/making-jewelry-move-ai-ugc-video-ads-that-show-sparkle-craft-and-style",
+    "/blog/performance-marketing-in-motion-ai-ugc-video-ads-for-sports-and-gym-equipment",
+    "/blog/marketing-to-pet-parents-ai-ugc-video-ads-for-pet-food-toys-and-accessories",
+    "/blog/no-models-no-studio-how-clothing-brands-turn-product-links-into-ugc-style-video-ads"
+  ],
+  "hub": {
+    "slug": "/blog",
+    "action": "update",
+    "baseHash": "646e92d3961f9c6c43c12ce235b6909e4874bc5d8f03f83d71c14b6f1f7c7a08",
+    "nextHash": "9960fc40f0a9786b274385a4916e2589aef1209c42a2ce781eb74e35cdec2729",
+    "resolvedCounts": {
+      "articles": 29,
+      "tutorials": 6
+    }
+  },
+  "articles": [
+    {
+      "slug": "/blog/making-jewelry-move-ai-ugc-video-ads-that-show-sparkle-craft-and-style",
+      "rowId": "aidreamcapes_v2_blog_making_jewelry_move_ai_ugc_video_ads_that_show_sparkle_craft_and_style",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "8405a2c7557b6141dfdf9d9b9cade18b61b399b5ff81c0d26b829a43ec22f0dd"
+    },
+    {
+      "slug": "/blog/performance-marketing-in-motion-ai-ugc-video-ads-for-sports-and-gym-equipment",
+      "rowId": "aidreamcapes_v2_blog_performance_marketing_in_motion_ai_ugc_video_ads_for_sports_and_gym_equipment",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "d27152cbae21d301d79d83d180c2bc30ffe37cbdc82b57eb46ab53469cfb23b5"
+    },
+    {
+      "slug": "/blog/marketing-to-pet-parents-ai-ugc-video-ads-for-pet-food-toys-and-accessories",
+      "rowId": "aidreamcapes_v2_blog_marketing_to_pet_parents_ai_ugc_video_ads_for_pet_food_toys_and_accessories",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "82a1154cc1912c46a88323ccb9817c8e5d48c9dc4c03a2dec3fc17838b676a7b"
+    },
+    {
+      "slug": "/blog/no-models-no-studio-how-clothing-brands-turn-product-links-into-ugc-style-video-ads",
+      "rowId": "aidreamcapes_v2_blog_no_models_no_studio_how_clothing_brands_turn_product_links_into_ugc_style_video_ads",
+      "action": "create",
+      "changed": true,
+      "baseHash": null,
+      "nextHash": "c958f060c47ffec9dcd16d4058c367ac13e837f8d737a3e84c36a6c60f70f39e"
+    }
+  ],
+  "note": "Content-only addition. Covers reuse the embedded video posters; the FAQPage graph carries the full schema.org fields. Rollback is a field-level inverse: delete the four LivePage rows and remove their hub cards."
+}
