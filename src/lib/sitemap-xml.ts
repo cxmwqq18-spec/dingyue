@@ -6,7 +6,6 @@ export type SitemapXmlEntry = {
     title: string;
     description: string;
     contentLoc?: string;
-    playerLoc?: string;
     publicationDate?: string;
     duration?: string;
   };
@@ -39,7 +38,6 @@ export function sitemapXml(entries: SitemapXmlEntry[]): string {
       `      <video:title>${escapeXml(entry.video.title)}</video:title>`,
       `      <video:description>${escapeXml(entry.video.description)}</video:description>`,
       ...(entry.video.contentLoc ? [`      <video:content_loc>${escapeXml(entry.video.contentLoc)}</video:content_loc>`] : []),
-      ...(entry.video.playerLoc ? [`      <video:player_loc>${escapeXml(entry.video.playerLoc)}</video:player_loc>`] : []),
       ...(entry.video.publicationDate ? [`      <video:publication_date>${escapeXml(entry.video.publicationDate)}</video:publication_date>`] : []),
       ...(entry.video.duration ? [`      <video:duration>${escapeXml(entry.video.duration)}</video:duration>`] : []),
       "    </video:video>"
