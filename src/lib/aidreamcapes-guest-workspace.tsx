@@ -238,7 +238,9 @@ export async function aidreamcapesMediaWatchMetadata({ slug }: {
   };
 }
 
-/** Metadata for a public media detail page; derived cards are not indexed yet. */
+/** Metadata for a public media detail page. Video cards canonicalise to their
+ * one watch page; the detail layout remains the prompt/template entry and keeps
+ * its own visible URL, but it must not compete with the watch page in search. */
 export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
   kind: MediaDetailKind;
   slug: string;
@@ -247,7 +249,10 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
   const detail = await resolveMediaDetail(kind, slug);
   if (!detail) return undefined;
   const title = mediaDetailTitle(detail.card);
-  const canonical = `${MEDIA_DETAIL_PUBLIC_ORIGIN}${detail.path}`;
+  const watchPath = kind === "video" && detail.card.video?.src
+    ? mediaWatchPath("video", detail.slug)
+    : undefined;
+  const canonical = `${MEDIA_DETAIL_PUBLIC_ORIGIN}${watchPath ?? detail.path}`;
   return {
     title: `${title} | AIVideosUGC`,
     description: mediaDetailDescription(detail.card, detail.kind),
@@ -256,8 +261,8 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
     openGraph: {
       // The detail page is the template/prompt entry, not the watch page. The
       // video.other claim lives on /watch/<slug>, where the player and
-      // VideoObject are. Keeping it here made Google treat a non-watch page as
-      // a video page, which is exactly the "video not on a watch page" signal.
+      // VideoObject are. Video detail pages therefore point their canonical at
+      // the watch page and stop being a second indexable copy of that video.
       type: "website",
       title,
       description: mediaDetailDescription(detail.card, detail.kind),

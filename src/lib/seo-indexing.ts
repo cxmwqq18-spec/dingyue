@@ -2218,48 +2218,59 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
     ? (await Promise.all(runtime.sites.map((item) => sitemapEntriesForSite(runtime.state, item)))).flat()
     : site ? await sitemapEntriesForSite(runtime.state, site) : [];
   if (site?.id === AIDREAMCAPES_SITE_ID) {
-    // Media detail pages are rendering projections of card data (no LivePage
-    // row of their own), so the card enumeration owns their sitemap entries.
-    // Video cards additionally emit a <video:video> entry for Google video
-    // indexing; cards added later are picked up automatically.
-    for (const media of await listAidreamcapesMediaDetailEntries()) {
+    // Media detail routes are owned by card data. The page and index passes
+    // above can still project a legacy detail row, so this final pass decides
+    // which media URLs survive: a video with a rendered file has exactly one
+    // search URL, its /watch/<slug> page; photo details stay on their own URL.
+    const mediaEntries = await listAidreamcapesMediaDetailEntries();
+    const videoDetailLocations = new Set<string>();
+    for (const media of mediaEntries) {
       // Retired detail addresses redirect to a living page; they must not be
       // submitted as canonical sitemap URLs.
       if (retiredMediaPageRedirect(media.kind, media.slug)) continue;
       const detailPath = mediaDetailPath(media.kind, media.slug);
       if (!detailPath) continue;
       const loc = `${AIDREAMCAPES_ORIGIN}${detailPath}`;
-      if (entries.some((entry) => entry.loc === loc)) continue;
       const lastmod = media.updatedAt.toISOString();
       const thumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.imagePath}`;
       const imageText = media.imageAlt ?? media.label;
-      // The detail page is the template/prompt entry, not a watch page. A
-      // <video:video> entry here tells Google this page is a video watch page,
-      // which is exactly the "video not on a watch page" report. The video
-      // entry belongs on /watch/<slug>, the page that owns the player.
+      const watchPath = media.kind === "video" && media.videoPath
+        ? mediaWatchPath(media.kind, media.slug)
+        : undefined;
+      if (watchPath) {
+        // Remove a detail URL that an earlier pass may already have added.
+        videoDetailLocations.add(loc);
+        const watchLoc = `${AIDREAMCAPES_ORIGIN}${watchPath}`;
+        const watchThumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.videoPosterPath ?? media.imagePath}`;
+        const watchEntry = {
+          loc: watchLoc,
+          images: [{ loc: watchThumbnailLoc, title: imageText, caption: imageText }],
+          video: {
+            thumbnailLoc: watchThumbnailLoc,
+            title: media.label,
+            description: media.description,
+            contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
+            publicationDate: media.publishedAt ?? (media.createdAt ?? media.updatedAt).toISOString(),
+            ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
+          },
+          lastmod
+        };
+        // The watch page may already have a plain entry from an earlier pass.
+        // Replace it so the sitemap always carries the VideoObject metadata.
+        const watchIndex = entries.findIndex((entry) => entry.loc === watchLoc);
+        if (watchIndex >= 0) entries[watchIndex] = watchEntry;
+        else entries.push(watchEntry);
+        continue;
+      }
+      if (entries.some((entry) => entry.loc === loc)) continue;
       entries.push({
         loc,
         images: [{ loc: thumbnailLoc, title: imageText, caption: imageText }],
         lastmod
       });
-      const watchPath = mediaWatchPath(media.kind, media.slug);
-      if (!watchPath || !media.videoPath) continue;
-      const watchLoc = `${AIDREAMCAPES_ORIGIN}${watchPath}`;
-      if (entries.some((entry) => entry.loc === watchLoc)) continue;
-      const watchThumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.videoPosterPath ?? media.imagePath}`;
-      entries.push({
-        loc: watchLoc,
-        images: [{ loc: watchThumbnailLoc, title: imageText, caption: imageText }],
-        video: {
-          thumbnailLoc: watchThumbnailLoc,
-          title: media.label,
-          description: media.description,
-          contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
-          publicationDate: media.publishedAt ?? (media.createdAt ?? media.updatedAt).toISOString(),
-          ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
-        },
-        lastmod
-      });
+    }
+    for (let index = entries.length - 1; index >= 0; index -= 1) {
+      if (videoDetailLocations.has(entries[index].loc)) entries.splice(index, 1);
     }
   }
   if (!site) return { entries, resolved: false };

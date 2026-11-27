@@ -86,8 +86,10 @@ async function expectRedirect(path, location) {
 //   /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug> and
 //   /ai-actors/<name> (flat). The card link is a plain path: no query string,
 // no fragment and no inert `data-workspace-entry` payload. The workspace is
-// reached from the detail page CTA, which carries the card identity. Derived
+// reached from the detail page CTA, which carries the card identity. Photo
 // detail pages are `index, follow` and submit themselves to the sitemap.
+// Video detail pages are `index, follow` but canonicalise to /watch/<slug>,
+// which owns the only sitemap URL and VideoObject for that video.
 const MEDIA_DETAIL_RE = /^\/(ai-image-generation|ai-video-generation)\/([a-z0-9][a-z0-9-]{0,119})$/i;
 const FLAT_ACTOR_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]{0,79})$/i;
 const NESTED_ACTOR_RE = /^\/ai-actors\/(?:men|women)\/[a-z0-9][a-z0-9-]{0,79}$/i;
@@ -112,6 +114,16 @@ function robotsContent(html) {
 
 function documentTitle(html) {
   return (html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || "").trim();
+}
+
+function canonicalPath(html) {
+  const href = html.match(/<link\b[^>]*\brel=["']canonical["'][^>]*\bhref=["']([^"']+)["']/i)?.[1];
+  if (!href) return "";
+  try {
+    return new URL(href, BASE_URL).pathname;
+  } catch {
+    return "";
+  }
 }
 
 /** Card anchors on a public media page: `<a class="v-pick-card">` and `<article class="tc">`. */
@@ -162,6 +174,8 @@ async function expectDetailPage(path, { kind, slug }) {
   assert.doesNotMatch(robots, /noindex/, `${path}: robots must be indexable (${robots || "missing"})`);
   assert.match(robots, /follow/, `${path}: robots must be follow (${robots || "missing"})`);
   assert.doesNotMatch(robots, /nofollow/, `${path}: robots must not be nofollow (${robots})`);
+  const expectedCanonical = kind === "video" ? `/watch/${slug}` : path;
+  assert.equal(canonicalPath(html), expectedCanonical, `${path}: canonical must be ${expectedCanonical}`);
   assert.equal(
     /<video\b/i.test(html),
     /"VideoObject"/.test(html),
@@ -467,9 +481,9 @@ const sitemapPaths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((matc
   }
 }).filter(Boolean);
 // The sitemap submits canonical public pages: the nested actor rows are
-// permanent redirects and must never submit. Media detail pages answer 200,
-// submit themselves to the sitemap, and their alias addresses redirect
-// permanently without submitting.
+// permanent redirects and must never submit. Video detail pages canonicalise
+// to /watch and must not submit a second URL; photo details remain canonical
+// and keep their own sitemap entry.
 const nestedActorUrls = sitemapPaths.filter((path) => NESTED_ACTOR_RE.test(path));
 assert.equal(nestedActorUrls.length, 0, `sitemap: ${nestedActorUrls.length} nested actor URL(s)`);
 for (const sample of detailSamples) {
@@ -478,11 +492,14 @@ for (const sample of detailSamples) {
   await direct.dispose?.();
   if (redirects) {
     assert.ok(!sitemapPaths.includes(sample.path), `sitemap: redirecting detail alias must not submit (${sample.path})`);
+  } else if (sample.kind === "video") {
+    assert.ok(!sitemapPaths.includes(sample.path), `sitemap: video detail must not submit a second URL (${sample.path})`);
+    assert.ok(sitemapPaths.includes(`/watch/${sample.slug}`), `sitemap: video watch page must submit (${sample.slug})`);
   } else {
-    assert.ok(sitemapPaths.includes(sample.path), `sitemap: detail page must submit itself to the sitemap (${sample.path})`);
+    assert.ok(sitemapPaths.includes(sample.path), `sitemap: photo detail page must submit itself to the sitemap (${sample.path})`);
   }
 }
-checks.push(`sitemap: ${sitemapPaths.length} URL(s), no nested actor URL, canonical media detail pages submit`);
+checks.push(`sitemap: ${sitemapPaths.length} URL(s), no nested actor URL, video details canonicalise to /watch`);
 const robots = await get("/robots.txt");
 assert.equal(robots.status, 200, `robots: status ${robots.status}`);
 // The origin is reached over plain HTTP on loopback, so the robots route also
