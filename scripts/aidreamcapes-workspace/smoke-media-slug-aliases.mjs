@@ -101,9 +101,21 @@ for (const mode of ['path', 'host']) {
 
       const canonical = await get(alias.newPath, mode);
       assert.equal(canonical.status, 200, `canonical address answered ${canonical.status}`);
+      // A video detail page canonicalises to its one watch page. Tool pages
+      // and photo details keep their own canonical address. The watch probe
+      // distinguishes a real video card from a tool page under the same prefix.
+      const canonicalUrl = new URL(`https://www.aivideosugc.com${alias.newPath}`);
+      const slug = canonicalUrl.pathname.split('/').pop() ?? '';
+      const watchPath = `/watch/${slug}`;
+      const watch = canonicalUrl.pathname.startsWith('/ai-video-generation/') && slug
+        ? await get(watchPath, mode)
+        : undefined;
+      const expectedCanonical = watch?.status === 200
+        ? `https://www.aivideosugc.com${watchPath}`
+        : `https://www.aivideosugc.com${alias.newPath}`;
       assert.equal(
         canonical.$('link[rel=canonical]').attr('href'),
-        `https://www.aivideosugc.com${alias.newPath}`,
+        expectedCanonical,
         'canonical link does not match the canonical address'
       );
       const robots = canonical.$('meta[name=robots]').attr('content') ?? '';
